@@ -76,7 +76,9 @@ export function GET(url: string) {
                         console.log('GET', url);
                         let data = await descriptor.value.apply(this, arguments);
                         console.log('GOT', data);
-                        res.json(data);
+                        if(!res.headersSent) {
+                            res.json(data);
+                        }
                     } catch(e) {
                        handleError(req, res, e);
                     }
@@ -98,7 +100,9 @@ export function POST(url: string) {
                    try {
                         let data = await descriptor.value.apply(this, arguments);
                         console.log('POST', url, data);
-                        return res.json(data);
+                        if(!res.headersSent) {
+                            return res.json(data);
+                        }
                     } catch(e) {
                         handleError(req, res, e);
                     }
