@@ -37,10 +37,13 @@ export class WebServer {
 
         this.app.use(session({ secret: 'V[|.7jC*xE76+z=4bsF8!Jcgj]pu' }));
         this.app.use(passport.initialize());
+
+
+        configurePassport(passport);
+
         this.app.use(passport.session()); // persistent login sessions
         this.app.use(flash()); // use connect-flash for flash messages stored in session
 
-        configurePassport(passport);
         this.app.set('view engine', 'ejs');
 
         console.log('Initing decorators')
