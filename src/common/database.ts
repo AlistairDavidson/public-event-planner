@@ -10,7 +10,7 @@ export class Database {
         this.models = models;
     }
 
-    connect(no_salesforce = false) {
+    connect() {
         this.db = new SequelizeStatic(
             process.env.DATABASE_URL, {
                 native: true
@@ -24,7 +24,7 @@ export class Database {
                 }, function (err) { 
                     console.log('Unable to connect to the database:', err);
                 })
-                .then(() => models.init(no_salesforce))            
+                .then(() => models.init())            
                 .then(() => this.db.sync());
         } catch(e) {
             console.error(e);
