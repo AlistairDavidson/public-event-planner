@@ -40,25 +40,34 @@ export default function(passport: passport.Passport) {
         process.nextTick(() => createUser(req, username, password, done));
     }));
 
-    function createUser(req: express.Request, username: string, password: string, done: Function) {
-        console.log('Create User', req, username, password, done)
-        database.models.User.findOne({
+    async function createUser(req: express.Request, username: string, password: string, done: Function) {
+        console.log('Create User', req, username, password, done);
+
+        let user = await database.models.User.findOne({
             where: {
                 username:  username
             }
-        }).then(user => {
-            if (user) {
-                return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
-            } else {
-                database.models.User.create({
-                    username: username,
-                    password: authService.generateHash(password),
-                    uuid: uuid.v4()
-                }).then(user => {                
-                    return done(null, user);
-                });
-            }
-        })
+        });
+        
+        if (user) {
+            return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
+        } else {
+            let user = await database.models.User.create({
+                username: username,
+                password: authService.generateHash(password),
+                uuid: uuid.v4()
+            });
+            
+            let permission = await database.models.Permission.findOne({
+                where: {
+                    name: 'view_profile'
+                }
+            });
+            
+            await user.addPermission(permission);
+
+            return done(null, user);
+        }    
     }
 }
 

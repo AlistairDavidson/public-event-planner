@@ -23,6 +23,8 @@ export class AuthService {
 
         let permissions = await this.permissions(user);
 
+        console.log('Got permissions', permissions);
+
         // check if permissions contains one of requirements
         let hasPermission = !!_(permissions)            
             .intersection(requirements)

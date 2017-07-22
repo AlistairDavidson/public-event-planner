@@ -3,18 +3,22 @@ import { UserInstance } from './user';
 
 export function permission(db: SequelizeStatic.Sequelize)  {    
     let Permission = db.define<PermissionInstance, PermissionAttribute>('Permission', {
-        name: SequelizeStatic.STRING(255),
-        uuid: SequelizeStatic.STRING(36)
+        name: SequelizeStatic.STRING(255)
     }, {
         schema: 'eventplanner'
     });
 
-    return Permission;    
+    Permission.findOrCreate({
+        where: {
+            name: 'view_profile'
+        }
+    });
+
+    return Permission;
 }
 
 export interface PermissionAttribute {
     name: string;
-    uuid: string;
 }
 
 export interface PermissionInstance extends SequelizeStatic.Instance<PermissionAttribute>, PermissionAttribute {
