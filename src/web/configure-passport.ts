@@ -29,24 +29,27 @@ export default function(passport: passport.Passport) {
         passwordField : 'password',
         passReqToCallback : true
     }, async (req: express.Request, email: string, password: string, done: Function) => {
-        process.nextTick(async () => {
-            let user = await database.models.User.findOne({
-                where: {
-                    email:  email
-                }
-            });
-                
-            if (user) {
-                return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
-            } else {
-                let user = await database.models.User.create({
-                    email: email,
-                    password: authService.generateHash(password),
-                    uuid: uuid.v4()
-                });
-                
-                return done(null, user);
+        process.nextTick(() => createUser(req, email, password, done));
+    }));
+
+    async function createUser(req: express.Request, email: string, password: string, done: Function) {
+        console.log('Create User', req, email, password, done)
+        let user = await database.models.User.findOne({
+            where: {
+                email:  email
             }
         });
-    }));
+            
+        if (user) {
+            return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
+        } else {
+            let user = await database.models.User.create({
+                email: email,
+                password: authService.generateHash(password),
+                uuid: uuid.v4()
+            });
+            
+            return done(null, user);
+        }
+    }
 }
