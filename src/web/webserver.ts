@@ -22,7 +22,14 @@ export class WebServer {
 	    this.app = express();
 
         console.log('Inited app', this.app)
-	
+    
+        // Enable cross origin requests
+        this.app.use(function(req, res, next) {
+            res.header("Access-Control-Allow-Origin", "*");
+            res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+            next();
+        });        
+        
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({ extended: true }));
         this.app.use(cookieParser());
@@ -36,13 +43,6 @@ export class WebServer {
         configurePassport(passport);
         this.app.set('view engine', 'ejs');
 
-        // Enable cross origin requests
-        this.app.use(function(req, res, next) {
-            res.header("Access-Control-Allow-Origin", "*");
-            res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-            next();
-        });        
-        
         console.log('Initing decorators')
         initDecorators(this.app);
 
@@ -56,7 +56,7 @@ export class WebServer {
         let host = this.server.address().address;
         let port = this.server.address().port;
 
-        console.log(`Data aggregator listening at http://${host}:${port}`);	
+        console.log(`Listening at http://${host}:${port}`);	
     }
 }
 
