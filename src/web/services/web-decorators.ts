@@ -69,7 +69,7 @@ export function GET(url: string) {
         routes.push((app: express.Application) => {
             console.log('initing get for ', url, descriptor.value);
 
-            app.get(
+            return app.get(
                 url,
                 async function(req, res) {
                     try {
@@ -82,7 +82,7 @@ export function GET(url: string) {
                     }
                 }
             )
-        );
+        });
     }
 }
 
