@@ -18,6 +18,7 @@ type ControllerMethod = TypedPropertyDescriptor<(req: express.Request, res: expr
  * Decorator, requires a user to have the supplied permissions to access the decorated method.
  */
 export function Auth(requirements: string[]) {
+    
     return function Authorise(target: Object, propertyKey: string, descriptor: ControllerMethod) {
         const originalMethod = descriptor.value;
         // TODO stuff
@@ -25,6 +26,7 @@ export function Auth(requirements: string[]) {
             try {      
                 passport.authenticate('local-login', (req: express.Request, res: express.Response) => {
                     let args = _.toArray(arguments);
+                    console.log('doing authorise');
                     return doAuthorise(req, res, requirements, originalMethod, args)
                 });
             } catch(e) {
@@ -37,11 +39,13 @@ export function Auth(requirements: string[]) {
 }
 
 async function doAuthorise(req: express.Request, res: express.Response, requirements: string[], originalMethod: Function, args: any) {
+    console.log('getting permissions', req.user, requirements);
     let permissions = await authService.authorize(req.user, requirements);
 
     args.push(req.user);
     args.push(permissions);
 
+    console.log('calling original method', req.user, permissions);
     return await originalMethod.apply(this, args);
 }
 
