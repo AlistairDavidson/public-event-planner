@@ -2,6 +2,8 @@ import authService from './auth-service';
 import * as express from 'express';
 import * as _ from 'lodash';
 
+import * as passport from 'passport';
+
 import { UserInstance } from '../../common/models/user';
 
 let routes: Function[] = [];
@@ -20,15 +22,11 @@ export function Auth(requirements: string[]) {
         const originalMethod = descriptor.value;
         // TODO stuff
         descriptor.value = async function(req: express.Request, res: express.Response) {  
-            try {                
-                let permissions = await authService.authorize(req.user, requirements);
-
-                let args = _.toArray(arguments);
-
-                args.push(req.user);
-                args.push(permissions);
-
-                return await originalMethod.apply(this, args);
+            try {      
+                passport.authenticate('local-login', (req: express.Request, res: express.Response) => {
+                    let args = _.toArray(arguments);
+                    return doAuthorise(req, res, requirements, originalMethod, args)
+                });
             } catch(e) {
                 handleError(req, res, e);
             }        
@@ -36,6 +34,15 @@ export function Auth(requirements: string[]) {
 
         return descriptor;
     }
+}
+
+async function doAuthorise(req: express.Request, res: express.Response, requirements: string[], originalMethod: Function, args: any) {
+    let permissions = await authService.authorize(req.user, requirements);
+
+    args.push(req.user);
+    args.push(permissions);
+
+    return await originalMethod.apply(this, args);
 }
 
 /**

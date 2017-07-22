@@ -21,7 +21,6 @@ export class AuthService {
    async authorize(user: UserInstance, requirements: string[]) {     
         console.log('Hit authorize');
 
-    
         let permissions = await this.permissions(user);
 
         // check if permissions contains one of requirements
