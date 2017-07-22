@@ -90,7 +90,7 @@ passport.use('local-login', new LocalStrategy({
         });
 }));
 
-passport.use('local', new LocalStrategy({
+passport.use(new LocalStrategy({
     passReqToCallback : true
 },
     function(req: express.Request, username: string, password: string, done: Function) {        
