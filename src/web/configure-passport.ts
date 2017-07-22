@@ -24,33 +24,31 @@ export default function(passport: passport.Passport) {
         done(null, user);
     });
 
-    passport.use('local-signup', new LocalStrategy({
-        usernameField : 'email',
-        passwordField : 'password',
+    passport.use('local-signup', new LocalStrategy({      
         passReqToCallback : true
-    }, async (req: express.Request, email: string, password: string, done: Function) => {
+    }, async (req: express.Request, username: string, password: string, done: Function) => {
         console.log('local-signup')
-        process.nextTick(() => createUser(req, email, password, done));
+        process.nextTick(() => createUser(req, username, password, done));
     }));
 
-    async function createUser(req: express.Request, email: string, password: string, done: Function) {
-        console.log('Create User', req, email, password, done)
-        let user = await database.models.User.findOne({
+    function createUser(req: express.Request, username: string, password: string, done: Function) {
+        console.log('Create User', req, username, password, done)
+         database.models.User.findOne({
             where: {
-                email:  email
+                email:  username
             }
-        });
-            
-        if (user) {
-            return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
-        } else {
-            let user = await database.models.User.create({
-                email: email,
-                password: authService.generateHash(password),
-                uuid: uuid.v4()
-            });
-            
-            return done(null, user);
-        }
+        }).then(user => {
+            if (user) {
+                return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
+            } else {
+                database.models.User.create({
+                    username: username,
+                    password: authService.generateHash(password),
+                    uuid: uuid.v4()
+                }).then(user => {                
+                    return done(null, user);
+                });
+            }
+        })
     }
 }

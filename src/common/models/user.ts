@@ -2,7 +2,7 @@ import * as SequelizeStatic from 'sequelize';
 
 export function user(db: SequelizeStatic.Sequelize)  {    
     let User = db.define<UserInstance, UserAttribute>('User', {
-        email: SequelizeStatic.STRING(255),
+        username: SequelizeStatic.STRING(255),
         password: SequelizeStatic.STRING(255),
         uuid: SequelizeStatic.STRING(36)
     }, {
@@ -13,7 +13,7 @@ export function user(db: SequelizeStatic.Sequelize)  {
 }
 
 export interface UserAttribute {
-    email: string;
+    username: string;
     password: string;
     uuid: string;
 }
