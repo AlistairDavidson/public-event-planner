@@ -36,7 +36,7 @@ export default class LoginController {
     @POST('/signup')
     async signupPost(req: express.Request, res: express.Response) {
         console.log('signup', req.body);
-        passport.authenticate('local')(req, res, function () {
+        passport.authenticate('local-signup')(req, res, function () {
             res.redirect('/profile');
         }); 
     } 
