@@ -66,7 +66,9 @@ export function Auth(requirements: string[]) {
  */
 export function GET(url: string) {
     return function RecieveGet(target: Object, propertyKey: string, descriptor: ControllerMethod) {
-        routes.push((app: express.Application) =>
+        routes.push((app: express.Application) => {
+            console.log('initing get for ', url, descriptor.value);
+
             app.get(
                 url,
                 async function(req, res) {
