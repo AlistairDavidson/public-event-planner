@@ -35,7 +35,7 @@ export default function(passport: passport.Passport) {
         console.log('Create User', req, username, password, done)
          database.models.User.findOne({
             where: {
-                email:  username
+                username:  username
             }
         }).then(user => {
             if (user) {
