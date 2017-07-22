@@ -66,6 +66,8 @@ passport.use('local-login', new LocalStrategy({
                 username: username
             }
         }).then((user) => {
+            console.log('found user')
+
             // if no user is found, return the message
             if (!user) {
                 return done(null, false, req.flash('loginMessage', 'No user found.')); // req.flash is the way to set flashdata using connect-flash

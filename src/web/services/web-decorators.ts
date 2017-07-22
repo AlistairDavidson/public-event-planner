@@ -71,9 +71,8 @@ export function GET(url: string) {
                 url,
                 async function(req, res) {
                     try {
-                        console.log('GET', url);
                         let data = await descriptor.value.apply(this, arguments);
-                        console.log('GOT', data);
+                        console.log('GET', url, data);
                         if(!res.headersSent) {
                             res.json(data);
                         }
@@ -94,7 +93,7 @@ export function POST(url: string) {
         routes.push((app: express.Application) =>
             app.post(
                 url,
-                async function(req, res) {
+                async  function(req, res) {
                    try {
                         let data = await descriptor.value.apply(this, arguments);
                         console.log('POST', url, data);

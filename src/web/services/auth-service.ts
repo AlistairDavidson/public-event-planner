@@ -14,6 +14,7 @@ export class AuthService {
     }
 
     validPassword(user: UserInstance, password: string) {
+        console.log('validating', user.get('username'), password);
         return bcrypt.compareSync(password, user.get('password'));
     }  
 
