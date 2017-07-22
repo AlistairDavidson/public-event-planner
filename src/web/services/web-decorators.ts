@@ -24,8 +24,8 @@ export function Auth(requirements: string[]) {
         // TODO stuff
         descriptor.value = function(req: express.Request, res: express.Response) {  
             console.log('request in auth')
-            try {      
-                passport.authenticate('local')(req, res, () => {
+            try {
+                passport.authenticate('local', (req: express.Request, res: express.Response) => {
                     let args = _.toArray(arguments);
                     console.log('doing authorise'); 
                     return doAuthorise(req, res, requirements, originalMethod, args)

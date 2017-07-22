@@ -71,14 +71,10 @@ passport.use('local-login', new LocalStrategy({
                 username: username
             }
         }).then((user) => {
-            console.log('found user')
-            
-            if (!user) {
-                return done(null, false, req.flash('loginMessage', 'No user found.'));
-            }
+            console.log('found user')            
                          
-            if (!authService.validPassword(user, password)) {
-                return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.'));
+            if (!authService.validPassword(user, password) || !user) {
+                return done(null, false, req.flash('loginMessage', 'Username or password incorrect'));
             }
 
             return done(null, user);
