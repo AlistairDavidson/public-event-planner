@@ -2,13 +2,15 @@ import authService from './auth-service';
 import * as express from 'express';
 import * as _ from 'lodash';
 
+import { UserInstance } from '../../common/models/user';
+
 let routes: Function[] = [];
 
 export function initDecorators(app: express.Application) {
    routes.forEach((route) => route(app));
 }
 
-type ControllerMethod = TypedPropertyDescriptor<(req: express.Request, res: express.Response, next: Function, roleId?: string, authorization?: string, permissions?: any) => any>;
+type ControllerMethod = TypedPropertyDescriptor<(req: express.Request, res: express.Response, next?: Function, user?: UserInstance, permissions?: any) => any>;
 
 /**
  * Decorator, requires a user to have the supplied permissions to access the decorated method.
@@ -17,45 +19,20 @@ export function Auth(requirements: string[]) {
     return function Authorise(target: Object, propertyKey: string, descriptor: ControllerMethod) {
         const originalMethod = descriptor.value;
         // TODO stuff
-       /* descriptor.value = async function(req: express.Request, res: express.Response) {  
+        descriptor.value = async function(req: express.Request, res: express.Response) {  
             try {                
-                let authorization = req.header('Authorization');
-
-                if(!authorization) {
-                    throw {
-                        status: 401,
-                        code: 'NOT_PERMITTED',
-                        message: 'Not authorised - no authorization header'
-                    };
-                }
-
-                let roleId = req.query.roleId || req.body.roleId;
-
-                if(!roleId) {
-                    throw {
-                        status: 403,
-                        code: 'NOT_PERMITTED',
-                        message: 'Not authorised - no role'
-                    };
-                }
-
-                let permissions = await authService.authorize(
-                        authorization,
-                        roleId,
-                        requirements
-                    );
+                let permissions = await authService.authorize(req.user, requirements);
 
                 let args = _.toArray(arguments);
 
-                args.push(roleId);
-                args.push(authorization);
+                args.push(req.user);
                 args.push(permissions);
 
                 return await originalMethod.apply(this, args);
             } catch(e) {
                 handleError(req, res, e);
             }        
-        };*/
+        };
 
         return descriptor;
     }

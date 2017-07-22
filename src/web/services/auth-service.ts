@@ -18,14 +18,14 @@ export class AuthService {
         return bcrypt.compareSync(password, user.get('password'));
     }  
 
-   /* async authorize(authorization: string, role: string, requirements: string[]) {     
+   async authorize(user: UserInstance, requirements: string[]) {     
         console.log('Hit authorize');
 
-        let permissions = await this.permissions(authorization);
+    
+        let permissions = await this.permissions(user);
 
         // check if permissions contains one of requirements
-        let hasPermission = !!_(permissions.permissions_by_role_id[role])
-            .uniq()
+        let hasPermission = !!_(permissions)            
             .intersection(requirements)
             .value()
             .length;
@@ -42,18 +42,10 @@ export class AuthService {
         return permissions;
     }
 
-    async permissions(authorization: string) {
-        var options = {
-            uri: `${process.env.MEMBER_API_URL}/auth/permissions`,
-            headers: {
-                'Authorization': authorization
-            }
-        };
-
-        let response = await request(options);
-                    
-        return JSON.parse(response).permissions;
-    }*/
+    async permissions(user: UserInstance) {
+        let permissions = await user.getPermissions();
+        return permissions.map(permission => permission.name);
+    }
 }
 
 export default new AuthService();

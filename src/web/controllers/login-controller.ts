@@ -40,6 +40,7 @@ export default class LoginController {
     }
 
     @GET('/profile')    
+    @Auth(['view_profile'])    
     async profile(req: express.Request, res: express.Response) {
         res.render('profile.ejs', { user: req.user.get() }); 
     }
