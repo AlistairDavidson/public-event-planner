@@ -25,7 +25,7 @@ export class WebServer {
 	
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({ extended: true }));
-        this.app.use(cookieParser);
+        this.app.use(cookieParser());
         //this.app.use(fileupload());
 
         //this.app.use(session({ secret: 'V[|.7jC*xE76+z=4bsF8!Jcgj]pu' }));
