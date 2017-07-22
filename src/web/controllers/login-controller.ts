@@ -21,7 +21,6 @@ export default class LoginController {
         res.render('signup.ejs', { message: req.flash('signupMessage') }); 
     }
 
-
     @GET('/logout')    
     async logout(req: express.Request, res: express.Response) {
         req.logout();
@@ -30,7 +29,7 @@ export default class LoginController {
 
     @GET('/profile')    
     async profile(req: express.Request, res: express.Response) {
-        res.render('profile.ejs'); 
+        res.render('profile.ejs', { user: req.user.get() }); 
     }
     
     @POST('/signup')

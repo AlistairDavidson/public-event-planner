@@ -11,6 +11,7 @@ import * as passport from 'passport';
 let flash = require('connect-flash');
 let fileupload = require('express-fileupload');
 
+import configurePassport from './configure-passport';
 
 export class WebServer {
     app: express.Express;
@@ -32,8 +33,9 @@ export class WebServer {
         this.app.use(passport.session()); // persistent login sessions
         this.app.use(flash()); // use connect-flash for flash messages stored in session
 
+        configurePassport(passport);
         this.app.set('view engine', 'ejs');
-        
+
         // Enable cross origin requests
         this.app.use(function(req, res, next) {
             res.header("Access-Control-Allow-Origin", "*");
