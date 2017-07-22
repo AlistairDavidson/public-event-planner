@@ -12,7 +12,7 @@ export class Models {
 
     init() {
         this.User = user(database.db);
-    }
+    } // test
 }
 
 let models = new Models();
