@@ -13,6 +13,7 @@ export default class LoginController {
 
     @GET('/login')    
     async login(req: express.Request, res: express.Response) {
+        console.log('Hi');
         res.render('login.ejs', { message: req.flash('loginMessage') }); 
     }
 
