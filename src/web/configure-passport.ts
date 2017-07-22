@@ -29,6 +29,7 @@ export default function(passport: passport.Passport) {
         passwordField : 'password',
         passReqToCallback : true
     }, async (req: express.Request, email: string, password: string, done: Function) => {
+        console.log('local-signup')
         process.nextTick(() => createUser(req, email, password, done));
     }));
 
