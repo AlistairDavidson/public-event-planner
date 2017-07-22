@@ -24,28 +24,29 @@ export class WebServer {
         console.log('Inited app', this.app)
     
         // Enable cross origin requests
-        this.app.use(function(req, res, next) {
+      /*  this.app.use(function(req, res, next) {
             res.header("Access-Control-Allow-Origin", "*");
             res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
             next();
-        });        
+        });        */
+
+        configurePassport(passport);
         
-        this.app.use(bodyParser.json());
-        this.app.use(bodyParser.urlencoded({ extended: true }));
         this.app.use(cookieParser());
+        this.app.use(bodyParser.urlencoded({ extended: true }));
+        this.app.use(bodyParser.json());
+        this.app.use(bodyParser());
         //this.app.use(fileupload());
 
+
+        this.app.set('view engine', 'ejs');
+
         this.app.use(session({ secret: 'V[|.7jC*xE76+z=4bsF8!Jcgj]pu' }));
-        configurePassport(passport);
-        this.app.use(passport.initialize());
-
-
         
-
+        this.app.use(passport.initialize());
         this.app.use(passport.session()); // persistent login sessions
         this.app.use(flash()); // use connect-flash for flash messages stored in session
 
-        this.app.set('view engine', 'ejs');
 
         console.log('Initing decorators')
         initDecorators(this.app);
