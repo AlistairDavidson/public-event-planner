@@ -6,7 +6,7 @@ export function user(db: SequelizeStatic.Sequelize)  {
         password: SequelizeStatic.STRING(255),
         uuid: SequelizeStatic.STRING(36)
     }, {
-        schema: 'snp'
+        schema: 'eventplanner'
     });
 
 
