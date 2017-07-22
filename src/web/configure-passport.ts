@@ -9,12 +9,16 @@ import { UserInstance } from '../common/models/user';
 import authService from './services/auth-service';
 
 export default function(passport: passport.Passport) {  
-    passport.serializeUser((user: UserInstance, done: Function) => {
+    passport.serializeUser((user: UserInstance, done: Function) => serializeUser(user, done));
+
+    function serializeUser(user: UserInstance, done: Function) {
         done(null, user.get('uuid'));
-    });
+    }
 
     // used to deserialize the user
-    passport.deserializeUser(async(uuid: string, done: Function) => {
+    passport.deserializeUser((uuid: string, done: Function) => deserializeUser(uuid, done));
+
+    async function deserializeUser(uuid: string, done: Function) {
         let user = await database.models.User.findOne({
             where: {
                 uuid: uuid
@@ -22,7 +26,7 @@ export default function(passport: passport.Passport) {
         });
         
         done(null, user);
-    });
+    }
 
     passport.use('local-signup', new LocalStrategy({      
         passReqToCallback : true
@@ -75,4 +79,28 @@ passport.use('local-login', new LocalStrategy({
             return done(null, user);
         });
 }));
+
+passport.use(new LocalStrategy({
+    passReqToCallback : true
+},
+    function(req: express.Request, username: string, password: string, done: Function) {        
+        database.models.User.findOne({
+            where: {
+                username: username
+            }
+        }).then((user) => {
+            console.log('found user')
+            
+            if (!user) {
+                return done(null, false, req.flash('loginMessage', 'No user found.'));
+            }
+                         
+            if (!authService.validPassword(user, password)) {
+                return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.'));
+            }
+
+            return done(null, user);
+        });
+}));
+
 
