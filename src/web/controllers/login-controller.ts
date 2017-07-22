@@ -7,9 +7,8 @@ export default class LoginController {
     }
 
     @GET('/')    
-    async index(req: express.Request, res: express.Response) {
-        res.json({ hi: 'hi' })
-        //res.render('index.ejs'); 
+    async index(req: express.Request, res: express.Response) {        
+        res.render('index.ejs'); 
     }
 
     @GET('/login')    

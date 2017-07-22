@@ -28,12 +28,12 @@ export class WebServer {
         this.app.use(cookieParser());
         //this.app.use(fileupload());
 
-        //this.app.use(session({ secret: 'V[|.7jC*xE76+z=4bsF8!Jcgj]pu' }));
-      //  this.app.use(passport.initialize());
-       // this.app.use(passport.session()); // persistent login sessions
-       // this.app.use(flash()); // use connect-flash for flash messages stored in session
+        this.app.use(session({ secret: 'V[|.7jC*xE76+z=4bsF8!Jcgj]pu' }));
+        this.app.use(passport.initialize());
+        this.app.use(passport.session()); // persistent login sessions
+        this.app.use(flash()); // use connect-flash for flash messages stored in session
 
-        //configurePassport(passport);
+        configurePassport(passport);
         this.app.set('view engine', 'ejs');
 
         // Enable cross origin requests
