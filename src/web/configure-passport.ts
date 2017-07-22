@@ -12,6 +12,8 @@ export default function(passport: passport.Passport) {
     passport.serializeUser((user: UserInstance, done: Function) => serializeUser(user, done));
 
     function serializeUser(user: UserInstance, done: Function) {
+        console.log('serialising user', user.get('uuid'));
+
         done(null, user.get('uuid'));
     }
 
@@ -19,11 +21,14 @@ export default function(passport: passport.Passport) {
     passport.deserializeUser((uuid: string, done: Function) => deserializeUser(uuid, done));
 
     async function deserializeUser(uuid: string, done: Function) {
+        
         let user = await database.models.User.findOne({
             where: {
                 uuid: uuid
             }
         });
+    
+        console.log('deserialising user', uuid, user);
         
         done(null, user);
     }
@@ -80,7 +85,7 @@ passport.use('local-login', new LocalStrategy({
         });
 }));
 
-passport.use(new LocalStrategy({
+passport.use('local', new LocalStrategy({
     passReqToCallback : true
 },
     function(req: express.Request, username: string, password: string, done: Function) {        
