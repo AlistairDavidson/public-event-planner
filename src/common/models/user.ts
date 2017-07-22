@@ -9,7 +9,6 @@ export function user(db: SequelizeStatic.Sequelize)  {
         schema: 'eventplanner'
     });
 
-
     return User;    
 }
 

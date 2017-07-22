@@ -16,7 +16,7 @@ type ControllerMethod = TypedPropertyDescriptor<(req: express.Request, res: expr
 export function Auth(requirements: string[]) {
     return function Authorise(target: Object, propertyKey: string, descriptor: ControllerMethod) {
         const originalMethod = descriptor.value;
-        
+        // TODO stuff
        /* descriptor.value = async function(req: express.Request, res: express.Response) {  
             try {                
                 let authorization = req.header('Authorization');
