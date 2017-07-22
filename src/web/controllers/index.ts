@@ -6,6 +6,6 @@ export default class Controllers {
     loginController: LoginController;
 
     constructor(public app: express.Express) {
-        this.loginController = new LoginController();
+        this.loginController = new LoginController(app);
     }    
 }
