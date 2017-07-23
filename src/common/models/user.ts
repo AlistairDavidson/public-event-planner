@@ -11,8 +11,7 @@ export function user(db: SequelizeStatic.Sequelize, Permission: PermissionModel)
     });
 
     Permission.belongsToMany(User, { through: 'UserPermission' });
-    User.belongsToMany(Permission, { through: 'UserPermission' });
-
+ 
     return User;    
 }
 
