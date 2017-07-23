@@ -21,10 +21,6 @@ export interface PermissionAttribute {
     name: string;
 }
 
-export interface PermissionInstance extends SequelizeStatic.Instance<PermissionAttribute>, PermissionAttribute {
-    getUser: SequelizeStatic.BelongsToGetAssociationMixin<UserInstance>;
-    setUser: SequelizeStatic.BelongsToSetAssociationMixin<UserInstance, string>;
-    createUser: SequelizeStatic.BelongsToCreateAssociationMixin<UserInstance>;
-}
+export interface PermissionInstance extends SequelizeStatic.Instance<PermissionAttribute>, PermissionAttribute {}
 
 export interface PermissionModel extends SequelizeStatic.Model<PermissionInstance, PermissionAttribute> {}

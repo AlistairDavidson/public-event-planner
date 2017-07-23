@@ -10,8 +10,8 @@ export function user(db: SequelizeStatic.Sequelize, Permission: PermissionModel)
         schema: 'eventplanner'
     });
 
-    Permission.belongsTo(User);
-    User.hasMany(Permission);
+    Permission.belongsToMany(User, { through: 'UserPermission' });
+    User.belongsToMany(Permission, { through: 'UserPermission' });
 
     return User;    
 }
