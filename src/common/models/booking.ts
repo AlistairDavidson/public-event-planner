@@ -7,8 +7,8 @@ import { ActApplicationModel, ActApplicationInstance, ActApplicationAttribute, A
 export function booking(db: SequelizeStatic.Sequelize, BookingStatus: BookingStatusModel, ActApplication: ActApplicationModel)  {    
     let Booking = db.define<BookingInstance, BookingAttribute>('Booking', {
         tech_specs: SequelizeStatic.TEXT,
-        size_of_act: SequelizeStatic.NUMBER,
-        size_of_party: SequelizeStatic.NUMBER
+        size_of_act: SequelizeStatic.INTEGER,
+        size_of_party: SequelizeStatic.INTEGER
         // budget
         // advertising priority
     }, {
