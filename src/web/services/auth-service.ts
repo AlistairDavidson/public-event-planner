@@ -42,7 +42,7 @@ export class AuthService {
             process.nextTick(() => createUser(req, username, password, done));
         }));
 
-        async function createUser(req: express.Request, username: string, password: string, done: Function) {
+        let createUser = async (req: express.Request, username: string, password: string, done: Function) => {
             console.log('Create User', username, password);
 
             let user = await database.models.User.findOne({
@@ -75,7 +75,7 @@ export class AuthService {
         passport.use('local-login', new LocalStrategy({
             passReqToCallback : true
         },
-            function(req: express.Request, username: string, password: string, done: Function) {        
+            (req: express.Request, username: string, password: string, done: Function) => {        
                 database.models.User.findOne({
                     where: {
                         username: username
@@ -94,7 +94,7 @@ export class AuthService {
         passport.use(new LocalStrategy({
             passReqToCallback : true
         },
-            function(req: express.Request, username: string, password: string, done: Function) {        
+            (req: express.Request, username: string, password: string, done: Function) => {        
                 database.models.User.findOne({
                     where: {
                         username: username
