@@ -5,9 +5,9 @@
   "main": "dist/web.js",
   "scripts": {
     "start": "nf start",
-    "postinstall": "npm run-script ng-build && tsc -p ./src/web --outDir dist",
+    "postinstall": "tsc -p ./src/web --outDir dist",
     "createdb": "ts-node src/scripts/create-db.ts",
-    "test": "(cd src/web; karma start)",
+    "test": "(cd src/web; karma start)",   
     "ng-build": "npm run-script dev:build && npm run-script uglify",
     "ng-watch": "npm run-script copy:watch & npm run-script sass:watch & npm run-script template:watch & npm run-script tsc:watch",
     "pre-e2e-test": "webdriver-manager start",

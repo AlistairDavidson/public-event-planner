@@ -8,7 +8,7 @@ export function act(db: SequelizeStatic.Sequelize, Booking: BookingModel, Contac
     let Act = db.define<ActInstance, ActAttribute>('Act', {
         name: SequelizeStatic.STRING(255),
         bio: SequelizeStatic.TEXT,
-        size: SequelizeStatic.NUMBER,
+        size: SequelizeStatic.INTEGER,
         tech_specs: SequelizeStatic.TEXT
     }, {
         schema: 'eventplanner'

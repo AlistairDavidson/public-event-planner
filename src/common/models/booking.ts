@@ -15,10 +15,10 @@ export function booking(db: SequelizeStatic.Sequelize, BookingStatus: BookingSta
         schema: 'eventplanner'
     });
     
-   // Booking.belongsTo(BookingStatus);
+    Booking.belongsTo(BookingStatus);
 
-    //Booking.hasOne(ActApplication);
-    //ActApplication.belongsTo(Booking);
+    Booking.hasOne(ActApplication);
+    ActApplication.belongsTo(Booking);
 
     // todos
 
