@@ -18,7 +18,7 @@ module('event-planner', [ 'event-planner.components', 'ui.router', 'ngCookies' ]
                 template: `<home></home>`
             })
     }])
-    .controller('votePlan', () => {});
+    .controller('eventPlanner', () => {});
 
 element(document).ready(() => { 
     bootstrap(document, ['event-planner', 'templates']);

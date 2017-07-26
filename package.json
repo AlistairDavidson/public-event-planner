@@ -15,14 +15,14 @@
     "dev:build": "npm run-script copy && npm run-script sass:build && npm run-script template:build && npm run-script tsc:build",
     "tsc:build": "webpack --config src/ng/src/webpack.config.js",
     "tsc:watch": "webpack -w --config src/ng/src/webpack.config.js",
-    "template:build": "nghtml2js -p src -f 'src/components/**/*.html' -o dist/templates.js",
-    "sass:build": "node-sass src/ng/src/app.scss --source-map=true -o dist",
-    "sass:watch": "node-sass -w -r src/ng/src/app.scss --source-map=true -o dist",
-    "copy": "cp -r src/ng/static/* dist/",
+    "template:build": "nghtml2js -p src -f 'src/components/**/*.html' -o dist/static/templates.js",
+    "sass:build": "node-sass src/ng/src/app.scss --source-map=true -o dist/static",
+    "sass:watch": "node-sass -w -r src/ng/src/app.scss --source-map=true -o dist/static",
+    "copy": "cp -r src/ng/static/* dist/static/static",
     "copy:watch": "onchange 'static/*' -- npm run-script copy",
     "uglify": "npm run-script js:uglify && npm run-script css:uglify",
-    "js:uglify": "uglifyjs dist/event-planner.js -o dist/event-planner.$npm_package_version.min.js --compress --mangle",
-    "css:uglify": "uglifycss dist/app.css > dist/event-planner.$npm_package_version.min.css"
+    "js:uglify": "uglifyjs dist/static/event-planner.js -o dist/static/event-planner.$npm_package_version.min.js --compress --mangle",
+    "css:uglify": "uglifycss dist/static/app.css > dist/static/event-planner.$npm_package_version.min.css"
   },
   "engines": {
     "node": "7.10.1"

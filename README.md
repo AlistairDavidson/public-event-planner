@@ -6,8 +6,10 @@ Copyright (C) 2017 Alistair Davidson <alistair.l.davidson@gmail.com>
 
 TODO
 
-Get an angular front page up
-    Make a component
+Serve angular files statically
+Make an angular component
+Show component on home.ejs
+
 
 Build application management
     new application (also supplies sample form for use in websites)

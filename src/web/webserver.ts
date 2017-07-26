@@ -49,6 +49,7 @@ export class WebServer {
         this.app.use(passport.session()); // persistent login sessions
         this.app.use(flash()); // use connect-flash for flash messages stored in session
 
+        this.app.use(express.static('dist/static'))
 
         console.log('Initing decorators')
         initDecorators(this.app);
