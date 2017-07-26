@@ -25,7 +25,7 @@ export function Auth(requirements: string[]) {
         descriptor.value = (req: express.Request, res: express.Response) => {  
             console.log('request in auth')
             try {
-                if(req.isAuthenticated()) {                
+                if(req.isAuthenticated) {                
                     let args = _.toArray(arguments);
                     console.log('doing authorise'); 
                     return doAuthorise(req, res, requirements, originalMethod, args)
