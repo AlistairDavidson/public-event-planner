@@ -18,7 +18,13 @@ export function permission(db: SequelizeStatic.Sequelize)  {
 }
 
 export interface PermissionAttribute {
-    name: string;
+    id?: number;
+    createdAt?: Date;
+    updatedAt?: Date;
+    name?: string;
+}
+
+export interface PermissionDto extends PermissionAttribute {    
 }
 
 export interface PermissionInstance extends SequelizeStatic.Instance<PermissionAttribute>, PermissionAttribute {}

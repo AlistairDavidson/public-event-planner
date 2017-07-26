@@ -1,5 +1,5 @@
 import * as SequelizeStatic from 'sequelize';
-import { PermissionModel, PermissionAttribute } from './permission';
+import { PermissionModel, PermissionInstance } from './permission';
 
 export function user(db: SequelizeStatic.Sequelize, Permission: PermissionModel)  {    
     let User = db.define<UserInstance, UserAttribute>('User', {
@@ -17,22 +17,28 @@ export function user(db: SequelizeStatic.Sequelize, Permission: PermissionModel)
 }
 
 export interface UserAttribute {
-    username: string;
-    password: string;
-    uuid: string;
+    id?: number;
+    createdAt?: Date;
+    updatedAt?: Date;
+    username?: string;
+    password?: string;
+    uuid?: string;
 }
 
 export interface UserInstance extends SequelizeStatic.Instance<UserAttribute>, UserAttribute {
-    getPermissions: SequelizeStatic.HasManyGetAssociationsMixin<PermissionAttribute>;
-    setPermissions: SequelizeStatic.HasManySetAssociationsMixin<PermissionAttribute, string>;
-    addPermissions: SequelizeStatic.HasManyAddAssociationsMixin<PermissionAttribute, string>;
-    addPermission: SequelizeStatic.HasManyAddAssociationMixin<PermissionAttribute, string>;
-    createPermission: SequelizeStatic.HasManyCreateAssociationMixin<PermissionAttribute>;
-    removePermission: SequelizeStatic.HasManyRemoveAssociationMixin<PermissionAttribute, string>;
-    removePermissions: SequelizeStatic.HasManyRemoveAssociationsMixin<PermissionAttribute, string>;
-    hasPermission: SequelizeStatic.HasManyHasAssociationMixin<PermissionAttribute, string>;
-    hasPermissions: SequelizeStatic.HasManyHasAssociationsMixin<PermissionAttribute, string>;
+    getPermissions: SequelizeStatic.HasManyGetAssociationsMixin<PermissionInstance>;
+    setPermissions: SequelizeStatic.HasManySetAssociationsMixin<PermissionInstance, number>;
+    addPermissions: SequelizeStatic.HasManyAddAssociationsMixin<PermissionInstance, number>;
+    addPermission: SequelizeStatic.HasManyAddAssociationMixin<PermissionInstance, number>;
+    createPermission: SequelizeStatic.HasManyCreateAssociationMixin<PermissionInstance>;
+    removePermission: SequelizeStatic.HasManyRemoveAssociationMixin<PermissionInstance, number>;
+    removePermissions: SequelizeStatic.HasManyRemoveAssociationsMixin<PermissionInstance, number>;
+    hasPermission: SequelizeStatic.HasManyHasAssociationMixin<PermissionInstance, number>;
+    hasPermissions: SequelizeStatic.HasManyHasAssociationsMixin<PermissionInstance, number>;
     countPermissions: SequelizeStatic.HasManyCountAssociationsMixin;
+}
+
+export interface UserDto extends UserAttribute {    
 }
 
 export interface UserModel extends SequelizeStatic.Model<UserInstance, UserAttribute> {}

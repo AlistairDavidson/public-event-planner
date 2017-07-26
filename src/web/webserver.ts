@@ -11,7 +11,7 @@ import * as passport from 'passport';
 let flash = require('connect-flash');
 let fileupload = require('express-fileupload');
 
-import configurePassport from './configure-passport';
+import authService from './services/auth-service';
 
 export class WebServer {
     app: express.Express;
@@ -24,13 +24,13 @@ export class WebServer {
         console.log('Inited app', this.app)
     
         // Enable cross origin requests
-      /*  this.app.use(function(req, res, next) {
+        this.app.use(function(req, res, next) {
             res.header("Access-Control-Allow-Origin", "*");
             res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
             next();
-        });        */
+        });
 
-        configurePassport(passport);
+        authService.init(passport);
         
         this.app.use(cookieParser());
         this.app.use(bodyParser.urlencoded({ extended: true }));

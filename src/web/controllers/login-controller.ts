@@ -6,7 +6,7 @@ export default class LoginController {
     constructor(app: express.Application) {
         app.post('/login', passport.authenticate('local-login', {
             successRedirect : '/profile', // redirect to the secure profile section
-            failureRedirect : '/login', // redirect back to the signup page if there is an error
+            failureRedirect : '/login', // redirect back to the login page if there is an error
             failureFlash: true // allow flash messages
         }));
 
@@ -18,7 +18,7 @@ export default class LoginController {
     }
 
     @GET('/')    
-    async index(req: express.Request, res: express.Response) {        
+    async index(req: express.Request, res: express.Response) {
         res.render('index.ejs'); 
     }
 
