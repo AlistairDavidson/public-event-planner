@@ -11,12 +11,12 @@ module.exports = {
             "./node_modules/angular-cookies/angular-cookies.min.js",
             "./node_modules/@uirouter/angularjs/release/angular-ui-router.min.js",
             "./node_modules/angular-material/angular-material.min.js",
-            "./dist/templates.js",
+            "./dist/static/templates.js",
             "./src/ng/src/index.ts"
         ]
     },
     output: {
-        filename: "dist/event-planner.js"
+        filename: "dist/static/event-planner.js"
     },
     resolve: {
         // Add '.ts' and '.tsx' as a resolvable extension.
