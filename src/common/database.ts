@@ -20,7 +20,7 @@ export class Database {
         try {
             await this.db.authenticate()
             await models.init();
-            await this.db.sync();
+            await this.db.sync({ force: true });
         } catch(err) {
             console.log('Unable to connect to the database:', err);
         }    
