@@ -49,16 +49,16 @@ export class Models {
         this.Permission = permission(database.db);
         this.User = user(database.db, this.Permission);
 
-        this.ActContact = actContact(database.db);
-        this.ContactDetail = contactDetail(database.db);
-        this.Contact = contact(database.db, this.ActContact, this.ContactDetail);
+        //this.ActContact = actContact(database.db);
+        //this.ContactDetail = contactDetail(database.db);
+        //this.Contact = contact(database.db, this.ActContact, this.ContactDetail);
         this.BookingStatus = bookingStatus(database.db);
         this.ActApplication = actApplication(database.db);
         this.Booking = booking(database.db, this.BookingStatus, this.ActApplication);
-        this.Act = act(database.db, this.Booking, this.Contact, this.ActContact);
-        this.Location = location(database.db);
-        this.Event = event(database.db, this.Booking, this.Location, this.ActApplication);
-        this.Timeslot = timeslot(database.db, this.Act, this.Location);
+        //this.Act = act(database.db, this.Booking, this.Contact, this.ActContact);
+       // this.Location = location(database.db);
+        //this.Event = event(database.db, this.Booking, this.Location, this.ActApplication);
+        //this.Timeslot = timeslot(database.db, this.Act, this.Location);
     }
 }
 
