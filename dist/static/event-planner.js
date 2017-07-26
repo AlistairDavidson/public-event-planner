@@ -608,7 +608,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 template: "<home></home>"
             });
         }])
-        .controller('votePlan', function () { });
+        .controller('eventPlanner', function () { });
     angular_1.element(document).ready(function () {
         angular_1.bootstrap(document, ['event-planner', 'templates']);
     });
@@ -623,7 +623,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(0)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, angular_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    angular_1.module('event-planner.components', ['ngSanitize']);
+    angular_1.module('event-planner.components', ['ngMaterial']);
 }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 
