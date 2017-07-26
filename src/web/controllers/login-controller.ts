@@ -22,7 +22,7 @@ export default class LoginController {
         res.render('index.ejs'); 
     }
 
-    @GET('/')
+    @GET('/home')
     @Auth(['view_profile'])
     async home(req: express.Request, res: express.Response) {
         res.render('home.ejs'); 
