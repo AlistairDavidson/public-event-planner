@@ -17,7 +17,7 @@ export function booking(db: SequelizeStatic.Sequelize, BookingStatus: BookingSta
     
     Booking.belongsTo(BookingStatus);
 
-    Booking.hasMany(ActApplication);
+    Booking.hasOne(ActApplication);
     ActApplication.belongsTo(Booking);
 
     // todos

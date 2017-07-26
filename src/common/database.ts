@@ -10,89 +10,82 @@ export class Database {
         this.models = models;
     }
 
-    connect() {
+    async connect() {
         this.db = new SequelizeStatic(
             process.env.DATABASE_URL, {
                 native: true
             }
         );
+
         try {
-            return this.db
-                .authenticate()
-                .then(function(err) {
-                    console.log('Database connection has been established successfully.');
-                }, function (err) { 
-                    console.log('Unable to connect to the database:', err);
-                })
-                .then(() => models.init())            
-                .then(() => this.db.sync())
-                .then(() => {
-
-                    this.models.BookingStatus.findOrCreate({
-                        where: {
-                            name: 'Applied',
-                            order: 0
-                        }
-                    });
-
-                    this.models.BookingStatus.findOrCreate({
-                        where: {
-                            name: 'Target',
-                            order: 1
-                        }
-                    });
-
-                    this.models.BookingStatus.findOrCreate({
-                        where: {
-                            name: 'Contacted',
-                            order: 2
-                        }
-                    });
-
-                    this.models.BookingStatus.findOrCreate({
-                        where: {
-                            name: 'Negotiating',
-                            order: 3
-                        }
-                    });
-
-                    this.models.BookingStatus.findOrCreate({
-                        where: {
-                            name: 'Booked',
-                            order: 4
-                        }
-                    });
-
-                    this.models.BookingStatus.findOrCreate({
-                        where: {
-                            name: 'Scheduled',
-                            order: 5
-                        }
-                    });
-
-                    this.models.BookingStatus.findOrCreate({
-                        where: {
-                            name: 'Complete',
-                            order: 6
-                        }
-                    });
-
-                    this.models.BookingStatus.findOrCreate({
-                        where: {
-                            name: 'Declined',
-                            order: 7
-                        }
-                    });
-                });
-        } catch(e) {
-            console.error(e);
+            await this.db.authenticate()
+        } catch(err) {
+            console.log('Unable to connect to the database:', err);
         }
+        
+        await models.init();
+        await this.db.sync();
+            
+        await this.models.BookingStatus.findOrCreate({
+            where: {
+                name: 'Applied',
+                order: 0
+            }
+        });
+
+        await this.models.BookingStatus.findOrCreate({
+            where: {
+                name: 'Target',
+                order: 1
+            }
+        });
+
+        await this.models.BookingStatus.findOrCreate({
+            where: {
+                name: 'Contacted',
+                order: 2
+            }
+        });
+
+        await this.models.BookingStatus.findOrCreate({
+            where: {
+                name: 'Negotiating',
+                order: 3
+            }
+        });
+
+        await this.models.BookingStatus.findOrCreate({
+            where: {
+                name: 'Booked',
+                order: 4
+            }
+        });
+
+        await this.models.BookingStatus.findOrCreate({
+            where: {
+                name: 'Scheduled',
+                order: 5
+            }
+        });
+
+        await this.models.BookingStatus.findOrCreate({
+            where: {
+                name: 'Complete',
+                order: 6
+            }
+        });
+
+        await this.models.BookingStatus.findOrCreate({
+            where: {
+                name: 'Declined',
+                order: 7
+            }
+        });         
     }
 
     create() {
         return this.db.sync({ force: true })
-            .then(function(err) {
-                
+            .then(function(err) {           
                 console.log('Database created!');
             }, function (err) { 
                 console.log('An error occurred while creating the table:', err);
