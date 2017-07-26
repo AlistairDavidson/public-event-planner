@@ -79,7 +79,14 @@ export class Database {
                 name: 'Declined',
                 order: 7
             }
-        });         
+        });      
+        
+        
+        await this.models.Permission.findOrCreate({
+            where: {
+                name: 'view_profile'
+            }
+        });
     }
 
     create() {

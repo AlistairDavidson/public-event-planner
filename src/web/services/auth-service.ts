@@ -43,7 +43,7 @@ export class AuthService {
         }));
 
         async function createUser(req: express.Request, username: string, password: string, done: Function) {
-            console.log('Create User', req, username, password, done);
+            console.log('Create User', username, password);
 
             let user = await database.models.User.findOne({
                 where: {
@@ -102,14 +102,9 @@ export class AuthService {
                 }).then((user) => {
                     console.log('found user')
                     
-                    if (!user) {
-                        return done(null, false, req.flash('loginMessage', 'No user found.'));
+                    if (!this.validPassword(user, password) || !user) {
+                        return done(null, false, req.flash('loginMessage', 'Username or password incorrect'));
                     }
-                                
-                    if (!this.validPassword(user, password)) {
-                        return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.'));
-                    }
-
                     return done(null, user);
                 });
         }));

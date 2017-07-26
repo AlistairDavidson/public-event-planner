@@ -8,12 +8,6 @@ export function permission(db: SequelizeStatic.Sequelize)  {
         schema: 'eventplanner'
     });
 
-    Permission.findOrCreate({
-        where: {
-            name: 'view_profile'
-        }
-    });
-
     return Permission;
 }
 
