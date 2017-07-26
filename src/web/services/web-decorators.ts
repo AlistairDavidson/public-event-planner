@@ -22,7 +22,7 @@ export function Auth(requirements: string[]) {
     return function Authorise(target: Object, propertyKey: string, descriptor: ControllerMethod) {
         const originalMethod = descriptor.value;
         // TODO stuff
-        descriptor.value = function(req: express.Request, res: express.Response) {  
+        descriptor.value = (req: express.Request, res: express.Response) => {  
             console.log('request in auth')
             try {
                 if(req.isAuthenticated()) {                
@@ -56,7 +56,7 @@ export function GET(url: string) {
         routes.push((app: express.Application) => {
             return app.get(
                 url,
-                async function(req, res) {
+                async (req, res) => {
                     try {
                         let data = await descriptor.value.apply(this, arguments);
                         console.log('GET', url, data);
@@ -80,7 +80,7 @@ export function POST(url: string) {
         routes.push((app: express.Application) =>
             app.post(
                 url,
-                async  function(req, res) {
+                async (req, res) => {
                    try {
                         let data = await descriptor.value.apply(this, arguments);
                         console.log('POST', url, data);
