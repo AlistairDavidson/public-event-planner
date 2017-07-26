@@ -71,3 +71,7 @@ Web sockets subscriptions on these services report changes on sub-objects too
     websocket/id
     websocket/list (if id = list...)
 
+
+
+
+Handle errors in auth better, redirect to /

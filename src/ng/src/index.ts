@@ -7,8 +7,6 @@ module('event-planner', [ 'event-planner.components', 'ui.router', 'ngCookies' ]
                  $urlRouterProvider: ng.ui.IUrlRouterProvider,
                  $locationProvider: ng.ILocationProvider) {
 
-        $locationProvider.html5Mode(true);
-
         $urlRouterProvider.otherwise('/');
 
         $stateProvider           

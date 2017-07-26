@@ -599,7 +599,6 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
     angular_1.module('event-planner', ['event-planner.components', 'ui.router', 'ngCookies'])
         .config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
         function ($stateProvider, $urlRouterProvider, $locationProvider) {
-            $locationProvider.html5Mode(true);
             $urlRouterProvider.otherwise('/');
             $stateProvider
                 .state({
