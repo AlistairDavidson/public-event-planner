@@ -12,6 +12,8 @@ import { UserInstance } from '../../common/models/user';
 
 export class AuthService {
     init(passport: passport.Passport) {
+        let self = this;
+
         passport.serializeUser((user: UserInstance, done: Function) => serializeUser(user, done));
 
         function serializeUser(user: UserInstance, done: Function) {
@@ -42,7 +44,7 @@ export class AuthService {
             process.nextTick(() => createUser(req, username, password, done));
         }));
 
-        let createUser = async (req: express.Request, username: string, password: string, done: Function) => {
+        async function createUser(req: express.Request, username: string, password: string, done: Function) {
             console.log('Create User', username, password);
 
             let user = await database.models.User.findOne({
@@ -56,7 +58,7 @@ export class AuthService {
             } else {
                 let user = await database.models.User.create({
                     username: username,
-                    password: this.generateHash(password),
+                    password: self.generateHash(password),
                     uuid: uuid.v4()
                 });
                 
@@ -75,7 +77,7 @@ export class AuthService {
         passport.use('local-login', new LocalStrategy({
             passReqToCallback : true
         },
-            (req: express.Request, username: string, password: string, done: Function) => {        
+            function(req: express.Request, username: string, password: string, done: Function) {        
                 database.models.User.findOne({
                     where: {
                         username: username
@@ -83,7 +85,7 @@ export class AuthService {
                 }).then((user) => {
                     console.log('found user')            
                                 
-                    if (!this.validPassword(user, password) || !user) {
+                    if (!self.validPassword(user, password) || !user) {
                         return done(null, false, req.flash('loginMessage', 'Username or password incorrect'));
                     }
 
@@ -94,7 +96,7 @@ export class AuthService {
         passport.use(new LocalStrategy({
             passReqToCallback : true
         },
-            (req: express.Request, username: string, password: string, done: Function) => {        
+            function(req: express.Request, username: string, password: string, done: Function) {        
                 database.models.User.findOne({
                     where: {
                         username: username
@@ -102,7 +104,7 @@ export class AuthService {
                 }).then((user) => {
                     console.log('found user')
                     
-                    if (!this.validPassword(user, password) || !user) {
+                    if (!self.validPassword(user, password) || !user) {
                         return done(null, false, req.flash('loginMessage', 'Username or password incorrect'));
                     }
                     return done(null, user);
