@@ -9,7 +9,7 @@ import contactService from './contact-service';
 export class ActApplicationService {
     async list(query: ListDto) {
         let result = await database.models.ActApplication.findAndCountAll({
-            order: [ `details.${query.field}`, query.order ],
+            order: [ `details ->> ${query.field}`, query.order ],
             offset: query.offset,
             limit: query.limit
         });
