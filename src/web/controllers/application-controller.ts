@@ -12,7 +12,7 @@ export default class ApplicationController {
     @GET('/api/application/list')
     @Auth(['view_application'])
     async list(req: express.Request, res: express.Response) {
-        let query = req.body as ListDto;
+        let query = req.query as ListDto;
         
         let result = await actApplicationService.list(query);
         
