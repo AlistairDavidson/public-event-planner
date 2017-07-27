@@ -51,7 +51,9 @@ export default class ApplicationController {
     @POST('/api/application/apply')  
     async apply(req: express.Request, res: express.Response) {
         let data = req.body as RawApplicationDto;
-        let application = await actApplicationService.save(data);
+        let application = await actApplicationService.save({
+            details: data 
+        });
         return { message: 'success' };
     }
 

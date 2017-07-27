@@ -678,7 +678,7 @@ minFrac:2,minInt:1,negPre:"-\u00a4",negSuf:"",posPre:"\u00a4",posSuf:""}]},id:"e
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(0), __webpack_require__(14)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, angular_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    angular_1.module('event-planner', ['event-planner.components', 'ui.router', 'ngCookies', 'templates', 'md.data.table'])
+    angular_1.module('event-planner', ['event-planner.services', 'event-planner.components', 'ui.router', 'ngCookies', 'templates', 'md.data.table'])
         .config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$mdIconProvider',
         function ($stateProvider, $urlRouterProvider, $locationProvider, $mdIconProvider) {
             $mdIconProvider
@@ -817,7 +817,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(0), __webpack_require__(13), __webpack_require__(12), __webpack_require__(11)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, angular_1, event_planner_app_1, applications_1, acts_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    angular_1.module('event-planner.components', ['ngMaterial'])
+    exports.default = angular_1.module('event-planner.components', ['ngMaterial'])
         .component('eventPlannerApp', event_planner_app_1.default)
         .component('applications', applications_1.default)
         .component('acts', acts_1.default);

@@ -1,7 +1,7 @@
 import { module, bootstrap, element } from 'angular';
 import './components';
 
-module('event-planner', [ 'event-planner.components', 'ui.router', 'ngCookies', 'templates', 'md.data.table' ])  
+module('event-planner', [ 'event-planner.services', 'event-planner.components', 'ui.router', 'ngCookies', 'templates', 'md.data.table' ])  
     .config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$mdIconProvider',
         function($stateProvider: ng.ui.IStateProvider,
                  $urlRouterProvider: ng.ui.IUrlRouterProvider,
