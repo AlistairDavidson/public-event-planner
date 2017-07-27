@@ -19,13 +19,6 @@ export interface ActApplicationAttribute {
     details?: RawApplicationDto;
 }
 
-export interface ActApplicationInstance extends SequelizeStatic.Instance<ActApplicationAttribute>, ActApplicationAttribute {
-    booking: BookingInstance;
-    createBooking: SequelizeStatic.BelongsToCreateAssociationMixin<BookingAttribute>;
-    getBooking: SequelizeStatic.BelongsToGetAssociationMixin<BookingInstance>;
-    setBooking: SequelizeStatic.BelongsToSetAssociationMixin<BookingInstance, number>;
-}
-
 export interface RawApplicationDto {
     name?: string;
     type?: string;
@@ -45,12 +38,13 @@ export interface RawApplicationDto {
     tech_specs?: string;
 }
 
-export interface ActApplicationDto extends ActApplicationAttribute {    
-}
+export interface ActApplicationDto extends ActApplicationAttribute {}
 
-export interface ActApplicationSuggestionsDto extends ActApplicationDto {
-    acts?: ActDto[];
-    booking?: BookingDto;
+export interface ActApplicationInstance extends SequelizeStatic.Instance<ActApplicationAttribute>, ActApplicationAttribute {
+    booking: BookingInstance;
+    createBooking: SequelizeStatic.BelongsToCreateAssociationMixin<BookingAttribute>;
+    getBooking: SequelizeStatic.BelongsToGetAssociationMixin<BookingInstance>;
+    setBooking: SequelizeStatic.BelongsToSetAssociationMixin<BookingInstance, number>;
 }
 
 export interface ActApplicationModel extends SequelizeStatic.Model<ActApplicationInstance, ActApplicationAttribute> {}

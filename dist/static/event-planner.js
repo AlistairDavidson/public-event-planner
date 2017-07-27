@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 11);
+/******/ 	return __webpack_require__(__webpack_require__.s = 14);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -84,7 +84,35 @@ module.exports = angular;
 angular
 	.module('templates', [])
 	.run(['$templateCache', function($templateCache) {
+		$templateCache.put('components/acts/acts.html', '');
 
+		$templateCache.put('components/applications/applications.html', '');
+
+		$templateCache.put('components/event-planner-app/event-planner-app.html', '<div layout="column" class="app-container" ng-cloak>\n' +
+			'  <md-toolbar md-scroll-shrink>\n' +
+			'    <div class="md-toolbar-tools">\n' +
+			'      <h3>\n' +
+			'        <span>Event Planner</span>\n' +
+			'      </h3>\n' +
+			'\n' +
+			'      <md-button ui-sref="home">\n' +
+			'        Home\n' +
+			'      </md-button>\n' +
+			'\n' +
+			'      <md-button ui-sref="applications">\n' +
+			'        Applications\n' +
+			'      </md-button>\n' +
+			'\n' +
+			'      <md-button ui-sref="acts">\n' +
+			'        Acts\n' +
+			'      </md-button>\n' +
+			'    </div>\n' +
+			'  </md-toolbar>\n' +
+			'\n' +
+			'  <md-content flex>\n' +
+			'    <ui-view></ui-view>\n' +
+			'  </md-content>\n' +
+			'</div>');
 	}
 ]);
 
@@ -593,18 +621,31 @@ minFrac:2,minInt:1,negPre:"-\u00a4",negSuf:"",posPre:"\u00a4",posSuf:""}]},id:"e
 /* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(0), __webpack_require__(10)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, angular_1) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(0), __webpack_require__(13)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, angular_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    angular_1.module('event-planner', ['event-planner.components', 'ui.router', 'ngCookies'])
-        .config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
-        function ($stateProvider, $urlRouterProvider, $locationProvider) {
+    angular_1.module('event-planner', ['event-planner.components', 'ui.router', 'ngCookies', 'templates'])
+        .config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$mdIconProvider',
+        function ($stateProvider, $urlRouterProvider, $locationProvider, $mdIconProvider) {
+            $mdIconProvider
+                .iconSet('community', 'mdi.svg');
+            $locationProvider.html5Mode(true);
             $urlRouterProvider.otherwise('/');
             $stateProvider
                 .state({
                 name: 'home',
                 url: '/',
-                template: "<home></home>"
+                template: "<dashboard>\n                                <md-progress-circular md-mode=\"indeterminate\" class=\"loading\"></md-progress-circular>\n                            </dashboard>"
+            })
+                .state({
+                name: 'applications',
+                url: '/applications',
+                template: "<applications>\n                                <md-progress-circular md-mode=\"indeterminate\" class=\"loading\"></md-progress-circular>\n                            </applications>"
+            })
+                .state({
+                name: 'acts',
+                url: '/acts',
+                template: "<acts>\n                                <md-progress-circular md-mode=\"indeterminate\" class=\"loading\"></md-progress-circular>\n                            </acts>"
             });
         }])
         .controller('eventPlanner', function () { });
@@ -619,16 +660,91 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 /* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(0)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, angular_1) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    angular_1.module('event-planner.components', ['ngMaterial']);
+    var ActsController = (function () {
+        function ActsController() {
+        }
+        ActsController.prototype.$onInit = function () {
+        };
+        return ActsController;
+    }());
+    var options = {
+        templateUrl: 'components/acts/acts.html',
+        controller: ActsController,
+        bindings: {}
+    };
+    exports.default = options;
 }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 
 
 /***/ }),
 /* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var ApplicationsController = (function () {
+        function ApplicationsController() {
+        }
+        ApplicationsController.prototype.$onInit = function () {
+        };
+        return ApplicationsController;
+    }());
+    var options = {
+        templateUrl: 'components/applications/applications.html',
+        controller: ApplicationsController,
+        bindings: {}
+    };
+    exports.default = options;
+}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var EventPlannerAppController = (function () {
+        function EventPlannerAppController() {
+        }
+        EventPlannerAppController.prototype.$onInit = function () {
+        };
+        return EventPlannerAppController;
+    }());
+    var options = {
+        templateUrl: 'components/event-planner-app/event-planner-app.html',
+        controller: EventPlannerAppController,
+        bindings: {}
+    };
+    exports.default = options;
+}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(0), __webpack_require__(12), __webpack_require__(11), __webpack_require__(10)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, angular_1, event_planner_app_1, applications_1, acts_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    angular_1.module('event-planner.components', ['ngMaterial'])
+        .component('eventPlannerApp', event_planner_app_1.default)
+        .component('applications', applications_1.default)
+        .component('acts', acts_1.default);
+}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ }),
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(8);

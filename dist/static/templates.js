@@ -5,6 +5,34 @@
 angular
 	.module('templates', [])
 	.run(['$templateCache', function($templateCache) {
+		$templateCache.put('components/acts/acts.html', '');
 
+		$templateCache.put('components/applications/applications.html', '');
+
+		$templateCache.put('components/event-planner-app/event-planner-app.html', '<div layout="column" class="app-container" ng-cloak>\n' +
+			'  <md-toolbar md-scroll-shrink>\n' +
+			'    <div class="md-toolbar-tools">\n' +
+			'      <h3>\n' +
+			'        <span>Event Planner</span>\n' +
+			'      </h3>\n' +
+			'\n' +
+			'      <md-button ui-sref="home">\n' +
+			'        Home\n' +
+			'      </md-button>\n' +
+			'\n' +
+			'      <md-button ui-sref="applications">\n' +
+			'        Applications\n' +
+			'      </md-button>\n' +
+			'\n' +
+			'      <md-button ui-sref="acts">\n' +
+			'        Acts\n' +
+			'      </md-button>\n' +
+			'    </div>\n' +
+			'  </md-toolbar>\n' +
+			'\n' +
+			'  <md-content flex>\n' +
+			'    <ui-view></ui-view>\n' +
+			'  </md-content>\n' +
+			'</div>');
 	}
 ]);

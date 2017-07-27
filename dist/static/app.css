@@ -13680,4 +13680,17 @@ md-toolbar {
   .hide-print:not(.show-print):not(.show) {
     display: none !important; } }
 
+div.app-container {
+  min-height: 90%; }
+
+div.app-container {
+  min-height: 90%; }
+
+div.app-container {
+  min-height: 90%; }
+
+.loading {
+  margin: auto;
+  top: 250px; }
+
 /*# sourceMappingURL=app.css.map */

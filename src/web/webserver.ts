@@ -40,7 +40,6 @@ export class WebServer {
         
         //this.app.use(fileupload());
 
-
         this.app.set('view engine', 'ejs');
 
         this.app.use(session({ secret: 'V[|.7jC*xE76+z=4bsF8!Jcgj]pu' }));
@@ -48,7 +47,7 @@ export class WebServer {
         this.app.use(passport.initialize());
         this.app.use(passport.session()); // persistent login sessions
         this.app.use(flash()); // use connect-flash for flash messages stored in session
-
+ 
         this.app.use(express.static('dist/static'))
 
         console.log('Initing decorators')
@@ -56,6 +55,8 @@ export class WebServer {
 
         console.log('Initing controllers')
         this.controllers = new Controllers(this.app);
+
+        this.app.get('/*', (req, res) => res.render('home.ejs'));
 
         this.server = this.app.listen(process.env.PORT || 8800, () => this.printURL());
     }
