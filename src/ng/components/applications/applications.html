@@ -1,50 +1,86 @@
-<md-table-container>
-    <!-- image
-    
-    
-    size_of_act
-    size_of_party
-    requested_fee
+<md-card>
+  <md-toolbar class="md-table-toolbar md-default" ng-hide="$ctrl.selectedApplications.length || $ctrl.filter.show">
+    <div class="md-toolbar-tools">
+      <h2 class="md-title">Applications</h2>
+      <div flex></div>
+      <md-button class="md-icon-button" ng-click="$ctrl.filter.show = true">
+        <md-icon>search</md-icon>
+      </md-button>
+      <md-button class="md-icon-button" ng-click="$ctrl.create($event)">
+        <md-icon>plus</md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
 
-    contact_name
-    email
-    phone
-    link
-    facebook
-    twitter
+  <md-toolbar class="md-table-toolbar md-default" ng-show="$ctrl.filter.show && !$ctrl.selectedApplications.length">
+    <div class="md-toolbar-tools">
+      <md-icon>search</md-icon>
+      <form flex name="$ctrl.form">
+        <input type="text" ng-model="$ctrl.query.filter" ng-model-options="$ctrl.filter.options" placeholder="search">
+      </form>
+      <md-button class="md-icon-button" ng-click="$ctrl.hideFilter()">
+        <md-icon>close</md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
 
-    party_names
-    bio
-    tech_specs-->
+  <md-toolbar class="md-table-toolbar alternate" ng-show="$ctrl.selectedApplications.length">
+    <div class="md-toolbar-tools" layout-align="space-between">
+      <div>{{$ctrl.selectedApplications.length.length}} {{$ctrl.selectedApplications.length.length > 1 ? 'items' : 'item'}} selected</div>
+      <md-button class="md-icon-button" ng-click="$ctrl.delete($event)">
+        <md-icon>delete</md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
 
-  <table md-table>
-    <thead md-head md-row-select multiple ng-model="$ctrl.selectedApplications" md-progress="$ctrl.loading" md-order="$ctrl.query.order" md-on-reorder="$ctrl.getApplicationsBound">
-      <tr md-row>
-        <th md-column md-order-by="name"><span>Name</span></th>
-        <th md-column md-order-by="type"><span>Type</span></th>
-        <th md-column md-order-by="town"><span>Town</span></th>
-        <th md-column md-order-by="size_of_party"><span>Size</span></th>
-        <th md-column md-order-by="requested_fee"><span>Fee Request</span></th>
-        <th md-column md-order-by="contact_name"><span>Contact</span></th>
-        <th md-column><span></span></th>
-      </tr>
-    </thead>
-    <tbody md-body>
-      <tr md-row md-select="application" md-select-id="id" md-auto-select ng-repeat="application in $ctrl.applications | orderBy: $ctrl.query.order">
-        <td md-cell>{{application.name}}</td>
-        <td md-cell>{{application.type}}</td>
-        <td md-cell>{{application.town}}</td>
-        <td md-cell>{{application.size_of_act}} / {{application.size_of_party}}</td>
-        <td md-cell>{{application.requested_fee}}</td>
-        <td md-cell>{{application.contact_name}}</td>
-        <td md-cell> 
-          <md-select ng-model="dessert.type" placeholder="Other">
-            <md-option ng-value="type" ng-repeat="type in getTypes()">{{type}}</md-option>
-          </md-select>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</md-table-container>
+  <md-table-container>
+      <!-- image
+      
+      
+      size_of_act
+      size_of_party
+      requested_fee
 
-<md-table-pagination md-limit="$ctrl.query.limit" md-page="$ctrl.query.page" md-total="{{$ctrl.applicationCount}}" md-on-paginate="$ctrl.getApplicationsBound" md-page-select></md-table-pagination>
+      contact_name
+      email
+      phone
+      link
+      facebook
+      twitter
+
+      party_names
+      bio
+      tech_specs-->
+
+    <table md-table>
+      <thead md-head md-row-select multiple ng-model="$ctrl.selectedApplications" md-progress="$ctrl.loading" md-order="$ctrl.query.order" md-on-reorder="$ctrl.getApplicationsBound">
+        <tr md-row>
+          <th md-column md-order-by="name"><span>Name</span></th>
+          <th md-column md-order-by="type"><span>Type</span></th>
+          <th md-column md-order-by="town"><span>Town</span></th>
+          <th md-column md-order-by="size_of_party"><span>Size</span></th>
+          <th md-column md-order-by="requested_fee"><span>Fee Request</span></th>
+          <th md-column md-order-by="contact_name"><span>Contact</span></th>
+          <th md-column><span></span></th>
+        </tr>
+      </thead>
+      <tbody md-body>
+        <tr md-row md-select="application" md-select-id="id" md-auto-select ng-repeat="application in $ctrl.applications | orderBy: $ctrl.query.order">
+          <td md-cell>{{application.name}}</td>
+          <td md-cell>{{application.type}}</td>
+          <td md-cell>{{application.town}}</td>
+          <td md-cell>{{application.size_of_act}} / {{application.size_of_party}}</td>
+          <td md-cell>{{application.requested_fee}}</td>
+          <td md-cell>{{application.contact_name}}</td>
+          <td md-cell> 
+            <md-select ng-model="dessert.type" placeholder="Other">
+              <md-option ng-value="type" ng-repeat="type in getTypes()">{{type}}</md-option>
+            </md-select>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </md-table-container>
+
+  <md-table-pagination md-limit="$ctrl.query.limit" md-page="$ctrl.query.page" md-total="{{$ctrl.applicationCount}}" md-on-paginate="$ctrl.getApplicationsBound" md-page-select></md-table-pagination>
+</md-card>

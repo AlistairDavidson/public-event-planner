@@ -21,12 +21,21 @@ export class ActApplicationService {
             limit: query.limit
         });
 
-
-        let result = await database.models.ActApplication.findAndCountAll({
+        let options: SequelizeStatic.FindOptions = {
             order: order,
             offset: query.offset,
-            limit: query.limit
-        });
+            limit: query.limit            
+        }
+
+        if(query.filter) {
+            options.where = {
+                'details::text' : {
+                    $like: `%${query.filter}%`
+                }
+            }
+        }
+
+        let result = await database.models.ActApplication.findAndCountAll();
 
         console.log(result);
 

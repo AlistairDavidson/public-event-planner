@@ -15,7 +15,8 @@ export function queryToRequest(query: MdSortDto) {
         field: field,
         order: order,
         offset: offset,
-        limit: query.limit
+        limit: query.limit,
+        filter: query.filter
     };
 
     return requestQuery;

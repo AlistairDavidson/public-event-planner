@@ -8,7 +8,8 @@ class ApplicationsController implements angular.IComponentController {
     query: MdSortDto = {
         order: 'name',
         limit: 100,
-        page: 1
+        page: 1,
+        filter: ''
     }
   
     count: number;
@@ -17,7 +18,13 @@ class ApplicationsController implements angular.IComponentController {
 
     loading: angular.IPromise<ActApplicationsDto>;
 
+    form: ng.IFormController;
+
     getApplicationsBound: Function;
+
+    filter: {
+        show: false
+    }
 
     constructor(private applicationService: ApplicationService) {
         this.getApplicationsBound = this.getApplications.bind(this);
@@ -47,6 +54,23 @@ class ApplicationsController implements angular.IComponentController {
             });
         
         return this.applications;
+    }
+
+    create() {
+
+    }
+
+    hideFilter() {
+        this.filter.show = false;
+        this.query.filter = '';
+        
+        if(this.form.$dirty) {
+            this.form.$setPristine();
+        }
+    }
+
+    delete() {
+
     }
 }
 
