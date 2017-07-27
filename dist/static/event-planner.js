@@ -817,7 +817,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(0), __webpack_require__(13), __webpack_require__(12), __webpack_require__(11)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, angular_1, event_planner_app_1, applications_1, acts_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.default = angular_1.module('event-planner.components', ['ngMaterial'])
+    exports.default = angular_1.module('event-planner.components', ['event-planner.services', 'ngMaterial'])
         .component('eventPlannerApp', event_planner_app_1.default)
         .component('applications', applications_1.default)
         .component('acts', acts_1.default);
@@ -877,7 +877,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
             field = field.slice(1);
             order = 'DESC';
         }
-        var offset = query.page * query.limit;
+        var offset = (query.page - 1) * query.limit;
         var requestQuery = {
             field: field,
             order: order,

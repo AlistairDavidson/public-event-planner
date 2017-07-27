@@ -34,7 +34,7 @@ class ApplicationsController implements angular.IComponentController {
                 return applicationsData;
             });            
     }
-
+    
     setApplicationsList(applicationsData: ActApplicationDto[]) {
         this.applications = applicationsData
             .map((applicationData) => {
