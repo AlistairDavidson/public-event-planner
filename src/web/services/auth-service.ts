@@ -70,6 +70,24 @@ export class AuthService {
                 
                 await user.addPermission(permission);
 
+                permission = await database.models.Permission.findOne({
+                    where: {
+                        name: 'view_application'
+                    }
+                });
+                
+                await user.addPermission(permission);
+
+                permission = await database.models.Permission.findOne({
+                    where: {
+                        name: 'edit_application'
+                    }
+                });
+                
+                await user.addPermission(permission);
+
+
+
                 return done(null, user);
             }    
         }
@@ -129,7 +147,7 @@ export class AuthService {
                 status: 403,
                 code: 'NOT_LOGGED_IN',
                 message: `User is not logged in`
-            }
+            }   
         }
         
         let permissions = await this.permissions(user);

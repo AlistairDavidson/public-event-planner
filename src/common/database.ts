@@ -87,6 +87,18 @@ export class Database {
                 name: 'view_profile'
             }
         });
+
+        await this.models.Permission.findOrCreate({
+            where: {
+                name: 'view_application'
+            }
+        });
+
+        await this.models.Permission.findOrCreate({
+            where: {
+                name: 'edit_application'
+            }
+        });
     }
 
     create() {
