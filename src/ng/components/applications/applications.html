@@ -20,7 +20,7 @@
   <table md-table>
     <thead md-head md-row-select multiple ng-model="$ctrl.selectedApplications" md-progress="$ctrl.loading" md-order="$ctrl.query.order" md-on-reorder="$ctrl.getApplicationsBound">
       <tr md-row>
-        <th md-column md-order-by="nameToLower"><span>Name</span></th>
+        <th md-column md-order-by="name"><span>Name</span></th>
         <th md-column md-order-by="type"><span>Type</span></th>
         <th md-column md-order-by="town"><span>Town</span></th>
         <th md-column md-numeric md-order-by="size_of_party"><span>Size</span></th>
