@@ -7,7 +7,36 @@ angular
 	.run(['$templateCache', function($templateCache) {
 		$templateCache.put('components/acts/acts.html', '');
 
-		$templateCache.put('components/applications/applications.html', '');
+		$templateCache.put('components/applications/applications.html', '<md-table-container>\n' +
+			'  <table md-table md-row-select multiple="multiple" ng-model="selected" md-progress="promise">\n' +
+			'    <thead md-head md-order="query.order" md-on-reorder="getDesserts">\n' +
+			'      <tr md-row>\n' +
+			'        <th md-column md-order-by="nameToLower"><span>Dessert (100g serving)</span></th>\n' +
+			'        <th md-column md-numeric md-order-by="calories.value"><span>Calories</span></th>\n' +
+			'        <th md-column md-numeric>Fat (g)</th>\n' +
+			'        <th md-column md-numeric>Carbs (g)</th>\n' +
+			'        <th md-column md-numeric>Protein (g)</th>\n' +
+			'        <th md-column md-numeric>Sodium (mg)</th>\n' +
+			'        <th md-column md-numeric>Calcium (%)</th>\n' +
+			'        <th md-column md-numeric>Iron (%)</th>\n' +
+			'      </tr>\n' +
+			'    </thead>\n' +
+			'    <tbody md-body>\n' +
+			'      <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="dessert in desserts.data">\n' +
+			'        <td md-cell>{{dessert.name}}</td>\n' +
+			'        <td md-cell>{{dessert.calories.value}}</td>\n' +
+			'        <td md-cell>{{dessert.fat.value | number: 1}}</td>\n' +
+			'        <td md-cell>{{dessert.carbs.value}}</td>\n' +
+			'        <td md-cell>{{dessert.protein.value | number: 1}}</td>\n' +
+			'        <td md-cell>{{dessert.sodium.value}}</td>\n' +
+			'        <td md-cell>{{dessert.calcium.value}}{{dessert.calcium.unit}}</td>\n' +
+			'        <td md-cell>{{dessert.iron.value}}{{dessert.iron.unit}}</td>\n' +
+			'      </tr>\n' +
+			'    </tbody>\n' +
+			'  </table>\n' +
+			'</md-table-container>\n' +
+			'\n' +
+			'<md-table-pagination md-limit="query.limit" md-limit-options="[5, 10, 15]" md-page="query.page" md-total="{{desserts.count}}" md-on-paginate="getDesserts" md-page-select></md-table-pagination>');
 
 		$templateCache.put('components/event-planner-app/event-planner-app.html', '<div layout="column" class="app-container" ng-cloak>\n' +
 			'  <md-toolbar md-scroll-shrink>\n' +
