@@ -30,7 +30,7 @@
       </tr>
     </thead>
     <tbody md-body>
-      <tr md-row md-select="application" md-select-id="id" md-auto-select ng-repeat="application in $ctrl.applications | orderBy $ctrl.query.order">
+      <tr md-row md-select="application" md-select-id="id" md-auto-select ng-repeat="application in $ctrl.applications | orderBy: $ctrl.query.order">
         <td md-cell>{{application.name}}</td>
         <td md-cell>{{application.type}}</td>
         <td md-cell>{{application.town}}</td>
