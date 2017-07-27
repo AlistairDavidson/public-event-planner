@@ -28,6 +28,8 @@ export class ActApplicationService {
             limit: query.limit
         });
 
+        console.log(result);
+
         return {
             applications: result.rows,
             count: result.count          

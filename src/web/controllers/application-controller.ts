@@ -15,10 +15,16 @@ export default class ApplicationController {
         let query = req.query as ListDto;
         
         let result = await actApplicationService.list(query);
-        
-        result.applications.map(application => application.toJSON());
 
-        return result;
+        console.log({
+             applications: result.applications.map(application => application.toJSON()),
+            count: result.count
+        })
+
+        return {
+            applications: result.applications.map(application => application.toJSON()),
+            count: result.count
+        };
     }
     
     @GET('/api/application/get')
