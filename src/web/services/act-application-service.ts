@@ -9,17 +9,21 @@ import contactService from './contact-service';
 
 export class ActApplicationService {
     async list(query: ListDto) {
-        let field = SequelizeStatic.json(`details.${query.field}`) as string;
+        if(query.order != 'ASC' && query.order != 'DESC') {
+            throw 'Bad request';
+        }
+
+        let order = SequelizeStatic.json(`details.${query.field} ${query.order}`) as string;
 
         console.log({
-            order: [ field, query.order ],
+            order: order,
             offset: query.offset,
             limit: query.limit
         });
 
 
         let result = await database.models.ActApplication.findAndCountAll({
-            order: [ field, query.order ],
+            order: order,
             offset: query.offset,
             limit: query.limit
         });
