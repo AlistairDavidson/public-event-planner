@@ -103,7 +103,7 @@ export class Database {
 
         /****
             TEST
-        */
+        ******/
 
         await this.models.ActApplication.findOrCreate({
             where: {
