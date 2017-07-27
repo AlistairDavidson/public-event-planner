@@ -87,35 +87,54 @@ angular
 		$templateCache.put('components/acts/acts.html', '');
 
 		$templateCache.put('components/applications/applications.html', '<md-table-container>\n' +
-			'  <table md-table md-row-select multiple="multiple" ng-model="selected" md-progress="promise">\n' +
-			'    <thead md-head md-order="query.order" md-on-reorder="getDesserts">\n' +
+			'    <!-- image\n' +
+			'    \n' +
+			'    \n' +
+			'    size_of_act\n' +
+			'    size_of_party\n' +
+			'    requested_fee\n' +
+			'\n' +
+			'    contact_name\n' +
+			'    email\n' +
+			'    phone\n' +
+			'    link\n' +
+			'    facebook\n' +
+			'    twitter\n' +
+			'\n' +
+			'    party_names\n' +
+			'    bio\n' +
+			'    tech_specs-->\n' +
+			'\n' +
+			'  <table md-table md-row-select multiple="multiple" ng-model="$ctrl.selectedRow" md-progress="$ctrl.loading">\n' +
+			'    <thead md-head md-order="$ctrl.query.order" md-on-reorder="$ctrl.getApplications">\n' +
 			'      <tr md-row>\n' +
-			'        <th md-column md-order-by="nameToLower"><span>Dessert (100g serving)</span></th>\n' +
-			'        <th md-column md-numeric md-order-by="calories.value"><span>Calories</span></th>\n' +
-			'        <th md-column md-numeric>Fat (g)</th>\n' +
-			'        <th md-column md-numeric>Carbs (g)</th>\n' +
-			'        <th md-column md-numeric>Protein (g)</th>\n' +
-			'        <th md-column md-numeric>Sodium (mg)</th>\n' +
-			'        <th md-column md-numeric>Calcium (%)</th>\n' +
-			'        <th md-column md-numeric>Iron (%)</th>\n' +
+			'        <th md-column md-order-by="nameToLower"><span>Name</span></th>\n' +
+			'        <th md-column md-order-by="type"><span>Type</span></th>\n' +
+			'        <th md-column md-order-by="type"><span>Town</span></th>\n' +
+			'        <th md-column md-numeric md-order-by="type"><span>Size</span></th>\n' +
+			'        <th md-column md-numeric md-order-by="type"><span>Fee Request</span></th>\n' +
+			'        <th md-column md-order-by="type"><span>Contact</span></th>\n' +
+			'        <th md-column><span></span></th>\n' +
 			'      </tr>\n' +
 			'    </thead>\n' +
 			'    <tbody md-body>\n' +
-			'      <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="dessert in desserts.data">\n' +
-			'        <td md-cell>{{dessert.name}}</td>\n' +
-			'        <td md-cell>{{dessert.calories.value}}</td>\n' +
-			'        <td md-cell>{{dessert.fat.value | number: 1}}</td>\n' +
-			'        <td md-cell>{{dessert.carbs.value}}</td>\n' +
-			'        <td md-cell>{{dessert.protein.value | number: 1}}</td>\n' +
-			'        <td md-cell>{{dessert.sodium.value}}</td>\n' +
-			'        <td md-cell>{{dessert.calcium.value}}{{dessert.calcium.unit}}</td>\n' +
-			'        <td md-cell>{{dessert.iron.value}}{{dessert.iron.unit}}</td>\n' +
+			'      <tr md-row md-select="application" md-select-id="id" md-auto-select ng-repeat="applications in $ctrl.applications">\n' +
+			'        <td md-cell>{{application.name}}</td>\n' +
+			'        <td md-cell>{{application.town}}</td>\n' +
+			'        <td md-cell>{{application.size_of_act}}/{{application.size_of_party}}</td>\n' +
+			'        <td md-cell>&pound;{{application.requested_fee}</td>\n' +
+			'        <td md-cell>{{application.contact_name}}</td>\n' +
+			'        <td md-cell> \n' +
+			'          <md-select ng-model="dessert.type" placeholder="Other">\n' +
+			'            <md-option ng-value="type" ng-repeat="type in getTypes()">{{type}}</md-option>\n' +
+			'          </md-select>\n' +
+			'        </td>\n' +
 			'      </tr>\n' +
 			'    </tbody>\n' +
 			'  </table>\n' +
 			'</md-table-container>\n' +
 			'\n' +
-			'<md-table-pagination md-limit="query.limit" md-limit-options="[5, 10, 15]" md-page="query.page" md-total="{{desserts.count}}" md-on-paginate="getDesserts" md-page-select></md-table-pagination>');
+			'<md-table-pagination md-limit="$ctrl.query.limit" md-page="$ctrl.query.page" md-total="{{$ctrl.applicationCount}}" md-on-paginate="$ctrl.getApplications" md-page-select></md-table-pagination>');
 
 		$templateCache.put('components/event-planner-app/event-planner-app.html', '<div layout="column" class="app-container" ng-cloak>\n' +
 			'  <md-toolbar md-scroll-shrink>\n' +
@@ -723,10 +742,38 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var ApplicationsController = (function () {
-        function ApplicationsController() {
+        function ApplicationsController(applicationService) {
+            this.applicationService = applicationService;
+            this.query = {
+                order: 'name',
+                limit: 100,
+                page: 1
+            };
         }
         ApplicationsController.prototype.$onInit = function () {
+            this.getApplications();
         };
+        ApplicationsController.prototype.getApplications = function () {
+            var _this = this;
+            return this.loading = this.applicationService.list(this.query)
+                .then(function (applicationsData) {
+                _this.setApplicationsList(applicationsData.applications);
+                _this.count = applicationsData.count;
+                return applicationsData;
+            });
+        };
+        ApplicationsController.prototype.setApplicationsList = function (applicationsData) {
+            this.applications = applicationsData
+                .map(function (applicationData) {
+                var details = applicationData.details;
+                details.id = applicationData.id;
+                details.createdAt = applicationData.createdAt;
+                details.updatedAt = applicationData.updatedAt;
+                return details;
+            });
+            return this.applications;
+        };
+        ApplicationsController.$inject = ['applicationService'];
         return ApplicationsController;
     }());
     var options = {

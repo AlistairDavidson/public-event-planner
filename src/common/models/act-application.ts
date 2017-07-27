@@ -40,6 +40,11 @@ export interface RawApplicationDto {
 
 export interface ActApplicationDto extends ActApplicationAttribute {}
 
+export interface ActApplicationsDto {
+    count: number;
+    applications: ActApplicationDto[];
+}
+
 export interface ActApplicationInstance extends SequelizeStatic.Instance<ActApplicationAttribute>, ActApplicationAttribute {
     booking: BookingInstance;
     createBooking: SequelizeStatic.BelongsToCreateAssociationMixin<BookingAttribute>;
