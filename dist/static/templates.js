@@ -41,6 +41,7 @@ angular
 			'    <tbody md-body>\n' +
 			'      <tr md-row md-select="application" md-select-id="id" md-auto-select ng-repeat="application in $ctrl.applications">\n' +
 			'        <td md-cell>{{application.name}}</td>\n' +
+			'        <td md-cell>{{application.type}}</td>\n' +
 			'        <td md-cell>{{application.town}}</td>\n' +
 			'        <td md-cell>{{application.size_of_act}}/{{application.size_of_party}}</td>\n' +
 			'        <td md-cell>{{application.requested_fee}}</td>\n' +
