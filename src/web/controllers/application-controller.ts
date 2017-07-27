@@ -10,7 +10,7 @@ export default class ApplicationController {
     }
 
     @GET('/api/application/list')
-    @Auth(['view_applications'])
+    @Auth(['view_application'])
     async list(req: express.Request, res: express.Response) {
         let query = req.body as ListDto;
         
@@ -22,7 +22,7 @@ export default class ApplicationController {
     }
     
     @GET('/api/application/get')
-    @Auth(['view_applications'])
+    @Auth(['view_application'])
     async get(req: express.Request, res: express.Response) {
         let id = req.query.id as number;
         let application = await actApplicationService.get(id);
@@ -30,7 +30,7 @@ export default class ApplicationController {
     }
     
     @POST('/api/application/save')
-    @Auth(['edit_applications'])
+    @Auth(['edit_application'])
     async save(req: express.Request, res: express.Response) {
         let id = req.body as ActApplicationDto;
         let application = await actApplicationService.save(id);
@@ -38,7 +38,7 @@ export default class ApplicationController {
     }
         
     @POST('/api/application/delete')
-    @Auth(['edit_applications'])
+    @Auth(['edit_application'])
     async delete(req: express.Request, res: express.Response) {
         let id = req.query.id as number;
         let application = await actApplicationService.delete(id);
