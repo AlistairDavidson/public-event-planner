@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 15);
+/******/ 	return __webpack_require__(__webpack_require__.s = 19);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -675,10 +675,10 @@ minFrac:2,minInt:1,negPre:"-\u00a4",negSuf:"",posPre:"\u00a4",posSuf:""}]},id:"e
 /* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(0), __webpack_require__(14)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, angular_1) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(0), __webpack_require__(17), __webpack_require__(14)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, angular_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    angular_1.module('event-planner', ['event-planner.services', 'event-planner.components', 'ui.router', 'ngCookies', 'templates', 'md.data.table'])
+    angular_1.module('event-planner', ['event-planner.components', 'event-planner.services', 'ui.router', 'ngCookies', 'templates', 'md.data.table'])
         .config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$mdIconProvider',
         function ($stateProvider, $urlRouterProvider, $locationProvider, $mdIconProvider) {
             $mdIconProvider
@@ -827,6 +827,99 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 /***/ }),
 /* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(16), __webpack_require__(18)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, helper_1, settings_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var ApplicationService = (function () {
+        function ApplicationService($http, $httpParamSerializer) {
+            this.$http = $http;
+            this.$httpParamSerializer = $httpParamSerializer;
+        }
+        ApplicationService.prototype.list = function (query) {
+            var listQuery = helper_1.queryToRequest(query);
+            var queryString = this.$httpParamSerializer(listQuery);
+            return this.$http.get(settings_1.default.api + "/application/list?" + queryString)
+                .then(function (response) { return response.data; });
+        };
+        ApplicationService.prototype.get = function (id) {
+            return this.$http.get(settings_1.default.api + "/application/get?id=" + id)
+                .then(function (response) { return response.data; });
+        };
+        ApplicationService.prototype.save = function (data) {
+            return this.$http.post(settings_1.default.api + "/application/save", data)
+                .then(function (response) { return response.data; });
+        };
+        ApplicationService.prototype.delete = function (data) {
+            return this.$http.post(settings_1.default.api + "/application/delete", { id: data.id })
+                .then(function (response) { return response.data; });
+        };
+        ApplicationService.$inject = ['$http', '$httpParamSerializer'];
+        return ApplicationService;
+    }());
+    exports.default = ApplicationService;
+}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    function queryToRequest(query) {
+        var field = query.order;
+        var order = 'ASC';
+        if (field[0] == '-') {
+            field = field.slice(1);
+            order = 'DESC';
+        }
+        var offset = query.page * query.limit;
+        var requestQuery = {
+            field: field,
+            order: order,
+            offset: offset,
+            limit: query.limit
+        };
+        return requestQuery;
+    }
+    exports.queryToRequest = queryToRequest;
+}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(0), __webpack_require__(15)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, angular_1, application_service_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.default = angular_1.module('event-planner.services', [])
+        .service('applicationService', application_service_1.default);
+}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.default = {
+        api: 'https://public-event-planner.herokuapp.com/api'
+    };
+}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ }),
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(9);
