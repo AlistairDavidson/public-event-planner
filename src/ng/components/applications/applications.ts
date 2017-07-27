@@ -26,7 +26,6 @@ class ApplicationsController implements angular.IComponentController {
     }
 
     getApplications() {
-
        return this.loading = this.applicationService.list(this.query)
             .then(applicationsData => {
                 this.setApplicationsList(applicationsData.applications);

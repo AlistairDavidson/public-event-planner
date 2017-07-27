@@ -18,7 +18,7 @@
     tech_specs-->
 
   <table md-table md-row-select multiple ng-model="selectedRow" md-progress="$ctrl.loading">
-    <thead md-head md-order="$ctrl.query.order" md-on-reorder="$ctrl.getApplications">
+    <thead md-head md-order="$ctrl.query.order" md-on-reorder="$ctrl.getApplications.bind($ctrl)">
       <tr md-row>
         <th md-column md-order-by="nameToLower"><span>Name</span></th>
         <th md-column md-order-by="type"><span>Type</span></th>
@@ -47,4 +47,4 @@
   </table>
 </md-table-container>
 
-<md-table-pagination md-limit="$ctrl.query.limit" md-page="$ctrl.query.page" md-total="{{$ctrl.applicationCount}}" md-on-paginate="$ctrl.getApplications" md-page-select></md-table-pagination>
+<md-table-pagination md-limit="$ctrl.query.limit" md-page="$ctrl.query.page" md-total="{{$ctrl.applicationCount}}" md-on-paginate="$ctrl.getApplications.bind($ctrl)" md-page-select></md-table-pagination>
