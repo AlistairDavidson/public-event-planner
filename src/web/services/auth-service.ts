@@ -124,8 +124,16 @@ export class AuthService {
    async authorize(user: UserInstance, requirements: string[]) {     
         console.log('Hit authorize');
 
+        if(!user) {
+            throw {
+                status: 403,
+                code: 'NOT_LOGGED_IN',
+                message: `User is not logged in`
+            }
+        }
+        
         let permissions = await this.permissions(user);
-
+   
         console.log('Got permissions', permissions);
 
         // check if permissions contains one of requirements
@@ -136,8 +144,8 @@ export class AuthService {
 
         if(!hasPermission) {
             throw {
-                status: 'NOT_PERMITTED',
-                code: 403,
+                status: 403,
+                code: 'NOT_PERMITTED',
                 message: `User has none of the permissions ${requirements}`
             }
         }

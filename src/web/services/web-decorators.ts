@@ -103,13 +103,13 @@ function handleError(req: express.Request, res: express.Response, e: any) {
     if(_.isArray(e)) {
         let errors = e.map((error: any) => {
             return {
-                errorCode: error.code || 'NOT_COMPLETED',
-                errorMessage: error.message || 'Unknown error',
-                statusCode: error.status || 500
+                status: error.status || 500,
+                code: error.code || 'NOT_COMPLETED',
+                message: error.message || 'Unknown error'
             }
         });
 
-        res.status(errors[0].statusCode)
+        res.status(errors[0].status)
             .json({
                 errors: errors
             });
@@ -119,26 +119,26 @@ function handleError(req: express.Request, res: express.Response, e: any) {
 
     // Process single error with default values
     let error = {
-        errorCode: 'NOT_COMPLETED',
-        errorMessage: '',
-        statusCode: 500
+        status: 500,
+        code: 'NOT_COMPLETED',
+        message: '',
     }
 
     if(e.status && e.status != '0') {
-        error.statusCode = e.status;
+        error.status = e.status;
     } 
 
-    res.status(error.statusCode);
+    res.status(error.status);
 
     if(e.message) {
-        error.errorMessage = e.message;
+        error.message = e.message;
     } else {
         // This case is for generic errors
-        error.errorMessage = e;
+        error.message = e;
     }
 
     if(e.code) {
-        error.statusCode = e.code;
+        error.code = e.code;
     }
     
     res.json({

@@ -72,3 +72,5 @@ Web sockets subscriptions on these services report changes on sub-objects too
 
 
 Handle errors in auth better, redirect to /
+
+application form should name event with hidden field
