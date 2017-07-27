@@ -4,10 +4,11 @@ import settings from '../settings';
 import { MdSortDto } from '../../common/types';
 
 export default class ApplicationService {
-    static $inject = ['$http', '$httpParamSerializer'];
+    static $inject = ['$http', '$httpParamSerializer', '$q'];
 
     constructor(private $http: ng.IHttpService,
-                private $httpParamSerializer: ng.IHttpParamSerializer) {
+                private $httpParamSerializer: ng.IHttpParamSerializer,
+                private $q: ng.IQService) {
 
     }
 
@@ -15,8 +16,8 @@ export default class ApplicationService {
         let listQuery = queryToRequest(query);
         let queryString = this.$httpParamSerializer(listQuery);
 
-        return this.$http.get(`${settings.api}/application/list?${queryString}`)
-            .then(response => (response.data as ActApplicationsDto));
+      return this.$http.get(`${settings.api}/application/list?${queryString}`)
+            .then(response => (response.data as ActApplicationsDto))
     }
 
     get(id: number) {

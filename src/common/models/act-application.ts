@@ -14,9 +14,11 @@ export function actApplication(db: SequelizeStatic.Sequelize)  {
 
 export interface ActApplicationAttribute {
     id?: number;
-    createdAt?: Date;
-    updatedAt?: Date;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
     details?: RawApplicationDto;
+    BookingId?: number;
+    EventId?: number;
 }
 
 export interface RawApplicationDto {
@@ -38,7 +40,10 @@ export interface RawApplicationDto {
     tech_specs?: string;
 }
 
-export interface ActApplicationDto extends ActApplicationAttribute {}
+export interface ActApplicationDto extends ActApplicationAttribute {
+    createdAt?: string;
+    updatedAt?: string;
+}
 
 export interface ActApplicationsDto {
     count: number;

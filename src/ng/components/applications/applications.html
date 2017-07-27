@@ -17,24 +17,24 @@
     bio
     tech_specs-->
 
-  <table md-table md-row-select multiple ng-model="$ctrl.selectedRow" md-progress="$ctrl.loading">
+  <table md-table md-row-select multiple ng-model="selectedRow" md-progress="$ctrl.loading">
     <thead md-head md-order="$ctrl.query.order" md-on-reorder="$ctrl.getApplications">
       <tr md-row>
         <th md-column md-order-by="nameToLower"><span>Name</span></th>
         <th md-column md-order-by="type"><span>Type</span></th>
-        <th md-column md-order-by="type"><span>Town</span></th>
-        <th md-column md-numeric md-order-by="type"><span>Size</span></th>
-        <th md-column md-numeric md-order-by="type"><span>Fee Request</span></th>
-        <th md-column md-order-by="type"><span>Contact</span></th>
+        <th md-column md-order-by="town"><span>Town</span></th>
+        <th md-column md-numeric md-order-by="size_of_party"><span>Size</span></th>
+        <th md-column md-order-by="requested_fee"><span>Fee Request</span></th>
+        <th md-column md-order-by="contact_name"><span>Contact</span></th>
         <th md-column><span></span></th>
       </tr>
     </thead>
     <tbody md-body>
-      <tr md-row md-select="application" md-select-id="id" md-auto-select ng-repeat="applications in $ctrl.applications">
+      <tr md-row md-select="application" md-select-id="id" md-auto-select ng-repeat="application in $ctrl.applications">
         <td md-cell>{{application.name}}</td>
         <td md-cell>{{application.town}}</td>
         <td md-cell>{{application.size_of_act}}/{{application.size_of_party}}</td>
-        <td md-cell>&pound;{{application.requested_fee}</td>
+        <td md-cell>{{application.requested_fee}}</td>
         <td md-cell>{{application.contact_name}}</td>
         <td md-cell> 
           <md-select ng-model="dessert.type" placeholder="Other">

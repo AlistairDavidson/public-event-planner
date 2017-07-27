@@ -34,14 +34,14 @@ class ApplicationsController implements angular.IComponentController {
                 return applicationsData;
             });            
     }
-    
+
     setApplicationsList(applicationsData: ActApplicationDto[]) {
         this.applications = applicationsData
             .map((applicationData) => {
                 let details = applicationData.details as ApplicationViewModel;
                 details.id = applicationData.id;
-                details.createdAt = applicationData.createdAt;
-                details.updatedAt = applicationData.updatedAt;
+                details.createdAt = new Date(Date.parse(applicationData.createdAt));
+                details.updatedAt = new Date(Date.parse(applicationData.updatedAt));
                 return details;
             });
         

@@ -26,24 +26,24 @@ angular
 			'    bio\n' +
 			'    tech_specs-->\n' +
 			'\n' +
-			'  <table md-table md-row-select multiple="multiple" ng-model="$ctrl.selectedRow" md-progress="$ctrl.loading">\n' +
+			'  <table md-table md-row-select multiple="multiple" ng-model="selectedRow" md-progress="$ctrl.loading">\n' +
 			'    <thead md-head md-order="$ctrl.query.order" md-on-reorder="$ctrl.getApplications">\n' +
 			'      <tr md-row>\n' +
 			'        <th md-column md-order-by="nameToLower"><span>Name</span></th>\n' +
 			'        <th md-column md-order-by="type"><span>Type</span></th>\n' +
-			'        <th md-column md-order-by="type"><span>Town</span></th>\n' +
-			'        <th md-column md-numeric md-order-by="type"><span>Size</span></th>\n' +
-			'        <th md-column md-numeric md-order-by="type"><span>Fee Request</span></th>\n' +
-			'        <th md-column md-order-by="type"><span>Contact</span></th>\n' +
+			'        <th md-column md-order-by="town"><span>Town</span></th>\n' +
+			'        <th md-column md-numeric md-order-by="size_of_party"><span>Size</span></th>\n' +
+			'        <th md-column md-order-by="requested_fee"><span>Fee Request</span></th>\n' +
+			'        <th md-column md-order-by="contact_name"><span>Contact</span></th>\n' +
 			'        <th md-column><span></span></th>\n' +
 			'      </tr>\n' +
 			'    </thead>\n' +
 			'    <tbody md-body>\n' +
-			'      <tr md-row md-select="application" md-select-id="id" md-auto-select ng-repeat="applications in $ctrl.applications">\n' +
+			'      <tr md-row md-select="application" md-select-id="id" md-auto-select ng-repeat="application in $ctrl.applications">\n' +
 			'        <td md-cell>{{application.name}}</td>\n' +
 			'        <td md-cell>{{application.town}}</td>\n' +
 			'        <td md-cell>{{application.size_of_act}}/{{application.size_of_party}}</td>\n' +
-			'        <td md-cell>&pound;{{application.requested_fee}</td>\n' +
+			'        <td md-cell>{{application.requested_fee}}</td>\n' +
 			'        <td md-cell>{{application.contact_name}}</td>\n' +
 			'        <td md-cell> \n' +
 			'          <md-select ng-model="dessert.type" placeholder="Other">\n' +
