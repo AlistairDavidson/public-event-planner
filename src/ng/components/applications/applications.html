@@ -17,7 +17,7 @@
     bio
     tech_specs-->
 
-  <table md-table md-row-select multiple ng-model="selectedRow" md-progress="$ctrl.loading">
+  <table md-table md-row-select multiple ng-model="$ctrl.selectedApplications" md-progress="$ctrl.loading">
     <thead md-head md-order="$ctrl.query.order" md-on-reorder="$ctrl.getApplications.bind($ctrl)">
       <tr md-row>
         <th md-column md-order-by="nameToLower"><span>Name</span></th>
