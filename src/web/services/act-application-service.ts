@@ -11,6 +11,13 @@ export class ActApplicationService {
     async list(query: ListDto) {
         let field = SequelizeStatic.json(`details.${query.field}`) as string;
 
+        console.log({
+            order: [ field, query.order ],
+            offset: query.offset,
+            limit: query.limit
+        });
+
+
         let result = await database.models.ActApplication.findAndCountAll({
             order: [ field, query.order ],
             offset: query.offset,
