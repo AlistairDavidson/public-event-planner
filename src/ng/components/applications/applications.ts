@@ -12,17 +12,19 @@ class ApplicationsController implements angular.IComponentController {
     }
   
     count: number;
-    applications: ApplicationViewModel[];
-    selectedApplications: ApplicationViewModel[];
+    applications: ApplicationViewModel[] = [];
+    selectedApplications: ApplicationViewModel[] = [];
 
     loading: angular.IPromise<ActApplicationsDto>;
-    
-    constructor(private applicationService: ApplicationService) {
 
+    getApplicationsBound: Function;
+
+    constructor(private applicationService: ApplicationService) {
+        this.getApplicationsBound = this.getApplications.bind(this);
     }
 
     $onInit() {
-    
+        this.getApplications();
     }
 
     getApplications() {

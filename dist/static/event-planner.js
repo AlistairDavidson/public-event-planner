@@ -105,8 +105,8 @@ angular
 			'    bio\n' +
 			'    tech_specs-->\n' +
 			'\n' +
-			'  <table md-table md-row-select multiple="multiple" ng-model="$ctrl.selectedApplications" md-progress="$ctrl.loading">\n' +
-			'    <thead md-head md-order="$ctrl.query.order" md-on-reorder="$ctrl.getApplications.bind($ctrl)">\n' +
+			'  <table md-table>\n' +
+			'    <thead md-head md-row-select multiple="multiple" ng-model="$ctrl.selectedApplications" md-progress="$ctrl.loading" md-order="$ctrl.query.order" md-on-reorder="$ctrl.getApplicationsBound">\n' +
 			'      <tr md-row>\n' +
 			'        <th md-column md-order-by="nameToLower"><span>Name</span></th>\n' +
 			'        <th md-column md-order-by="type"><span>Type</span></th>\n' +
@@ -135,7 +135,7 @@ angular
 			'  </table>\n' +
 			'</md-table-container>\n' +
 			'\n' +
-			'<md-table-pagination md-limit="$ctrl.query.limit" md-page="$ctrl.query.page" md-total="{{$ctrl.applicationCount}}" md-on-paginate="$ctrl.getApplications.bind($ctrl)" md-page-select></md-table-pagination>');
+			'<md-table-pagination md-limit="$ctrl.query.limit" md-page="$ctrl.query.page" md-total="{{$ctrl.applicationCount}}" md-on-paginate="$ctrl.getApplicationsBound" md-page-select></md-table-pagination>');
 
 		$templateCache.put('components/event-planner-app/event-planner-app.html', '<div layout="column" class="app-container" ng-cloak>\n' +
 			'  <md-toolbar md-scroll-shrink>\n' +
@@ -750,6 +750,9 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 limit: 100,
                 page: 1
             };
+            this.applications = [];
+            this.selectedApplications = [];
+            this.getApplicationsBound = this.getApplications.bind(this);
         }
         ApplicationsController.prototype.$onInit = function () {
             this.getApplications();
