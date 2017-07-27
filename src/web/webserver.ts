@@ -6,7 +6,7 @@ import { initDecorators } from './services/web-decorators';
 
 import * as bodyParser from 'body-parser';
 import * as cookieParser from 'cookie-parser';
-import * as session from 'express-session';
+let session = require('cookie-session');
 import * as passport from 'passport';
 let flash = require('connect-flash');
 let fileupload = require('express-fileupload');
@@ -42,7 +42,7 @@ export class WebServer {
 
         this.app.set('view engine', 'ejs');
 
-        this.app.use(session({ secret: 'V[|.7jC*xE76+z=4bsF8!Jcgj]pu' }));
+        this.app.use(session({ name: 'session', secret: 'V[|.7jC*xE76+z=4bsF8!Jcgj]pu' }));
         
         this.app.use(passport.initialize());
         this.app.use(passport.session()); // persistent login sessions
