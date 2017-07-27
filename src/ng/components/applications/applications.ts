@@ -22,7 +22,7 @@ class ApplicationsController implements angular.IComponentController {
     }
 
     $onInit() {
-        this.getApplications();
+    
     }
 
     getApplications() {
