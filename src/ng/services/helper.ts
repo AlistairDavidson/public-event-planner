@@ -9,7 +9,7 @@ export function queryToRequest(query: MdSortDto) {
         order = 'DESC';
     }
 
-    let offset = query.page * query.limit;
+    let offset = (query.page - 1) * query.limit;
 
     let requestQuery: ListDto = {
         field: field,
