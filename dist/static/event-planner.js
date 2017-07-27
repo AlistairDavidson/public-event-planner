@@ -118,7 +118,7 @@ angular
 			'      </tr>\n' +
 			'    </thead>\n' +
 			'    <tbody md-body>\n' +
-			'      <tr md-row md-select="application" md-select-id="id" md-auto-select ng-repeat="application in $ctrl.applications | orderBy $ctrl.query.order">\n' +
+			'      <tr md-row md-select="application" md-select-id="id" md-auto-select ng-repeat="application in $ctrl.applications | orderBy: $ctrl.query.order">\n' +
 			'        <td md-cell>{{application.name}}</td>\n' +
 			'        <td md-cell>{{application.type}}</td>\n' +
 			'        <td md-cell>{{application.town}}</td>\n' +
