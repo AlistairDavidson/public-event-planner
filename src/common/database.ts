@@ -99,6 +99,57 @@ export class Database {
                 name: 'edit_application'
             }
         });
+
+
+        /****
+            TEST
+        */
+
+        await this.models.ActApplication.findOrCreate({
+            where: {
+                details: {
+                    name: 'Allstars',
+                    type: 'Band',
+                    contact_name: 'Alice',
+                    email: 'band@example.com',
+                    phone: '000-000-000-000',
+                    town: 'Aberdeen',
+                    link: 'http://example.com',
+                    facebook: 'http://example.com',
+                    twitter: 'http://example.com',
+                    size_of_act: 4,
+                    size_of_party: '',
+                    party_names: 'Alice, Alex, Annabel, Ally',
+                    requested_fee: '£100',    
+                    bio: 'All about alabaster',
+                    image: '',
+                    tech_specs: 'Amps'   
+                }
+            }
+        });
+
+         await this.models.ActApplication.findOrCreate({
+            where: {
+                details: {
+                    name: 'Braves',
+                    type: 'Band',
+                    contact_name: 'Bob',
+                    email: 'band@example.com',
+                    phone: '000-000-000-000',
+                    town: 'Brigton',
+                    link: 'http://example.com',
+                    facebook: 'http://example.com',
+                    twitter: 'http://example.com',
+                    size_of_act: 2,
+                    size_of_party: '',
+                    party_names: 'Bob, Belle',
+                    requested_fee: '£200',    
+                    bio: 'Brilliant',
+                    image: '',
+                    tech_specs: 'Bass'   
+                }
+            }
+        });
     }
 
     create() {
