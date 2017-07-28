@@ -86,56 +86,94 @@ angular
 	.run(['$templateCache', function($templateCache) {
 		$templateCache.put('components/acts/acts.html', '');
 
-		$templateCache.put('components/applications/applications.html', '<md-table-container>\n' +
-			'    <!-- image\n' +
-			'    \n' +
-			'    \n' +
-			'    size_of_act\n' +
-			'    size_of_party\n' +
-			'    requested_fee\n' +
+		$templateCache.put('components/applications/applications.html', '<md-card>\n' +
+			'  <md-toolbar class="md-table-toolbar md-default" ng-hide="$ctrl.selectedApplications.length || $ctrl.filter.show">\n' +
+			'    <div class="md-toolbar-tools">\n' +
+			'      <h2 class="md-title">Applications</h2>\n' +
+			'      <div flex></div>\n' +
+			'      <md-button class="md-icon-button" ng-click="$ctrl.filter.show = true">\n' +
+			'        <md-icon>search</md-icon>\n' +
+			'      </md-button>\n' +
+			'      <md-button class="md-icon-button" ng-click="$ctrl.create($event)">\n' +
+			'        <md-icon>add</md-icon>\n' +
+			'      </md-button>\n' +
+			'    </div>\n' +
+			'  </md-toolbar>\n' +
 			'\n' +
-			'    contact_name\n' +
-			'    email\n' +
-			'    phone\n' +
-			'    link\n' +
-			'    facebook\n' +
-			'    twitter\n' +
+			'  <md-toolbar class="md-table-toolbar md-default" ng-show="$ctrl.filter.show && !$ctrl.selectedApplications.length">\n' +
+			'    <div class="md-toolbar-tools">\n' +
+			'      <md-icon>search</md-icon>\n' +
+			'      <form flex name="$ctrl.form">\n' +
+			'        <md-input-container class="filter-container">\n' +
+			'          <input ng-model="$ctrl.query.filter" ng-model-options="$ctrl.filter.options">\n' +
+			'        </md-input-container>\n' +
+			'      </form>\n' +
+			'      <md-button class="md-icon-button" ng-click="$ctrl.hideFilter()">\n' +
+			'        <md-icon>close</md-icon>\n' +
+			'      </md-button>\n' +
+			'    </div>\n' +
+			'  </md-toolbar>\n' +
 			'\n' +
-			'    party_names\n' +
-			'    bio\n' +
-			'    tech_specs-->\n' +
+			'  <md-toolbar class="md-table-toolbar alternate" ng-show="$ctrl.selectedApplications.length">\n' +
+			'    <div class="md-toolbar-tools" layout-align="space-between">      \n' +
+			'      <div>{{$ctrl.selectedApplications.length.length}} {{$ctrl.selectedApplications.length.length > 1 ? \'items\' : \'item\'}} selected</div>\n' +
+			'      <md-button class="md-icon-button" ng-click="$ctrl.delete($event)">\n' +
+			'        <md-icon>delete</md-icon>\n' +
+			'      </md-button>\n' +
+			'    </div>\n' +
+			'  </md-toolbar>\n' +
 			'\n' +
-			'  <table md-table>\n' +
-			'    <thead md-head md-row-select multiple="multiple" ng-model="$ctrl.selectedApplications" md-progress="$ctrl.loading" md-order="$ctrl.query.order" md-on-reorder="$ctrl.getApplicationsBound">\n' +
-			'      <tr md-row>\n' +
-			'        <th md-column md-order-by="nameToLower"><span>Name</span></th>\n' +
-			'        <th md-column md-order-by="type"><span>Type</span></th>\n' +
-			'        <th md-column md-order-by="town"><span>Town</span></th>\n' +
-			'        <th md-column md-numeric md-order-by="size_of_party"><span>Size</span></th>\n' +
-			'        <th md-column md-order-by="requested_fee"><span>Fee Request</span></th>\n' +
-			'        <th md-column md-order-by="contact_name"><span>Contact</span></th>\n' +
-			'        <th md-column><span></span></th>\n' +
-			'      </tr>\n' +
-			'    </thead>\n' +
-			'    <tbody md-body>\n' +
-			'      <tr md-row md-select="application" md-select-id="id" md-auto-select ng-repeat="application in $ctrl.applications | orderBy: $ctrl.query.order">\n' +
-			'        <td md-cell>{{application.name}}</td>\n' +
-			'        <td md-cell>{{application.type}}</td>\n' +
-			'        <td md-cell>{{application.town}}</td>\n' +
-			'        <td md-cell>{{application.size_of_act}}/{{application.size_of_party}}</td>\n' +
-			'        <td md-cell>{{application.requested_fee}}</td>\n' +
-			'        <td md-cell>{{application.contact_name}}</td>\n' +
-			'        <td md-cell> \n' +
-			'          <md-select ng-model="dessert.type" placeholder="Other">\n' +
-			'            <md-option ng-value="type" ng-repeat="type in getTypes()">{{type}}</md-option>\n' +
-			'          </md-select>\n' +
-			'        </td>\n' +
-			'      </tr>\n' +
-			'    </tbody>\n' +
-			'  </table>\n' +
-			'</md-table-container>\n' +
+			'  <md-table-container>\n' +
+			'      <!-- image\n' +
+			'      \n' +
+			'      \n' +
+			'      size_of_act\n' +
+			'      size_of_party\n' +
+			'      requested_fee\n' +
 			'\n' +
-			'<md-table-pagination md-limit="$ctrl.query.limit" md-page="$ctrl.query.page" md-total="{{$ctrl.applicationCount}}" md-on-paginate="$ctrl.getApplicationsBound" md-page-select></md-table-pagination>');
+			'      contact_name\n' +
+			'      email\n' +
+			'      phone\n' +
+			'      link\n' +
+			'      facebook\n' +
+			'      twitter\n' +
+			'\n' +
+			'      party_names\n' +
+			'      bio\n' +
+			'      tech_specs-->\n' +
+			'\n' +
+			'    <table md-table>\n' +
+			'      <thead md-head md-row-select multiple="multiple" ng-model="$ctrl.selectedApplications" md-progress="$ctrl.loading" md-order="$ctrl.query.order" md-on-reorder="$ctrl.getApplicationsBound">\n' +
+			'        <tr md-row>\n' +
+			'          <th md-column md-order-by="name"><span>Name</span></th>\n' +
+			'          <th md-column md-order-by="type"><span>Type</span></th>\n' +
+			'          <th md-column md-order-by="town"><span>Town</span></th>\n' +
+			'          <th md-column md-order-by="size_of_party"><span>Size</span></th>\n' +
+			'          <th md-column md-order-by="requested_fee"><span>Fee Request</span></th>\n' +
+			'          <th md-column md-order-by="contact_name"><span>Contact</span></th>\n' +
+			'          <th md-column><span></span></th>\n' +
+			'        </tr>\n' +
+			'      </thead>\n' +
+			'      <tbody md-body>\n' +
+			'        <tr md-row md-select="application" md-select-id="id" md-auto-select ng-repeat="application in $ctrl.applications | orderBy: $ctrl.query.order">\n' +
+			'          <td md-cell>{{application.name}}</td>\n' +
+			'          <td md-cell>{{application.type}}</td>\n' +
+			'          <td md-cell>{{application.town}}</td>\n' +
+			'          <td md-cell>{{application.size_of_act}} / {{application.size_of_party}}</td>\n' +
+			'          <td md-cell>{{application.requested_fee}}</td>\n' +
+			'          <td md-cell>{{application.contact_name}}</td>\n' +
+			'          <td md-cell> \n' +
+			'            <md-select ng-model="dessert.type" placeholder="Other">\n' +
+			'              <md-option ng-value="type" ng-repeat="type in getTypes()">{{type}}</md-option>\n' +
+			'            </md-select>\n' +
+			'          </td>\n' +
+			'        </tr>\n' +
+			'      </tbody>\n' +
+			'    </table>\n' +
+			'  </md-table-container>\n' +
+			'\n' +
+			'  <md-table-pagination md-limit="$ctrl.query.limit" md-page="$ctrl.query.page" md-total="{{$ctrl.applicationCount}}" md-on-paginate="$ctrl.getApplicationsBound" md-page-select></md-table-pagination>\n' +
+			'</md-card>');
 
 		$templateCache.put('components/event-planner-app/event-planner-app.html', '<div layout="column" class="app-container" ng-cloak>\n' +
 			'  <md-toolbar md-scroll-shrink>\n' +
@@ -748,7 +786,8 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
             this.query = {
                 order: 'name',
                 limit: 100,
-                page: 1
+                page: 1,
+                filter: ''
             };
             this.applications = [];
             this.selectedApplications = [];
@@ -776,6 +815,17 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 return details;
             });
             return this.applications;
+        };
+        ApplicationsController.prototype.create = function () {
+        };
+        ApplicationsController.prototype.hideFilter = function () {
+            this.filter.show = false;
+            this.query.filter = '';
+            if (this.form.$dirty) {
+                this.form.$setPristine();
+            }
+        };
+        ApplicationsController.prototype.delete = function () {
         };
         ApplicationsController.$inject = ['applicationService'];
         return ApplicationsController;
@@ -887,7 +937,8 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
             field: field,
             order: order,
             offset: offset,
-            limit: query.limit
+            limit: query.limit,
+            filter: query.filter
         };
         return requestQuery;
     }

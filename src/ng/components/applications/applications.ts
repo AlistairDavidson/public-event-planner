@@ -23,7 +23,10 @@ class ApplicationsController implements angular.IComponentController {
     getApplicationsBound: Function;
 
     filter: {
-        show: false
+        show: false,
+        options: {
+            
+        }
     }
 
     constructor(private applicationService: ApplicationService) {

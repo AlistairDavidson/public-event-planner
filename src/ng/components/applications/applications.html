@@ -7,7 +7,7 @@
         <md-icon>search</md-icon>
       </md-button>
       <md-button class="md-icon-button" ng-click="$ctrl.create($event)">
-        <md-icon>plus</md-icon>
+        <md-icon>add</md-icon>
       </md-button>
     </div>
   </md-toolbar>
@@ -16,7 +16,9 @@
     <div class="md-toolbar-tools">
       <md-icon>search</md-icon>
       <form flex name="$ctrl.form">
-        <input type="text" ng-model="$ctrl.query.filter" ng-model-options="$ctrl.filter.options" placeholder="search">
+        <md-input-container class="filter-container">
+          <input ng-model="$ctrl.query.filter" ng-model-options="$ctrl.filter.options">
+        </md-input-container>
       </form>
       <md-button class="md-icon-button" ng-click="$ctrl.hideFilter()">
         <md-icon>close</md-icon>
@@ -25,7 +27,7 @@
   </md-toolbar>
 
   <md-toolbar class="md-table-toolbar alternate" ng-show="$ctrl.selectedApplications.length">
-    <div class="md-toolbar-tools" layout-align="space-between">
+    <div class="md-toolbar-tools" layout-align="space-between">      
       <div>{{$ctrl.selectedApplications.length.length}} {{$ctrl.selectedApplications.length.length > 1 ? 'items' : 'item'}} selected</div>
       <md-button class="md-icon-button" ng-click="$ctrl.delete($event)">
         <md-icon>delete</md-icon>
