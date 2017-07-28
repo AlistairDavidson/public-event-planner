@@ -1,11 +1,3 @@
-<ep-table
-  title="Applications"
-  list="$ctrl.getApplications(query)"
-  create="$ctrl.create()"
-  headerTemplate="'/applications-header.html'"
-  cellTemplate="'/applications-cell.html'" >
-</ep-table>
-
 <script type="text/ng-template" id="/applications-header.html">
   <th md-column md-order-by="name"><span>Name</span></th>
   <th md-column md-order-by="type"><span>Type</span></th>
@@ -29,6 +21,15 @@
     </md-select>
   </td>
 </script>
+
+<ep-table
+  title="Applications"
+  list="$ctrl.getApplications(query)"
+  create="$ctrl.create()"
+  header-template="'/applications-header.html'"
+  cell-template="'/applications-cell.html'" >
+</ep-table>
+
 
 <!-- <md-card>
   <md-toolbar class="md-table-toolbar md-default" ng-hide="$ctrl.selectedApplications.length || $ctrl.filter.show">

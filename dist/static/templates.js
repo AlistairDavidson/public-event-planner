@@ -7,10 +7,7 @@ angular
 	.run(['$templateCache', function($templateCache) {
 		$templateCache.put('components/acts/acts.html', '');
 
-		$templateCache.put('components/applications/applications.html', '<ep-table title="Applications" list="$ctrl.getApplications(query)" create="$ctrl.create()" headertemplate="\'/applications-header.html\'" celltemplate="\'/applications-cell.html\'">\n' +
-			'</ep-table>\n' +
-			'\n' +
-			'<script type="text/ng-template" id="/applications-header.html">\n' +
+		$templateCache.put('components/applications/applications.html', '<script type="text/ng-template" id="/applications-header.html">\n' +
 			'  <th md-column md-order-by="name"><span>Name</span></th>\n' +
 			'  <th md-column md-order-by="type"><span>Type</span></th>\n' +
 			'  <th md-column md-order-by="town"><span>Town</span></th>\n' +
@@ -33,6 +30,10 @@ angular
 			'    </md-select>\n' +
 			'  </td>\n' +
 			'</script>\n' +
+			'\n' +
+			'<ep-table title="Applications" list="$ctrl.getApplications(query)" create="$ctrl.create()" header-template="\'/applications-header.html\'" cell-template="\'/applications-cell.html\'">\n' +
+			'</ep-table>\n' +
+			'\n' +
 			'\n' +
 			'<!-- <md-card>\n' +
 			'  <md-toolbar class="md-table-toolbar md-default" ng-hide="$ctrl.selectedApplications.length || $ctrl.filter.show">\n' +
