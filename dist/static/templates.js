@@ -121,5 +121,7 @@ angular
 			'    <ui-view></ui-view>\n' +
 			'  </md-content>\n' +
 			'</div>');
+
+		$templateCache.put('components/table/table.html', '');
 	}
 ]);
