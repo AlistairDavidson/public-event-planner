@@ -9,21 +9,21 @@
 </script>
 
 <script type="text/ng-template" id="/applications-cell.html">
-  <td md-cell>{{data.name}}</td>
-  <td md-cell>{{data.type}}</td>
-  <td md-cell>{{data.town}}</td>
-  <td md-cell>{{data.size_of_act}} / {{data.size_of_party}}</td>
-  <td md-cell>{{data.requested_fee}}</td>
-  <td md-cell>{{data.contact_name}}</td>
+  <td md-cell>{{ data.name }}</td>
+  <td md-cell>{{ data.type }}</td>
+  <td md-cell>{{ data.town }}</td>
+  <td md-cell>{{ data.size_of_act }} / {{ data.size_of_party }}</td>
+  <td md-cell>{{ data.requested_fee }}</td>
+  <td md-cell>{{ data.contact_name }}</td>
   <td md-cell> 
     <md-select ng-model="dessert.type" placeholder="Other">
-      <md-option ng-value="type" ng-repeat="type in getTypes()">{{type}}</md-option>
+      <md-option ng-value="type" ng-repeat="type in getTypes()">{{ type }}</md-option>
     </md-select>
   </td>
 </script>
 
 <ep-table
-  title="Applications"
+  title="'Applications'"
   list="$ctrl.getApplications(query)"
   create="$ctrl.create()"
   header-template="'/applications-header.html'"

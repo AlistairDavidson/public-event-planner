@@ -31,7 +31,7 @@ angular
 			'  </td>\n' +
 			'</script>\n' +
 			'\n' +
-			'<ep-table title="Applications" list="$ctrl.getApplications(query)" create="$ctrl.create()" header-template="\'/applications-header.html\'" cell-template="\'/applications-cell.html\'">\n' +
+			'<ep-table title="\'Applications\'" list="$ctrl.getApplications(query)" create="$ctrl.create()" header-template="\'/applications-header.html\'" cell-template="\'/applications-cell.html\'">\n' +
 			'</ep-table>\n' +
 			'\n' +
 			'\n' +
@@ -138,7 +138,7 @@ angular
 			'    </div>\n' +
 			'  </md-toolbar>\n' +
 			'\n' +
-			'  <md-toolbar class="md-table-toolbar md-default" ng-show="$ctrl.filter.show && !$ctrl.data.length">\n' +
+			'  <md-toolbar class="md-table-toolbar md-default" ng-show="$ctrl.filter.show && !$ctrl.selected.length">\n' +
 			'    <div class="md-toolbar-tools">\n' +
 			'      <md-icon>search</md-icon>\n' +
 			'      <form flex name="$ctrl.form">\n' +
@@ -152,7 +152,7 @@ angular
 			'    </div>\n' +
 			'  </md-toolbar>\n' +
 			'\n' +
-			'  <md-toolbar class="md-table-toolbar alternate" ng-show="$ctrl.selectedApplications.length">\n' +
+			'  <md-toolbar class="md-table-toolbar alternate" ng-show="$ctrl.selected.length">\n' +
 			'    <div class="md-toolbar-tools" layout-align="space-between">      \n' +
 			'      <div>{{$ctrl.data.length}} {{$ctrl.selected.length > 1 ? \'items\' : \'item\'}} selected</div>\n' +
 			'      <md-button class="md-icon-button" ng-click="$ctrl.delete($event)">\n' +
