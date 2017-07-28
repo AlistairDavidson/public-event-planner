@@ -97,15 +97,15 @@ angular
 			'</script>\n' +
 			'\n' +
 			'<script type="text/ng-template" id="/applications-cell.html">\n' +
-			'  <td md-cell>{{data.name}}</td>\n' +
-			'  <td md-cell>{{data.type}}</td>\n' +
-			'  <td md-cell>{{data.town}}</td>\n' +
-			'  <td md-cell>{{data.size_of_act}} / {{data.size_of_party}}</td>\n' +
-			'  <td md-cell>{{data.requested_fee}}</td>\n' +
-			'  <td md-cell>{{data.contact_name}}</td>\n' +
+			'  <td md-cell>{{ data.name }}</td>\n' +
+			'  <td md-cell>{{ data.type }}</td>\n' +
+			'  <td md-cell>{{ data.town }}</td>\n' +
+			'  <td md-cell>{{ data.size_of_act }} / {{ data.size_of_party }}</td>\n' +
+			'  <td md-cell>{{ data.requested_fee }}</td>\n' +
+			'  <td md-cell>{{ data.contact_name }}</td>\n' +
 			'  <td md-cell> \n' +
 			'    <md-select ng-model="dessert.type" placeholder="Other">\n' +
-			'      <md-option ng-value="type" ng-repeat="type in getTypes()">{{type}}</md-option>\n' +
+			'      <md-option ng-value="type" ng-repeat="type in getTypes()">{{ type }}</md-option>\n' +
 			'    </md-select>\n' +
 			'  </td>\n' +
 			'</script>\n' +
@@ -933,7 +933,8 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var EpTableController = (function () {
-        function EpTableController() {
+        function EpTableController($scope) {
+            this.$scope = $scope;
             this.data = [];
             this.selected = [];
             this.query = {
@@ -945,7 +946,9 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
             this.get = this.get.bind(this);
         }
         EpTableController.prototype.$onInit = function () {
+            var _this = this;
             this.get();
+            this.$scope.$watch('$ctrl.query.filter', function (_) { return _this.get(); });
         };
         EpTableController.prototype.get = function () {
             var _this = this;
@@ -965,6 +968,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         };
         EpTableController.prototype.delete = function () {
         };
+        EpTableController.$inject = ['$scope'];
         return EpTableController;
     }());
     var options = {

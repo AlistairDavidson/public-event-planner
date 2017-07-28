@@ -18,15 +18,15 @@ angular
 			'</script>\n' +
 			'\n' +
 			'<script type="text/ng-template" id="/applications-cell.html">\n' +
-			'  <td md-cell>{{data.name}}</td>\n' +
-			'  <td md-cell>{{data.type}}</td>\n' +
-			'  <td md-cell>{{data.town}}</td>\n' +
-			'  <td md-cell>{{data.size_of_act}} / {{data.size_of_party}}</td>\n' +
-			'  <td md-cell>{{data.requested_fee}}</td>\n' +
-			'  <td md-cell>{{data.contact_name}}</td>\n' +
+			'  <td md-cell>{{ data.name }}</td>\n' +
+			'  <td md-cell>{{ data.type }}</td>\n' +
+			'  <td md-cell>{{ data.town }}</td>\n' +
+			'  <td md-cell>{{ data.size_of_act }} / {{ data.size_of_party }}</td>\n' +
+			'  <td md-cell>{{ data.requested_fee }}</td>\n' +
+			'  <td md-cell>{{ data.contact_name }}</td>\n' +
 			'  <td md-cell> \n' +
 			'    <md-select ng-model="dessert.type" placeholder="Other">\n' +
-			'      <md-option ng-value="type" ng-repeat="type in getTypes()">{{type}}</md-option>\n' +
+			'      <md-option ng-value="type" ng-repeat="type in getTypes()">{{ type }}</md-option>\n' +
 			'    </md-select>\n' +
 			'  </td>\n' +
 			'</script>\n' +
