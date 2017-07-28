@@ -23,7 +23,7 @@ export class ActApplicationService {
 
         if(query.filter) {
             options.where = {
-                'details::text' : {
+                'details' : {
                     $iLike: `%${query.filter}%`
                 }
             }
