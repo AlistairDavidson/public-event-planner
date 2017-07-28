@@ -22,11 +22,12 @@ export class ActApplicationService {
         }
 
         if(query.filter) {
-            options.where = {
-                'details' : {
+            options.where = SequelizeStatic.where(
+                SequelizeStatic.cast(SequelizeStatic.col('details'), 'text'),
+                {
                     $iLike: `%${query.filter}%`
                 }
-            }
+            ) as any;
         }
 
         let result = await database.models.ActApplication.findAndCountAll(options);
