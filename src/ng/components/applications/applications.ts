@@ -5,49 +5,26 @@ import { MdSortDto } from '../../../common/types';
 class ApplicationsController implements angular.IComponentController {
     static $inject = ['applicationService'];
 
-    query: MdSortDto = {
-        order: 'name',
-        limit: 100,
-        page: 1,
-        filter: ''
-    }
-  
-    count: number;
-    applications: ApplicationViewModel[] = [];
-    selectedApplications: ApplicationViewModel[] = [];
-
-    loading: angular.IPromise<ActApplicationsDto>;
-
-    form: ng.IFormController;
-
-    getApplicationsBound: Function;
-
-    filter: {
-        show: false,
-        options: {
-            
-        }
-    }
-
     constructor(private applicationService: ApplicationService) {
-        this.getApplicationsBound = this.getApplications.bind(this);
     }
 
     $onInit() {
-        this.getApplications();
     }
 
-    getApplications() {
-       return this.loading = this.applicationService.list(this.query)
+    getApplications(query: MdSortDto) {
+       return this.applicationService.list(query)
             .then(applicationsData => {
-                this.setApplicationsList(applicationsData.applications);
-                this.count = applicationsData.count
-                return applicationsData;
+                let applications = this.processApplicationsList(applicationsData.applications);
+                let count = applicationsData.count
+                return {
+                    count: count,
+                    data: applications
+                };
             });            
     }
 
-    setApplicationsList(applicationsData: ActApplicationDto[]) {
-        this.applications = applicationsData
+    processApplicationsList(applicationsData: ActApplicationDto[]) {
+       let applications = applicationsData
             .map((applicationData) => {
                 let details = applicationData.details as ApplicationViewModel;
                 details.id = applicationData.id;
@@ -56,20 +33,11 @@ class ApplicationsController implements angular.IComponentController {
                 return details;
             });
         
-        return this.applications;
+        return applications;
     }
 
     create() {
 
-    }
-
-    hideFilter() {
-        this.filter.show = false;
-        this.query.filter = '';
-        
-        if(this.form.$dirty) {
-            this.form.$setPristine();
-        }
     }
 
     delete() {

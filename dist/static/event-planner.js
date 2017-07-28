@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 19);
+/******/ 	return __webpack_require__(__webpack_require__.s = 20);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -86,7 +86,34 @@ angular
 	.run(['$templateCache', function($templateCache) {
 		$templateCache.put('components/acts/acts.html', '');
 
-		$templateCache.put('components/applications/applications.html', '<md-card>\n' +
+		$templateCache.put('components/applications/applications.html', '<ep-table title="Applications" list="$ctrl.getApplications(query)" create="$ctrl.create()" headertemplate="\'/applications-header.html\'" celltemplate="\'/applications-cell.html\'">\n' +
+			'</ep-table>\n' +
+			'\n' +
+			'<script type="text/ng-template" id="/applications-header.html">\n' +
+			'  <th md-column md-order-by="name"><span>Name</span></th>\n' +
+			'  <th md-column md-order-by="type"><span>Type</span></th>\n' +
+			'  <th md-column md-order-by="town"><span>Town</span></th>\n' +
+			'  <th md-column md-order-by="size_of_party"><span>Size</span></th>\n' +
+			'  <th md-column md-order-by="requested_fee"><span>Fee Request</span></th>\n' +
+			'  <th md-column md-order-by="contact_name"><span>Contact</span></th>\n' +
+			'  <th md-column><span></span></th>\n' +
+			'</script>\n' +
+			'\n' +
+			'<script type="text/ng-template" id="/applications-cell.html">\n' +
+			'  <td md-cell>{{data.name}}</td>\n' +
+			'  <td md-cell>{{data.type}}</td>\n' +
+			'  <td md-cell>{{data.town}}</td>\n' +
+			'  <td md-cell>{{data.size_of_act}} / {{data.size_of_party}}</td>\n' +
+			'  <td md-cell>{{data.requested_fee}}</td>\n' +
+			'  <td md-cell>{{data.contact_name}}</td>\n' +
+			'  <td md-cell> \n' +
+			'    <md-select ng-model="dessert.type" placeholder="Other">\n' +
+			'      <md-option ng-value="type" ng-repeat="type in getTypes()">{{type}}</md-option>\n' +
+			'    </md-select>\n' +
+			'  </td>\n' +
+			'</script>\n' +
+			'\n' +
+			'<!-- <md-card>\n' +
 			'  <md-toolbar class="md-table-toolbar md-default" ng-hide="$ctrl.selectedApplications.length || $ctrl.filter.show">\n' +
 			'    <div class="md-toolbar-tools">\n' +
 			'      <h2 class="md-title">Applications</h2>\n' +
@@ -116,7 +143,7 @@ angular
 			'\n' +
 			'  <md-toolbar class="md-table-toolbar alternate" ng-show="$ctrl.selectedApplications.length">\n' +
 			'    <div class="md-toolbar-tools" layout-align="space-between">      \n' +
-			'      <div>{{$ctrl.selectedApplications.length.length}} {{$ctrl.selectedApplications.length.length > 1 ? \'items\' : \'item\'}} selected</div>\n' +
+			'      <div>{{$ctrl.selectedApplications.length}} {{$ctrl.selectedApplications.length > 1 ? \'items\' : \'item\'}} selected</div>\n' +
 			'      <md-button class="md-icon-button" ng-click="$ctrl.delete($event)">\n' +
 			'        <md-icon>delete</md-icon>\n' +
 			'      </md-button>\n' +
@@ -142,8 +169,8 @@ angular
 			'      bio\n' +
 			'      tech_specs-->\n' +
 			'\n' +
-			'    <table md-table>\n' +
-			'      <thead md-head md-row-select multiple="multiple" ng-model="$ctrl.selectedApplications" md-progress="$ctrl.loading" md-order="$ctrl.query.order" md-on-reorder="$ctrl.getApplicationsBound">\n' +
+			'    <!--  <table md-table>\n' +
+			'      <thead md-head md-row-select multiple ng-model="$ctrl.selectedApplications" md-progress="$ctrl.loading" md-order="$ctrl.query.order" md-on-reorder="$ctrl.getApplicationsBound">\n' +
 			'        <tr md-row>\n' +
 			'          <th md-column md-order-by="name"><span>Name</span></th>\n' +
 			'          <th md-column md-order-by="type"><span>Type</span></th>\n' +
@@ -173,6 +200,77 @@ angular
 			'  </md-table-container>\n' +
 			'\n' +
 			'  <md-table-pagination md-limit="$ctrl.query.limit" md-page="$ctrl.query.page" md-total="{{$ctrl.applicationCount}}" md-on-paginate="$ctrl.getApplicationsBound" md-page-select></md-table-pagination>\n' +
+			'</md-card>-->');
+
+		$templateCache.put('components/ep-table/ep-table.html', '<md-card>\n' +
+			'  <md-toolbar class="md-table-toolbar md-default" ng-hide="$ctrl.selected.length || $ctrl.filter.show">\n' +
+			'    <div class="md-toolbar-tools">\n' +
+			'      <h2 class="md-title">{{ $ctrl.title }}</h2>\n' +
+			'      <div flex></div>\n' +
+			'      <md-button class="md-icon-button" ng-click="$ctrl.filter.show = true">\n' +
+			'        <md-icon>search</md-icon>\n' +
+			'      </md-button>\n' +
+			'      <md-button class="md-icon-button" ng-click="$ctrl.create($event)">\n' +
+			'        <md-icon>add</md-icon>\n' +
+			'      </md-button>\n' +
+			'    </div>\n' +
+			'  </md-toolbar>\n' +
+			'\n' +
+			'  <md-toolbar class="md-table-toolbar md-default" ng-show="$ctrl.filter.show && !$ctrl.data.length">\n' +
+			'    <div class="md-toolbar-tools">\n' +
+			'      <md-icon>search</md-icon>\n' +
+			'      <form flex name="$ctrl.form">\n' +
+			'        <md-input-container class="filter-container">\n' +
+			'          <input ng-model="$ctrl.query.filter" ng-model-options="$ctrl.filter.options">\n' +
+			'        </md-input-container>\n' +
+			'      </form>\n' +
+			'      <md-button class="md-icon-button" ng-click="$ctrl.hideFilter()">\n' +
+			'        <md-icon>close</md-icon>\n' +
+			'      </md-button>\n' +
+			'    </div>\n' +
+			'  </md-toolbar>\n' +
+			'\n' +
+			'  <md-toolbar class="md-table-toolbar alternate" ng-show="$ctrl.selectedApplications.length">\n' +
+			'    <div class="md-toolbar-tools" layout-align="space-between">      \n' +
+			'      <div>{{$ctrl.data.length}} {{$ctrl.selected.length > 1 ? \'items\' : \'item\'}} selected</div>\n' +
+			'      <md-button class="md-icon-button" ng-click="$ctrl.delete($event)">\n' +
+			'        <md-icon>delete</md-icon>\n' +
+			'      </md-button>\n' +
+			'    </div>\n' +
+			'  </md-toolbar>\n' +
+			'\n' +
+			'  <md-table-container>\n' +
+			'      <!-- image\n' +
+			'      \n' +
+			'      \n' +
+			'      size_of_act\n' +
+			'      size_of_party\n' +
+			'      requested_fee\n' +
+			'\n' +
+			'      contact_name\n' +
+			'      email\n' +
+			'      phone\n' +
+			'      link\n' +
+			'      facebook\n' +
+			'      twitter\n' +
+			'\n' +
+			'      party_names\n' +
+			'      bio\n' +
+			'      tech_specs-->\n' +
+			'\n' +
+			'    <table md-table>\n' +
+			'      <thead md-head md-row-select multiple="multiple" ng-model="$ctrl.data" md-progress="$ctrl.loading" md-order="$ctrl.query.order" md-on-reorder="$ctrl.get">\n' +
+			'        <tr md-row ng-include="$ctrl.headerTemplate">               \n' +
+			'        </tr>\n' +
+			'      </thead>\n' +
+			'      <tbody md-body>\n' +
+			'        <tr md-row md-select="row" md-select-id="id" md-auto-select ng-repeat="row in $ctrl.data | orderBy: $ctrl.query.order" ng-include="$ctrl.cellTemplate" onload="data = row">        \n' +
+			'        </tr>\n' +
+			'      </tbody>\n' +
+			'    </table>\n' +
+			'  </md-table-container>\n' +
+			'\n' +
+			'  <md-table-pagination md-limit="$ctrl.query.limit" md-page="$ctrl.query.page" md-total="{{$ctrl.count}}" md-on-paginate="$ctrl.get" md-page-select></md-table-pagination>\n' +
 			'</md-card>');
 
 		$templateCache.put('components/event-planner-app/event-planner-app.html', '<div layout="column" class="app-container" ng-cloak>\n' +
@@ -714,7 +812,7 @@ minFrac:2,minInt:1,negPre:"-\u00a4",negSuf:"",posPre:"\u00a4",posSuf:""}]},id:"e
 /* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(0), __webpack_require__(17), __webpack_require__(14)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, angular_1) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(0), __webpack_require__(18), __webpack_require__(15)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, angular_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     angular_1.module('event-planner', ['event-planner.components', 'event-planner.services', 'ui.router', 'ngCookies', 'templates', 'md.data.table'])
@@ -783,30 +881,23 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
     var ApplicationsController = (function () {
         function ApplicationsController(applicationService) {
             this.applicationService = applicationService;
-            this.query = {
-                order: 'name',
-                limit: 100,
-                page: 1,
-                filter: ''
-            };
-            this.applications = [];
-            this.selectedApplications = [];
-            this.getApplicationsBound = this.getApplications.bind(this);
         }
         ApplicationsController.prototype.$onInit = function () {
-            this.getApplications();
         };
-        ApplicationsController.prototype.getApplications = function () {
+        ApplicationsController.prototype.getApplications = function (query) {
             var _this = this;
-            return this.loading = this.applicationService.list(this.query)
+            return this.applicationService.list(query)
                 .then(function (applicationsData) {
-                _this.setApplicationsList(applicationsData.applications);
-                _this.count = applicationsData.count;
-                return applicationsData;
+                var applications = _this.processApplicationsList(applicationsData.applications);
+                var count = applicationsData.count;
+                return {
+                    count: count,
+                    data: applications
+                };
             });
         };
-        ApplicationsController.prototype.setApplicationsList = function (applicationsData) {
-            this.applications = applicationsData
+        ApplicationsController.prototype.processApplicationsList = function (applicationsData) {
+            var applications = applicationsData
                 .map(function (applicationData) {
                 var details = applicationData.details;
                 details.id = applicationData.id;
@@ -814,16 +905,9 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 details.updatedAt = new Date(Date.parse(applicationData.updatedAt));
                 return details;
             });
-            return this.applications;
+            return applications;
         };
         ApplicationsController.prototype.create = function () {
-        };
-        ApplicationsController.prototype.hideFilter = function () {
-            this.filter.show = false;
-            this.query.filter = '';
-            if (this.form.$dirty) {
-                this.form.$setPristine();
-            }
         };
         ApplicationsController.prototype.delete = function () {
         };
@@ -847,6 +931,64 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
+    var EpTableController = (function () {
+        function EpTableController() {
+            this.data = [];
+            this.selected = [];
+            this.query = {
+                order: 'name',
+                limit: 100,
+                page: 1,
+                filter: ''
+            };
+            this.get = this.get.bind(this);
+        }
+        EpTableController.prototype.$onInit = function () {
+            this.get();
+        };
+        EpTableController.prototype.get = function () {
+            var _this = this;
+            return this.loading = this.list({ query: this.query })
+                .then(function (newData) {
+                _this.data = newData.data;
+                _this.count = newData.count;
+                return newData;
+            });
+        };
+        EpTableController.prototype.hideFilter = function () {
+            this.filter.show = false;
+            this.query.filter = '';
+            if (this.form.$dirty) {
+                this.form.$setPristine();
+            }
+        };
+        EpTableController.prototype.delete = function () {
+        };
+        return EpTableController;
+    }());
+    var options = {
+        templateUrl: 'components/ep-table/ep-table.html',
+        controller: EpTableController,
+        bindings: {
+            title: '=',
+            list: '&',
+            create: '&',
+            headerTemplate: '=',
+            cellTemplate: '='
+        }
+    };
+    exports.default = options;
+}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
     var EventPlannerAppController = (function () {
         function EventPlannerAppController() {
         }
@@ -865,14 +1007,15 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(0), __webpack_require__(13), __webpack_require__(12), __webpack_require__(11)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, angular_1, event_planner_app_1, applications_1, acts_1) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(0), __webpack_require__(14), __webpack_require__(12), __webpack_require__(11), __webpack_require__(13)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, angular_1, event_planner_app_1, applications_1, acts_1, ep_table_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.default = angular_1.module('event-planner.components', ['event-planner.services', 'ngMaterial'])
         .component('eventPlannerApp', event_planner_app_1.default)
+        .component('epTable', ep_table_1.default)
         .component('applications', applications_1.default)
         .component('acts', acts_1.default);
 }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
@@ -880,10 +1023,10 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(16), __webpack_require__(18)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, helper_1, settings_1) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(17), __webpack_require__(19)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, helper_1, settings_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var ApplicationService = (function () {
@@ -919,7 +1062,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
@@ -948,10 +1091,10 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(0), __webpack_require__(15)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, angular_1, application_service_1) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(0), __webpack_require__(16)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, angular_1, application_service_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.default = angular_1.module('event-planner.services', [])
@@ -961,7 +1104,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
@@ -975,7 +1118,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(9);
