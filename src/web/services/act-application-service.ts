@@ -15,12 +15,6 @@ export class ActApplicationService {
 
         let order = SequelizeStatic.json(`details.${query.field} ${query.order}`) as string;
 
-        console.log({
-            order: order,
-            offset: query.offset,
-            limit: query.limit
-        });
-
         let options: SequelizeStatic.FindOptions = {
             order: order,
             offset: query.offset,
@@ -30,14 +24,12 @@ export class ActApplicationService {
         if(query.filter) {
             options.where = {
                 'details::text' : {
-                    $like: `%${query.filter}%`
+                    $iLike: `%${query.filter}%`
                 }
             }
         }
 
-        let result = await database.models.ActApplication.findAndCountAll();
-
-        console.log(result);
+        let result = await database.models.ActApplication.findAndCountAll(options);
 
         return {
             applications: result.rows,

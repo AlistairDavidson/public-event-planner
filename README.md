@@ -6,11 +6,15 @@ Copyright (C) 2017 Alistair Davidson <alistair.l.davidson@gmail.com>
 
 TODO
 
-Build nav
+Application editor
+Turn into generic editor with template import
+Mobile menu
+Tables and edit on mobile
+Applications should have a coancetated search field so we don't find json prop names
 
 Build application management
+    Build contact menu
     new application (also supplies sample form for use in websites)
-    view applications
     application to booking, act, and contact. Act and contact may already exist...
 
 
