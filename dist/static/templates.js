@@ -7,6 +7,125 @@ angular
 	.run(['$templateCache', function($templateCache) {
 		$templateCache.put('components/acts/acts.html', '');
 
+		$templateCache.put('components/application-editor/application-editor.html', '<md-dialog aria-label="New Application">\n' +
+			'    <md-dialog-content class="md-dialog-content">\n' +
+			'        <form novalidate ng-cloak>\n' +
+			'            <div layout="column">\n' +
+			'                <h2 class="md-title">Application</h2>\n' +
+			'\n' +
+			'                <div layout-gt-sm="row">\n' +
+			'                    <md-input-container>\n' +
+			'                        <label>Act Name</label>\n' +
+			'                        <input ng-model="$ctrl.application.details.name">\n' +
+			'                    </md-input-container>\n' +
+			'\n' +
+			'                    <md-input-container>\n' +
+			'                        <label>Type</label>\n' +
+			'                        <input ng-model="$ctrl.application.details.type">\n' +
+			'                    </md-input-container>\n' +
+			'\n' +
+			'                    <md-input-container>\n' +
+			'                        <label>Town</label>\n' +
+			'                        <input ng-model="$ctrl.application.details.town">\n' +
+			'                    </md-input-container>\n' +
+			'                </div>\n' +
+			'\n' +
+			'                <div layout-gt-sm="row">\n' +
+			'                    <md-input-container>\n' +
+			'                        <label>Act Size</label>\n' +
+			'                        <input ng-model="$ctrl.application.details.size_of_act">\n' +
+			'                    </md-input-container>\n' +
+			'\n' +
+			'                    <md-input-container>\n' +
+			'                        <label>Party Size</label>\n' +
+			'                        <input ng-model="$ctrl.application.details.size_of_party">\n' +
+			'                    </md-input-container>\n' +
+			'                \n' +
+			'                    <md-input-container>\n' +
+			'                        <label>Requested Fee</label>\n' +
+			'                        <input ng-model="$ctrl.application.details.requested_fee">\n' +
+			'                    </md-input-container>\n' +
+			'                </div>\n' +
+			'\n' +
+			'                <h3 class="md-subhead">Contact</h3>\n' +
+			'\n' +
+			'                <div layout-gt-sm="row">\n' +
+			'                    <md-input-container>\n' +
+			'                        <label>Name</label>\n' +
+			'                        <input ng-model="$ctrl.application.details.contact_name">\n' +
+			'                    </md-input-container>\n' +
+			'\n' +
+			'                    <md-input-container>\n' +
+			'                        <label>Email</label>\n' +
+			'                        <input ng-model="$ctrl.application.details.email">\n' +
+			'                    </md-input-container>\n' +
+			'\n' +
+			'                    <md-input-container>\n' +
+			'                        <label>Phone</label>\n' +
+			'                        <input ng-model="$ctrl.application.details.phone">\n' +
+			'                    </md-input-container>\n' +
+			'                </div>\n' +
+			'\n' +
+			'                <div layout-gt-sm="row">\n' +
+			'                    <md-input-container>\n' +
+			'                        <label>Link</label>\n' +
+			'                        <input ng-model="$ctrl.application.details.link">\n' +
+			'                    </md-input-container>\n' +
+			'\n' +
+			'                    <md-input-container>\n' +
+			'                        <label>Facebook</label>\n' +
+			'                        <input ng-model="$ctrl.application.details.facebook">\n' +
+			'                    </md-input-container>\n' +
+			'\n' +
+			'                    <md-input-container>\n' +
+			'                        <label>Twitter</label>\n' +
+			'                        <input ng-model="$ctrl.application.details.twitter">\n' +
+			'                    </md-input-container>\n' +
+			'                </div>\n' +
+			'\n' +
+			'                <h3 class="md-subhead">Details</h3>\n' +
+			'\n' +
+			'                <div layout-gt-sm="row">\n' +
+			'                    <md-input-container>\n' +
+			'                        <label>Party Names</label>\n' +
+			'                        <input ng-model="$ctrl.application.details.party_names">\n' +
+			'                    </md-input-container>\n' +
+			'                </div>\n' +
+			'\n' +
+			'                <div layout-gt-sm="row">\n' +
+			'                    <md-input-container>\n' +
+			'                        <label>Bio</label>\n' +
+			'                        <textarea ng-model="$ctrl.application.details.bio">\n' +
+			'                        </textarea>\n' +
+			'                    </md-input-container>\n' +
+			'                </div>\n' +
+			'\n' +
+			'                <div layout-gt-sm="row">\n' +
+			'                    <md-input-container>\n' +
+			'                        <label>Tech Specs</label>\n' +
+			'                        <textarea ng-model="$ctrl.application.details.tech_specs">\n' +
+			'                        </textarea>\n' +
+			'                    </md-input-container>\n' +
+			'                </div>\n' +
+			'\n' +
+			'                <div layout-gt-sm="row">\n' +
+			'                    <md-input-container>\n' +
+			'                        <label>Image</label>\n' +
+			'                        <input ng-model="$ctrl.application.details.image">\n' +
+			'                    </md-input-container>\n' +
+			'                </div>\n' +
+			'\n' +
+			'\n' +
+			'                <img ng-if="$ctrl.application.details.image" src="{{ $ctrl.application.details.image }}">\n' +
+			'            </div>\n' +
+			'        </form>\n' +
+			'    </md-dialog-content>\n' +
+			'    <md-dialog-actions>\n' +
+			'        <md-button ng-click="$ctrl.save()">Save</md-button>\n' +
+			'        <md-button ng-click="$ctrl.cancel()">Cancel</md-button>\n' +
+			'    </md-dialog-actions>\n' +
+			'</md-dialog>');
+
 		$templateCache.put('components/applications/applications.html', '<script type="text/ng-template" id="/applications-header.html">\n' +
 			'  <th md-column md-order-by="name"><span>Name</span></th>\n' +
 			'  <th md-column md-order-by="type"><span>Type</span></th>\n' +
@@ -32,97 +151,7 @@ angular
 			'</script>\n' +
 			'\n' +
 			'<ep-table title="\'Applications\'" list="$ctrl.getApplications(query)" create="$ctrl.create()" header-template="\'/applications-header.html\'" cell-template="\'/applications-cell.html\'">\n' +
-			'</ep-table>\n' +
-			'\n' +
-			'\n' +
-			'<!-- <md-card>\n' +
-			'  <md-toolbar class="md-table-toolbar md-default" ng-hide="$ctrl.selectedApplications.length || $ctrl.filter.show">\n' +
-			'    <div class="md-toolbar-tools">\n' +
-			'      <h2 class="md-title">Applications</h2>\n' +
-			'      <div flex></div>\n' +
-			'      <md-button class="md-icon-button" ng-click="$ctrl.filter.show = true">\n' +
-			'        <md-icon>search</md-icon>\n' +
-			'      </md-button>\n' +
-			'      <md-button class="md-icon-button" ng-click="$ctrl.create($event)">\n' +
-			'        <md-icon>add</md-icon>\n' +
-			'      </md-button>\n' +
-			'    </div>\n' +
-			'  </md-toolbar>\n' +
-			'\n' +
-			'  <md-toolbar class="md-table-toolbar md-default" ng-show="$ctrl.filter.show && !$ctrl.selectedApplications.length">\n' +
-			'    <div class="md-toolbar-tools">\n' +
-			'      <md-icon>search</md-icon>\n' +
-			'      <form flex name="$ctrl.form">\n' +
-			'        <md-input-container class="filter-container">\n' +
-			'          <input ng-model="$ctrl.query.filter" ng-model-options="$ctrl.filter.options">\n' +
-			'        </md-input-container>\n' +
-			'      </form>\n' +
-			'      <md-button class="md-icon-button" ng-click="$ctrl.hideFilter()">\n' +
-			'        <md-icon>close</md-icon>\n' +
-			'      </md-button>\n' +
-			'    </div>\n' +
-			'  </md-toolbar>\n' +
-			'\n' +
-			'  <md-toolbar class="md-table-toolbar alternate" ng-show="$ctrl.selectedApplications.length">\n' +
-			'    <div class="md-toolbar-tools" layout-align="space-between">      \n' +
-			'      <div>{{$ctrl.selectedApplications.length}} {{$ctrl.selectedApplications.length > 1 ? \'items\' : \'item\'}} selected</div>\n' +
-			'      <md-button class="md-icon-button" ng-click="$ctrl.delete($event)">\n' +
-			'        <md-icon>delete</md-icon>\n' +
-			'      </md-button>\n' +
-			'    </div>\n' +
-			'  </md-toolbar>\n' +
-			'\n' +
-			'  <md-table-container>\n' +
-			'      <!-- image\n' +
-			'      \n' +
-			'      \n' +
-			'      size_of_act\n' +
-			'      size_of_party\n' +
-			'      requested_fee\n' +
-			'\n' +
-			'      contact_name\n' +
-			'      email\n' +
-			'      phone\n' +
-			'      link\n' +
-			'      facebook\n' +
-			'      twitter\n' +
-			'\n' +
-			'      party_names\n' +
-			'      bio\n' +
-			'      tech_specs-->\n' +
-			'\n' +
-			'    <!--  <table md-table>\n' +
-			'      <thead md-head md-row-select multiple ng-model="$ctrl.selectedApplications" md-progress="$ctrl.loading" md-order="$ctrl.query.order" md-on-reorder="$ctrl.getApplicationsBound">\n' +
-			'        <tr md-row>\n' +
-			'          <th md-column md-order-by="name"><span>Name</span></th>\n' +
-			'          <th md-column md-order-by="type"><span>Type</span></th>\n' +
-			'          <th md-column md-order-by="town"><span>Town</span></th>\n' +
-			'          <th md-column md-order-by="size_of_party"><span>Size</span></th>\n' +
-			'          <th md-column md-order-by="requested_fee"><span>Fee Request</span></th>\n' +
-			'          <th md-column md-order-by="contact_name"><span>Contact</span></th>\n' +
-			'          <th md-column><span></span></th>\n' +
-			'        </tr>\n' +
-			'      </thead>\n' +
-			'      <tbody md-body>\n' +
-			'        <tr md-row md-select="application" md-select-id="id" md-auto-select ng-repeat="application in $ctrl.applications | orderBy: $ctrl.query.order">\n' +
-			'          <td md-cell>{{application.name}}</td>\n' +
-			'          <td md-cell>{{application.type}}</td>\n' +
-			'          <td md-cell>{{application.town}}</td>\n' +
-			'          <td md-cell>{{application.size_of_act}} / {{application.size_of_party}}</td>\n' +
-			'          <td md-cell>{{application.requested_fee}}</td>\n' +
-			'          <td md-cell>{{application.contact_name}}</td>\n' +
-			'          <td md-cell> \n' +
-			'            <md-select ng-model="dessert.type" placeholder="Other">\n' +
-			'              <md-option ng-value="type" ng-repeat="type in getTypes()">{{type}}</md-option>\n' +
-			'            </md-select>\n' +
-			'          </td>\n' +
-			'        </tr>\n' +
-			'      </tbody>\n' +
-			'    </table>\n' +
-			'  </md-table-container>\n' +
-			'\n' +
-			'  <md-table-pagination md-limit="$ctrl.query.limit" md-page="$ctrl.query.page" md-total="{{$ctrl.applicationCount}}" md-on-paginate="$ctrl.getApplicationsBound" md-page-select></md-table-pagination>\n' +
-			'</md-card>-->');
+			'</ep-table>');
 
 		$templateCache.put('components/ep-table/ep-table.html', '<md-card>\n' +
 			'  <md-toolbar class="md-table-toolbar md-default" ng-hide="$ctrl.selected.length || $ctrl.filter.show">\n' +
@@ -162,26 +191,8 @@ angular
 			'  </md-toolbar>\n' +
 			'\n' +
 			'  <md-table-container>\n' +
-			'      <!-- image\n' +
-			'      \n' +
-			'      \n' +
-			'      size_of_act\n' +
-			'      size_of_party\n' +
-			'      requested_fee\n' +
-			'\n' +
-			'      contact_name\n' +
-			'      email\n' +
-			'      phone\n' +
-			'      link\n' +
-			'      facebook\n' +
-			'      twitter\n' +
-			'\n' +
-			'      party_names\n' +
-			'      bio\n' +
-			'      tech_specs-->\n' +
-			'\n' +
 			'    <table md-table>\n' +
-			'      <thead md-head md-row-select multiple="multiple" ng-model="$ctrl.data" md-progress="$ctrl.loading" md-order="$ctrl.query.order" md-on-reorder="$ctrl.get">\n' +
+			'      <thead md-head md-row-select="true" multiple="true" ng-model="$ctrl.data" md-progress="$ctrl.loading" md-order="$ctrl.query.order" md-on-reorder="$ctrl.get">\n' +
 			'        <tr md-row ng-include="$ctrl.headerTemplate">               \n' +
 			'        </tr>\n' +
 			'      </thead>\n' +
@@ -192,7 +203,8 @@ angular
 			'    </table>\n' +
 			'  </md-table-container>\n' +
 			'\n' +
-			'  <md-table-pagination md-limit="$ctrl.query.limit" md-page="$ctrl.query.page" md-total="{{$ctrl.count}}" md-on-paginate="$ctrl.get" md-page-select></md-table-pagination>\n' +
+			'  <md-table-pagination md-limit="$ctrl.query.limit" md-page="$ctrl.query.page" md-total="{{$ctrl.count}}" md-on-paginate="$ctrl.get" md-page-select>\n' +
+			'  </md-table-pagination>\n' +
 			'</md-card>');
 
 		$templateCache.put('components/event-planner-app/event-planner-app.html', '<div layout="column" class="app-container" ng-cloak>\n' +

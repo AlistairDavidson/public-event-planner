@@ -7,11 +7,6 @@ function permission(db) {
     }, {
         schema: 'eventplanner'
     });
-    Permission.findOrCreate({
-        where: {
-            name: 'view_profile'
-        }
-    });
     return Permission;
 }
 exports.permission = permission;

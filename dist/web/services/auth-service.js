@@ -16,6 +16,7 @@ const database_1 = require("../../common/database");
 const uuid = require("uuid");
 class AuthService {
     init(passport) {
+        let self = this;
         passport.serializeUser((user, done) => serializeUser(user, done));
         function serializeUser(user, done) {
             console.log('serialising user', user.get('uuid'));
@@ -42,7 +43,7 @@ class AuthService {
         })));
         function createUser(req, username, password, done) {
             return __awaiter(this, void 0, void 0, function* () {
-                console.log('Create User', req, username, password, done);
+                console.log('Create User', username, password);
                 let user = yield database_1.default.models.User.findOne({
                     where: {
                         username: username
@@ -54,12 +55,24 @@ class AuthService {
                 else {
                     let user = yield database_1.default.models.User.create({
                         username: username,
-                        password: this.generateHash(password),
+                        password: self.generateHash(password),
                         uuid: uuid.v4()
                     });
                     let permission = yield database_1.default.models.Permission.findOne({
                         where: {
                             name: 'view_profile'
+                        }
+                    });
+                    yield user.addPermission(permission);
+                    permission = yield database_1.default.models.Permission.findOne({
+                        where: {
+                            name: 'view_application'
+                        }
+                    });
+                    yield user.addPermission(permission);
+                    permission = yield database_1.default.models.Permission.findOne({
+                        where: {
+                            name: 'edit_application'
                         }
                     });
                     yield user.addPermission(permission);
@@ -76,7 +89,7 @@ class AuthService {
                 }
             }).then((user) => {
                 console.log('found user');
-                if (!this.validPassword(user, password) || !user) {
+                if (!self.validPassword(user, password) || !user) {
                     return done(null, false, req.flash('loginMessage', 'Username or password incorrect'));
                 }
                 return done(null, user);
@@ -91,11 +104,8 @@ class AuthService {
                 }
             }).then((user) => {
                 console.log('found user');
-                if (!user) {
-                    return done(null, false, req.flash('loginMessage', 'No user found.'));
-                }
-                if (!this.validPassword(user, password)) {
-                    return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.'));
+                if (!self.validPassword(user, password) || !user) {
+                    return done(null, false, req.flash('loginMessage', 'Username or password incorrect'));
                 }
                 return done(null, user);
             });
@@ -111,6 +121,13 @@ class AuthService {
     authorize(user, requirements) {
         return __awaiter(this, void 0, void 0, function* () {
             console.log('Hit authorize');
+            if (!user) {
+                throw {
+                    status: 403,
+                    code: 'NOT_LOGGED_IN',
+                    message: `User is not logged in`
+                };
+            }
             let permissions = yield this.permissions(user);
             console.log('Got permissions', permissions);
             // check if permissions contains one of requirements
@@ -120,8 +137,8 @@ class AuthService {
                 .length;
             if (!hasPermission) {
                 throw {
-                    status: 'NOT_PERMITTED',
-                    code: 403,
+                    status: 403,
+                    code: 'NOT_PERMITTED',
                     message: `User has none of the permissions ${requirements}`
                 };
             }

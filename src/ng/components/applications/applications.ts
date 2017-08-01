@@ -1,11 +1,14 @@
 import ApplicationService from '../../services/application-service';
 import { ActApplicationDto, RawApplicationDto, ActApplicationsDto } from '../../../common/models/act-application';
 import { MdSortDto } from '../../../common/types';
+import { element } from 'angular';
+import { ApplicationEditorController } from '../application-editor/application-editor';
 
 class ApplicationsController implements angular.IComponentController {
-    static $inject = ['applicationService'];
+    static $inject = ['applicationService', '$mdDialog'];
 
-    constructor(private applicationService: ApplicationService) {
+    constructor(private applicationService: ApplicationService,
+                private $mdDialog: ng.material.IDialogService) {
     }
 
     $onInit() {
@@ -36,8 +39,16 @@ class ApplicationsController implements angular.IComponentController {
         return applications;
     }
 
-    create() {
-
+    create(ev: ng.IAngularEvent) {
+        this.$mdDialog.show({
+            controller: ApplicationEditorController,
+            templateUrl: 'components/application-editor/application-editor.html',
+            parent: element(document.body),
+            targetEvent: ev,
+            clickOutsideToClose: true,
+            fullscreen: true,
+            controllerAs: '$ctrl'
+        } as any);
     }
 
     delete() {

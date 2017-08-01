@@ -5,7 +5,7 @@ const controllers_1 = require("./controllers");
 const web_decorators_1 = require("./services/web-decorators");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
-const session = require("express-session");
+let session = require('cookie-session');
 const passport = require("passport");
 let flash = require('connect-flash');
 let fileupload = require('express-fileupload');
@@ -28,14 +28,16 @@ class WebServer {
         this.app.use(bodyParser.text());
         //this.app.use(fileupload());
         this.app.set('view engine', 'ejs');
-        this.app.use(session({ secret: 'V[|.7jC*xE76+z=4bsF8!Jcgj]pu' }));
+        this.app.use(session({ name: 'session', secret: 'V[|.7jC*xE76+z=4bsF8!Jcgj]pu' }));
         this.app.use(passport.initialize());
         this.app.use(passport.session()); // persistent login sessions
         this.app.use(flash()); // use connect-flash for flash messages stored in session
+        this.app.use(express.static('dist/static'));
         console.log('Initing decorators');
         web_decorators_1.initDecorators(this.app);
         console.log('Initing controllers');
         this.controllers = new controllers_1.default(this.app);
+        this.app.get('/*', (req, res) => res.render('home.ejs'));
         this.server = this.app.listen(process.env.PORT || 8800, () => this.printURL());
     }
     printURL() {

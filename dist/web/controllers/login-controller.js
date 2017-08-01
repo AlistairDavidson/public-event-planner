@@ -23,41 +23,55 @@ const web_decorators_1 = require("../services/web-decorators");
 class LoginController {
     constructor(app) {
         app.post('/login', passport.authenticate('local-login', {
-            successRedirect: '/profile',
+            successRedirect: '/',
             failureRedirect: '/login',
             failureFlash: true // allow flash messages
         }));
         app.post('/signup', passport.authenticate('local-signup', {
-            successRedirect: '/profile',
+            successRedirect: '/',
             failureRedirect: '/signup',
             failureFlash: true // allow flash messages
         }));
     }
     index(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            res.render('index.ejs');
+            if (req.user) {
+                res.render('home.ejs');
+            }
+            else {
+                res.render('index.ejs');
+            }
+        });
+    }
+    home(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            res.render('home.ejs');
         });
     }
     login(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log('Hi');
-            res.render('login.ejs', { message: req.flash('loginMessage') });
+            if (req.user) {
+                res.render('home.ejs');
+            }
+            else {
+                res.render('login.ejs', { message: req.flash('loginMessage') });
+            }
         });
     }
     signup(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            res.render('signup.ejs', { message: req.flash('signupMessage') });
+            if (req.user) {
+                res.render('home.ejs');
+            }
+            else {
+                res.render('signup.ejs', { message: req.flash('signupMessage') });
+            }
         });
     }
     logout(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             req.logout();
             res.redirect('/');
-        });
-    }
-    profile(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            res.render('profile.ejs', { user: req.user.get() });
         });
     }
 }
@@ -67,6 +81,13 @@ __decorate([
     __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", Promise)
 ], LoginController.prototype, "index", null);
+__decorate([
+    web_decorators_1.GET('/home'),
+    web_decorators_1.Auth(['view_profile']),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Promise)
+], LoginController.prototype, "home", null);
 __decorate([
     web_decorators_1.GET('/login'),
     __metadata("design:type", Function),
@@ -85,11 +106,4 @@ __decorate([
     __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", Promise)
 ], LoginController.prototype, "logout", null);
-__decorate([
-    web_decorators_1.GET('/profile'),
-    web_decorators_1.Auth(['view_profile']),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
-    __metadata("design:returntype", Promise)
-], LoginController.prototype, "profile", null);
 exports.default = LoginController;

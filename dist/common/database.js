@@ -1,4 +1,12 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const SequelizeStatic = require("sequelize");
 const models_1 = require("./models");
@@ -7,23 +15,129 @@ class Database {
         this.models = models_1.default;
     }
     connect() {
-        this.db = new SequelizeStatic(process.env.DATABASE_URL, {
-            native: true
-        });
-        try {
-            return this.db
-                .authenticate()
-                .then(function (err) {
-                console.log('Database connection has been established successfully.');
-            }, function (err) {
+        return __awaiter(this, void 0, void 0, function* () {
+            this.db = new SequelizeStatic(process.env.DATABASE_URL, {
+                native: true
+            });
+            try {
+                yield this.db.authenticate();
+                yield models_1.default.init();
+                yield this.db.sync();
+            }
+            catch (err) {
                 console.log('Unable to connect to the database:', err);
-            })
-                .then(() => models_1.default.init())
-                .then(() => this.db.sync());
-        }
-        catch (e) {
-            console.error(e);
-        }
+            }
+            yield this.models.BookingStatus.findOrCreate({
+                where: {
+                    name: 'Applied',
+                    order: 0
+                }
+            });
+            yield this.models.BookingStatus.findOrCreate({
+                where: {
+                    name: 'Target',
+                    order: 1
+                }
+            });
+            yield this.models.BookingStatus.findOrCreate({
+                where: {
+                    name: 'Contacted',
+                    order: 2
+                }
+            });
+            yield this.models.BookingStatus.findOrCreate({
+                where: {
+                    name: 'Negotiating',
+                    order: 3
+                }
+            });
+            yield this.models.BookingStatus.findOrCreate({
+                where: {
+                    name: 'Booked',
+                    order: 4
+                }
+            });
+            yield this.models.BookingStatus.findOrCreate({
+                where: {
+                    name: 'Scheduled',
+                    order: 5
+                }
+            });
+            yield this.models.BookingStatus.findOrCreate({
+                where: {
+                    name: 'Complete',
+                    order: 6
+                }
+            });
+            yield this.models.BookingStatus.findOrCreate({
+                where: {
+                    name: 'Declined',
+                    order: 7
+                }
+            });
+            yield this.models.Permission.findOrCreate({
+                where: {
+                    name: 'view_profile'
+                }
+            });
+            yield this.models.Permission.findOrCreate({
+                where: {
+                    name: 'view_application'
+                }
+            });
+            yield this.models.Permission.findOrCreate({
+                where: {
+                    name: 'edit_application'
+                }
+            });
+            /****
+                TEST
+            ******/
+            yield this.models.ActApplication.findOrCreate({
+                where: {
+                    details: {
+                        name: 'Allstars',
+                        type: 'Band',
+                        contact_name: 'Alice',
+                        email: 'band@example.com',
+                        phone: '000-000-000-000',
+                        town: 'Aberdeen',
+                        link: 'http://example.com',
+                        facebook: 'http://example.com',
+                        twitter: 'http://example.com',
+                        size_of_act: 4,
+                        size_of_party: 4,
+                        party_names: 'Alice, Alex, Annabel, Ally',
+                        requested_fee: '£100',
+                        bio: 'All about alabaster',
+                        image: '',
+                        tech_specs: 'Amps'
+                    }
+                }
+            });
+            yield this.models.ActApplication.findOrCreate({
+                where: {
+                    details: {
+                        name: 'Braves',
+                        type: 'Band',
+                        contact_name: 'Bob',
+                        email: 'band@example.com',
+                        phone: '000-000-000-000',
+                        town: 'Brigton',
+                        link: 'http://example.com',
+                        facebook: 'http://example.com',
+                        twitter: 'http://example.com',
+                        size_of_act: 2,
+                        size_of_party: 2,
+                        party_names: 'Bob, Belle',
+                        requested_fee: '£200',
+                        bio: 'Brilliant',
+                        image: '',
+                        tech_specs: 'Bass'
+                    }
+                }
+            });
+        });
     }
     create() {
         return this.db.sync({ force: true })

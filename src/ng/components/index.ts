@@ -3,11 +3,14 @@ import services from '../services';
 
 import eventPlannerApp from './event-planner-app/event-planner-app';
 import applications from './applications/applications';
+import applicationEditor from './application-editor/application-editor';
 import acts from './acts/acts';
 import epTable from './ep-table/ep-table';
+
 
 export default module('event-planner.components', [ 'event-planner.services', 'ngMaterial' ])
     .component('eventPlannerApp', eventPlannerApp)
     .component('epTable', epTable)
     .component('applications', applications)
+    .component('applicationEditor', applicationEditor)
     .component('acts', acts);

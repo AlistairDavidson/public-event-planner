@@ -5,7 +5,7 @@ import { BookingStatusModel, BookingStatusAttribute, BookingStatusInstance, Book
 import { ActApplicationModel, ActApplicationInstance, ActApplicationAttribute, ActApplicationDto } from './act-application';
 
 export function booking(db: SequelizeStatic.Sequelize, BookingStatus: BookingStatusModel, ActApplication: ActApplicationModel)  {    
-    let Booking = db.define<BookingInstance, BookingAttribute>('Booking', {
+   let Booking = db.define<BookingInstance, BookingAttribute>('Booking', {
         tech_specs: SequelizeStatic.TEXT,
         size_of_act: SequelizeStatic.INTEGER,
         size_of_party: SequelizeStatic.INTEGER
