@@ -4,7 +4,11 @@ import './components';
 import ApplicationService from './services/application-service';
 import { ApplicationViewModel } from './services/application-service';
 
-module('event-planner', [ 'event-planner.components', 'event-planner.services', 'ui.router', 'ngCookies', 'templates', 'md.data.table' ])  
+module('event-planner', [ 'event-planner.components', 'event-planner.services', 'ui.router', 'ngCookies', 'templates', 'md.data.table' ])
+    .config(['$mdIconProvider', ($mdIconProvider: ng.material.IIconProvider) => {
+        $mdIconProvider
+            .iconSet('community', 'mdi.svg');
+    }])         
     .config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$mdIconProvider',
         function($stateProvider: ng.ui.IStateProvider,
                  $urlRouterProvider: ng.ui.IUrlRouterProvider,

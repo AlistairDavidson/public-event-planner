@@ -140,11 +140,17 @@ angular
 			'            <p>{{ $ctrl.application.bio }}</p>\n' +
 			'        </md-card-title-text>\n' +
 			'    </md-card-title>\n' +
-			'    \n' +
+			'\n' +
 			'    <md-card-actions layout="row" layout-align="end center">\n' +
-			'        <md-button href="{{ $ctrl.application.link }}" target="_blank">Website</md-button>\n' +
-			'        <md-button href="{{ $ctrl.application.facebook }}" target="_blank">Facebook</md-button>\n' +
-			'        <md-button href="{{ $ctrl.application.twitter }}" target="_blank">Twitter</md-button>\n' +
+			'        <md-button ng-if="$ctrl.application.link" href="{{ $ctrl.application.link }}" target="_blank">\n' +
+			'            <md-icon>link</md-icon> Website\n' +
+			'        </md-button>\n' +
+			'        <md-button ng-if="$ctrl.application.facebook" href="{{ $ctrl.application.facebook }}" target="_blank">\n' +
+			'            <md-icon md-svg-icon="community:facebook"></md-icon> Facebook\n' +
+			'        </md-button>\n' +
+			'        <md-button ng-if="$ctrl.application.twitter" href="{{ $ctrl.application.twitter }}" target="_blank">\n' +
+			'            <md-icon md-svg-icon="community:twitter"></md-icon> Twitter\n' +
+			'        </md-button>\n' +
 			'    </md-card-actions>\n' +
 			'</md-card>');
 
@@ -298,19 +304,19 @@ angular
 			'      <md-menu-content width="4">\n' +
 			'        <md-menu-item>\n' +
 			'          <md-button ng-if="data.link" ng-href="{{ data.link }}" target="_blank">\n' +
-			'            Website\n' +
+			'            <md-icon>link</md-icon> Website\n' +
 			'          </md-button>\n' +
 			'        </md-menu-item>\n' +
 			'        \n' +
 			'        <md-menu-item>\n' +
 			'          <md-button ng-if="data.facebook" ng-href="{{ data.facebook }}" target="_blank">\n' +
-			'            Facebook\n' +
+			'            <md-icon md-svg-icon="community:facebook"></md-icon> Facebook\n' +
 			'          </md-button>\n' +
 			'        </md-menu-item>\n' +
 			'\n' +
 			'        <md-menu-item>\n' +
 			'          <md-button ng-if="data.twitter" ng-href="{{ data.twitter }}" target="_blank">\n' +
-			'            Twitter\n' +
+			'            <md-icon md-svg-icon="community:twitter"></md-icon> Twitter\n' +
 			'          </md-button>\n' +
 			'        </md-menu-item>\n' +
 			'      </md-menu-content>\n' +
@@ -931,6 +937,10 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     angular_1.module('event-planner', ['event-planner.components', 'event-planner.services', 'ui.router', 'ngCookies', 'templates', 'md.data.table'])
+        .config(['$mdIconProvider', function ($mdIconProvider) {
+            $mdIconProvider
+                .iconSet('community', 'mdi.svg');
+        }])
         .config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$mdIconProvider',
         function ($stateProvider, $urlRouterProvider, $locationProvider, $mdIconProvider) {
             $mdIconProvider
