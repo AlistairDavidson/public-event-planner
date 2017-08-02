@@ -345,7 +345,7 @@ angular
 			'    <div class="md-toolbar-tools">\n' +
 			'      <h2 class="md-title">{{ $ctrl.title }}</h2>\n' +
 			'      <div flex></div>\n' +
-			'      <md-button class="md-icon-button" ng-click="$ctrl.filter.show = true">\n' +
+			'      <md-button class="md-icon-button" ng-click="$ctrl.showFilter()">\n' +
 			'        <md-icon>search</md-icon>\n' +
 			'      </md-button>\n' +
 			'      <md-button class="md-icon-button" ng-click="$ctrl.create($event)">\n' +
@@ -359,7 +359,7 @@ angular
 			'      <md-icon>search</md-icon>\n' +
 			'      <form flex name="$ctrl.form">\n' +
 			'        <md-input-container class="filter-container">\n' +
-			'          <input ng-model="$ctrl.query.filter" ng-model-options="$ctrl.filter.options">\n' +
+			'          <input ng-model="$ctrl.query.filter" ng-model-options="$ctrl.filter.options" aria-label="Filter table" id="table-filter">\n' +
 			'        </md-input-container>\n' +
 			'      </form>\n' +
 			'      <md-button class="md-icon-button" ng-click="$ctrl.hideFilter()">\n' +
@@ -1119,6 +1119,10 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 }
                 return 'home';
             },
+            set: function (value) {
+                // do nothing! :)
+                // state changes happen through ui-sref links
+            },
             enumerable: true,
             configurable: true
         });
@@ -1139,7 +1143,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 /* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(0)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, angular_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var EpTableController = (function () {
@@ -1152,6 +1156,12 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 limit: 100,
                 page: 1,
                 filter: ''
+            };
+            this.filter = {
+                show: false,
+                options: {
+                    debounce: 300
+                }
             };
             this.get = this.get.bind(this);
         }
@@ -1173,6 +1183,10 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
             var _this = this;
             return this.loading = this.onCreate()
                 .then(function () { return _this.get(); });
+        };
+        EpTableController.prototype.showFilter = function () {
+            this.filter.show = true;
+            angular_1.element('#table-filter').focus();
         };
         EpTableController.prototype.hideFilter = function () {
             this.filter.show = false;

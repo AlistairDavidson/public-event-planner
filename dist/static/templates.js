@@ -222,7 +222,7 @@ angular
 			'    <div class="md-toolbar-tools">\n' +
 			'      <h2 class="md-title">{{ $ctrl.title }}</h2>\n' +
 			'      <div flex></div>\n' +
-			'      <md-button class="md-icon-button" ng-click="$ctrl.filter.show = true">\n' +
+			'      <md-button class="md-icon-button" ng-click="$ctrl.showFilter()">\n' +
 			'        <md-icon>search</md-icon>\n' +
 			'      </md-button>\n' +
 			'      <md-button class="md-icon-button" ng-click="$ctrl.create($event)">\n' +
@@ -236,7 +236,7 @@ angular
 			'      <md-icon>search</md-icon>\n' +
 			'      <form flex name="$ctrl.form">\n' +
 			'        <md-input-container class="filter-container">\n' +
-			'          <input ng-model="$ctrl.query.filter" ng-model-options="$ctrl.filter.options">\n' +
+			'          <input ng-model="$ctrl.query.filter" ng-model-options="$ctrl.filter.options" aria-label="Filter table" id="table-filter">\n' +
 			'        </md-input-container>\n' +
 			'      </form>\n' +
 			'      <md-button class="md-icon-button" ng-click="$ctrl.hideFilter()">\n' +

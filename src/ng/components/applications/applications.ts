@@ -18,6 +18,12 @@ class ApplicationsController implements angular.IComponentController {
 
         return 'home';
     }
+
+
+    set currentNavItem(value: string) {
+        // do nothing! :)
+        // state changes happen through ui-sref links
+    }
 }
 
 let options: angular.IComponentOptions = {

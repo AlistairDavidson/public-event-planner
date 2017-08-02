@@ -3,7 +3,7 @@
     <div class="md-toolbar-tools">
       <h2 class="md-title">{{ $ctrl.title }}</h2>
       <div flex></div>
-      <md-button class="md-icon-button" ng-click="$ctrl.filter.show = true">
+      <md-button class="md-icon-button" ng-click="$ctrl.showFilter()">
         <md-icon>search</md-icon>
       </md-button>
       <md-button class="md-icon-button" ng-click="$ctrl.create($event)">
@@ -17,7 +17,7 @@
       <md-icon>search</md-icon>
       <form flex name="$ctrl.form">
         <md-input-container class="filter-container">
-          <input ng-model="$ctrl.query.filter" ng-model-options="$ctrl.filter.options">
+          <input ng-model="$ctrl.query.filter" ng-model-options="$ctrl.filter.options" aria-label="Filter table" id="table-filter">
         </md-input-container>
       </form>
       <md-button class="md-icon-button" ng-click="$ctrl.hideFilter()">

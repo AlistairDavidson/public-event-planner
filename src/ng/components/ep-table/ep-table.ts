@@ -1,6 +1,7 @@
 import ApplicationService from '../../services/application-service';
 import { ActApplicationDto, RawApplicationDto, ActApplicationsDto } from '../../../common/models/act-application';
 import { MdSortDto } from '../../../common/types';
+import { element } from 'angular';
 
 class EpTableController implements angular.IComponentController {
     static $inject = ['$scope']
@@ -24,7 +25,7 @@ class EpTableController implements angular.IComponentController {
         filter: ''
     }
 
-    filter: {
+    filter = {
         show: false,
         options: {
             debounce: 300
@@ -53,6 +54,11 @@ class EpTableController implements angular.IComponentController {
     create() {
         return this.loading = this.onCreate()
             .then(() => this.get());
+    }
+
+    showFilter() {
+        this.filter.show = true;
+        (element('#table-filter') as any).focus();
     }
 
     hideFilter() {
