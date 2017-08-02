@@ -272,12 +272,12 @@ angular
 			'</md-card>');
 
 		$templateCache.put('components/event-planner-app/event-planner-app.html', '<div layout="column" class="app-container" ng-cloak>\n' +
-			'  <md-toolbar md-scroll-shrink>\n' +
-			'    <div class="md-toolbar-tools">\n' +
-			'      <md-button hide-gt-sm aria-label="Menu" class="md-fab md-menu-button fixed" ng-click="$ctrl.openSidenav()">                        \n' +
-			'            <md-icon>&#xE5D2;</md-icon>    \n' +
-			'      </md-button>\n' +
+			'  <md-button hide-gt-sm aria-label="Menu" class="md-fab md-menu-button fixed" ng-click="$ctrl.openSidenav()">                        \n' +
+			'        <md-icon>&#xE5D2;</md-icon>    \n' +
+			'  </md-button>\n' +
 			'\n' +
+			'  <md-toolbar md-scroll-shrink show-gt-sm>\n' +
+			'    <div class="md-toolbar-tools">\n' +
 			'      <h3>\n' +
 			'        <span>Event Planner</span>\n' +
 			'      </h3>\n' +
