@@ -399,21 +399,21 @@ angular
 			'        <md-icon>&#xE5D2;</md-icon>    \n' +
 			'  </md-button>\n' +
 			'\n' +
-			'  <md-toolbar md-scroll-shrink show-gt-sm>\n' +
+			'  <md-toolbar md-scroll-shrink hide-xs hide-sm>\n' +
 			'    <div class="md-toolbar-tools">\n' +
 			'      <h3>\n' +
 			'        <span>Event Planner</span>\n' +
 			'      </h3>\n' +
 			'\n' +
-			'      <md-button ui-sref="home" ng-disabled="$ctrl.currentNavItem == \'home\'">\n' +
+			'      <md-button ui-sref="home">\n' +
 			'        Home\n' +
 			'      </md-button>\n' +
 			'\n' +
-			'      <md-button ui-sref="applications.summary" ng-disabled="/application/.test($ctrl.currentNavItem)">\n' +
+			'      <md-button ui-sref="applications.summary">\n' +
 			'        Applications\n' +
 			'      </md-button>\n' +
 			'\n' +
-			'      <md-button ui-sref="acts" ng-disabled="$ctrl.currentNavItem == \'acts\'">\n' +
+			'      <md-button ui-sref="acts">\n' +
 			'        Acts\n' +
 			'      </md-button>\n' +
 			'    </div>\n' +
@@ -426,19 +426,19 @@ angular
 			'        <md-button class="md-icon-button" ng-click="$ctrl.closeSidenav()">\n' +
 			'          <md-icon>&#xE5D2;</md-icon>\n' +
 			'        </md-button>\n' +
-			'        <span class="toolbar-title">Menu</span>\n' +
+			'        <span class="toolbar-title">Event Planner</span>\n' +
 			'      </h1>\n' +
 			'    </md-toolbar>\n' +
 			'    <md-content layout-padding layout="column">\n' +
-			'      <md-button ui-sref="home" ng-click="$ctrl.closeSidenav()" ng-disabled="$ctrl.currentNavItem == \'home\'" class="md-raised md-primary md-hue-2">\n' +
+			'      <md-button ui-sref="home" ng-click="$ctrl.closeSidenav()" class="md-raised md-primary md-hue-2">\n' +
 			'        Home\n' +
 			'      </md-button>\n' +
 			'      <br>\n' +
-			'      <md-button ui-sref="applications.summary" ng-click="$ctrl.closeSidenav()" ng-disabled="$ctrl.currentNavItem == \'applications.summary\'" class="md-raised md-primary md-hue-2">\n' +
+			'      <md-button ui-sref="applications.summary" ng-click="$ctrl.closeSidenav()" class="md-raised md-primary md-hue-2">\n' +
 			'        Applications\n' +
 			'      </md-button>\n' +
 			'      <br>\n' +
-			'      <md-button ui-sref="acts" ng-click="$ctrl.closeSidenav()" ng-disabled="$ctrl.currentNavItem == \'acts\'" class="md-raised md-primary md-hue-2">\n' +
+			'      <md-button ui-sref="acts" ng-click="$ctrl.closeSidenav()" class="md-raised md-primary md-hue-2">\n' +
 			'        Acts\n' +
 			'      </md-button>\n' +
 			'      <br>      \n' +
@@ -1266,20 +1266,6 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         EventPlannerAppController.prototype.closeSidenav = function () {
             this.$mdSidenav('left').close();
         };
-        Object.defineProperty(EventPlannerAppController.prototype, "currentNavItem", {
-            get: function () {
-                if (this.$state && this.$state.current && this.$state.current.name) {
-                    return this.$state.current.name;
-                }
-                return 'home';
-            },
-            set: function (value) {
-                // do nothing! :)
-                // state changes happen through ui-sref links
-            },
-            enumerable: true,
-            configurable: true
-        });
         EventPlannerAppController.$inject = ['$window', '$mdSidenav', '$state'];
         return EventPlannerAppController;
     }());

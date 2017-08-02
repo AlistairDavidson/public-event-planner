@@ -6,21 +6,21 @@
         <md-icon>&#xE5D2;</md-icon>    
   </md-button>
 
-  <md-toolbar md-scroll-shrink show-gt-sm>
+  <md-toolbar md-scroll-shrink hide-xs hide-sm>
     <div class="md-toolbar-tools">
       <h3>
         <span>Event Planner</span>
       </h3>
 
-      <md-button ui-sref="home" ng-disabled="$ctrl.currentNavItem == 'home'">
+      <md-button ui-sref="home">
         Home
       </md-button>
 
-      <md-button ui-sref="applications.summary" ng-disabled="/application/.test($ctrl.currentNavItem)">
+      <md-button ui-sref="applications.summary">
         Applications
       </md-button>
 
-      <md-button ui-sref="acts" ng-disabled="$ctrl.currentNavItem == 'acts'">
+      <md-button ui-sref="acts">
         Acts
       </md-button>
     </div>
@@ -36,19 +36,19 @@
         <md-button class="md-icon-button" ng-click="$ctrl.closeSidenav()">
           <md-icon>&#xE5D2;</md-icon>
         </md-button>
-        <span class="toolbar-title">Menu</span>
+        <span class="toolbar-title">Event Planner</span>
       </h1>
     </md-toolbar>
     <md-content layout-padding layout="column">
-      <md-button ui-sref="home" ng-click="$ctrl.closeSidenav()" ng-disabled="$ctrl.currentNavItem == 'home'" class="md-raised md-primary md-hue-2">
+      <md-button ui-sref="home" ng-click="$ctrl.closeSidenav()" class="md-raised md-primary md-hue-2">
         Home
       </md-button>
       <br/>
-      <md-button ui-sref="applications.summary" ng-click="$ctrl.closeSidenav()" ng-disabled="$ctrl.currentNavItem == 'applications.summary'" class="md-raised md-primary md-hue-2">
+      <md-button ui-sref="applications.summary" ng-click="$ctrl.closeSidenav()" class="md-raised md-primary md-hue-2">
         Applications
       </md-button>
       <br/>
-      <md-button ui-sref="acts" ng-click="$ctrl.closeSidenav()" ng-disabled="$ctrl.currentNavItem == 'acts'" class="md-raised md-primary md-hue-2">
+      <md-button ui-sref="acts" ng-click="$ctrl.closeSidenav()" class="md-raised md-primary md-hue-2">
         Acts
       </md-button>
       <br/>      
