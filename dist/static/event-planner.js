@@ -1422,13 +1422,17 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         }
         ApplicationService.prototype.list = function (query) {
             var _this = this;
-            if (query === void 0) { query = {}; }
-            var listQuery;
-            if (query.filter) {
-                listQuery = helper_1.queryToRequest(query);
+            var queryString;
+            if (query) {
+                var listQuery = helper_1.queryToRequest(query);
+                listQuery.eventId = this.$stateParams.event;
+                queryString = this.$httpParamSerializer(listQuery);
             }
-            listQuery.eventId = this.$stateParams.event;
-            var queryString = this.$httpParamSerializer(listQuery);
+            else {
+                queryString = this.$httpParamSerializer({
+                    eventId: this.$stateParams.event
+                });
+            }
             var url = settings_1.default.api + "/application/list?" + queryString;
             return this.$http.get(url)
                 .then(function (response) { return response.data; })
@@ -1446,6 +1450,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 .then(function (response) { return response.data; });
         };
         ApplicationService.prototype.save = function (data) {
+            data.EventId = this.$stateParams.event;
             return this.$http.post(settings_1.default.api + "/application/save", data)
                 .then(function (response) { return response.data; });
         };

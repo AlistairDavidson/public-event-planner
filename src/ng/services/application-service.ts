@@ -16,16 +16,19 @@ export default class ApplicationService {
 
     }
 
-    list(query: MdSortDto = {}) {
-        let listQuery: ListDto;
-        
-        if(query.filter) {
-            listQuery = queryToRequest(query);
-        }
+    list(query?: MdSortDto) {
+        let queryString: string;
 
-        listQuery.eventId = this.$stateParams.event;
+        if(query) {
+           let listQuery = queryToRequest(query);
+           listQuery.eventId = this.$stateParams.event;
+           queryString = this.$httpParamSerializer(listQuery);         
+        } else {
+            queryString = this.$httpParamSerializer({
+                eventId: this.$stateParams.event
+            });
+        }    
 
-        let queryString = this.$httpParamSerializer(listQuery);            
         let url = `${settings.api}/application/list?${queryString}`;
 
         return this.$http.get(url)
