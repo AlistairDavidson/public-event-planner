@@ -7,25 +7,21 @@ angular
 	.run(['$templateCache', function($templateCache) {
 		$templateCache.put('components/acts/acts.html', '');
 
-		$templateCache.put('components/application-card/application-card.html', '{{ $ctrl.application }}\n' +
-			'\n' +
-			'<md-card>\n' +
+		$templateCache.put('components/application-card/application-card.html', '<md-card>\n' +
 			'    <md-card-title>\n' +
 			'        <md-card-title-text>\n' +
 			'            <span class="md-headline">{{ $ctrl.application.name }}</span>\n' +
 			'            <span class="md-subhead">{{ $ctrl.application.type }}, {{ $ctrl.application.town }}, {{ $ctrl.application.requested_fee }}</span>\n' +
 			'            <p>{{ $ctrl.application.bio }}</p>\n' +
 			'        </md-card-title-text>\n' +
-			'        <md-card-title-media>\n' +
-			'            <div class="md-media-lg card-media">\n' +
-			'                <img ng-if="$ctrl.application.image" src="{{ $ctrl.application.image }}">\n' +
-			'            </div>\n' +
+			'        <md-card-title-media>        \n' +
+			'            <img ng-if="$ctrl.application.image" src="{{ $ctrl.application.image }}" class="md-media-lg card-media">\n' +
 			'        </md-card-title-media>\n' +
 			'    </md-card-title>\n' +
 			'    <md-card-actions layout="row" layout-align="end center">\n' +
-			'        <md-button href="{{ $ctrl.application.link }}">Website</md-button>\n' +
-			'        <md-button href="{{ $ctrl.application.facebook }}">Facebook</md-button>\n' +
-			'        <md-button href="{{ $ctrl.application.twitter }}">Twitter</md-button>\n' +
+			'        <md-button href="{{ $ctrl.application.link }}" target="_blank">Website</md-button>\n' +
+			'        <md-button href="{{ $ctrl.application.facebook }}" target="_blank">Facebook</md-button>\n' +
+			'        <md-button href="{{ $ctrl.application.twitter }}" target="_blank">Twitter</md-button>\n' +
 			'    </md-card-actions>\n' +
 			'</md-card>');
 
@@ -148,8 +144,10 @@ angular
 			'    </md-dialog-actions>\n' +
 			'</md-dialog>');
 
-		$templateCache.put('components/applications-summary/applications-summary.html', '<application-card ng-repeat="application in $ctrl.applications" application="application">\n' +
-			'</application-card>');
+		$templateCache.put('components/applications-summary/applications-summary.html', '<div flex-gt-sm="66">\n' +
+			'    <application-card ng-repeat="application in $ctrl.applications" application="application">\n' +
+			'    </application-card>\n' +
+			'</div>');
 
 		$templateCache.put('components/applications-table/applications-table.html', '<script type="text/ng-template" id="/applications-header.html">\n' +
 			'  <th md-column md-order-by="createdAt"><span>Recieved</span></th>\n' +
