@@ -199,11 +199,11 @@ angular
 			'</ep-table>');
 
 		$templateCache.put('components/applications/applications.html', '<md-nav-bar md-selected-nav-item="$ctrl.currentNavItem">\n' +
-			'    <md-nav-item md-nav-sref="applications.summary" name="applications_summary">\n' +
+			'    <md-nav-item md-nav-sref="applications.summary" name="applications.summary">\n' +
 			'        Summary\n' +
 			'    </md-nav-item>\n' +
 			'\n' +
-			'    <md-nav-item md-nav-sref="applications.detail" name="applications_details">\n' +
+			'    <md-nav-item md-nav-sref="applications.detail" name="applications.detail">\n' +
 			'        Details\n' +
 			'    </md-nav-item>\n' +
 			'</md-nav-bar>\n' +

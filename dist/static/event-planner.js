@@ -322,11 +322,11 @@ angular
 			'</ep-table>');
 
 		$templateCache.put('components/applications/applications.html', '<md-nav-bar md-selected-nav-item="$ctrl.currentNavItem">\n' +
-			'    <md-nav-item md-nav-sref="applications.summary" name="applications_summary">\n' +
+			'    <md-nav-item md-nav-sref="applications.summary" name="applications.summary">\n' +
 			'        Summary\n' +
 			'    </md-nav-item>\n' +
 			'\n' +
-			'    <md-nav-item md-nav-sref="applications.detail" name="applications_details">\n' +
+			'    <md-nav-item md-nav-sref="applications.detail" name="applications.detail">\n' +
 			'        Details\n' +
 			'    </md-nav-item>\n' +
 			'</md-nav-bar>\n' +
@@ -1099,11 +1099,20 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var ApplicationsController = (function () {
-        function ApplicationsController() {
-            this.currentNavItem = 'applications_summary';
+        function ApplicationsController($state) {
+            this.$state = $state;
         }
-        ApplicationsController.prototype.$onInit = function () {
-        };
+        Object.defineProperty(ApplicationsController.prototype, "currentNavItem", {
+            get: function () {
+                if (this.$state && this.$state.current && this.$state.current.name) {
+                    return this.$state.current.name;
+                }
+                return 'home';
+            },
+            enumerable: true,
+            configurable: true
+        });
+        ApplicationsController.$inject = ['$state'];
         return ApplicationsController;
     }());
     var options = {
