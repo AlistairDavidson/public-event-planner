@@ -1,9 +1,16 @@
 class EventPlannerAppController implements angular.IComponentController {
-    constructor() {
+    constructor(private $window: ng.IWindowService,
+                private $mdSidenav: ng.material.ISidenavService) {
 
     }
 
-    $onInit() {
+    openSidenav() {
+        this.$window.scrollTo(0, 0);
+        this.$mdSidenav('left').open();
+    }
+
+    closeSidenav() {
+        this.$mdSidenav('left').close();
     }
 }
 

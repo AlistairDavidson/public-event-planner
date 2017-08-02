@@ -1,6 +1,13 @@
 <div layout="column" class="app-container" ng-cloak>
   <md-toolbar md-scroll-shrink>
     <div class="md-toolbar-tools">
+      <md-button  hide-gt-sm
+                  aria-label="Menu" 
+                  class="md-fab md-menu-button fixed"
+                  ng-click="$ctrl.openSidenav()">                        
+            <md-icon>&#xE5D2;</md-icon>    
+      </md-button>
+
       <h3>
         <span>Event Planner</span>
       </h3>
@@ -19,6 +26,35 @@
     </div>
   </md-toolbar>
 
+  <md-sidenav
+    class="md-sidenav-left"
+    md-component-id="left"        
+    md-whiteframe="4">
+
+    <md-toolbar>
+      <h1 class="md-toolbar-tools">
+        <md-button class="md-icon-button" ng-click="$ctrl.closeSidenav()">
+          <md-icon>&#xE5D2;</md-icon>
+        </md-button>
+        <span class="toolbar-title">Menu</span>
+      </h1>
+    </md-toolbar>
+    <md-content layout-padding layout="column">
+      <md-button ui-sref="home" ng-click="$ctrl.closeSidenav()" ng-disabled="$ctrl.currentNavItem == 'home'" class="md-raised md-primary md-hue-2">
+        Home
+      </md-button>
+      <br/>
+      <md-button ui-sref="applications.summary" ng-click="$ctrl.closeSidenav()" ng-disabled="$ctrl.currentNavItem == 'applications.summary'" class="md-raised md-primary md-hue-2">
+        Applications
+      </md-button>
+      <br/>
+      <md-button ui-sref="acts" ng-click="$ctrl.closeSidenav()" ng-disabled="$ctrl.currentNavItem == 'acts'" class="md-raised md-primary md-hue-2">
+        Acts
+      </md-button>
+      <br/>      
+    </md-content>
+  </md-sidenav>
+  
   <md-content flex>
     <ui-view></ui-view>
   </md-content>
