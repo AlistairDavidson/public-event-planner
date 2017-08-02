@@ -1,0 +1,70 @@
+<md-card>
+  <md-toolbar class="md-table-toolbar md-default" ng-hide="$ctrl.selected.length || $ctrl.filter.show">
+    <div class="md-toolbar-tools">
+      <h2 class="md-title">{{ $ctrl.title }}</h2>
+      <div flex></div>
+      <md-button class="md-icon-button" ng-click="$ctrl.filter.show = true">
+        <md-icon>search</md-icon>
+      </md-button>
+      <md-button class="md-icon-button" ng-click="$ctrl.create($event)">
+        <md-icon>add</md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+
+  <md-toolbar class="md-table-toolbar md-default" ng-show="$ctrl.filter.show && !$ctrl.selected.length">
+    <div class="md-toolbar-tools">
+      <md-icon>search</md-icon>
+      <form flex name="$ctrl.form">
+        <md-input-container class="filter-container">
+          <input ng-model="$ctrl.query.filter" ng-model-options="$ctrl.filter.options">
+        </md-input-container>
+      </form>
+      <md-button class="md-icon-button" ng-click="$ctrl.hideFilter()">
+        <md-icon>close</md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+
+  <md-toolbar class="md-table-toolbar alternate" ng-show="$ctrl.selected.length">
+    <div class="md-toolbar-tools" layout-align="space-between">      
+      <div>{{$ctrl.data.length}} {{$ctrl.selected.length > 1 ? 'items' : 'item'}} selected</div>
+      <md-button class="md-icon-button" ng-click="$ctrl.delete($event)">
+        <md-icon>delete</md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+
+  <md-table-container>
+    <table md-table>
+      <thead md-head
+             md-row-select="true"
+             multiple="true"
+             ng-model="$ctrl.data"
+             md-progress="$ctrl.loading"
+             md-order="$ctrl.query.order"
+             md-on-reorder="$ctrl.get">
+        <tr md-row ng-include="$ctrl.headerTemplate">               
+        </tr>
+      </thead>
+      <tbody md-body>
+        <tr md-row
+            md-select="row"
+            md-select-id="id"
+            md-auto-select
+            ng-repeat="row in $ctrl.data | orderBy: $ctrl.query.order"
+            ng-include="$ctrl.cellTemplate"
+            onload="data = row">        
+        </tr>
+      </tbody>
+    </table>
+  </md-table-container>
+
+  <md-table-pagination
+    md-limit="$ctrl.query.limit"
+    md-page="$ctrl.query.page"
+    md-total="{{$ctrl.count}}"
+    md-on-paginate="$ctrl.get"
+    md-page-select>
+  </md-table-pagination>
+</md-card>

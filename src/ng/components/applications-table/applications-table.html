@@ -1,0 +1,53 @@
+<script type="text/ng-template" id="/applications-header.html">
+  <th md-column md-order-by="createdAt"><span>Recieved</span></th>
+  <th md-column md-order-by="name"><span>Name</span></th>
+  <th md-column md-order-by="type"><span>Type</span></th>
+  <th md-column md-order-by="town"><span>Town</span></th>
+  <th md-column md-order-by="size_of_party"><span>Size</span></th>
+  <th md-column md-order-by="requested_fee"><span>Fee Request</span></th>
+  <th md-column><span></span></th>
+</script>
+
+<script type="text/ng-template" id="/applications-cell.html">
+  <td md-cell>{{ data.createdAt | date: 'mediumDate' }}</td>
+  <td md-cell>{{ data.name }}</td>
+  <td md-cell>{{ data.type }}</td>
+  <td md-cell>{{ data.town }}</td>
+  <td md-cell>{{ data.size_of_act }} / {{ data.size_of_party }}</td>
+  <td md-cell>{{ data.requested_fee }}</td>
+  <td md-cell> 
+    <md-menu>
+      <md-button aria-label="Application contact menu" class="md-icon-button" ng-click="$mdMenu.open($event)">
+        <md-icon md-menu-origin>phone</md-icon>
+      </md-button>
+
+      <md-menu-content width="4">
+        <md-menu-item>
+          <md-button ng-if="data.link" ng-href="{{ data.link }}" target="_blank">
+            <md-icon>link</md-icon> Website
+          </md-button>
+        </md-menu-item>
+        
+        <md-menu-item>
+          <md-button ng-if="data.facebook" ng-href="{{ data.facebook }}" target="_blank">
+            <md-icon md-svg-icon="community:facebook"></md-icon> Facebook
+          </md-button>
+        </md-menu-item>
+
+        <md-menu-item>
+          <md-button ng-if="data.twitter" ng-href="{{ data.twitter }}" target="_blank">
+            <md-icon md-svg-icon="community:twitter"></md-icon> Twitter
+          </md-button>
+        </md-menu-item>
+      </md-menu-content>
+    </md-menu>
+  </td>
+</script>
+
+<ep-table
+  title="'Applications'"
+  on-list="$ctrl.getApplications(query)"
+  on-create="$ctrl.create()"
+  header-template="'/applications-header.html'"
+  cell-template="'/applications-cell.html'">
+</ep-table>
