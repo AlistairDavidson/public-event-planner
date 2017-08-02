@@ -4,7 +4,7 @@ export function queryToRequest(query: MdSortDto) {
     let field = query.order;
     let order = 'ASC';
 
-    if(field[0] == '-') {
+    if(field && field[0] == '-') {
         field = field.slice(1);
         order = 'DESC';
     }

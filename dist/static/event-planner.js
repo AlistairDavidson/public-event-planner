@@ -126,7 +126,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
     function queryToRequest(query) {
         var field = query.order;
         var order = 'ASC';
-        if (field[0] == '-') {
+        if (field && field[0] == '-') {
             field = field.slice(1);
             order = 'DESC';
         }
@@ -1423,8 +1423,11 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         ApplicationService.prototype.list = function (query) {
             var _this = this;
             if (query === void 0) { query = {}; }
-            query.eventId = this.$stateParams.event;
-            var listQuery = helper_1.queryToRequest(query);
+            var listQuery;
+            if (query.filter) {
+                listQuery = helper_1.queryToRequest(query);
+            }
+            listQuery.eventId = this.$stateParams.event;
             var queryString = this.$httpParamSerializer(listQuery);
             var url = settings_1.default.api + "/application/list?" + queryString;
             return this.$http.get(url)

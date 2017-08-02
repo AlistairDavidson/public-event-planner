@@ -1,7 +1,7 @@
 import { ActApplicationDto, RawApplicationDto, ActApplicationsDto } from '../../common/models/act-application';
 import { queryToRequest } from './helper';
 import settings from '../settings';
-import { MdSortDto } from '../../common/types';
+import { MdSortDto, ListDto } from '../../common/types';
 import { element } from 'angular';
 import { ApplicationEditorController } from '../components/application-editor/application-editor';
 
@@ -17,9 +17,14 @@ export default class ApplicationService {
     }
 
     list(query: MdSortDto = {}) {
-        query.eventId = this.$stateParams.event;
+        let listQuery: ListDto;
+        
+        if(query.filter) {
+            listQuery = queryToRequest(query);
+        }
 
-        let listQuery = queryToRequest(query);
+        listQuery.eventId = this.$stateParams.event;
+
         let queryString = this.$httpParamSerializer(listQuery);            
         let url = `${settings.api}/application/list?${queryString}`;
 
@@ -41,6 +46,8 @@ export default class ApplicationService {
     }
 
     save(data: ActApplicationDto) {
+        data.EventId = this.$stateParams.event;
+
         return this.$http.post(`${settings.api}/application/save`, data)
             .then(response => (response.data as ActApplicationDto));
     }
