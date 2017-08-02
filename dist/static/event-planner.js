@@ -460,9 +460,8 @@ angular
 			'        Acts\n' +
 			'      </md-button>\n' +
 			'\n' +
-			'    \n' +
 			'      <md-select ng-model="$ctrl.selectedEvent" ng-change="$ctrl.switchEvent()" aria-label="Switch events" class="md-no-underline">\n' +
-			'                  \n' +
+			'\n' +
 			'        <md-option ng-repeat="event in $ctrl.events" ng-value="event.id">\n' +
 			'          {{ event.name }}\n' +
 			'        </md-option>\n' +
@@ -1346,7 +1345,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
             console.log('Switching to', this.selectedEvent);
             var state = this.currentNavItem;
             if (state == 'default') {
-                state = 'root';
+                state = 'root.home';
             }
             this.$state.go(state, { event: this.selectedEvent });
         };

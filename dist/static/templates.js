@@ -294,9 +294,8 @@ angular
 			'        Acts\n' +
 			'      </md-button>\n' +
 			'\n' +
-			'    \n' +
 			'      <md-select ng-model="$ctrl.selectedEvent" ng-change="$ctrl.switchEvent()" aria-label="Switch events" class="md-no-underline">\n' +
-			'                  \n' +
+			'\n' +
 			'        <md-option ng-repeat="event in $ctrl.events" ng-value="event.id">\n' +
 			'          {{ event.name }}\n' +
 			'        </md-option>\n' +
