@@ -9,20 +9,21 @@ module('event-planner', [ 'event-planner.components', 'event-planner.services', 
         $mdIconProvider
             .iconSet('community', 'mdi.svg');
     }])         
-    .config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$mdIconProvider',
+    .config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
         function($stateProvider: ng.ui.IStateProvider,
                  $urlRouterProvider: ng.ui.IUrlRouterProvider,
-                 $locationProvider: ng.ILocationProvider,
-                 $mdIconProvider: ng.material.IIconProvider) {
-
-        $mdIconProvider
-            .iconSet('community', 'mdi.svg');
+                 $locationProvider: ng.ILocationProvider) {
 
         $locationProvider.html5Mode(true);
 
-        $urlRouterProvider.otherwise('/mugstock2018');
+        $urlRouterProvider.otherwise('/');
         
         $stateProvider                       
+            .state({
+                name: 'default',
+                url: '/',
+                template: `<md-progress-circular md-mode="indeterminate" class="loading"></md-progress-circular>`
+            })
             .state({
                 name: 'root',
                 url: '/{event}',

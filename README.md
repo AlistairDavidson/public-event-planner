@@ -7,8 +7,9 @@ Copyright (C) 2017 Alistair Davidson <alistair.l.davidson@gmail.com>
 TODO
 
 Applications should be tied to events on create and list
-    Event should be in all routes
-    Event selection menu
+    Event selection menu - an ng-select type thing
+    If no event selected, auto-select most recent
+    Store last event in cookie
     Events need unique codes (eg 'mugstock2018')
 
 Application to booking, act, and contact. Act and contact may already exist...

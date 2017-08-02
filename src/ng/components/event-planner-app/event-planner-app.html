@@ -23,6 +23,17 @@
       <md-button ui-sref="root.acts">
         Acts
       </md-button>
+
+      <md-input-container>
+        <label>Event</label>
+        <md-select ng-model="ctrl.selectedEvent">
+          <md-option><em>Choose an event</em></md-option>
+          <md-option ng-repeat="event in $ctrl.events" ng-value="event.id">
+            <a ui-sref="{{$ctrl.currentNavItem}}({ event: event.id })">{{ event.name }}</a>
+          </md-option>
+        </md-select>
+      </md-input-container>
+
     </div>
   </md-toolbar>
 
@@ -52,6 +63,15 @@
         Acts
       </md-button>
       <br/>      
+      <md-input-container>
+        <label>Event</label>
+        <md-select ng-model="ctrl.selectedEvent">
+          <md-option><em>Choose an event</em></md-option>
+          <md-option ng-repeat="event in $ctrl.events" ng-value="event.id">
+            <a ui-sref="{{$ctrl.currentNavItem}}({ event: event.id })">{{ event.name }}</a>
+          </md-option>
+        </md-select>
+      </md-input-container>
     </md-content>
   </md-sidenav>
   

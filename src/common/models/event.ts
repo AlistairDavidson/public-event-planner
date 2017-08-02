@@ -75,4 +75,9 @@ export interface EventInstance extends SequelizeStatic.Instance<EventAttribute>,
 export interface EventDto extends EventAttribute {    
 }
 
+export interface EventsDto {
+    count: number;
+    events: EventDto[];
+}
+
 export interface EventModel extends SequelizeStatic.Model<EventInstance, EventAttribute> {}

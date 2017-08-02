@@ -86,8 +86,20 @@ export class AuthService {
                 
                 await user.addPermission(permission);
 
-
-
+                permission = await database.models.Permission.findOne({
+                    where: {
+                        name: 'edit_event'
+                    }
+                });
+                
+                await user.addPermission(permission);
+                permission = await database.models.Permission.findOne({
+                    where: {
+                        name: 'view_event'
+                    }
+                });
+                
+                await user.addPermission(permission);
                 return done(null, user);
             }    
         }

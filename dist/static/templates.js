@@ -293,6 +293,17 @@ angular
 			'      <md-button ui-sref="root.acts">\n' +
 			'        Acts\n' +
 			'      </md-button>\n' +
+			'\n' +
+			'      <md-input-container>\n' +
+			'        <label>Event</label>\n' +
+			'        <md-select ng-model="ctrl.selectedEvent">\n' +
+			'          <md-option><em>Choose an event</em></md-option>\n' +
+			'          <md-option ng-repeat="event in $ctrl.events" ng-value="event.id">\n' +
+			'            <a ui-sref="{{$ctrl.currentNavItem}}({ event: event.id })">{{ event.name }}</a>\n' +
+			'          </md-option>\n' +
+			'        </md-select>\n' +
+			'      </md-input-container>\n' +
+			'\n' +
 			'    </div>\n' +
 			'  </md-toolbar>\n' +
 			'\n' +
@@ -319,6 +330,15 @@ angular
 			'        Acts\n' +
 			'      </md-button>\n' +
 			'      <br>      \n' +
+			'      <md-input-container>\n' +
+			'        <label>Event</label>\n' +
+			'        <md-select ng-model="ctrl.selectedEvent">\n' +
+			'          <md-option><em>Choose an event</em></md-option>\n' +
+			'          <md-option ng-repeat="event in $ctrl.events" ng-value="event.id">\n' +
+			'            <a ui-sref="{{$ctrl.currentNavItem}}({ event: event.id })">{{ event.name }}</a>\n' +
+			'          </md-option>\n' +
+			'        </md-select>\n' +
+			'      </md-input-container>\n' +
 			'    </md-content>\n' +
 			'  </md-sidenav>\n' +
 			'  \n' +

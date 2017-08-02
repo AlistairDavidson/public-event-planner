@@ -100,6 +100,19 @@ export class Database {
             }
         });
 
+        await this.models.Permission.findOrCreate({
+            where: {
+                name: 'edit_event'
+            }
+        });
+
+
+        await this.models.Permission.findOrCreate({
+            where: {
+                name: 'view_event'
+            }
+        });
+
 
         /****
             TEST
