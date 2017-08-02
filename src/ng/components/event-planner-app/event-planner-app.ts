@@ -1,8 +1,9 @@
 class EventPlannerAppController implements angular.IComponentController {
-    static $inject = ['$window', '$mdSidenav'];
+    static $inject = ['$window', '$mdSidenav', '$state'];
 
     constructor(private $window: ng.IWindowService,
-                private $mdSidenav: ng.material.ISidenavService) {
+                private $mdSidenav: ng.material.ISidenavService,
+                private $state: ng.ui.IStateService) {
 
     }
 
@@ -13,6 +14,19 @@ class EventPlannerAppController implements angular.IComponentController {
 
     closeSidenav() {
         this.$mdSidenav('left').close();
+    }
+
+    get currentNavItem() {
+        if(this.$state && this.$state.current && this.$state.current.name) {
+            return this.$state.current.name;
+        }
+
+        return 'home';
+    }
+
+    set currentNavItem(value: string) {
+        // do nothing! :)
+        // state changes happen through ui-sref links
     }
 }
 

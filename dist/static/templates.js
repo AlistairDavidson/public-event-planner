@@ -282,15 +282,15 @@ angular
 			'        <span>Event Planner</span>\n' +
 			'      </h3>\n' +
 			'\n' +
-			'      <md-button ui-sref="home">\n' +
+			'      <md-button ui-sref="home" ng-disabled="$ctrl.currentNavItem == \'home\'">\n' +
 			'        Home\n' +
 			'      </md-button>\n' +
 			'\n' +
-			'      <md-button ui-sref="applications.summary">\n' +
+			'      <md-button ui-sref="applications.summary" ng-disabled="/application/.test($ctrl.currentNavItem)">\n' +
 			'        Applications\n' +
 			'      </md-button>\n' +
 			'\n' +
-			'      <md-button ui-sref="acts">\n' +
+			'      <md-button ui-sref="acts" ng-disabled="$ctrl.currentNavItem == \'acts\'">\n' +
 			'        Acts\n' +
 			'      </md-button>\n' +
 			'    </div>\n' +

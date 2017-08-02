@@ -6,8 +6,6 @@ Copyright (C) 2017 Alistair Davidson <alistair.l.davidson@gmail.com>
 
 TODO
 
-Mobile menu
-
 Applications should be tied to events on create and list
     Event should be in all routes
     Event selection menu

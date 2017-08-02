@@ -12,15 +12,15 @@
         <span>Event Planner</span>
       </h3>
 
-      <md-button ui-sref="home">
+      <md-button ui-sref="home" ng-disabled="$ctrl.currentNavItem == 'home'">
         Home
       </md-button>
 
-      <md-button ui-sref="applications.summary">
+      <md-button ui-sref="applications.summary" ng-disabled="/application/.test($ctrl.currentNavItem)">
         Applications
       </md-button>
 
-      <md-button ui-sref="acts">
+      <md-button ui-sref="acts" ng-disabled="$ctrl.currentNavItem == 'acts'">
         Acts
       </md-button>
     </div>

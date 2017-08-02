@@ -405,15 +405,15 @@ angular
 			'        <span>Event Planner</span>\n' +
 			'      </h3>\n' +
 			'\n' +
-			'      <md-button ui-sref="home">\n' +
+			'      <md-button ui-sref="home" ng-disabled="$ctrl.currentNavItem == \'home\'">\n' +
 			'        Home\n' +
 			'      </md-button>\n' +
 			'\n' +
-			'      <md-button ui-sref="applications.summary">\n' +
+			'      <md-button ui-sref="applications.summary" ng-disabled="/application/.test($ctrl.currentNavItem)">\n' +
 			'        Applications\n' +
 			'      </md-button>\n' +
 			'\n' +
-			'      <md-button ui-sref="acts">\n' +
+			'      <md-button ui-sref="acts" ng-disabled="$ctrl.currentNavItem == \'acts\'">\n' +
 			'        Acts\n' +
 			'      </md-button>\n' +
 			'    </div>\n' +
@@ -1254,9 +1254,10 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var EventPlannerAppController = (function () {
-        function EventPlannerAppController($window, $mdSidenav) {
+        function EventPlannerAppController($window, $mdSidenav, $state) {
             this.$window = $window;
             this.$mdSidenav = $mdSidenav;
+            this.$state = $state;
         }
         EventPlannerAppController.prototype.openSidenav = function () {
             this.$window.scrollTo(0, 0);
@@ -1265,7 +1266,21 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         EventPlannerAppController.prototype.closeSidenav = function () {
             this.$mdSidenav('left').close();
         };
-        EventPlannerAppController.$inject = ['$window', '$mdSidenav'];
+        Object.defineProperty(EventPlannerAppController.prototype, "currentNavItem", {
+            get: function () {
+                if (this.$state && this.$state.current && this.$state.current.name) {
+                    return this.$state.current.name;
+                }
+                return 'home';
+            },
+            set: function (value) {
+                // do nothing! :)
+                // state changes happen through ui-sref links
+            },
+            enumerable: true,
+            configurable: true
+        });
+        EventPlannerAppController.$inject = ['$window', '$mdSidenav', '$state'];
         return EventPlannerAppController;
     }());
     var options = {
