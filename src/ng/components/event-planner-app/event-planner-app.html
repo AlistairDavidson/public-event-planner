@@ -26,10 +26,11 @@
 
       <md-input-container>
         <label>Event</label>
-        <md-select ng-model="ctrl.selectedEvent">
+        <md-select ng-model="$ctrl.selectedEvent"
+                   ng-change="$ctrl.switchEvent()">
           <md-option><em>Choose an event</em></md-option>
           <md-option ng-repeat="event in $ctrl.events" ng-value="event.id">
-            <a ui-sref="{{$ctrl.currentNavItem}}({ event: event.id })">{{ event.name }}</a>
+            {{ event.name }}
           </md-option>
         </md-select>
       </md-input-container>

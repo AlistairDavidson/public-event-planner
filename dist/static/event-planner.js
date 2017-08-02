@@ -462,10 +462,10 @@ angular
 			'\n' +
 			'      <md-input-container>\n' +
 			'        <label>Event</label>\n' +
-			'        <md-select ng-model="ctrl.selectedEvent">\n' +
+			'        <md-select ng-model="$ctrl.selectedEvent" ng-change="$ctrl.switchEvent()">\n' +
 			'          <md-option><em>Choose an event</em></md-option>\n' +
 			'          <md-option ng-repeat="event in $ctrl.events" ng-value="event.id">\n' +
-			'            <a ui-sref="{{$ctrl.currentNavItem}}({ event: event.id })">{{ event.name }}</a>\n' +
+			'            {{ event.name }}\n' +
 			'          </md-option>\n' +
 			'        </md-select>\n' +
 			'      </md-input-container>\n' +
@@ -1343,6 +1343,9 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         };
         EventPlannerAppController.prototype.closeSidenav = function () {
             this.$mdSidenav('left').close();
+        };
+        EventPlannerAppController.prototype.switchEvent = function () {
+            this.$state.go(this.currentNavItem, { event: this.selectedEvent });
         };
         Object.defineProperty(EventPlannerAppController.prototype, "currentNavItem", {
             get: function () {

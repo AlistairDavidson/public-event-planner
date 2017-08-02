@@ -5,6 +5,7 @@ class EventPlannerAppController implements angular.IComponentController {
     static $inject = ['$window', '$mdSidenav', '$state', 'eventService'];
 
     events: EventDto[];
+    selectedEvent: number; 
 
     constructor(private $window: ng.IWindowService,
                 private $mdSidenav: ng.material.ISidenavService,
@@ -29,6 +30,9 @@ class EventPlannerAppController implements angular.IComponentController {
         this.$mdSidenav('left').close();
     }
 
+    switchEvent() {
+        this.$state.go(this.currentNavItem, { event: this.selectedEvent });
+    }
 
     get currentNavItem() {
         if(this.$state && this.$state.current && this.$state.current.name) {
