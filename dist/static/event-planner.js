@@ -267,7 +267,7 @@ angular
 			'    </md-dialog-actions>\n' +
 			'</md-dialog>');
 
-		$templateCache.put('components/applications-summary/applications-summary.html', '<div layout-align="row">\n' +
+		$templateCache.put('components/applications-summary/applications-summary.html', '<div layout="row">\n' +
 			'    <application-card ng-repeat="application in $ctrl.applications" application="application">\n' +
 			'    </application-card>\n' +
 			'</div>');
