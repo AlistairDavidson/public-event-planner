@@ -167,8 +167,8 @@ angular
 			'  <td md-cell>{{ data.size_of_act }} / {{ data.size_of_party }}</td>\n' +
 			'  <td md-cell>{{ data.requested_fee }}</td>\n' +
 			'  <td md-cell> \n' +
-			'    <md-menu>\n' +
-			'      <md-button aria-label="Application contact menu" class="md-icon-button">\n' +
+			'    <!-- <md-menu>\n' +
+			'      <md-button aria-label="Application contact menu" class="md-icon-button" ng-click="ctrl.openMenu($mdMenu, $event)">\n' +
 			'        Contact\n' +
 			'      </md-button>\n' +
 			'\n' +
@@ -191,7 +191,7 @@ angular
 			'          </md-button>\n' +
 			'        </md-menu-item>\n' +
 			'      </md-menu-content>\n' +
-			'    </md-menu>\n' +
+			'    </md-menu>-->\n' +
 			'  </td>\n' +
 			'</script>\n' +
 			'\n' +
