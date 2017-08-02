@@ -294,7 +294,7 @@ angular
 			'        Acts\n' +
 			'      </md-button>\n' +
 			'\n' +
-			'      <md-select ng-model="$ctrl.selectedEvent" ng-change="$ctrl.switchEvent()" aria-label="Switch events" class="md-no-underline">\n' +
+			'      <md-select ng-model="$ctrl.selectedEvent" ng-change="$ctrl.switchEvent()" aria-label="Switch events" class="md-no-underline event-selector">\n' +
 			'\n' +
 			'        <md-option ng-repeat="event in $ctrl.events" ng-value="event.id">\n' +
 			'          {{ event.name }}\n' +
@@ -312,6 +312,15 @@ angular
 			'          <md-icon>&#xE5D2;</md-icon>\n' +
 			'        </md-button>\n' +
 			'        <span class="toolbar-title">Event Planner</span>\n' +
+			'        \n' +
+			'        <md-select ng-model="$ctrl.selectedEvent" ng-change="$ctrl.switchEvent()" aria-label="Switch events" class="md-no-underline event-selector">\n' +
+			'\n' +
+			'        <md-option ng-repeat="event in $ctrl.events" ng-value="event.id">\n' +
+			'          {{ event.name }}\n' +
+			'        </md-option>\n' +
+			'\n' +
+			'      </md-select>\n' +
+			'\n' +
 			'      </h1>\n' +
 			'    </md-toolbar>\n' +
 			'    <md-content layout-padding layout="column">\n' +
@@ -327,16 +336,7 @@ angular
 			'        Acts\n' +
 			'      </md-button>\n' +
 			'      <br>      \n' +
-			'      <md-input-container>\n' +
-			'        <label>Event</label>\n' +
-			'        <md-select ng-model="ctrl.selectedEvent">\n' +
-			'          <md-option><em>Choose an event</em></md-option>\n' +
-			'          <md-option ng-repeat="event in $ctrl.events" ng-value="event.id">\n' +
-			'            <a ui-sref="{{$ctrl.currentNavItem}}({ event: event.id })">{{ event.name }}</a>\n' +
-			'          </md-option>\n' +
-			'        </md-select>\n' +
-			'      </md-input-container>\n' +
-			'    </md-content>\n' +
+			'      </md-content>\n' +
 			'  </md-sidenav>\n' +
 			'  \n' +
 			'  <md-content flex>\n' +

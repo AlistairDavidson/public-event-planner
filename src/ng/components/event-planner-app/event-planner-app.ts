@@ -2,7 +2,7 @@ import EventService from '../../services/event-service';
 import { EventDto } from '../../../common/models/event';
 
 class EventPlannerAppController implements angular.IComponentController {
-    static $inject = ['$window', '$mdSidenav', '$state', 'eventService'];
+    static $inject = ['$window', '$mdSidenav', '$state', '$stateParams', 'eventService'];
 
     events: EventDto[];
     selectedEvent: number; 
@@ -10,6 +10,7 @@ class EventPlannerAppController implements angular.IComponentController {
     constructor(private $window: ng.IWindowService,
                 private $mdSidenav: ng.material.ISidenavService,
                 private $state: ng.ui.IStateService,
+                private $stateParams: ng.ui.IStateParamsService,
                 private eventService: EventService) {
 
 
@@ -18,7 +19,10 @@ class EventPlannerAppController implements angular.IComponentController {
 
     $onInit() {
         this.eventService.list()
-            .then(eventData => this.events = eventData.events);
+            .then(eventData => this.events = eventData.events)
+            .then(() => {
+                if()
+            });
     }
 
     openSidenav() {

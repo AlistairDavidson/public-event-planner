@@ -27,7 +27,7 @@
       <md-select  ng-model="$ctrl.selectedEvent"
                   ng-change="$ctrl.switchEvent()"
                   aria-label="Switch events"
-                  class="md-no-underline">
+                  class="md-no-underline event-selector">
 
         <md-option ng-repeat="event in $ctrl.events" ng-value="event.id">
           {{ event.name }}
@@ -48,6 +48,18 @@
           <md-icon>&#xE5D2;</md-icon>
         </md-button>
         <span class="toolbar-title">Event Planner</span>
+        
+        <md-select  ng-model="$ctrl.selectedEvent"
+                  ng-change="$ctrl.switchEvent()"
+                  aria-label="Switch events"
+                  class="md-no-underline event-selector">
+
+        <md-option ng-repeat="event in $ctrl.events" ng-value="event.id">
+          {{ event.name }}
+        </md-option>
+
+      </md-select>
+
       </h1>
     </md-toolbar>
     <md-content layout-padding layout="column">
@@ -63,16 +75,7 @@
         Acts
       </md-button>
       <br/>      
-      <md-input-container>
-        <label>Event</label>
-        <md-select ng-model="ctrl.selectedEvent">
-          <md-option><em>Choose an event</em></md-option>
-          <md-option ng-repeat="event in $ctrl.events" ng-value="event.id">
-            <a ui-sref="{{$ctrl.currentNavItem}}({ event: event.id })">{{ event.name }}</a>
-          </md-option>
-        </md-select>
-      </md-input-container>
-    </md-content>
+      </md-content>
   </md-sidenav>
   
   <md-content flex>
