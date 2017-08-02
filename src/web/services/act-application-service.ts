@@ -8,7 +8,17 @@ import { ActApplicationDto, ActApplicationInstance, ActApplicationAttribute, Raw
 import contactService from './contact-service';
 
 export class ActApplicationService {
-    async list(query: ListDto) {
+    async list(query?: ListDto) {
+        if(!query) {
+            query = {
+                field: 'createdAt',
+                order: 'ASC',
+                filter: '',
+                offset: 0,
+                limit: 100
+            }
+        }
+
         if(query.order != 'ASC' && query.order != 'DESC') {
             throw 'Bad request';
         }

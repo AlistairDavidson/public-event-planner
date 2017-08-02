@@ -1,20 +1,23 @@
-import ApplicationService from '../../services/application-service';
 import { ActApplicationDto, RawApplicationDto, ActApplicationsDto } from '../../../common/models/act-application';
 import { MdSortDto } from '../../../common/types';
-import { element } from 'angular';
 import { ApplicationEditorController } from '../application-editor/application-editor';
+import ApplicationService from '../../services/application-service';
+import { element } from 'angular';
 
 class ApplicationsController implements angular.IComponentController {
     static $inject = ['applicationService', '$mdDialog'];
 
+    currentNavItem = 'summary';
+
     constructor(private applicationService: ApplicationService,
                 private $mdDialog: ng.material.IDialogService) {
+
     }
 
     $onInit() {
     }
 
-    getApplications(query: MdSortDto) {
+    getApplications(query?: MdSortDto) {
        return this.applicationService.list(query)
             .then(applicationsData => {
                 let applications = this.processApplicationsList(applicationsData.applications);
@@ -40,27 +43,26 @@ class ApplicationsController implements angular.IComponentController {
     }
 
     create(ev: ng.IAngularEvent) {
-        this.$mdDialog.show({
+        return this.$mdDialog.show({
             controller: ApplicationEditorController,
             templateUrl: 'components/application-editor/application-editor.html',
             parent: element(document.body),
             targetEvent: ev,
             clickOutsideToClose: true,
             fullscreen: true,
+            bindToController: true,
             controllerAs: '$ctrl'
         } as any);
     }
 
-    delete() {
-
-    }
 }
 
-interface ApplicationViewModel extends RawApplicationDto {
+export interface ApplicationViewModel extends RawApplicationDto {
     id?: number;
     createdAt?: Date;
     updatedAt?: Date;
 }
+
 
 let options: angular.IComponentOptions = {
     templateUrl: 'components/applications/applications.html',

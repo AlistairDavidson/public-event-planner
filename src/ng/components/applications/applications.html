@@ -1,31 +1,24 @@
-<script type="text/ng-template" id="/applications-header.html">
-  <th md-column md-order-by="name"><span>Name</span></th>
-  <th md-column md-order-by="type"><span>Type</span></th>
-  <th md-column md-order-by="town"><span>Town</span></th>
-  <th md-column md-order-by="size_of_party"><span>Size</span></th>
-  <th md-column md-order-by="requested_fee"><span>Fee Request</span></th>
-  <th md-column md-order-by="contact_name"><span>Contact</span></th>
-  <th md-column><span></span></th>
-</script>
+<md-nav-bar
+    md-selected-nav-item="$ctrl.currentNavItem"
+    nav-bar-aria-label="Application links">
 
-<script type="text/ng-template" id="/applications-cell.html">
-  <td md-cell>{{ data.name }}</td>
-  <td md-cell>{{ data.type }}</td>
-  <td md-cell>{{ data.town }}</td>
-  <td md-cell>{{ data.size_of_act }} / {{ data.size_of_party }}</td>
-  <td md-cell>{{ data.requested_fee }}</td>
-  <td md-cell>{{ data.contact_name }}</td>
-  <td md-cell> 
-    <md-select ng-model="dessert.type" placeholder="Other">
-      <md-option ng-value="type" ng-repeat="type in getTypes()">{{ type }}</md-option>
-    </md-select>
-  </td>
-</script>
+    <md-nav-item md-nav-click="ctrl.currentNavItem = 'summary'" name="applications_summary">
+        Summary
+    </md-nav-item>
 
-<ep-table
-  title="'Applications'"
-  list="$ctrl.getApplications(query)"
-  create="$ctrl.create()"
-  header-template="'/applications-header.html'"
-  cell-template="'/applications-cell.html'" >
-</ep-table>
+    <md-nav-item ui-sref="ctrl.currentNavItem = 'details'" name="applications_details">
+        Details
+    </md-nav-item>
+</md-nav-bar>
+
+<applications-summary
+    ng-if="ctrl.currentNavItem == 'summary'"
+    get-applications="$ctrl.getApplications(query)"
+    create="$ctrl.create()">
+</applications-summary>
+
+<applications-table
+    ng-if="ctrl.currentNavItem == 'table'"
+    get-applications="$ctrl.getApplications(query)"
+    create="$ctrl.create()">
+</applications-table>

@@ -12,12 +12,17 @@ export default class ApplicationService {
 
     }
 
-    list(query: MdSortDto) {
-        let listQuery = queryToRequest(query);
-        let queryString = this.$httpParamSerializer(listQuery);
+    list(query?: MdSortDto) {
+        if(query) {
+            let listQuery = queryToRequest(query);
+            let queryString = this.$httpParamSerializer(listQuery);
 
-      return this.$http.get(`${settings.api}/application/list?${queryString}`)
-            .then(response => (response.data as ActApplicationsDto))
+            return this.$http.get(`${settings.api}/application/list?${queryString}`)
+                .then(response => (response.data as ActApplicationsDto));
+        } else {
+            return this.$http.get(`${settings.api}/application/list`)
+                .then(response => (response.data as ActApplicationsDto));            
+        }
     }
 
     get(id: number) {

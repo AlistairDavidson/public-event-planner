@@ -7,6 +7,26 @@ angular
 	.run(['$templateCache', function($templateCache) {
 		$templateCache.put('components/acts/acts.html', '');
 
+		$templateCache.put('components/application-card/application-card.html', '<md-card>\n' +
+			'    <md-card-title>\n' +
+			'        <md-card-title-text>\n' +
+			'            <span class="md-headline">{{:: $ctrl.application.details.name }}</span>\n' +
+			'            <span class="md-subhead">{{:: $ctrl.application.details.type }}, {{:: $ctrl.application.details.town }}, {{:: $ctrl.application.details.requested_fee }}</span>\n' +
+			'            <p>{{:: $ctrl.application.details.bio }}</p>\n' +
+			'        </md-card-title-text>\n' +
+			'        <md-card-title-media>\n' +
+			'            <div class="md-media-lg card-media">\n' +
+			'                <img ng-if="$ctrl.application.details.image" src="{{ $ctrl.application.details.image }}">\n' +
+			'            </div>\n' +
+			'        </md-card-title-media>\n' +
+			'    </md-card-title>\n' +
+			'    <md-card-actions layout="row" layout-align="end center">\n' +
+			'        <md-button href="{{::$ctrl.application.details.link}}">Website</md-button>\n' +
+			'        <md-button href="{{::$ctrl.application.details.facebook}}">Facebook</md-button>\n' +
+			'        <md-button href="{{::$ctrl.application.details.twitter}}">Twitter</md-button>\n' +
+			'    </md-card-actions>\n' +
+			'</md-card>');
+
 		$templateCache.put('components/application-editor/application-editor.html', '<md-dialog aria-label="New Application">\n' +
 			'    <md-dialog-content class="md-dialog-content">\n' +
 			'        <form novalidate ng-cloak>\n' +
@@ -126,32 +146,54 @@ angular
 			'    </md-dialog-actions>\n' +
 			'</md-dialog>');
 
-		$templateCache.put('components/applications/applications.html', '<script type="text/ng-template" id="/applications-header.html">\n' +
+		$templateCache.put('components/applications-summary/applications-summary.html', '<application-card ng-repeat="application in $ctrl.applications" application="application">\n' +
+			'</application-card>');
+
+		$templateCache.put('components/applications-table/applications-table.html', '<script type="text/ng-template" id="/applications-header.html">\n' +
+			'  <th md-column md-order-by="createdAt"><span>Recieved</span></th>\n' +
 			'  <th md-column md-order-by="name"><span>Name</span></th>\n' +
 			'  <th md-column md-order-by="type"><span>Type</span></th>\n' +
 			'  <th md-column md-order-by="town"><span>Town</span></th>\n' +
 			'  <th md-column md-order-by="size_of_party"><span>Size</span></th>\n' +
 			'  <th md-column md-order-by="requested_fee"><span>Fee Request</span></th>\n' +
-			'  <th md-column md-order-by="contact_name"><span>Contact</span></th>\n' +
 			'  <th md-column><span></span></th>\n' +
 			'</script>\n' +
 			'\n' +
 			'<script type="text/ng-template" id="/applications-cell.html">\n' +
+			'  <td md-cell>{{ data.createdAt | date: \'mediumDate\' }}</td>\n' +
 			'  <td md-cell>{{ data.name }}</td>\n' +
 			'  <td md-cell>{{ data.type }}</td>\n' +
 			'  <td md-cell>{{ data.town }}</td>\n' +
 			'  <td md-cell>{{ data.size_of_act }} / {{ data.size_of_party }}</td>\n' +
 			'  <td md-cell>{{ data.requested_fee }}</td>\n' +
-			'  <td md-cell>{{ data.contact_name }}</td>\n' +
 			'  <td md-cell> \n' +
-			'    <md-select ng-model="dessert.type" placeholder="Other">\n' +
-			'      <md-option ng-value="type" ng-repeat="type in getTypes()">{{ type }}</md-option>\n' +
+			'    <md-select ng-model="$ctrl.menu" placeholder="Menu">      \n' +
+			'      <md-option ng-value="website">Website</md-option>\n' +
+			'      <md-option ng-value="facebook">Facebook</md-option>\n' +
+			'      <md-option ng-value="facebook">Twitter</md-option>\n' +
 			'    </md-select>\n' +
 			'  </td>\n' +
 			'</script>\n' +
 			'\n' +
-			'<ep-table title="\'Applications\'" list="$ctrl.getApplications(query)" create="$ctrl.create()" header-template="\'/applications-header.html\'" cell-template="\'/applications-cell.html\'">\n' +
+			'<ep-table title="\'Applications\'" on-list="$ctrl.getApplications(query)" on-create="$ctrl.create()" header-template="\'/applications-header.html\'" cell-template="\'/applications-cell.html\'">\n' +
 			'</ep-table>');
+
+		$templateCache.put('components/applications/applications.html', '<md-nav-bar md-selected-nav-item="$ctrl.currentNavItem" nav-bar-aria-label="Application links">\n' +
+			'\n' +
+			'    <md-nav-item md-nav-click="ctrl.currentNavItem = \'summary\'" name="applications_summary">\n' +
+			'        Summary\n' +
+			'    </md-nav-item>\n' +
+			'\n' +
+			'    <md-nav-item ui-sref="ctrl.currentNavItem = \'details\'" name="applications_details">\n' +
+			'        Details\n' +
+			'    </md-nav-item>\n' +
+			'</md-nav-bar>\n' +
+			'\n' +
+			'<applications-summary ng-if="ctrl.currentNavItem == \'summary\'" get-applications="$ctrl.getApplications(query)" create="$ctrl.create()">\n' +
+			'</applications-summary>\n' +
+			'\n' +
+			'<applications-table ng-if="ctrl.currentNavItem == \'table\'" get-applications="$ctrl.getApplications(query)" create="$ctrl.create()">\n' +
+			'</applications-table>');
 
 		$templateCache.put('components/ep-table/ep-table.html', '<md-card>\n' +
 			'  <md-toolbar class="md-table-toolbar md-default" ng-hide="$ctrl.selected.length || $ctrl.filter.show">\n' +

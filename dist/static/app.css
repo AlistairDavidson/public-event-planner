@@ -14052,9 +14052,6 @@ div.app-container {
   position: relative;
   top: 15px; }
 
-div.app-container {
-  min-height: 90%; }
-
 .loading {
   margin: auto;
   top: 250px; }
