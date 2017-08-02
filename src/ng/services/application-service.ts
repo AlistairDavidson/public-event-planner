@@ -6,24 +6,22 @@ import { element } from 'angular';
 import { ApplicationEditorController } from '../components/application-editor/application-editor';
 
 export default class ApplicationService {
-    static $inject = ['$http', '$httpParamSerializer', '$q', '$mdDialog'];
+    static $inject = ['$http', '$httpParamSerializer', '$q', '$mdDialog', '$stateParams'];
 
     constructor(private $http: ng.IHttpService,
                 private $httpParamSerializer: ng.IHttpParamSerializer,
                 private $q: ng.IQService,
-                private $mdDialog: ng.material.IDialogService) {
+                private $mdDialog: ng.material.IDialogService,
+                private $stateParams: ng.ui.IStateParamsService) {
 
     }
 
-    list(query?: MdSortDto) {
-        let url = `${settings.api}/application/list`;
+    list(query: MdSortDto = {}) {
+        query.eventId = this.$stateParams.event;
 
-        if(query) {
-            let listQuery = queryToRequest(query);
-            let queryString = this.$httpParamSerializer(listQuery);
-
-            url = `${url}?${queryString}`                
-        }
+        let listQuery = queryToRequest(query);
+        let queryString = this.$httpParamSerializer(listQuery);            
+        let url = `${settings.api}/application/list?${queryString}`;
 
         return this.$http.get(url)
             .then(response => (response.data as ActApplicationsDto))

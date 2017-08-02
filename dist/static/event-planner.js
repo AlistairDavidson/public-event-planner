@@ -136,7 +136,8 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
             order: order,
             offset: offset,
             limit: query.limit,
-            filter: query.filter
+            filter: query.filter,
+            eventId: query.eventId
         };
         return requestQuery;
     }
@@ -1412,20 +1413,20 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var ApplicationService = (function () {
-        function ApplicationService($http, $httpParamSerializer, $q, $mdDialog) {
+        function ApplicationService($http, $httpParamSerializer, $q, $mdDialog, $stateParams) {
             this.$http = $http;
             this.$httpParamSerializer = $httpParamSerializer;
             this.$q = $q;
             this.$mdDialog = $mdDialog;
+            this.$stateParams = $stateParams;
         }
         ApplicationService.prototype.list = function (query) {
             var _this = this;
-            var url = settings_1.default.api + "/application/list";
-            if (query) {
-                var listQuery = helper_1.queryToRequest(query);
-                var queryString = this.$httpParamSerializer(listQuery);
-                url = url + "?" + queryString;
-            }
+            if (query === void 0) { query = {}; }
+            query.eventId = this.$stateParams.event;
+            var listQuery = helper_1.queryToRequest(query);
+            var queryString = this.$httpParamSerializer(listQuery);
+            var url = settings_1.default.api + "/application/list?" + queryString;
             return this.$http.get(url)
                 .then(function (response) { return response.data; })
                 .then(function (applicationsData) {
@@ -1472,7 +1473,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 controllerAs: '$ctrl'
             });
         };
-        ApplicationService.$inject = ['$http', '$httpParamSerializer', '$q', '$mdDialog'];
+        ApplicationService.$inject = ['$http', '$httpParamSerializer', '$q', '$mdDialog', '$stateParams'];
         return ApplicationService;
     }());
     exports.default = ApplicationService;

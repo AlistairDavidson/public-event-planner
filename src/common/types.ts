@@ -4,11 +4,13 @@ export interface ListDto {
     offset: number;
     limit: number;
     filter: string;
+    eventId?: string;
 }
 
 export interface MdSortDto {
-    order: string;
-    limit: number;
-    page: number;
-    filter: string;
+    order?: string;
+    limit?: number;
+    page?: number;
+    filter?: string;
+    eventId?: string;
 }

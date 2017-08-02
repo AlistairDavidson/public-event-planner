@@ -8,19 +8,7 @@ import { ActApplicationDto, ActApplicationInstance, ActApplicationAttribute, Raw
 import contactService from './contact-service';
 
 export class ActApplicationService {
-    async list(query?: ListDto) {
-        console.log('list', query);
-
-        if(!query) {
-            query = {
-                field: 'createdAt',
-                order: 'DESC',
-                filter: '',
-                offset: 0,
-                limit: 100
-            }
-        }
-
+    async list(query: ListDto) {
         if(query.order != 'ASC' && query.order != 'DESC') {
             query.order = 'ASC';
         }
@@ -30,20 +18,24 @@ export class ActApplicationService {
             order = SequelizeStatic.json(`details.${query.field} ${query.order}`) as string;
         }
 
-        let options: SequelizeStatic.FindOptions = {
+        let options: any = {
             order: order,
             offset: query.offset,
             limit: query.limit            
         }
 
         if(query.filter) {
-            options.where = SequelizeStatic.where(
-                SequelizeStatic.cast(SequelizeStatic.col('details'), 'text'),
-                {
-                    $iLike: `%${query.filter}%`
-                }
-            ) as any;
-        }
+            options.where = SequelizeStatic.and(
+                SequelizeStatic.where(                
+                    SequelizeStatic.cast(SequelizeStatic.col('details'), 'text'),
+                    {
+                        $iLike: `%${query.filter}%`
+                    }
+                ), {
+                    EventId: query.eventId
+                }) as any;
+        }        
+
 
         console.log('do-list', options);
 
@@ -56,12 +48,12 @@ export class ActApplicationService {
     }
 
     async get(actId: number) {
-        let application = await database.models.ActApplication.findById(actId, {
+        let application = await database.models.ActApplication.findById(actId, {            
             include: [{
                 model: database.models.Booking,
                 include: [{
                     model: database.models.Act
-                }]
+                }]                
             }]
         });
 
