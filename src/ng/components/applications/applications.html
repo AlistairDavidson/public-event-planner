@@ -2,23 +2,23 @@
     md-selected-nav-item="$ctrl.currentNavItem"
     nav-bar-aria-label="Application links">
 
-    <md-nav-item md-nav-click="$ctrl.currentNavItem = 'summary'" name="applications_summary">
+    <md-nav-item name="applications_summary">
         Summary
     </md-nav-item>
 
-    <md-nav-item md-nav-click="$ctrl.currentNavItem = 'details'" name="applications_details">
+    <md-nav-item name="applications_details">
         Details
     </md-nav-item>
 </md-nav-bar>
 
 <applications-summary
-    ng-if="$ctrl.currentNavItem == 'summary'"
+    ng-if="$ctrl.currentNavItem == 'applications_summary'"
     get-applications="$ctrl.getApplications(query)"
     create="$ctrl.create()">
 </applications-summary>
 
 <applications-table
-    ng-if="$ctrl.currentNavItem == 'details'"
+    ng-if="$ctrl.currentNavItem == 'applications_details'"
     get-applications="$ctrl.getApplications(query)"
     create="$ctrl.create()">
 </applications-table>

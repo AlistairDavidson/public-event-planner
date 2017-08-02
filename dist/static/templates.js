@@ -10,9 +10,9 @@ angular
 		$templateCache.put('components/application-card/application-card.html', '<md-card>\n' +
 			'    <md-card-title>\n' +
 			'        <md-card-title-text>\n' +
-			'            <span class="md-headline">{{:: $ctrl.application.details.name }}</span>\n' +
-			'            <span class="md-subhead">{{:: $ctrl.application.details.type }}, {{:: $ctrl.application.details.town }}, {{:: $ctrl.application.details.requested_fee }}</span>\n' +
-			'            <p>{{:: $ctrl.application.details.bio }}</p>\n' +
+			'            <span class="md-headline">{{ $ctrl.application.details.name }}</span>\n' +
+			'            <span class="md-subhead">{{ $ctrl.application.details.type }}, {{ $ctrl.application.details.town }}, {{ $ctrl.application.details.requested_fee }}</span>\n' +
+			'            <p>{{ $ctrl.application.details.bio }}</p>\n' +
 			'        </md-card-title-text>\n' +
 			'        <md-card-title-media>\n' +
 			'            <div class="md-media-lg card-media">\n' +
@@ -21,9 +21,9 @@ angular
 			'        </md-card-title-media>\n' +
 			'    </md-card-title>\n' +
 			'    <md-card-actions layout="row" layout-align="end center">\n' +
-			'        <md-button href="{{::$ctrl.application.details.link}}">Website</md-button>\n' +
-			'        <md-button href="{{::$ctrl.application.details.facebook}}">Facebook</md-button>\n' +
-			'        <md-button href="{{::$ctrl.application.details.twitter}}">Twitter</md-button>\n' +
+			'        <md-button href="{{ $ctrl.application.details.link }}">Website</md-button>\n' +
+			'        <md-button href="{{ $ctrl.application.details.facebook }}">Facebook</md-button>\n' +
+			'        <md-button href="{{ $ctrl.application.details.twitter }}">Twitter</md-button>\n' +
 			'    </md-card-actions>\n' +
 			'</md-card>');
 
@@ -180,19 +180,19 @@ angular
 
 		$templateCache.put('components/applications/applications.html', '<md-nav-bar md-selected-nav-item="$ctrl.currentNavItem" nav-bar-aria-label="Application links">\n' +
 			'\n' +
-			'    <md-nav-item md-nav-click="$ctrl.currentNavItem = \'summary\'" name="applications_summary">\n' +
+			'    <md-nav-item name="applications_summary">\n' +
 			'        Summary\n' +
 			'    </md-nav-item>\n' +
 			'\n' +
-			'    <md-nav-item md-nav-click="$ctrl.currentNavItem = \'details\'" name="applications_details">\n' +
+			'    <md-nav-item name="applications_details">\n' +
 			'        Details\n' +
 			'    </md-nav-item>\n' +
 			'</md-nav-bar>\n' +
 			'\n' +
-			'<applications-summary ng-if="$ctrl.currentNavItem == \'summary\'" get-applications="$ctrl.getApplications(query)" create="$ctrl.create()">\n' +
+			'<applications-summary ng-if="$ctrl.currentNavItem == \'applications_summary\'" get-applications="$ctrl.getApplications(query)" create="$ctrl.create()">\n' +
 			'</applications-summary>\n' +
 			'\n' +
-			'<applications-table ng-if="$ctrl.currentNavItem == \'details\'" get-applications="$ctrl.getApplications(query)" create="$ctrl.create()">\n' +
+			'<applications-table ng-if="$ctrl.currentNavItem == \'applications_details\'" get-applications="$ctrl.getApplications(query)" create="$ctrl.create()">\n' +
 			'</applications-table>');
 
 		$templateCache.put('components/ep-table/ep-table.html', '<md-card>\n' +
