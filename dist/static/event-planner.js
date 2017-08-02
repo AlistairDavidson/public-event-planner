@@ -303,19 +303,19 @@ angular
 
 		$templateCache.put('components/applications/applications.html', '<md-nav-bar md-selected-nav-item="$ctrl.currentNavItem" nav-bar-aria-label="Application links">\n' +
 			'\n' +
-			'    <md-nav-item md-nav-click="ctrl.currentNavItem = \'summary\'" name="applications_summary">\n' +
+			'    <md-nav-item md-nav-click="$ctrl.currentNavItem = \'summary\'" name="applications_summary">\n' +
 			'        Summary\n' +
 			'    </md-nav-item>\n' +
 			'\n' +
-			'    <md-nav-item ui-sref="ctrl.currentNavItem = \'details\'" name="applications_details">\n' +
+			'    <md-nav-item md-nav-click="$ctrl.currentNavItem = \'details\'" name="applications_details">\n' +
 			'        Details\n' +
 			'    </md-nav-item>\n' +
 			'</md-nav-bar>\n' +
 			'\n' +
-			'<applications-summary ng-if="ctrl.currentNavItem == \'summary\'" get-applications="$ctrl.getApplications(query)" create="$ctrl.create()">\n' +
+			'<applications-summary ng-if="$ctrl.currentNavItem == \'summary\'" get-applications="$ctrl.getApplications(query)" create="$ctrl.create()">\n' +
 			'</applications-summary>\n' +
 			'\n' +
-			'<applications-table ng-if="ctrl.currentNavItem == \'table\'" get-applications="$ctrl.getApplications(query)" create="$ctrl.create()">\n' +
+			'<applications-table ng-if="$ctrl.currentNavItem == \'table\'" get-applications="$ctrl.getApplications(query)" create="$ctrl.create()">\n' +
 			'</applications-table>');
 
 		$templateCache.put('components/ep-table/ep-table.html', '<md-card>\n' +
