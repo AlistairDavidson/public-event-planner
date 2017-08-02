@@ -150,15 +150,9 @@ angular
 			'    </md-dialog-actions>\n' +
 			'</md-dialog>');
 
-		$templateCache.put('components/applications-summary/applications-summary.html', '<md-content class="md-padding" layout="column" flex="80" flex-offset="10">    \n' +
-			'<md-grid-list md-cols="5" md-gutter="1em" md-row-height="4:3">\n' +
-			'  <md-grid-tile ng-repeat="application in $ctrl.applications">\n' +
-			'    \n' +
-			'            <application-card application="application">\n' +
-			'            </application-card>\n' +
-			'      \n' +
-			'    </md-grid-tile>\n' +
-			'</md-grid-list>\n' +
+		$templateCache.put('components/applications-summary/applications-summary.html', '<md-content class="md-padding" layout="row" layout-wrap>    \n' +
+			'    <application-card flex="50" ng-repeat="application in $ctrl.applications" application="application">\n' +
+			'    </application-card>\n' +
 			'</md-content>');
 
 		$templateCache.put('components/applications-table/applications-table.html', '<script type="text/ng-template" id="/applications-header.html">\n' +
