@@ -301,11 +301,11 @@ angular
 
 		$templateCache.put('components/applications/applications.html', '<md-nav-bar md-selected-nav-item="$ctrl.currentNavItem" nav-bar-aria-label="Application links">\n' +
 			'\n' +
-			'    <md-nav-item md-nav-click="$ctrl.currentNavItem = \'applications_summary\'" name="applications_summary">\n' +
+			'    <md-nav-item ui-sref="applications.summary" name="applications_summary">\n' +
 			'        Summary\n' +
 			'    </md-nav-item>\n' +
 			'\n' +
-			'    <md-nav-item md-nav-click="$ctrl.currentNavItem = \'applications_details\'" name="applications_details">\n' +
+			'    <md-nav-item ui-sref="applications.detail" name="applications_details">\n' +
 			'        Details\n' +
 			'    </md-nav-item>\n' +
 			'</md-nav-bar>\n' +
@@ -942,7 +942,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 .state({
                 name: 'applications.detail',
                 url: '/detail',
-                template: "<applications-table                                \n                                get-applications=\"$ctrl.applicationService.getApplications(query)\"\n                                create=\"$ctrl.applicationService.create()\">\n                            </applications-table>",
+                template: "<applications-table                                \n                                get-applications=\"$ctrl.applicationService.get(query)\"\n                                create=\"$ctrl.applicationService.create()\">\n                            </applications-table>",
                 controller: ['applicationService', function (applicationService) {
                         this.applicationService = applicationService;
                     }],
