@@ -51,7 +51,7 @@ module('event-planner', [ 'event-planner.components', 'event-planner.services', 
                 name: 'applications.detail',
                 url: '/detail',
                 template:  `<applications-table                                
-                                get-applications="$ctrl.applicationService.get(query)"
+                                get-applications="$ctrl.applicationService.list(query)"
                                 create="$ctrl.applicationService.create()">
                             </applications-table>`,
                 controller: ['applicationService', function(applicationService: ApplicationService) {

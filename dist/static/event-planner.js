@@ -942,7 +942,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 .state({
                 name: 'applications.detail',
                 url: '/detail',
-                template: "<applications-table                                \n                                get-applications=\"$ctrl.applicationService.get(query)\"\n                                create=\"$ctrl.applicationService.create()\">\n                            </applications-table>",
+                template: "<applications-table                                \n                                get-applications=\"$ctrl.applicationService.list(query)\"\n                                create=\"$ctrl.applicationService.create()\">\n                            </applications-table>",
                 controller: ['applicationService', function (applicationService) {
                         this.applicationService = applicationService;
                     }],
