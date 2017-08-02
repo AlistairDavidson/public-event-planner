@@ -25,7 +25,10 @@ export class ActApplicationService {
             query.order = 'ASC';
         }
 
-        let order = SequelizeStatic.json(`details.${query.field} ${query.order}`) as string;
+        let order;
+        if(query.field) {
+            order = SequelizeStatic.json(`details.${query.field} ${query.order}`) as string;
+        }
 
         let options: SequelizeStatic.FindOptions = {
             order: order,
