@@ -151,7 +151,7 @@ angular
 			'</md-dialog>');
 
 		$templateCache.put('components/applications-summary/applications-summary.html', '<md-content class="md-padding" layout="row" layout-wrap>    \n' +
-			'    <application-card flex="100" flex-gt-xs="50" flex-gt-md="25" ng-repeat="application in $ctrl.applications" application="application">\n' +
+			'    <application-card flex="100" flex-gt-xs="50" flex-gt-sm="33" flex-gt-md="25" ng-repeat="application in $ctrl.applications" application="application">\n' +
 			'    </application-card>\n' +
 			'</md-content>');
 
