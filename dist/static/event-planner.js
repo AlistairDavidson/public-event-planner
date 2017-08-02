@@ -443,8 +443,8 @@ angular
 			'        <md-icon>&#xE5D2;</md-icon>    \n' +
 			'  </md-button>\n' +
 			'\n' +
-			'  <md-toolbar md-scroll-shrink hide-xs hide-sm>\n' +
-			'    <div class="md-toolbar-tools">\n' +
+			'  <md-toolbar md-scroll-shrink>\n' +
+			'    <div class="md-toolbar-tools" hide-xs hide-sm>\n' +
 			'      <h3>\n' +
 			'        <span>Event Planner</span>\n' +
 			'      </h3>\n' +
