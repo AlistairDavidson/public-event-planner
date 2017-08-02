@@ -151,8 +151,14 @@ angular
 			'</md-dialog>');
 
 		$templateCache.put('components/applications-summary/applications-summary.html', '<md-content class="md-padding" layout="column" flex="80" flex-offset="10">    \n' +
-			'    <application-card ng-repeat="application in $ctrl.applications" application="application">\n' +
-			'    </application-card>\n' +
+			'<md-grid-list md-cols="5" md-gutter="1em" md-row-height="4:3">\n' +
+			'  <md-grid-tile ng-repeat="application in $ctrl.applications">\n' +
+			'    \n' +
+			'            <application-card application="application">\n' +
+			'            </application-card>\n' +
+			'      \n' +
+			'    </md-grid-tile>\n' +
+			'</md-grid-list>\n' +
 			'</md-content>');
 
 		$templateCache.put('components/applications-table/applications-table.html', '<script type="text/ng-template" id="/applications-header.html">\n' +
@@ -311,8 +317,7 @@ angular
 			'        <md-button class="md-icon-button" ng-click="$ctrl.closeSidenav()">\n' +
 			'          <md-icon>&#xE5D2;</md-icon>\n' +
 			'        </md-button>\n' +
-			'        <span class="toolbar-title">Event Planner</span>\n' +
-			'        \n' +
+			'\n' +
 			'        <md-select ng-model="$ctrl.selectedEvent" ng-change="$ctrl.switchEvent()" aria-label="Switch events" class="md-no-underline event-selector">\n' +
 			'\n' +
 			'        <md-option ng-repeat="event in $ctrl.events" ng-value="event.id">\n' +
