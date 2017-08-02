@@ -299,13 +299,12 @@ angular
 			'<ep-table title="\'Applications\'" on-list="$ctrl.getApplications(query)" on-create="$ctrl.create()" header-template="\'/applications-header.html\'" cell-template="\'/applications-cell.html\'">\n' +
 			'</ep-table>');
 
-		$templateCache.put('components/applications/applications.html', '<md-nav-bar md-selected-nav-item="$ctrl.currentNavItem" nav-bar-aria-label="Application links">\n' +
-			'\n' +
-			'    <md-nav-item ui-sref="applications.summary" name="applications_summary">\n' +
+		$templateCache.put('components/applications/applications.html', '<md-nav-bar md-selected-nav-item="$ctrl.currentNavItem">\n' +
+			'    <md-nav-item md-nav-sref="applications.summary" name="applications_summary">\n' +
 			'        Summary\n' +
 			'    </md-nav-item>\n' +
 			'\n' +
-			'    <md-nav-item ui-sref="applications.detail" name="applications_details">\n' +
+			'    <md-nav-item md-nav-sref="applications.detail" name="applications_details">\n' +
 			'        Details\n' +
 			'    </md-nav-item>\n' +
 			'</md-nav-bar>\n' +

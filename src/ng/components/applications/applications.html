@@ -1,12 +1,9 @@
-<md-nav-bar
-    md-selected-nav-item="$ctrl.currentNavItem"
-    nav-bar-aria-label="Application links">
-
-    <md-nav-item ui-sref="applications.summary" name="applications_summary">
+<md-nav-bar md-selected-nav-item="$ctrl.currentNavItem">
+    <md-nav-item md-nav-sref="applications.summary" name="applications_summary">
         Summary
     </md-nav-item>
 
-    <md-nav-item ui-sref="applications.detail" name="applications_details">
+    <md-nav-item md-nav-sref="applications.detail" name="applications_details">
         Details
     </md-nav-item>
 </md-nav-bar>
