@@ -105,7 +105,7 @@ export class Database {
             TEST
         ******/
 
-        await this.models.ActApplication.findOrCreate({
+     /*   await this.models.ActApplication.findOrCreate({
             where: {
                 details: {
                     name: 'Allstars',
@@ -149,7 +149,7 @@ export class Database {
                     tech_specs: 'Bass'   
                 }
             }
-        });
+        });*/
     }
 
     create() {

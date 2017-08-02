@@ -291,25 +291,25 @@ angular
 			'  <td md-cell>{{ data.requested_fee }}</td>\n' +
 			'  <td md-cell> \n' +
 			'    <md-menu>\n' +
-			'      <md-button aria-label="Application contact menu" class="md-icon-button" ng-click="$ctrl.$mdMenu.open($event)">\n' +
+			'      <md-button aria-label="Application contact menu" class="md-icon-button" ng-click="$mdMenu.open($event)">\n' +
 			'        <md-icon md-menu-origin>phone</md-icon>\n' +
 			'      </md-button>\n' +
 			'\n' +
 			'      <md-menu-content width="4">\n' +
 			'        <md-menu-item>\n' +
-			'          <md-button ng-href="{{ data.link }}" target="_blank">\n' +
+			'          <md-button ng-if="data.link" ng-href="{{ data.link }}" target="_blank">\n' +
 			'            Website\n' +
 			'          </md-button>\n' +
 			'        </md-menu-item>\n' +
 			'        \n' +
 			'        <md-menu-item>\n' +
-			'          <md-button ng-href="{{ data.facebook }}" target="_blank">\n' +
+			'          <md-button ng-if="data.facebook" ng-href="{{ data.facebook }}" target="_blank">\n' +
 			'            Facebook\n' +
 			'          </md-button>\n' +
 			'        </md-menu-item>\n' +
 			'\n' +
 			'        <md-menu-item>\n' +
-			'          <md-button ng-href="{{ data.twitter }}" target="_blank">\n' +
+			'          <md-button ng-if="data.twitter" ng-href="{{ data.twitter }}" target="_blank">\n' +
 			'            Twitter\n' +
 			'          </md-button>\n' +
 			'        </md-menu-item>\n' +
@@ -1070,14 +1070,12 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var ApplicationsTableController = (function () {
-        function ApplicationsTableController($mdMenu) {
-            this.$mdMenu = $mdMenu;
+        function ApplicationsTableController() {
         }
         ApplicationsTableController.prototype.$onInit = function () {
         };
         ApplicationsTableController.prototype.delete = function () {
         };
-        ApplicationsTableController.$inject = ['$mdMenu'];
         return ApplicationsTableController;
     }());
     var options = {

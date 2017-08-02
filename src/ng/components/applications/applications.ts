@@ -5,13 +5,18 @@ import { ApplicationViewModel } from '../../services/application-service';
 
 
 class ApplicationsController implements angular.IComponentController {    
-    currentNavItem = 'applications_summary';
+    static $inject = ['$state'];
 
-    constructor() {
+    constructor(private $state: ng.ui.IStateService) {
 
     }
 
-    $onInit() {
+    get currentNavItem() {
+        if(this.$state && this.$state.current && this.$state.current.name) {
+            return this.$state.current.name;
+        }
+
+        return 'home';
     }
 }
 
