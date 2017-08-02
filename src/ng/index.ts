@@ -1,6 +1,8 @@
 import { module, bootstrap, element } from 'angular';
 import './services';
 import './components';
+import ApplicationService from './services/application-service';
+import { ApplicationViewModel } from './services/application-service';
 
 module('event-planner', [ 'event-planner.components', 'event-planner.services', 'ui.router', 'ngCookies', 'templates', 'md.data.table' ])  
     .config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$mdIconProvider',
@@ -32,6 +34,32 @@ module('event-planner', [ 'event-planner.components', 'event-planner.services', 
                             </applications>`
             })
             .state({
+                name: 'applications.summary',
+                url: '/summary',
+                template:  `<applications-summary
+                                applications="$ctrl.applications">
+                            </applications-summary>`,
+                resolve: {
+                    applicationsData: ['applicationService', (applicationService: ApplicationService) => applicationService.list()]
+                },                     
+                controller: ['applicationsData', function(applications: { data: ApplicationViewModel[] }) {
+                    this.applications = applications.data;
+                }],
+                controllerAs: '$ctrl'
+            })
+            .state({
+                name: 'applications.detail',
+                url: '/detail',
+                template:  `<applications-table                                
+                                get-applications="$ctrl.applicationService.getApplications(query)"
+                                create="$ctrl.applicationService.create()">
+                            </applications-table>`,
+                controller: ['applicationService', function(applicationService: ApplicationService) {
+                    this.applicationService = applicationService;
+                }],
+                controllerAs: '$ctrl'
+            })
+            .state({
                 name: 'acts',
                 url: '/acts',
                 template:  `<acts>
@@ -44,3 +72,4 @@ module('event-planner', [ 'event-planner.components', 'event-planner.services', 
 element(document).ready(() => { 
     bootstrap(document, ['event-planner', 'templates']);
 });
+

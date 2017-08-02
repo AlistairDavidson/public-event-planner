@@ -142,7 +142,7 @@ angular
 			'    </md-dialog-actions>\n' +
 			'</md-dialog>');
 
-		$templateCache.put('components/applications-summary/applications-summary.html', '<md-content class="md-padding" layout="column" flex="75">    \n' +
+		$templateCache.put('components/applications-summary/applications-summary.html', '<md-content class="md-padding" layout="column" flex="80" flex-offset="10">    \n' +
 			'    <application-card ng-repeat="application in $ctrl.applications" application="application">\n' +
 			'    </application-card>\n' +
 			'</md-content>');
@@ -187,11 +187,8 @@ angular
 			'    </md-nav-item>\n' +
 			'</md-nav-bar>\n' +
 			'\n' +
-			'<applications-summary ng-if="$ctrl.currentNavItem == \'applications_summary\'" get-applications="$ctrl.getApplications(query)" create="$ctrl.create()">\n' +
-			'</applications-summary>\n' +
-			'\n' +
-			'<applications-table ng-if="$ctrl.currentNavItem == \'applications_details\'" get-applications="$ctrl.getApplications(query)" create="$ctrl.create()">\n' +
-			'</applications-table>');
+			'<ui-view>\n' +
+			'</ui-view>');
 
 		$templateCache.put('components/ep-table/ep-table.html', '<md-card>\n' +
 			'  <md-toolbar class="md-table-toolbar md-default" ng-hide="$ctrl.selected.length || $ctrl.filter.show">\n' +
@@ -258,7 +255,7 @@ angular
 			'        Home\n' +
 			'      </md-button>\n' +
 			'\n' +
-			'      <md-button ui-sref="applications">\n' +
+			'      <md-button ui-sref="applications.summary">\n' +
 			'        Applications\n' +
 			'      </md-button>\n' +
 			'\n' +

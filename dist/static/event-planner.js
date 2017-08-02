@@ -265,7 +265,7 @@ angular
 			'    </md-dialog-actions>\n' +
 			'</md-dialog>');
 
-		$templateCache.put('components/applications-summary/applications-summary.html', '<md-content class="md-padding" layout="column" flex="75">    \n' +
+		$templateCache.put('components/applications-summary/applications-summary.html', '<md-content class="md-padding" layout="column" flex="80" flex-offset="10">    \n' +
 			'    <application-card ng-repeat="application in $ctrl.applications" application="application">\n' +
 			'    </application-card>\n' +
 			'</md-content>');
@@ -310,11 +310,8 @@ angular
 			'    </md-nav-item>\n' +
 			'</md-nav-bar>\n' +
 			'\n' +
-			'<applications-summary ng-if="$ctrl.currentNavItem == \'applications_summary\'" get-applications="$ctrl.getApplications(query)" create="$ctrl.create()">\n' +
-			'</applications-summary>\n' +
-			'\n' +
-			'<applications-table ng-if="$ctrl.currentNavItem == \'applications_details\'" get-applications="$ctrl.getApplications(query)" create="$ctrl.create()">\n' +
-			'</applications-table>');
+			'<ui-view>\n' +
+			'</ui-view>');
 
 		$templateCache.put('components/ep-table/ep-table.html', '<md-card>\n' +
 			'  <md-toolbar class="md-table-toolbar md-default" ng-hide="$ctrl.selected.length || $ctrl.filter.show">\n' +
@@ -381,7 +378,7 @@ angular
 			'        Home\n' +
 			'      </md-button>\n' +
 			'\n' +
-			'      <md-button ui-sref="applications">\n' +
+			'      <md-button ui-sref="applications.summary">\n' +
 			'        Applications\n' +
 			'      </md-button>\n' +
 			'\n' +
@@ -931,6 +928,27 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 template: "<applications>\n                                <md-progress-circular md-mode=\"indeterminate\" class=\"loading\"></md-progress-circular>\n                            </applications>"
             })
                 .state({
+                name: 'applications.summary',
+                url: '/summary',
+                template: "<applications-summary\n                                applications=\"$ctrl.applications\">\n                            </applications-summary>",
+                resolve: {
+                    applicationsData: ['applicationService', function (applicationService) { return applicationService.list(); }]
+                },
+                controller: ['applicationsData', function (applications) {
+                        this.applications = applications.data;
+                    }],
+                controllerAs: '$ctrl'
+            })
+                .state({
+                name: 'applications.detail',
+                url: '/detail',
+                template: "<applications-table                                \n                                get-applications=\"$ctrl.applicationService.getApplications(query)\"\n                                create=\"$ctrl.applicationService.create()\">\n                            </applications-table>",
+                controller: ['applicationService', function (applicationService) {
+                        this.applicationService = applicationService;
+                    }],
+                controllerAs: '$ctrl'
+            })
+                .state({
                 name: 'acts',
                 url: '/acts',
                 template: "<acts>\n                                <md-progress-circular md-mode=\"indeterminate\" class=\"loading\"></md-progress-circular>\n                            </acts>"
@@ -1006,9 +1024,6 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         function ApplicationsSummaryController() {
         }
         ApplicationsSummaryController.prototype.$onInit = function () {
-            var _this = this;
-            this.getApplications()
-                .then(function (applications) { return _this.applications = applications.data; });
         };
         return ApplicationsSummaryController;
     }());
@@ -1017,7 +1032,8 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         controller: ApplicationsSummaryController,
         bindings: {
             getApplications: '&',
-            create: '&'
+            create: '&',
+            applications: '='
         }
     };
     exports.default = options;
@@ -1058,53 +1074,15 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 /* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(1), __webpack_require__(0)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, application_editor_1, angular_1) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var ApplicationsController = (function () {
-        function ApplicationsController(applicationService, $mdDialog) {
-            this.applicationService = applicationService;
-            this.$mdDialog = $mdDialog;
+        function ApplicationsController() {
             this.currentNavItem = 'applications_summary';
         }
         ApplicationsController.prototype.$onInit = function () {
         };
-        ApplicationsController.prototype.getApplications = function (query) {
-            var _this = this;
-            return this.applicationService.list(query)
-                .then(function (applicationsData) {
-                var applications = _this.processApplicationsList(applicationsData.applications);
-                var count = applicationsData.count;
-                return {
-                    count: count,
-                    data: applications
-                };
-            });
-        };
-        ApplicationsController.prototype.processApplicationsList = function (applicationsData) {
-            var applications = applicationsData
-                .map(function (applicationData) {
-                var details = applicationData.details;
-                details.id = applicationData.id;
-                details.createdAt = new Date(Date.parse(applicationData.createdAt));
-                details.updatedAt = new Date(Date.parse(applicationData.updatedAt));
-                return details;
-            });
-            return applications;
-        };
-        ApplicationsController.prototype.create = function (ev) {
-            return this.$mdDialog.show({
-                controller: application_editor_1.ApplicationEditorController,
-                templateUrl: 'components/application-editor/application-editor.html',
-                parent: angular_1.element(document.body),
-                targetEvent: ev,
-                clickOutsideToClose: true,
-                fullscreen: true,
-                bindToController: true,
-                controllerAs: '$ctrl'
-            });
-        };
-        ApplicationsController.$inject = ['applicationService', '$mdDialog'];
         return ApplicationsController;
     }());
     var options = {
@@ -1232,26 +1210,34 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 /* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(21), __webpack_require__(23)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, helper_1, settings_1) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(21), __webpack_require__(23), __webpack_require__(0), __webpack_require__(1)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, helper_1, settings_1, angular_1, application_editor_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var ApplicationService = (function () {
-        function ApplicationService($http, $httpParamSerializer, $q) {
+        function ApplicationService($http, $httpParamSerializer, $q, $mdDialog) {
             this.$http = $http;
             this.$httpParamSerializer = $httpParamSerializer;
             this.$q = $q;
+            this.$mdDialog = $mdDialog;
         }
         ApplicationService.prototype.list = function (query) {
+            var _this = this;
+            var url = settings_1.default.api + "/application/list";
             if (query) {
                 var listQuery = helper_1.queryToRequest(query);
                 var queryString = this.$httpParamSerializer(listQuery);
-                return this.$http.get(settings_1.default.api + "/application/list?" + queryString)
-                    .then(function (response) { return response.data; });
+                url = url + "?" + queryString;
             }
-            else {
-                return this.$http.get(settings_1.default.api + "/application/list")
-                    .then(function (response) { return response.data; });
-            }
+            return this.$http.get(url)
+                .then(function (response) { return response.data; })
+                .then(function (applicationsData) {
+                var applications = _this.processApplicationsList(applicationsData.applications);
+                var count = applicationsData.count;
+                return {
+                    count: count,
+                    data: applications
+                };
+            });
         };
         ApplicationService.prototype.get = function (id) {
             return this.$http.get(settings_1.default.api + "/application/get?id=" + id)
@@ -1265,7 +1251,30 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
             return this.$http.post(settings_1.default.api + "/application/delete", { id: data.id })
                 .then(function (response) { return response.data; });
         };
-        ApplicationService.$inject = ['$http', '$httpParamSerializer', '$q'];
+        ApplicationService.prototype.processApplicationsList = function (applicationsData) {
+            var applications = applicationsData
+                .map(function (applicationData) {
+                var details = applicationData.details;
+                details.id = applicationData.id;
+                details.createdAt = new Date(Date.parse(applicationData.createdAt));
+                details.updatedAt = new Date(Date.parse(applicationData.updatedAt));
+                return details;
+            });
+            return applications;
+        };
+        ApplicationService.prototype.create = function (ev) {
+            return this.$mdDialog.show({
+                controller: application_editor_1.ApplicationEditorController,
+                templateUrl: 'components/application-editor/application-editor.html',
+                parent: angular_1.element(document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true,
+                fullscreen: true,
+                bindToController: true,
+                controllerAs: '$ctrl'
+            });
+        };
+        ApplicationService.$inject = ['$http', '$httpParamSerializer', '$q', '$mdDialog'];
         return ApplicationService;
     }());
     exports.default = ApplicationService;

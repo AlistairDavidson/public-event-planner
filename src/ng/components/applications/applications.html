@@ -11,14 +11,5 @@
     </md-nav-item>
 </md-nav-bar>
 
-<applications-summary
-    ng-if="$ctrl.currentNavItem == 'applications_summary'"
-    get-applications="$ctrl.getApplications(query)"
-    create="$ctrl.create()">
-</applications-summary>
-
-<applications-table
-    ng-if="$ctrl.currentNavItem == 'applications_details'"
-    get-applications="$ctrl.getApplications(query)"
-    create="$ctrl.create()">
-</applications-table>
+<ui-view>
+</ui-view>
