@@ -130,7 +130,9 @@ angular
 	.run(['$templateCache', function($templateCache) {
 		$templateCache.put('components/acts/acts.html', '');
 
-		$templateCache.put('components/application-card/application-card.html', '<md-card>\n' +
+		$templateCache.put('components/application-card/application-card.html', '{{ $ctrl.application }}\n' +
+			'\n' +
+			'<md-card>\n' +
 			'    <md-card-title>\n' +
 			'        <md-card-title-text>\n' +
 			'            <span class="md-headline">{{ $ctrl.application.name }}</span>\n' +
@@ -1010,7 +1012,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         ApplicationsSummaryController.prototype.$onInit = function () {
             var _this = this;
             this.getApplications()
-                .then(function (applications) { return _this.applications = applications; });
+                .then(function (applications) { return _this.applications = applications.data; });
         };
         return ApplicationsSummaryController;
     }());

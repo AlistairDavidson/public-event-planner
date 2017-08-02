@@ -7,7 +7,9 @@ angular
 	.run(['$templateCache', function($templateCache) {
 		$templateCache.put('components/acts/acts.html', '');
 
-		$templateCache.put('components/application-card/application-card.html', '<md-card>\n' +
+		$templateCache.put('components/application-card/application-card.html', '{{ $ctrl.application }}\n' +
+			'\n' +
+			'<md-card>\n' +
 			'    <md-card-title>\n' +
 			'        <md-card-title-text>\n' +
 			'            <span class="md-headline">{{ $ctrl.application.name }}</span>\n' +
