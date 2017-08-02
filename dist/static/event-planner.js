@@ -328,11 +328,11 @@ angular
 			'</ep-table>');
 
 		$templateCache.put('components/applications/applications.html', '<md-nav-bar md-selected-nav-item="$ctrl.currentNavItem">\n' +
-			'    <md-nav-item md-nav-sref="applications.summary" name="applications.summary">\n' +
+			'    <md-nav-item md-nav-sref="root.applications.summary" name="root.applications.summary">\n' +
 			'        Summary\n' +
 			'    </md-nav-item>\n' +
 			'\n' +
-			'    <md-nav-item md-nav-sref="applications.detail" name="applications.detail">\n' +
+			'    <md-nav-item md-nav-sref="root.applications.detail" name="root.applications.detail">\n' +
 			'        Details\n' +
 			'    </md-nav-item>\n' +
 			'</md-nav-bar>\n' +
@@ -405,15 +405,15 @@ angular
 			'        <span>Event Planner</span>\n' +
 			'      </h3>\n' +
 			'\n' +
-			'      <md-button ui-sref="home">\n' +
+			'      <md-button ui-sref="root.home">\n' +
 			'        Home\n' +
 			'      </md-button>\n' +
 			'\n' +
-			'      <md-button ui-sref="applications.summary">\n' +
+			'      <md-button ui-sref="root.applications.summary">\n' +
 			'        Applications\n' +
 			'      </md-button>\n' +
 			'\n' +
-			'      <md-button ui-sref="acts">\n' +
+			'      <md-button ui-sref="root.acts">\n' +
 			'        Acts\n' +
 			'      </md-button>\n' +
 			'    </div>\n' +
@@ -430,15 +430,15 @@ angular
 			'      </h1>\n' +
 			'    </md-toolbar>\n' +
 			'    <md-content layout-padding layout="column">\n' +
-			'      <md-button ui-sref="home" ng-click="$ctrl.closeSidenav()" class="md-raised md-primary md-hue-2">\n' +
+			'      <md-button ui-sref="root.home" ng-click="$ctrl.closeSidenav()" class="md-raised md-primary md-hue-2">\n' +
 			'        Home\n' +
 			'      </md-button>\n' +
 			'      <br>\n' +
-			'      <md-button ui-sref="applications.summary" ng-click="$ctrl.closeSidenav()" class="md-raised md-primary md-hue-2">\n' +
+			'      <md-button ui-sref="root.applications.summary" ng-click="$ctrl.closeSidenav()" class="md-raised md-primary md-hue-2">\n' +
 			'        Applications\n' +
 			'      </md-button>\n' +
 			'      <br>\n' +
-			'      <md-button ui-sref="acts" ng-click="$ctrl.closeSidenav()" class="md-raised md-primary md-hue-2">\n' +
+			'      <md-button ui-sref="root.acts" ng-click="$ctrl.closeSidenav()" class="md-raised md-primary md-hue-2">\n' +
 			'        Acts\n' +
 			'      </md-button>\n' +
 			'      <br>      \n' +
@@ -976,20 +976,26 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
             $mdIconProvider
                 .iconSet('community', 'mdi.svg');
             $locationProvider.html5Mode(true);
-            $urlRouterProvider.otherwise('/');
+            $urlRouterProvider.otherwise('/mugstock2018');
             $stateProvider
                 .state({
-                name: 'home',
-                url: '/',
+                name: 'root',
+                url: '/{event}',
+                template: "<ui-view></ui-view>",
+                abstract: true
+            })
+                .state({
+                name: 'root.home',
+                url: '/home',
                 template: "<dashboard>\n                                <md-progress-circular md-mode=\"indeterminate\" class=\"loading\"></md-progress-circular>\n                            </dashboard>"
             })
                 .state({
-                name: 'applications',
+                name: 'root.applications',
                 url: '/applications',
                 template: "<applications>\n                                <md-progress-circular md-mode=\"indeterminate\" class=\"loading\"></md-progress-circular>\n                            </applications>"
             })
                 .state({
-                name: 'applications.summary',
+                name: 'root.applications.summary',
                 url: '/summary',
                 template: "<applications-summary\n                                applications=\"$ctrl.applications\">\n                            </applications-summary>",
                 resolve: {
@@ -1001,7 +1007,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 controllerAs: '$ctrl'
             })
                 .state({
-                name: 'applications.detail',
+                name: 'root.applications.detail',
                 url: '/detail',
                 template: "<applications-table                                \n                                get-applications=\"$ctrl.applicationService.list(query)\"\n                                create=\"$ctrl.applicationService.create()\">\n                            </applications-table>",
                 controller: ['applicationService', function (applicationService) {
@@ -1010,7 +1016,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 controllerAs: '$ctrl'
             })
                 .state({
-                name: 'acts',
+                name: 'root.acts',
                 url: '/acts',
                 template: "<acts>\n                                <md-progress-circular md-mode=\"indeterminate\" class=\"loading\"></md-progress-circular>\n                            </acts>"
             });

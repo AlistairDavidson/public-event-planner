@@ -20,25 +20,31 @@ module('event-planner', [ 'event-planner.components', 'event-planner.services', 
 
         $locationProvider.html5Mode(true);
 
-        $urlRouterProvider.otherwise('/');
+        $urlRouterProvider.otherwise('/mugstock2018');
         
-        $stateProvider           
+        $stateProvider                       
             .state({
-                name: 'home',
-                url: '/',
+                name: 'root',
+                url: '/{event}',
+                template: `<ui-view></ui-view>`,
+                abstract: true
+            })
+            .state({
+                name: 'root.home',
+                url: '/home',
                 template:  `<dashboard>
                                 <md-progress-circular md-mode="indeterminate" class="loading"></md-progress-circular>
                             </dashboard>`
             })
             .state({
-                name: 'applications',
+                name: 'root.applications',
                 url: '/applications',
                 template:  `<applications>
                                 <md-progress-circular md-mode="indeterminate" class="loading"></md-progress-circular>
                             </applications>`
             })
             .state({
-                name: 'applications.summary',
+                name: 'root.applications.summary',
                 url: '/summary',
                 template:  `<applications-summary
                                 applications="$ctrl.applications">
@@ -52,7 +58,7 @@ module('event-planner', [ 'event-planner.components', 'event-planner.services', 
                 controllerAs: '$ctrl'
             })
             .state({
-                name: 'applications.detail',
+                name: 'root.applications.detail',
                 url: '/detail',
                 template:  `<applications-table                                
                                 get-applications="$ctrl.applicationService.list(query)"
@@ -64,7 +70,7 @@ module('event-planner', [ 'event-planner.components', 'event-planner.services', 
                 controllerAs: '$ctrl'
             })
             .state({
-                name: 'acts',
+                name: 'root.acts',
                 url: '/acts',
                 template:  `<acts>
                                 <md-progress-circular md-mode="indeterminate" class="loading"></md-progress-circular>
