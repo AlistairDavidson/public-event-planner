@@ -192,7 +192,7 @@ angular
 			'<applications-summary ng-if="$ctrl.currentNavItem == \'summary\'" get-applications="$ctrl.getApplications(query)" create="$ctrl.create()">\n' +
 			'</applications-summary>\n' +
 			'\n' +
-			'<applications-table ng-if="$ctrl.currentNavItem == \'table\'" get-applications="$ctrl.getApplications(query)" create="$ctrl.create()">\n' +
+			'<applications-table ng-if="$ctrl.currentNavItem == \'details\'" get-applications="$ctrl.getApplications(query)" create="$ctrl.create()">\n' +
 			'</applications-table>');
 
 		$templateCache.put('components/ep-table/ep-table.html', '<md-card>\n' +

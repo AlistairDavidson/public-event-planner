@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 23);
+/******/ 	return __webpack_require__(__webpack_require__.s = 24);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -315,7 +315,7 @@ angular
 			'<applications-summary ng-if="$ctrl.currentNavItem == \'summary\'" get-applications="$ctrl.getApplications(query)" create="$ctrl.create()">\n' +
 			'</applications-summary>\n' +
 			'\n' +
-			'<applications-table ng-if="$ctrl.currentNavItem == \'table\'" get-applications="$ctrl.getApplications(query)" create="$ctrl.create()">\n' +
+			'<applications-table ng-if="$ctrl.currentNavItem == \'details\'" get-applications="$ctrl.getApplications(query)" create="$ctrl.create()">\n' +
 			'</applications-table>');
 
 		$templateCache.put('components/ep-table/ep-table.html', '<md-card>\n' +
@@ -911,7 +911,7 @@ minFrac:2,minInt:1,negPre:"-\u00a4",negSuf:"",posPre:"\u00a4",posSuf:""}]},id:"e
 /* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(0), __webpack_require__(21), __webpack_require__(18)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, angular_1) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(0), __webpack_require__(22), __webpack_require__(19)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, angular_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     angular_1.module('event-planner', ['event-planner.components', 'event-planner.services', 'ui.router', 'ngCookies', 'templates', 'md.data.table'])
@@ -1004,6 +1004,36 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
+    var ApplicationsSummaryController = (function () {
+        function ApplicationsSummaryController() {
+        }
+        ApplicationsSummaryController.prototype.$onInit = function () {
+            var _this = this;
+            this.getApplications()
+                .then(function (applications) { return _this.applications = applications; });
+        };
+        return ApplicationsSummaryController;
+    }());
+    var options = {
+        templateUrl: 'components/applications-summary/applications-summary.html',
+        controller: ApplicationsSummaryController,
+        bindings: {
+            getApplications: '&',
+            create: '&'
+        }
+    };
+    exports.default = options;
+}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
     var ApplicationsTableController = (function () {
         function ApplicationsTableController() {
         }
@@ -1027,7 +1057,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(1), __webpack_require__(0)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, application_editor_1, angular_1) {
@@ -1090,7 +1120,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
@@ -1157,7 +1187,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
@@ -1181,10 +1211,10 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(0), __webpack_require__(17), __webpack_require__(14), __webpack_require__(1), __webpack_require__(13), __webpack_require__(15), __webpack_require__(12), __webpack_require__(16)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, angular_1, event_planner_app_1, applications_table_1, application_editor_1, application_card_1, applications_1, acts_1, ep_table_1) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(0), __webpack_require__(18), __webpack_require__(15), __webpack_require__(1), __webpack_require__(13), __webpack_require__(14), __webpack_require__(16), __webpack_require__(12), __webpack_require__(17)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, angular_1, event_planner_app_1, applications_table_1, application_editor_1, application_card_1, applications_summary_1, applications_1, acts_1, ep_table_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.default = angular_1.module('event-planner.components', ['event-planner.services', 'ngMaterial'])
@@ -1193,6 +1223,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         .component('applicationsTable', applications_table_1.default)
         .component('applicationEditor', application_editor_1.default)
         .component('applicationCard', application_card_1.default)
+        .component('applicationsSummary', applications_summary_1.default)
         .component('applications', applications_1.default)
         .component('acts', acts_1.default);
 }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
@@ -1200,10 +1231,10 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(20), __webpack_require__(22)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, helper_1, settings_1) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(21), __webpack_require__(23)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, helper_1, settings_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var ApplicationService = (function () {
@@ -1245,7 +1276,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
@@ -1274,10 +1305,10 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(0), __webpack_require__(19)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, angular_1, application_service_1) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(0), __webpack_require__(20)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, angular_1, application_service_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.default = angular_1.module('event-planner.services', [])
@@ -1287,7 +1318,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
@@ -1301,7 +1332,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(10);
