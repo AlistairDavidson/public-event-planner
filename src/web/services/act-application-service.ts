@@ -9,6 +9,8 @@ import contactService from './contact-service';
 
 export class ActApplicationService {
     async list(query?: ListDto) {
+        console.log('list', query);
+
         if(!query) {
             query = {
                 field: 'createdAt',
@@ -20,7 +22,7 @@ export class ActApplicationService {
         }
 
         if(query.order != 'ASC' && query.order != 'DESC') {
-            throw 'Bad request';
+            query.order = 'ASC';
         }
 
         let order = SequelizeStatic.json(`details.${query.field} ${query.order}`) as string;
@@ -39,6 +41,8 @@ export class ActApplicationService {
                 }
             ) as any;
         }
+
+        console.log('do-list', options);
 
         let result = await database.models.ActApplication.findAndCountAll(options);
 
