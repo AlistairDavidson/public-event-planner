@@ -1,4 +1,6 @@
 class EventPlannerAppController implements angular.IComponentController {
+    static $inject = ['$window', '$mdSidenav'];
+
     constructor(private $window: ng.IWindowService,
                 private $mdSidenav: ng.material.ISidenavService) {
 

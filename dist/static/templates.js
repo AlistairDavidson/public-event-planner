@@ -296,31 +296,31 @@ angular
 			'    </div>\n' +
 			'  </md-toolbar>\n' +
 			'\n' +
-			'<md-sidenav class="md-sidenav-left" md-component-id="left" md-whiteframe="4">\n' +
+			'  <md-sidenav class="md-sidenav-left" md-component-id="left" md-whiteframe="4">\n' +
 			'\n' +
-			'            <md-toolbar>\n' +
-			'                  <h1 class="md-toolbar-tools">\n' +
-			'                        <md-button class="md-icon-button" ng-click="$ctrl.closeSidenav()">\n' +
-			'                              <md-icon>&#xE5D2;</md-icon>\n' +
-			'                        </md-button>\n' +
-			'                        <span class="toolbar-title">Menu</span>\n' +
-			'                  </h1>\n' +
-			'            </md-toolbar>\n' +
-			'            <md-content layout-padding layout="column">\n' +
-			'                  <md-button ui-sref="home" ng-click="$ctrl.closeSidenav()" ng-disabled="$ctrl.currentNavItem == \'home\'" class="md-raised md-primary md-hue-2">\n' +
-			'                        Home\n' +
-			'                  </md-button>\n' +
-			'                  <br>\n' +
-			'                  <md-button ui-sref="applications.summary" ng-click="$ctrl.closeSidenav()" ng-disabled="$ctrl.currentNavItem == \'applications.summary\'" class="md-raised md-primary md-hue-2">\n' +
-			'                        Applications\n' +
-			'                  </md-button>\n' +
-			'                  <br>\n' +
-			'                  <md-button ui-sref="acts" ng-click="$ctrl.closeSidenav()" ng-disabled="$ctrl.currentNavItem == \'acts\'" class="md-raised md-primary md-hue-2">\n' +
-			'                        Acts\n' +
-			'                  </md-button>\n' +
-			'                  <br>      \n' +
-			'            </md-content>\n' +
-			'      </md-sidenav>\n' +
+			'    <md-toolbar>\n' +
+			'      <h1 class="md-toolbar-tools">\n' +
+			'        <md-button class="md-icon-button" ng-click="$ctrl.closeSidenav()">\n' +
+			'          <md-icon>&#xE5D2;</md-icon>\n' +
+			'        </md-button>\n' +
+			'        <span class="toolbar-title">Menu</span>\n' +
+			'      </h1>\n' +
+			'    </md-toolbar>\n' +
+			'    <md-content layout-padding layout="column">\n' +
+			'      <md-button ui-sref="home" ng-click="$ctrl.closeSidenav()" ng-disabled="$ctrl.currentNavItem == \'home\'" class="md-raised md-primary md-hue-2">\n' +
+			'        Home\n' +
+			'      </md-button>\n' +
+			'      <br>\n' +
+			'      <md-button ui-sref="applications.summary" ng-click="$ctrl.closeSidenav()" ng-disabled="$ctrl.currentNavItem == \'applications.summary\'" class="md-raised md-primary md-hue-2">\n' +
+			'        Applications\n' +
+			'      </md-button>\n' +
+			'      <br>\n' +
+			'      <md-button ui-sref="acts" ng-click="$ctrl.closeSidenav()" ng-disabled="$ctrl.currentNavItem == \'acts\'" class="md-raised md-primary md-hue-2">\n' +
+			'        Acts\n' +
+			'      </md-button>\n' +
+			'      <br>      \n' +
+			'    </md-content>\n' +
+			'  </md-sidenav>\n' +
 			'  \n' +
 			'  <md-content flex>\n' +
 			'    <ui-view></ui-view>\n' +
