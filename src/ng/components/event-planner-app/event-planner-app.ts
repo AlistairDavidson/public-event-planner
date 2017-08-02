@@ -32,7 +32,11 @@ class EventPlannerAppController implements angular.IComponentController {
 
     switchEvent() {
         console.log('Switching to', this.selectedEvent);
-        this.$state.go(this.currentNavItem, { event: this.selectedEvent });
+        let state = this.currentNavItem;
+        if(state == 'default') {
+            state = 'root';
+        }
+        this.$state.go(state, { event: this.selectedEvent });
     }
 
     get currentNavItem() {

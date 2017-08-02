@@ -1344,7 +1344,11 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         };
         EventPlannerAppController.prototype.switchEvent = function () {
             console.log('Switching to', this.selectedEvent);
-            this.$state.go(this.currentNavItem, { event: this.selectedEvent });
+            var state = this.currentNavItem;
+            if (state == 'default') {
+                state = 'root';
+            }
+            this.$state.go(state, { event: this.selectedEvent });
         };
         Object.defineProperty(EventPlannerAppController.prototype, "currentNavItem", {
             get: function () {
