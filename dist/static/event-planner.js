@@ -1323,16 +1323,24 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var EventPlannerAppController = (function () {
-        function EventPlannerAppController($window, $mdSidenav, $state, eventService) {
+        function EventPlannerAppController($window, $mdSidenav, $state, $stateParams, eventService) {
             this.$window = $window;
             this.$mdSidenav = $mdSidenav;
             this.$state = $state;
+            this.$stateParams = $stateParams;
             this.eventService = eventService;
         }
         EventPlannerAppController.prototype.$onInit = function () {
             var _this = this;
+            this.selectedEvent = this.$stateParams.event;
             this.eventService.list()
-                .then(function (eventData) { return _this.events = eventData.events; });
+                .then(function (eventData) { return _this.events = eventData.events; })
+                .then(function () {
+                if (!_this.selectedEvent) {
+                    _this.selectedEvent = _this.events[0].id;
+                    _this.switchEvent();
+                }
+            });
         };
         EventPlannerAppController.prototype.openSidenav = function () {
             this.$window.scrollTo(0, 0);
@@ -1363,7 +1371,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
             enumerable: true,
             configurable: true
         });
-        EventPlannerAppController.$inject = ['$window', '$mdSidenav', '$state', 'eventService'];
+        EventPlannerAppController.$inject = ['$window', '$mdSidenav', '$state', '$stateParams', 'eventService'];
         return EventPlannerAppController;
     }());
     var options = {

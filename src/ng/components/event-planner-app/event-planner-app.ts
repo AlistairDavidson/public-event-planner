@@ -18,10 +18,15 @@ class EventPlannerAppController implements angular.IComponentController {
     }
 
     $onInit() {
+        this.selectedEvent = this.$stateParams.event;
+
         this.eventService.list()
             .then(eventData => this.events = eventData.events)
             .then(() => {
-                if()
+                if(!this.selectedEvent) {
+                    this.selectedEvent = this.events[0].id;
+                    this.switchEvent(); 
+                }
             });
     }
 
