@@ -460,15 +460,13 @@ angular
 			'        Acts\n' +
 			'      </md-button>\n' +
 			'\n' +
-			'      <md-input-container>\n' +
-			'        <label>Event</label>\n' +
-			'        <md-select ng-model="$ctrl.selectedEvent" ng-change="$ctrl.switchEvent()">\n' +
-			'          <md-option><em>Choose an event</em></md-option>\n' +
-			'          <md-option ng-repeat="event in $ctrl.events" ng-value="event.id">\n' +
-			'            {{ event.name }}\n' +
-			'          </md-option>\n' +
-			'        </md-select>\n' +
-			'      </md-input-container>\n' +
+			'    \n' +
+			'      <md-select ng-model="$ctrl.selectedEvent" ng-change="$ctrl.switchEvent()" aria-label="Switch events" class="md-no-underline">\n' +
+			'                  \n' +
+			'        <md-option ng-repeat="event in $ctrl.events" ng-value="event.id">\n' +
+			'          {{ event.name }}\n' +
+			'        </md-option>\n' +
+			'      </md-select>\n' +
 			'\n' +
 			'    </div>\n' +
 			'  </md-toolbar>\n' +
@@ -1345,6 +1343,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
             this.$mdSidenav('left').close();
         };
         EventPlannerAppController.prototype.switchEvent = function () {
+            console.log('Switching to', this.selectedEvent);
             this.$state.go(this.currentNavItem, { event: this.selectedEvent });
         };
         Object.defineProperty(EventPlannerAppController.prototype, "currentNavItem", {

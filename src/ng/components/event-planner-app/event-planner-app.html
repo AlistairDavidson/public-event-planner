@@ -24,16 +24,16 @@
         Acts
       </md-button>
 
-      <md-input-container>
-        <label>Event</label>
-        <md-select ng-model="$ctrl.selectedEvent"
-                   ng-change="$ctrl.switchEvent()">
-          <md-option><em>Choose an event</em></md-option>
-          <md-option ng-repeat="event in $ctrl.events" ng-value="event.id">
-            {{ event.name }}
-          </md-option>
-        </md-select>
-      </md-input-container>
+    
+      <md-select  ng-model="$ctrl.selectedEvent"
+                  ng-change="$ctrl.switchEvent()"
+                  aria-label="Switch events"
+                  class="md-no-underline">
+                  
+        <md-option ng-repeat="event in $ctrl.events" ng-value="event.id">
+          {{ event.name }}
+        </md-option>
+      </md-select>
 
     </div>
   </md-toolbar>
