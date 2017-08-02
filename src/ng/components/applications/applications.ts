@@ -7,7 +7,7 @@ import { element } from 'angular';
 class ApplicationsController implements angular.IComponentController {
     static $inject = ['applicationService', '$mdDialog'];
 
-    currentNavItem = 'summary';
+    currentNavItem = 'applications_summary';
 
     constructor(private applicationService: ApplicationService,
                 private $mdDialog: ng.material.IDialogService) {

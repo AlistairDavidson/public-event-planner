@@ -10,20 +10,20 @@ angular
 		$templateCache.put('components/application-card/application-card.html', '<md-card>\n' +
 			'    <md-card-title>\n' +
 			'        <md-card-title-text>\n' +
-			'            <span class="md-headline">{{ $ctrl.application.details.name }}</span>\n' +
-			'            <span class="md-subhead">{{ $ctrl.application.details.type }}, {{ $ctrl.application.details.town }}, {{ $ctrl.application.details.requested_fee }}</span>\n' +
-			'            <p>{{ $ctrl.application.details.bio }}</p>\n' +
+			'            <span class="md-headline">{{ $ctrl.application.name }}</span>\n' +
+			'            <span class="md-subhead">{{ $ctrl.application.type }}, {{ $ctrl.application.town }}, {{ $ctrl.application.requested_fee }}</span>\n' +
+			'            <p>{{ $ctrl.application.bio }}</p>\n' +
 			'        </md-card-title-text>\n' +
 			'        <md-card-title-media>\n' +
 			'            <div class="md-media-lg card-media">\n' +
-			'                <img ng-if="$ctrl.application.details.image" src="{{ $ctrl.application.details.image }}">\n' +
+			'                <img ng-if="$ctrl.application.image" src="{{ $ctrl.application.image }}">\n' +
 			'            </div>\n' +
 			'        </md-card-title-media>\n' +
 			'    </md-card-title>\n' +
 			'    <md-card-actions layout="row" layout-align="end center">\n' +
-			'        <md-button href="{{ $ctrl.application.details.link }}">Website</md-button>\n' +
-			'        <md-button href="{{ $ctrl.application.details.facebook }}">Facebook</md-button>\n' +
-			'        <md-button href="{{ $ctrl.application.details.twitter }}">Twitter</md-button>\n' +
+			'        <md-button href="{{ $ctrl.application.link }}">Website</md-button>\n' +
+			'        <md-button href="{{ $ctrl.application.facebook }}">Facebook</md-button>\n' +
+			'        <md-button href="{{ $ctrl.application.twitter }}">Twitter</md-button>\n' +
 			'    </md-card-actions>\n' +
 			'</md-card>');
 
