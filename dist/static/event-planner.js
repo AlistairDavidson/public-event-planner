@@ -132,13 +132,15 @@ angular
 
 		$templateCache.put('components/application-card/application-card.html', '<md-card>\n' +
 			'    <img ng-if="$ctrl.application.image" src="{{ $ctrl.application.image }}" class="md-card-image">\n' +
+			'\n' +
 			'    <md-card-title>\n' +
 			'        <md-card-title-text>\n' +
 			'            <span class="md-headline">{{ $ctrl.application.name }}</span>\n' +
-			'            <span class="md-subhead">{{ $ctrl.application.type }}, {{ $ctrl.application.town }}, {{ $ctrl.application.requested_fee }}</span>\n' +
+			'            <span class="md-subhead">{{ $ctrl.application.createdAt | date: \'mediumDate\' }} - {{ $ctrl.application.type }}, {{ $ctrl.application.town }}, {{ $ctrl.application.requested_fee }}</span>\n' +
 			'            <p>{{ $ctrl.application.bio }}</p>\n' +
 			'        </md-card-title-text>\n' +
 			'    </md-card-title>\n' +
+			'    \n' +
 			'    <md-card-actions layout="row" layout-align="end center">\n' +
 			'        <md-button href="{{ $ctrl.application.link }}" target="_blank">Website</md-button>\n' +
 			'        <md-button href="{{ $ctrl.application.facebook }}" target="_blank">Facebook</md-button>\n' +
@@ -288,11 +290,31 @@ angular
 			'  <td md-cell>{{ data.size_of_act }} / {{ data.size_of_party }}</td>\n' +
 			'  <td md-cell>{{ data.requested_fee }}</td>\n' +
 			'  <td md-cell> \n' +
-			'    <md-select ng-model="$ctrl.menu" placeholder="Menu">      \n' +
-			'      <md-option ng-value="website">Website</md-option>\n' +
-			'      <md-option ng-value="facebook">Facebook</md-option>\n' +
-			'      <md-option ng-value="facebook">Twitter</md-option>\n' +
-			'    </md-select>\n' +
+			'    <md-menu>\n' +
+			'      <md-button aria-label="Application contact menu" class="md-icon-button">\n' +
+			'        Contact\n' +
+			'      </md-button>\n' +
+			'\n' +
+			'      <md-menu-content width="4">\n' +
+			'        <md-menu-item>\n' +
+			'          <md-button href="{{ data.link }}" target="_blank">\n' +
+			'            Website\n' +
+			'          </md-button>\n' +
+			'        </md-menu-item>\n' +
+			'        \n' +
+			'        <md-menu-item>\n' +
+			'          <md-button href="{{ data.facebook }}" target="_blank">\n' +
+			'            Facebook\n' +
+			'          </md-button>\n' +
+			'        </md-menu-item>\n' +
+			'\n' +
+			'        <md-menu-item>\n' +
+			'          <md-button href="{{ data.twitter }}" target="_blank">\n' +
+			'            Twitter\n' +
+			'          </md-button>\n' +
+			'        </md-menu-item>\n' +
+			'      </md-menu-content>\n' +
+			'    </md-menu>\n' +
 			'  </td>\n' +
 			'</script>\n' +
 			'\n' +
