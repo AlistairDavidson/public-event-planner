@@ -14,7 +14,7 @@ export class ActApplicationService {
         if(!query) {
             query = {
                 field: 'createdAt',
-                order: 'ASC',
+                order: 'DESC',
                 filter: '',
                 offset: 0,
                 limit: 100
