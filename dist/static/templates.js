@@ -492,7 +492,7 @@ angular
 			'        Applications\n' +
 			'      </md-button>\n' +
 			'\n' +
-			'      <md-button ui-sref="root.acts">\n' +
+			'      <md-button ui-sref="root.acts.summary">\n' +
 			'        Acts\n' +
 			'      </md-button>\n' +
 			'\n' +
