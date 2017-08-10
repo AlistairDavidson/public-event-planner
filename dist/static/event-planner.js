@@ -1835,7 +1835,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 /* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(0), __webpack_require__(25), __webpack_require__(18), __webpack_require__(3), __webpack_require__(16), __webpack_require__(17), __webpack_require__(22), __webpack_require__(4), __webpack_require__(20), __webpack_require__(21), __webpack_require__(23), __webpack_require__(19), __webpack_require__(24)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, angular_1, event_planner_app_1, acts_table_1, act_editor_1, act_card_1, acts_summary_1, applications_table_1, application_editor_1, application_card_1, applications_summary_1, applications_1, acts_1, ep_table_1) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(0), __webpack_require__(25), __webpack_require__(24), __webpack_require__(18), __webpack_require__(3), __webpack_require__(16), __webpack_require__(17), __webpack_require__(19), __webpack_require__(22), __webpack_require__(4), __webpack_require__(20), __webpack_require__(21), __webpack_require__(23)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, angular_1, event_planner_app_1, ep_table_1, acts_table_1, act_editor_1, act_card_1, acts_summary_1, acts_1, applications_table_1, application_editor_1, application_card_1, applications_summary_1, applications_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.default = angular_1.module('event-planner.components', ['event-planner.services', 'ngMaterial'])
@@ -1845,12 +1845,12 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         .component('actEditor', act_editor_1.default)
         .component('actCard', act_card_1.default)
         .component('actsSummary', acts_summary_1.default)
-        .component('EactventsTable', applications_table_1.default)
+        .component('acts', acts_1.default)
+        .component('applicationsTable', applications_table_1.default)
         .component('applicationEditor', application_editor_1.default)
         .component('applicationCard', application_card_1.default)
         .component('applicationsSummary', applications_summary_1.default)
-        .component('applications', applications_1.default)
-        .component('acts', acts_1.default);
+        .component('applications', applications_1.default);
 }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 
