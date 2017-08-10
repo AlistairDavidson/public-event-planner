@@ -154,8 +154,8 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.default = {
-        //api: 'https://public-event-planner.herokuapp.com/api'
-        api: 'http://localhost:5000/api'
+        api: 'https://public-event-planner.herokuapp.com/api'
+        //api: 'http://localhost:5000/api'
     };
 }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -701,7 +701,7 @@ angular
 			'        Applications\n' +
 			'      </md-button>\n' +
 			'      <br>\n' +
-			'      <md-button ui-sref="root.acts" ng-click="$ctrl.closeSidenav()" class="md-raised md-primary md-hue-2">\n' +
+			'      <md-button ui-sref="root.acts.summary" ng-click="$ctrl.closeSidenav()" class="md-raised md-primary md-hue-2">\n' +
 			'        Acts\n' +
 			'      </md-button>\n' +
 			'      <br>      \n' +

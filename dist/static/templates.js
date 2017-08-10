@@ -533,7 +533,7 @@ angular
 			'        Applications\n' +
 			'      </md-button>\n' +
 			'      <br>\n' +
-			'      <md-button ui-sref="root.acts" ng-click="$ctrl.closeSidenav()" class="md-raised md-primary md-hue-2">\n' +
+			'      <md-button ui-sref="root.acts.summary" ng-click="$ctrl.closeSidenav()" class="md-raised md-primary md-hue-2">\n' +
 			'        Acts\n' +
 			'      </md-button>\n' +
 			'      <br>      \n' +
