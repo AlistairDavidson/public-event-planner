@@ -8,7 +8,7 @@ import { ActApplicationDto, ActApplicationInstance, ActApplicationAttribute, Raw
 import contactService from './contact-service';
 
 export class ActApplicationService {
-    async list(query: ListDto): Promise<ActApplicationsDto> {
+    async list(query: ListDto) {
         if(query.order != 'ASC' && query.order != 'DESC') {
             query.order = 'ASC';
         }
@@ -42,7 +42,7 @@ export class ActApplicationService {
         let result = await database.models.ActApplication.findAndCountAll(options);
 
         return {
-            applications: result.rows as ActApplicationDto[],
+            applications: result.rows,
             count: result.count          
         };
     }

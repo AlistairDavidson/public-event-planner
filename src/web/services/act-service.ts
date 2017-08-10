@@ -12,7 +12,7 @@ import { ListDto } from '../../common/types';
 import contactService from './contact-service';
 
 export class ActService {
-        async list(query?: ListDto): Promise<ActsDto> {
+        async list(query?: ListDto) {
         console.log('list', query);
 
         if(!query) {
