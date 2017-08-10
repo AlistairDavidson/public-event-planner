@@ -16,7 +16,7 @@ class ActsSummaryController implements angular.IComponentController {
 }
 
 let options: angular.IComponentOptions = {
-    templateUrl: 'components/acts-summary/acts-summary.html',
+    templateUrl: 'components/act/acts-summary/acts-summary.html',
     controller: ActsSummaryController,
     bindings: {
         getActs: '&',

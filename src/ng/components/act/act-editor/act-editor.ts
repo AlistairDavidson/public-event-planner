@@ -28,7 +28,7 @@ export class ActEditorController implements angular.IComponentController {
 }
 
 let options: angular.IComponentOptions = {
-    templateUrl: 'components/act-editor/act-editor.html',
+    templateUrl: 'components/act/act-editor/act-editor.html',
     controller: ActEditorController,
     bindings: {
         act: '=?'

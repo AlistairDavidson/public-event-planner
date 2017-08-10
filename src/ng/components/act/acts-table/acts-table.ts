@@ -14,7 +14,7 @@ class ActsTableController implements angular.IComponentController {
 }
 
 let options: angular.IComponentOptions = {
-    templateUrl: 'components/acts-table/acts-table.html',
+    templateUrl: 'components/act/acts-table/acts-table.html',
     controller: ActsTableController,
     bindings: {
         getActs: '&',

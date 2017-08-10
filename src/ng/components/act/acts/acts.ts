@@ -25,7 +25,7 @@ class ActsController implements angular.IComponentController {
 }
 
 let options: angular.IComponentOptions = {
-    templateUrl: 'components/acts/acts.html',
+    templateUrl: 'components/act/acts/acts.html',
     controller: ActsController,
     bindings: {}
 }

@@ -12,7 +12,7 @@ export class ActCardController implements angular.IComponentController {
 }
 
 let options: angular.IComponentOptions = {
-    templateUrl: 'components/act-card/act-card.html',
+    templateUrl: 'components/act/act-card/act-card.html',
     controller: ActCardController,
     bindings: {
         act: '='

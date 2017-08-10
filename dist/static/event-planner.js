@@ -148,7 +148,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
     }());
     exports.ActEditorController = ActEditorController;
     var options = {
-        templateUrl: 'components/act-editor/act-editor.html',
+        templateUrl: 'components/act/act-editor/act-editor.html',
         controller: ActEditorController,
         bindings: {
             act: '=?'
@@ -1457,7 +1457,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
     }());
     exports.ActCardController = ActCardController;
     var options = {
-        templateUrl: 'components/act-card/act-card.html',
+        templateUrl: 'components/act/act-card/act-card.html',
         controller: ActCardController,
         bindings: {
             act: '='
@@ -1483,7 +1483,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         return ActsSummaryController;
     }());
     var options = {
-        templateUrl: 'components/acts-summary/acts-summary.html',
+        templateUrl: 'components/act/acts-summary/acts-summary.html',
         controller: ActsSummaryController,
         bindings: {
             getActs: '&',
@@ -1513,7 +1513,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         return ActsTableController;
     }());
     var options = {
-        templateUrl: 'components/acts-table/acts-table.html',
+        templateUrl: 'components/act/acts-table/acts-table.html',
         controller: ActsTableController,
         bindings: {
             getActs: '&',
@@ -1554,7 +1554,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         return ActsController;
     }());
     var options = {
-        templateUrl: 'components/acts/acts.html',
+        templateUrl: 'components/act/acts/acts.html',
         controller: ActsController,
         bindings: {}
     };
