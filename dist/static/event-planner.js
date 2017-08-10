@@ -267,20 +267,20 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
             _.extend(this, act);
         }
         ActViewModel.prototype.getImage = function () {
-            var imageContact = _.filter(this.webContact.contactDetails, { type: 'Image' });
-            return imageContact[0].data.image;
+            var contacts = _.filter(this.webContact.contactDetails, { type: 'Image' });
+            return contacts.length ? contacts[0].data.image : '';
         };
         ActViewModel.prototype.getWebsite = function () {
-            var imageContact = _.filter(this.webContact.contactDetails, { type: 'Website' });
-            return imageContact[0].data.website;
+            var contacts = _.filter(this.webContact.contactDetails, { type: 'Website' });
+            return contacts.length ? contacts[0].data.website : '';
         };
         ActViewModel.prototype.getFacebook = function () {
-            var imageContact = _.filter(this.webContact.contactDetails, { type: 'Facebook' });
-            return imageContact[0].data.facebook;
+            var contacts = _.filter(this.webContact.contactDetails, { type: 'Facebook' });
+            return contacts.length ? contacts[0].data.facebook : '';
         };
         ActViewModel.prototype.getTwitter = function () {
-            var imageContact = _.filter(this.webContact.contactDetails, { type: 'Twitter' });
-            return imageContact[0].data.twitter;
+            var contacts = _.filter(this.webContact.contactDetails, { type: 'Twitter' });
+            return contacts.length ? contacts[0].data.twitter : '';
         };
         return ActViewModel;
     }());

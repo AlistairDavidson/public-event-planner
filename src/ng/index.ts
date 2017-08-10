@@ -5,6 +5,7 @@ import ApplicationService from './services/application-service';
 import { ApplicationViewModel } from './services/application-service';
 import { ActDto } from '../common/models/act';
 import ActService from './services/act-service';
+import { ActViewModel } from './services/act-service';
 
 module('event-planner', [ 'event-planner.components', 'event-planner.services', 'ui.router', 'ngCookies', 'templates', 'md.data.table' ])
     .config(['$mdIconProvider', ($mdIconProvider: ng.material.IIconProvider) => {
@@ -88,7 +89,7 @@ module('event-planner', [ 'event-planner.components', 'event-planner.services', 
                 resolve: {
                     actsData: ['actService', (actService: ActService) => actService.list()]
                 },                     
-                controller: ['actsData', function(acts: { data: ActDto[] }) {
+                controller: ['actsData', function(acts: { data: ActViewModel[] }) {
                     this.acts = acts.data;
                 }],
                 controllerAs: '$ctrl'

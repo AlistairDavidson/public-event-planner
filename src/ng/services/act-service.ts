@@ -98,22 +98,22 @@ export class ActViewModel implements ActDto {
     bookings?: BookingDto[];
 
     getImage() {
-        let imageContact = _.filter(this.webContact.contactDetails, { type: 'Image' });
-        return (imageContact[0].data as ImageDto).image;
+        let contacts = _.filter(this.webContact.contactDetails, { type: 'Image' });
+        return contacts.length ? (contacts[0].data as ImageDto).image : '';
     }
 
     getWebsite() {
-        let imageContact = _.filter(this.webContact.contactDetails, { type: 'Website' });
-        return (imageContact[0].data as WebsiteDto).website;
+        let contacts = _.filter(this.webContact.contactDetails, { type: 'Website' });
+        return contacts.length ? (contacts[0].data as WebsiteDto).website : '';
     }
 
     getFacebook() {
-        let imageContact = _.filter(this.webContact.contactDetails, { type: 'Facebook' });
-        return (imageContact[0].data as FacebookDto).facebook;
+        let contacts = _.filter(this.webContact.contactDetails, { type: 'Facebook' });
+        return contacts.length ? (contacts[0].data as FacebookDto).facebook : '';
     }
 
     getTwitter() {
-        let imageContact = _.filter(this.webContact.contactDetails, { type: 'Twitter' });
-        return (imageContact[0].data as TwitterDto).twitter;
+        let contacts = _.filter(this.webContact.contactDetails, { type: 'Twitter' });
+        return contacts.length ? (contacts[0].data as TwitterDto).twitter : '';
     }
 }
