@@ -3,7 +3,7 @@ import { queryToRequest } from './helper';
 import settings from '../settings';
 import { MdSortDto, ListDto } from '../../common/types';
 import { element } from 'angular';
-import { ApplicationEditorController } from '../../components/application-editor/application-editor';
+import { ApplicationEditorController } from '../components/application/application-editor/application-editor';
 
 export default class ApplicationService {
     static $inject = ['$http', '$httpParamSerializer', '$q', '$mdDialog', '$stateParams'];
