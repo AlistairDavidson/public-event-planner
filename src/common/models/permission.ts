@@ -15,6 +15,7 @@ export interface PermissionAttribute {
     id?: number;
     createdAt?: Date;
     updatedAt?: Date;
+    
     name?: string;
 }
 

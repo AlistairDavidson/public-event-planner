@@ -1,0 +1,119 @@
+<md-dialog aria-label="New Application">
+    <md-dialog-content class="md-dialog-content">
+        <form   novalidate
+                ng-cloak>
+            <div layout="column">
+                <h2 class="md-title">Act</h2>
+
+                <div layout-gt-sm="row">
+                    <md-input-container>
+                        <label>Act Name</label>
+                        <input ng-model="$ctrl.act.name">
+                    </md-input-container>
+
+                    <md-input-container>
+                        <label>Type</label>
+                        <input ng-model="$ctrl.act.type">
+                    </md-input-container>
+
+                    <md-input-container>
+                        <label>Town</label>
+                        <input ng-model="$ctrl.act.town">
+                    </md-input-container>
+                </div>
+
+                <div layout-gt-sm="row">
+                    <md-input-container>
+                        <label>Act Size</label>
+                        <input ng-model="$ctrl.act.size_of_act">
+                    </md-input-container>
+
+                    <md-input-container>
+                        <label>Party Size</label>
+                        <input ng-model="$ctrl.act.size_of_party">
+                    </md-input-container>
+                
+                    <md-input-container>
+                        <label>Requested Fee</label>
+                        <input ng-model="$ctrl.act.requested_fee">
+                    </md-input-container>
+                </div>
+
+                <h3 class="md-subhead">Contact</h3>
+
+                <div layout-gt-sm="row">
+                    <md-input-container>
+                        <label>Name</label>
+                        <input ng-model="$ctrl.act.contact_name">
+                    </md-input-container>
+
+                    <md-input-container>
+                        <label>Email</label>
+                        <input ng-model="$ctrl.act.email">
+                    </md-input-container>
+
+                    <md-input-container>
+                        <label>Phone</label>
+                        <input ng-model="$ctrl.act.phone">
+                    </md-input-container>
+                </div>
+
+                <div layout-gt-sm="row">
+                    <md-input-container>
+                        <label>Link</label>
+                        <input ng-model="$ctrl.act.link">
+                    </md-input-container>
+
+                    <md-input-container>
+                        <label>Facebook</label>
+                        <input ng-model="$ctrl.act.facebook">
+                    </md-input-container>
+
+                    <md-input-container>
+                        <label>Twitter</label>
+                        <input ng-model="$ctrl.act.twitter">
+                    </md-input-container>
+                </div>
+
+                <h3 class="md-subhead">Details</h3>
+
+                <div layout-gt-sm="row">
+                    <md-input-container>
+                        <label>Party Names</label>
+                        <input ng-model="$ctrl.act.party_names">
+                    </md-input-container>
+                </div>
+
+                <div layout-gt-sm="row">
+                    <md-input-container>
+                        <label>Bio</label>
+                        <textarea ng-model="$ctrl.act.bio">
+                        </textarea>
+                    </md-input-container>
+                </div>
+
+                <div layout-gt-sm="row">
+                    <md-input-container>
+                        <label>Tech Specs</label>
+                        <textarea ng-model="$ctrl.act.tech_specs">
+                        </textarea>
+                    </md-input-container>
+                </div>
+
+                <div layout-gt-sm="row">
+                    <md-input-container>
+                        <label>Image</label>
+                        <input ng-model="$ctrl.act.image">
+                    </md-input-container>
+                </div>
+
+
+                <img ng-if="$ctrl.act.image" src="{{ $ctrl.act.image }}" />
+            </div>
+        </form>
+    </md-dialog-content>
+    <md-dialog-actions>
+        <md-button ng-click="$ctrl.save()">Save</md-button>
+        <md-button ng-click="$ctrl.cancel()">Cancel</md-button>
+    </md-dialog-actions>
+</md-dialog>

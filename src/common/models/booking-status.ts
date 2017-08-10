@@ -17,6 +17,7 @@ export interface BookingStatusAttribute {
     id?: number;
     createdAt?: Date;
     updatedAt?: Date;
+    
     name?: string;
     order?: number;
     colour?: string;

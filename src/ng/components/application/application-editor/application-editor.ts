@@ -1,5 +1,5 @@
-import ApplicationService from '../../services/application-service';
-import { ActApplicationDto, RawApplicationDto, ActApplicationsDto } from '../../../common/models/act-application';
+import ApplicationService from '../../../services/application-service';
+import { ActApplicationDto, RawApplicationDto, ActApplicationsDto } from '../../../../common/models/act-application';
 
 export class ApplicationEditorController implements angular.IComponentController {
     static $inject = ['applicationService', '$mdDialog'];
@@ -30,7 +30,7 @@ export class ApplicationEditorController implements angular.IComponentController
 }
 
 let options: angular.IComponentOptions = {
-    templateUrl: 'components/application-editor/application-editor.html',
+    templateUrl: 'components/application/application-editor/application-editor.html',
     controller: ApplicationEditorController,
     bindings: {
         application: '=?'

@@ -1,5 +1,5 @@
-import { ApplicationViewModel } from '../../services/application-service';
-import { ActApplicationDto, RawApplicationDto, ActApplicationsDto } from '../../../common/models/act-application';
+import { ApplicationViewModel } from '../../../services/application-service';
+import { ActApplicationDto, RawApplicationDto, ActApplicationsDto } from '../../../../common/models/act-application';
 
 export class ApplicationCardController implements angular.IComponentController {
     application?: ApplicationViewModel;
@@ -13,7 +13,7 @@ export class ApplicationCardController implements angular.IComponentController {
 }
 
 let options: angular.IComponentOptions = {
-    templateUrl: 'components/application-card/application-card.html',
+    templateUrl: 'components/application/application-card/application-card.html',
     controller: ApplicationCardController,
     bindings: {
         application: '='

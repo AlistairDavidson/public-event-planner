@@ -1,10 +1,10 @@
 import * as SequelizeStatic from 'sequelize';
-import { ActModel, ActAttribute, ActInstance } from './act';
+import { ActModel, ActAttribute, ActInstance, ActDto } from './act';
 import { ContactAttribute, ContactModel, ContactInstance, ContactDto } from './contact';
 
 export function actContact(db: SequelizeStatic.Sequelize)  {    
     let ActContact = db.define<ActContactInstance, ActContactAttribute>('ActContact', {
-        relationship: SequelizeStatic.STRING(255)        
+        relationship: SequelizeStatic.STRING(255)               
     }, {
         schema: 'eventplanner'
     });
@@ -17,6 +17,8 @@ export interface ActContactAttribute {
     createdAt?: Date;
     updatedAt?: Date;
     relationship?: string;
+    ActId?: number;
+    ContactId?: number;
 }
 
 export interface ActContactInstance extends SequelizeStatic.Instance<ActContactAttribute>, ActContactAttribute {
@@ -33,6 +35,7 @@ export interface ActContactInstance extends SequelizeStatic.Instance<ActContactA
 
 export interface ActContactDto extends ActContactAttribute {    
     contact?: ContactDto; 
+    act?: ActDto;
 }
 
 export interface ActContactModel extends SequelizeStatic.Model<ActContactInstance, ActContactAttribute> {}

@@ -13,13 +13,13 @@
 
     <md-card-actions layout="row" layout-align="end center">
         <md-button ng-if="$ctrl.application.link" href="{{ $ctrl.application.link }}" target="_blank">
-            <md-icon>link</md-icon> Website
+            <md-icon aria-label="Website">link</md-icon>
         </md-button>
         <md-button ng-if="$ctrl.application.facebook" href="{{ $ctrl.application.facebook }}" target="_blank">
-            <md-icon md-svg-icon="community:facebook"></md-icon> Facebook
+            <md-icon aria-label="Facebook" md-svg-icon="community:facebook"></md-icon>
         </md-button>
         <md-button ng-if="$ctrl.application.twitter" href="{{ $ctrl.application.twitter }}" target="_blank">
-            <md-icon md-svg-icon="community:twitter"></md-icon> Twitter
+            <md-icon aria-label="Twitter" md-svg-icon="community:twitter"></md-icon>
         </md-button>
     </md-card-actions>
 </md-card>

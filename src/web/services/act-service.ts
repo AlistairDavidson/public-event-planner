@@ -1,17 +1,71 @@
 import database from '../../common/database';
 import * as _ from 'lodash';
+import * as SequelizeStatic from 'sequelize';
 
 import { ActDto, ActInstance } from '../../common/models/act';
 import { ActContactDto } from '../../common/models/act-contact';
 import { BookingDto, BookingInstance, BookingAttribute } from '../../common/models/booking';
 import { ActApplicationDto, ActApplicationInstance, ActApplicationAttribute } from '../../common/models/act-application';
+import { ListDto } from '../../common/types';
+
 
 import contactService from './contact-service';
 
 export class ActService {
-    async list() {
-        let acts = await database.models.Act.findAll();
-        return acts;
+        async list(query?: ListDto) {
+        console.log('list', query);
+
+        if(!query) {
+            query = {
+                field: 'createdAt',
+                order: 'DESC',
+                filter: '',
+                offset: 0,
+                limit: 100
+            }
+        }
+
+        if(query.order != 'ASC' && query.order != 'DESC') {
+            query.order = 'ASC';
+        }
+
+        let order;
+        if(query.field) {
+            order = [ query.field, query.order ]
+        }
+
+        let options: SequelizeStatic.FindOptions = {
+            order: order,
+            offset: query.offset,
+            limit: query.limit            
+        }
+
+        if(query.filter) {
+            options.where = {
+                name: {
+                    $iLike: `%${query.filter}%`
+                }
+            }
+        }
+
+        options.include = [{
+            model: database.models.ActContact            
+        },{
+            model: database.models.ActContact,
+            as: 'mainContact'           
+        },{
+            model: database.models.ActContact,
+            as: 'webContact'         
+        }];
+
+        console.log('do-list', options);
+
+        let result = await database.models.Act.findAndCountAll(options);
+
+        return {
+            acts: result.rows,
+            count: result.count          
+        };
     }
 
     async get(actId: number) {
@@ -31,8 +85,21 @@ export class ActService {
                 },{
                     model: database.models.Contact,
                     as: 'mainContact'
+                },{
+                    model: database.models.Contact,
+                    as: 'webContact'
                 }]
             });
+
+        return act;
+    }
+
+    async save(actData: ActDto) {        
+        let act = await database.models.Act.findById(actData.id);
+        
+        if(!act) {
+            act = await database.models.Act.create(actData);
+        }
 
         return act;
     }
@@ -41,6 +108,10 @@ export class ActService {
         let mainContactData = actData.mainContact;
         delete actData.mainContact;
 
+        let webContactData = actData.webContact;
+        delete actData.webContact;
+
+
         let act = await this.get(actData.id);
         if(!act) {
             act = await database.models.Act.create(actData);
@@ -48,6 +119,9 @@ export class ActService {
 
         let mainContact = (await contactService.updateOrCreate([ mainContactData ]))[0];
         await act.setMainContact(mainContact);
+
+        let webContact = (await contactService.updateOrCreate([ webContactData ]))[0];
+        await act.setMainContact(webContact);
 
         await this.rewriteContacts(act, actData.actContacts);
         await this.rewriteBookings(act, actData.bookings);

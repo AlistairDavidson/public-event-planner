@@ -31,6 +31,7 @@ export interface BookingAttribute {
     id?: number;
     createdAt?: Date;
     updatedAt?: Date;
+    
     tech_specs?: string;
     size_of_act?: number;
     size_of_party?: number;
@@ -62,7 +63,7 @@ export interface BookingDto extends BookingAttribute {
     event?: EventDto;
     act?: ActDto;
     bookingStatus?: BookingStatusDto;
-    actApplication?: ActApplicationDto;
+    actApplication?: ActApplicationDto; 
 }
 
 export interface BookingModel extends SequelizeStatic.Model<BookingInstance, BookingAttribute> {}

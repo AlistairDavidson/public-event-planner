@@ -1,4 +1,4 @@
-import { ActApplicationDto, RawApplicationDto, ActApplicationsDto } from '../../../common/models/act-application';
+import { ActApplicationDto, RawApplicationDto, ActApplicationsDto } from '../../../../common/models/act-application';
 
 class ApplicationsTableController implements angular.IComponentController {
     getApplications: Function;
@@ -16,7 +16,7 @@ class ApplicationsTableController implements angular.IComponentController {
 }
 
 let options: angular.IComponentOptions = {
-    templateUrl: 'components/applications-table/applications-table.html',
+    templateUrl: 'components/application/applications-table/applications-table.html',
     controller: ApplicationsTableController,
     bindings: {
         getApplications: '&',

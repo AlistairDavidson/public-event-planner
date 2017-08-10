@@ -20,8 +20,8 @@ export interface ContactDetailAttribute {
     type?: ContactDetailType;
 }
 
-export type ContactDetailDataDto = AddressDto | EmailDto | FacebookPageDto | TwitterDto | PhoneDto | WebsiteDto;
-export type ContactDetailType = 'Address' | 'Email' | 'FacebookPage' | 'Twitter' | 'Phone' | 'Website';
+export type ContactDetailDataDto = AddressDto | EmailDto | FacebookDto | TwitterDto | PhoneDto | WebsiteDto | ImageDto;
+export type ContactDetailType = 'Address' | 'Email' | 'Facebook' | 'Twitter' | 'Phone' | 'Website' | 'Image';
 
 export interface AddressDto {
     address?: string;
@@ -32,7 +32,7 @@ export interface EmailDto {
     email?: string;
 }
 
-export interface FacebookPageDto {
+export interface FacebookDto {
     facebook?: string;
 }
 
@@ -46,6 +46,10 @@ export interface PhoneDto {
 
 export interface WebsiteDto {
     website?: string;
+}
+
+export interface ImageDto {
+    image?: string;
 }
 
 export interface ContactDetailInstance extends SequelizeStatic.Instance<ContactDetailAttribute>, ContactDetailAttribute {}

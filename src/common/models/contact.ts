@@ -1,5 +1,5 @@
 import * as SequelizeStatic from 'sequelize';
-import { ActContactModel, ActContactInstance } from './act-contact';
+import { ActContactModel, ActContactInstance, ActContactDto } from './act-contact';
 import { ContactDetailModel, ContactDetailInstance, ContactDetailDto } from './contact-detail';
 
 export function contact(db: SequelizeStatic.Sequelize, ActContact: ActContactModel, ContactDetail: ContactDetailModel)  {    
@@ -22,6 +22,7 @@ export interface ContactAttribute {
     id?: number;
     createdAt?: Date;
     updatedAt?: Date;
+
     name?: string;
 }
 
@@ -51,6 +52,7 @@ export interface ContactInstance extends SequelizeStatic.Instance<ContactAttribu
 
 export interface ContactDto extends ContactAttribute {
     contactDetails?: ContactDetailDto[];
+    actContacts?: ActContactDto[];
 }
 
 export interface ContactModel extends SequelizeStatic.Model<ContactInstance, ContactAttribute> {}

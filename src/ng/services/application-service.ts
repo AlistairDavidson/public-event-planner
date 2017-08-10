@@ -3,7 +3,7 @@ import { queryToRequest } from './helper';
 import settings from '../settings';
 import { MdSortDto, ListDto } from '../../common/types';
 import { element } from 'angular';
-import { ApplicationEditorController } from '../components/application-editor/application-editor';
+import { ApplicationEditorController } from '../../components/application-editor/application-editor';
 
 export default class ApplicationService {
     static $inject = ['$http', '$httpParamSerializer', '$q', '$mdDialog', '$stateParams'];
@@ -76,7 +76,7 @@ export default class ApplicationService {
     create(ev: ng.IAngularEvent) {
         return this.$mdDialog.show({
             controller: ApplicationEditorController,
-            templateUrl: 'components/application-editor/application-editor.html',
+            templateUrl: 'components/application/application-editor/application-editor.html',
             parent: element(document.body),
             targetEvent: ev,
             clickOutsideToClose: true,

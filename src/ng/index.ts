@@ -3,6 +3,8 @@ import './services';
 import './components';
 import ApplicationService from './services/application-service';
 import { ApplicationViewModel } from './services/application-service';
+import { ActDto } from '../common/models/act';
+import ActService from './services/act-service';
 
 module('event-planner', [ 'event-planner.components', 'event-planner.services', 'ui.router', 'ngCookies', 'templates', 'md.data.table' ])
     .config(['$mdIconProvider', ($mdIconProvider: ng.material.IIconProvider) => {
@@ -76,6 +78,32 @@ module('event-planner', [ 'event-planner.components', 'event-planner.services', 
                 template:  `<acts>
                                 <md-progress-circular md-mode="indeterminate" class="loading"></md-progress-circular>
                             </acts>`
+            })
+            .state({
+                name: 'root.acts.summary',
+                url: '/summary',
+                template:  `<acts-summary
+                                acts="$ctrl.acts">
+                            </acts-summary>`,
+                resolve: {
+                    applicationsData: ['actService', (actService: ActService) => actService.list()]
+                },                     
+                controller: ['actsData', function(acts: { data: ActDto[] }) {
+                    this.acts = acts.data;
+                }],
+                controllerAs: '$ctrl'
+            })
+            .state({
+                name: 'root.acts.detail',
+                url: '/detail',
+                template:  `<acts-table                                
+                                get-acts="$ctrl.actService.list(query)"
+                                create="$ctrl.actService.create()">
+                            </acts-table>`,
+                controller: ['actService', function(actService: ActService) {
+                    this.actService = actService;
+                }],
+                controllerAs: '$ctrl'
             });
     }])
     .controller('eventPlanner', () => {});

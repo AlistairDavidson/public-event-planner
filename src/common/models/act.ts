@@ -7,9 +7,10 @@ import { ActContactInstance, ActContactModel, ActContactDto } from './act-contac
 export function act(db: SequelizeStatic.Sequelize, Booking: BookingModel, Contact: ContactModel, ActContact: ActContactModel)  {    
     let Act = db.define<ActInstance, ActAttribute>('Act', {
         name: SequelizeStatic.STRING(255),
+        town: SequelizeStatic.STRING(255),       
         bio: SequelizeStatic.TEXT,
-        size: SequelizeStatic.INTEGER,
-        tech_specs: SequelizeStatic.TEXT
+        tech_specs: SequelizeStatic.TEXT,
+        type: SequelizeStatic.STRING(255)
     }, {
         schema: 'eventplanner'
     });
@@ -17,11 +18,11 @@ export function act(db: SequelizeStatic.Sequelize, Booking: BookingModel, Contac
     Booking.belongsTo(Act);
     Act.hasMany(Booking);
 
-
     Act.hasMany(ActContact);
     ActContact.belongsTo(Act);
 
     Act.belongsTo(Contact, { as: 'mainContact' });
+    Act.belongsTo(Contact, { as: 'webContact' });
 
     return Act;
 }
@@ -30,10 +31,14 @@ export interface ActAttribute {
     id?: number;
     createdAt?: Date;
     updatedAt?: Date;
+
     name?: string;
     bio?: string;
     tech_specs?: string;
-    size?: number;
+    type?: string;
+
+    mainContactId?: number;
+    webContactId?: number;
 }
 
 export interface ActInstance extends SequelizeStatic.Instance<ActAttribute>, ActAttribute {
@@ -78,9 +83,15 @@ export interface ActInstance extends SequelizeStatic.Instance<ActAttribute>, Act
 
 export interface ActDto extends ActAttribute {
     mainContact?: ContactDto;
-    timeslots?: TimeslotDto[];
+    webContact?: ContactDto;
     actContacts?: ActContactDto[];
+    timeslots?: TimeslotDto[];
     bookings?: BookingDto[];
+}
+
+export interface ActsDto {
+    count: number;
+    applications: ActDto[];
 }
 
 export interface ActModel extends SequelizeStatic.Model<ActInstance, ActAttribute> {}

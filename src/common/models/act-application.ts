@@ -1,6 +1,6 @@
 import * as SequelizeStatic from 'sequelize';
-import { ActModel, ActAttribute, ActInstance, ActDto } from './act';
 import { BookingInstance, BookingAttribute, BookingModel, BookingDto } from './booking';
+import { EventInstance, EventAttribute, EventModel, EventDto } from './event';
 
 export function actApplication(db: SequelizeStatic.Sequelize)  {    
     let ActApplication = db.define<ActApplicationInstance, ActApplicationAttribute>('ActApplication', {
@@ -43,6 +43,8 @@ export interface RawApplicationDto {
 export interface ActApplicationDto extends ActApplicationAttribute {
     createdAt?: string;
     updatedAt?: string;
+    booking?: BookingDto;
+    event?: EventDto;
 }
 
 export interface ActApplicationsDto {
@@ -55,6 +57,11 @@ export interface ActApplicationInstance extends SequelizeStatic.Instance<ActAppl
     createBooking: SequelizeStatic.BelongsToCreateAssociationMixin<BookingAttribute>;
     getBooking: SequelizeStatic.BelongsToGetAssociationMixin<BookingInstance>;
     setBooking: SequelizeStatic.BelongsToSetAssociationMixin<BookingInstance, number>;
+
+    event: EventInstance;
+    createEvent: SequelizeStatic.BelongsToCreateAssociationMixin<EventAttribute>;
+    getEvent: SequelizeStatic.BelongsToGetAssociationMixin<EventInstance>;
+    setEvent: SequelizeStatic.BelongsToSetAssociationMixin<EventInstance, number>;
 }
 
 export interface ActApplicationModel extends SequelizeStatic.Model<ActApplicationInstance, ActApplicationAttribute> {}

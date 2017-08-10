@@ -2,12 +2,12 @@ import { module } from 'angular';
 import services from '../services';
 
 import eventPlannerApp from './event-planner-app/event-planner-app';
-import applicationsTable from './applications-table/applications-table';
-import applicationEditor from './application-editor/application-editor';
-import applicationCard from './application-card/application-card';
-import applicationsSummary from './applications-summary/applications-summary';
-import applications from './applications/applications';
-import acts from './acts/acts';
+import applicationsTable from './application/applications-table/applications-table';
+import applicationEditor from './application/application-editor/application-editor';
+import applicationCard from './application/application-card/application-card';
+import applicationsSummary from './application/applications-summary/applications-summary';
+import applications from './application/applications/applications';
+import acts from './act/acts/acts';
 import epTable from './ep-table/ep-table';
 
 

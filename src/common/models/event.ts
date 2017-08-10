@@ -1,7 +1,7 @@
 import * as SequelizeStatic from 'sequelize';
-import { BookingInstance, BookingModel } from './booking';
-import { LocationInstance, LocationModel } from './location';
-import { ActApplicationInstance, ActApplicationModel } from './act-application';
+import { BookingInstance, BookingModel, BookingDto } from './booking';
+import { LocationInstance, LocationModel, LocationDto } from './location';
+import { ActApplicationInstance, ActApplicationModel, ActApplicationDto } from './act-application';
 
 export function event(db: SequelizeStatic.Sequelize, Booking: BookingModel, Location: LocationModel, ActApplication: ActApplicationModel)  {    
     let Event = db.define<EventInstance, EventAttribute>('Event', {
@@ -31,6 +31,7 @@ export interface EventAttribute {
     id?: number;
     createdAt?: Date;
     updatedAt?: Date;
+
     name?: string,
     version?: string,
     start?: Date,
@@ -73,6 +74,9 @@ export interface EventInstance extends SequelizeStatic.Instance<EventAttribute>,
 }
 
 export interface EventDto extends EventAttribute {    
+    bookings?: BookingDto[];
+    locations?: LocationDto[];
+    actApplications?: ActApplicationDto[];
 }
 
 export interface EventsDto {

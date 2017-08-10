@@ -4,7 +4,7 @@ import { ListDto } from '../../common/types';
 import { EventDto } from '../../common/models/event';
 import eventService from '../services/event-service';
 
-export default class ApplicationController {
+export default class EventController {
     constructor(app: express.Application) {
        
     }

@@ -1,6 +1,6 @@
-import { ApplicationViewModel } from '../../services/application-service';
-import { ActApplicationDto, RawApplicationDto, ActApplicationsDto } from '../../../common/models/act-application';
-import { MdSortDto } from '../../../common/types';
+import { ApplicationViewModel } from '../../../services/application-service';
+import { ActApplicationDto, RawApplicationDto, ActApplicationsDto } from '../../../../common/models/act-application';
+import { MdSortDto } from '../../../../common/types';
 
 class ApplicationsSummaryController implements angular.IComponentController {
     getApplications: Function;
@@ -17,7 +17,7 @@ class ApplicationsSummaryController implements angular.IComponentController {
 }
 
 let options: angular.IComponentOptions = {
-    templateUrl: 'components/applications-summary/applications-summary.html',
+    templateUrl: 'components/application/applications-summary/applications-summary.html',
     controller: ApplicationsSummaryController,
     bindings: {
         getApplications: '&',
