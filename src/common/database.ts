@@ -20,7 +20,7 @@ export class Database {
         try {
             await this.db.authenticate()
             await models.init();
-            await this.db.sync();
+            await this.db.sync({ force: true });
         } catch(err) {
             console.log('Unable to connect to the database:', err);
         }    
@@ -118,7 +118,7 @@ export class Database {
             TEST
         ******/
 
-     /*   await this.models.ActApplication.findOrCreate({
+        await this.models.ActApplication.findOrCreate({
             where: {
                 details: {
                     name: 'Allstars',
@@ -135,7 +135,7 @@ export class Database {
                     party_names: 'Alice, Alex, Annabel, Ally',
                     requested_fee: '£100',    
                     bio: 'All about alabaster',
-                    image: '',
+                    image: 'https://www.ticketline.co.uk/images/artist/the-wurzels/the-wurzels.jpg',
                     tech_specs: 'Amps'   
                 }
             }
@@ -158,11 +158,11 @@ export class Database {
                     party_names: 'Bob, Belle',
                     requested_fee: '£200',    
                     bio: 'Brilliant',
-                    image: '',
+                    image: 'http://cdn8.openculture.com/wp-content/uploads/2015/01/06212116/spinal-tap.jpg',
                     tech_specs: 'Bass'   
                 }
             }
-        });*/
+        });
     }
 
     create() {
