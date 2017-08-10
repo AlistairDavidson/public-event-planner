@@ -185,7 +185,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
             return this.$http.get(url)
                 .then(function (response) {
                 var actsResponse = response.data;
-                actsResponse.applications = actsResponse.applications.map(function (act) { return new ActViewModel(act); });
+                actsResponse.acts = actsResponse.acts.map(function (act) { return new ActViewModel(act); });
                 return actsResponse;
             });
         };
