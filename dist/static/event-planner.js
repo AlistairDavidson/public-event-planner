@@ -1416,7 +1416,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 url: '/summary',
                 template: "<acts-summary\n                                acts=\"$ctrl.acts\">\n                            </acts-summary>",
                 resolve: {
-                    applicationsData: ['actService', function (actService) { return actService.list(); }]
+                    actsData: ['actService', function (actService) { return actService.list(); }]
                 },
                 controller: ['actsData', function (acts) {
                         this.acts = acts.data;

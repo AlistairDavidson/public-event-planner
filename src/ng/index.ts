@@ -86,7 +86,7 @@ module('event-planner', [ 'event-planner.components', 'event-planner.services', 
                                 acts="$ctrl.acts">
                             </acts-summary>`,
                 resolve: {
-                    applicationsData: ['actService', (actService: ActService) => actService.list()]
+                    actsData: ['actService', (actService: ActService) => actService.list()]
                 },                     
                 controller: ['actsData', function(acts: { data: ActDto[] }) {
                     this.acts = acts.data;
