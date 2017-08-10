@@ -3,12 +3,12 @@ import { ListDto } from '../../common/types';
 import * as _ from 'lodash';
 import * as SequelizeStatic from 'sequelize';
 
-import { ActApplicationDto, ActApplicationInstance, ActApplicationAttribute, RawApplicationDto } from '../../common/models/act-application';
+import { ActApplicationDto, ActApplicationInstance, ActApplicationAttribute, RawApplicationDto, ActApplicationsDto } from '../../common/models/act-application';
 
 import contactService from './contact-service';
 
 export class ActApplicationService {
-    async list(query: ListDto) {
+    async list(query: ListDto): Promise<ActApplicationsDto> {
         if(query.order != 'ASC' && query.order != 'DESC') {
             query.order = 'ASC';
         }
@@ -42,7 +42,7 @@ export class ActApplicationService {
         let result = await database.models.ActApplication.findAndCountAll(options);
 
         return {
-            applications: result.rows,
+            applications: result.rows.map(row => row.toJSON() as ActApplicationDto),
             count: result.count          
         };
     }

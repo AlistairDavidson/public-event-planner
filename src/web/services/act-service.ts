@@ -2,7 +2,7 @@ import database from '../../common/database';
 import * as _ from 'lodash';
 import * as SequelizeStatic from 'sequelize';
 
-import { ActDto, ActInstance } from '../../common/models/act';
+import { ActDto, ActsDto, ActInstance } from '../../common/models/act';
 import { ActContactDto } from '../../common/models/act-contact';
 import { BookingDto, BookingInstance, BookingAttribute } from '../../common/models/booking';
 import { ActApplicationDto, ActApplicationInstance, ActApplicationAttribute } from '../../common/models/act-application';
@@ -12,7 +12,7 @@ import { ListDto } from '../../common/types';
 import contactService from './contact-service';
 
 export class ActService {
-        async list(query?: ListDto) {
+        async list(query?: ListDto): Promise<ActsDto> {
         console.log('list', query);
 
         if(!query) {

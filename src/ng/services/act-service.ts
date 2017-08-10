@@ -34,7 +34,7 @@ export default class ActService {
         return this.$http.get(url)
             .then(response => {
                 let actsResponse = response.data as ActsDto;
-                actsResponse.applications = actsResponse.applications.map(act => new ActViewModel(act));
+                actsResponse.acts = actsResponse.acts.map(act => new ActViewModel(act));
                 return actsResponse;
             });            
     }
