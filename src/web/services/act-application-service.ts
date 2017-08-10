@@ -42,7 +42,7 @@ export class ActApplicationService {
         let result = await database.models.ActApplication.findAndCountAll(options);
 
         return {
-            applications: result.rows.map(row => row.toJSON() as ActApplicationDto),
+            applications: result.rows as ActApplicationDto[],
             count: result.count          
         };
     }
