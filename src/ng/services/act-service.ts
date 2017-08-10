@@ -35,7 +35,10 @@ export default class ActService {
             .then(response => {
                 let actsResponse = response.data as ActsDto;
                 actsResponse.acts = actsResponse.acts.map(act => new ActViewModel(act));
-                return actsResponse;
+                return {
+                    count: actsResponse.count,
+                    data: actsResponse.acts
+                }
             });            
     }
 

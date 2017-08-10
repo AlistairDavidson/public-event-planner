@@ -228,7 +228,10 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 .then(function (response) {
                 var actsResponse = response.data;
                 actsResponse.acts = actsResponse.acts.map(function (act) { return new ActViewModel(act); });
-                return actsResponse;
+                return {
+                    count: actsResponse.count,
+                    data: actsResponse.acts
+                };
             });
         };
         ActService.prototype.get = function (id) {
@@ -486,7 +489,7 @@ angular
 			'  </td>\n' +
 			'</script>\n' +
 			'\n' +
-			'<ep-table title="\'ACts\'" on-list="$ctrl.getActs(query)" on-create="$ctrl.create()" header-template="\'/acts-header.html\'" cell-template="\'/acts-cell.html\'">\n' +
+			'<ep-table title="\'Acts\'" on-list="$ctrl.getActs(query)" on-create="$ctrl.create()" header-template="\'/acts-header.html\'" cell-template="\'/acts-cell.html\'">\n' +
 			'</ep-table>');
 
 		$templateCache.put('components/act/acts/acts.html', '<md-nav-bar md-selected-nav-item="$ctrl.currentNavItem">\n' +
