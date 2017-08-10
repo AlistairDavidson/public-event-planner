@@ -61,45 +61,23 @@ export class AuthService {
                     password: self.generateHash(password),
                     uuid: uuid.v4()
                 });
-                
-                let permission = await database.models.Permission.findOne({
-                    where: {
-                        name: 'view_profile'
-                    }
-                });
-                
-                await user.addPermission(permission);
 
-                permission = await database.models.Permission.findOne({
-                    where: {
-                        name: 'view_application'
-                    }
+                ['view_profile',
+                'view_application',
+                'edit_application',
+                'view_event',
+                'edit_event',
+                'view_act',
+                'edit_act'].forEach(async permissionName => {
+                    let permission = await database.models.Permission.findOne({
+                        where: {
+                            name: permissionName
+                        }
+                    });
+                
+                    await user.addPermission(permission);
                 });
                 
-                await user.addPermission(permission);
-
-                permission = await database.models.Permission.findOne({
-                    where: {
-                        name: 'edit_application'
-                    }
-                });
-                
-                await user.addPermission(permission);
-
-                permission = await database.models.Permission.findOne({
-                    where: {
-                        name: 'edit_event'
-                    }
-                });
-                
-                await user.addPermission(permission);
-                permission = await database.models.Permission.findOne({
-                    where: {
-                        name: 'view_event'
-                    }
-                });
-                
-                await user.addPermission(permission);
                 return done(null, user);
             }    
         }

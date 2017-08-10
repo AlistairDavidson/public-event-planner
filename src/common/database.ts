@@ -81,38 +81,19 @@ export class Database {
             }
         });      
         
-        
-        await this.models.Permission.findOrCreate({
-            where: {
-                name: 'view_profile'
-            }
-        });
-
-        await this.models.Permission.findOrCreate({
-            where: {
-                name: 'view_application'
-            }
-        });
-
-        await this.models.Permission.findOrCreate({
-            where: {
-                name: 'edit_application'
-            }
-        });
-
-        await this.models.Permission.findOrCreate({
-            where: {
-                name: 'edit_event'
-            }
-        });
-
-
-        await this.models.Permission.findOrCreate({
-            where: {
-                name: 'view_event'
-            }
-        });
-
+        ['view_profile',
+        'view_application',
+        'edit_application',
+        'view_event',
+        'edit_event',
+        'view_act',
+        'edit_act'].forEach(async permission =>  
+            await this.models.Permission.findOrCreate({
+                where: {
+                    name: permission
+                }
+            })
+        );              
 
         /****
             TEST
