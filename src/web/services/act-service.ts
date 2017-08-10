@@ -49,12 +49,10 @@ export class ActService {
         }
 
         options.include = [{
-            model: database.models.ActContact            
-        },{
-            model: database.models.ActContact,
+            model: database.models.Contact,
             as: 'mainContact'           
         },{
-            model: database.models.ActContact,
+            model: database.models.Contact,
             as: 'webContact'         
         }];
 

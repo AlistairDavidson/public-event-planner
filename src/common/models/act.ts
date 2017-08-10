@@ -79,6 +79,11 @@ export interface ActInstance extends SequelizeStatic.Instance<ActAttribute>, Act
     createMainContact: SequelizeStatic.BelongsToCreateAssociationMixin<ContactAttribute>;
     getMainContact: SequelizeStatic.BelongsToGetAssociationMixin<ContactInstance>;
     setMainContact: SequelizeStatic.BelongsToSetAssociationMixin<ContactInstance, number>;
+
+    webContact: ContactInstance;
+    createWebContact: SequelizeStatic.BelongsToCreateAssociationMixin<ContactAttribute>;
+    getWebContact: SequelizeStatic.BelongsToGetAssociationMixin<ContactInstance>;
+    setWebContact: SequelizeStatic.BelongsToSetAssociationMixin<ContactInstance, number>;
 }
 
 export interface ActDto extends ActAttribute {
