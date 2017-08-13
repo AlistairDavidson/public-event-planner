@@ -663,9 +663,18 @@ angular
 			'</md-dialog>');
 
 		$templateCache.put('components/application/applications-summary/applications-summary.html', '<md-content class="md-padding" layout="row" layout-wrap>    \n' +
-			'    <application-card flex="100" flex-gt-xs="50" flex-gt-sm="33" flex-gt-md="25" ng-repeat="application in $ctrl.applications" application="application">\n' +
-			'    </application-card>\n' +
-			'</md-content>');
+			'    <md-content class="md-padding" layout="row" layout-wrap>    \n' +
+			'        <md-grid md-cols="12" style="height:100%" md-row-height="fit">\n' +
+			'            <md-tile ng-repeat="application in $ctrl.applications" md-colspan="4">    \n' +
+			'\n' +
+			'            <application-card application="application">\n' +
+			'            </application-card>\n' +
+			'\n' +
+			'            <!-- flex="100"\n' +
+			'                                flex-gt-xs="50"\n' +
+			'                                flex-gt-sm="33"\n' +
+			'                                flex-gt-md="25"-->\n' +
+			'</md-tile></md-grid></md-content></md-content>');
 
 		$templateCache.put('components/application/applications-table/applications-table.html', '<script type="text/ng-template" id="/applications-header.html">\n' +
 			'  <th md-column md-order-by="createdAt"><span>Received</span></th>\n' +
