@@ -9,13 +9,9 @@ TODO
 Acts section pages
     Bookings
         Table
-        Create / Edit popup        
-        Detail view
-    Act
-        Summary
-        Table
+    Act      
         Create / Edit popup
-        Detail view
+        Detail view - single-page, single act, editable, will show timeline etc later
 
 Application to booking, act, and contact.
     Popup thingy like create
@@ -29,6 +25,9 @@ Applications
 Events management page - create and edit events
     this should be sort of a top level page... need to be able to come 'out' of an event
 
+Give events users, allow sharing
+Event list gets from user
+
 Event view
     Locations
     Calendar
@@ -41,11 +40,23 @@ Maybe some direct management of contacts
 ep-table
     Page length option
     Focus search field when search button pressed
+    Improve search styling
     Get select and delete working
 
 Dashboard
 
-User claims on events
+Location
+    Location types
+        Venue
+        Green room
+        etc
+
+Equipment
+    Equipment types
+    Equipment sources
+    List of all equipment needed
+
+Rider prices
 
 --
 
@@ -97,6 +108,8 @@ Act
     Can each have a different type of ticket
 
 Todo views
+
+Todo dependencies, todo lists automatically advancing booking statuses
 
 Connect to facebook, twitter, eventbrite...
     Fetch band follower numbers

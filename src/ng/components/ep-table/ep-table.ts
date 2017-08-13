@@ -58,7 +58,7 @@ class EpTableController implements angular.IComponentController {
 
     showFilter() {
         this.filter.show = true;
-        (element('#table-filter') as any).focus();
+        //(element('#table-filter') as any).focus();
     }
 
     hideFilter() {
