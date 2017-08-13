@@ -447,7 +447,7 @@ angular
 			'</md-dialog>');
 
 		$templateCache.put('components/act/acts-summary/acts-summary.html', '<md-content class="md-padding" layout="row" layout-wrap>    \n' +
-			'    <md-grid md-cols="12">\n' +
+			'    <md-grid md-cols="12" style="height:100%" md-row-height="fit">\n' +
 			'        <md-tile ng-repeat="act in $ctrl.acts" md-colspan="4">    \n' +
 			'            <application-card act="act">\n' +
 			'\n' +
