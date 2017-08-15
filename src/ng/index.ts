@@ -89,8 +89,8 @@ module('event-planner', [ 'event-planner.components', 'event-planner.services', 
                 resolve: {
                     actsData: ['actService', (actService: ActService) => actService.list()]
                 },                     
-                controller: ['actsData', function(acts: { data: ActViewModel[] }) {
-                    this.acts = acts.data;
+                controller: ['actsData', function(actsData: { data: ActViewModel[] }) {
+                    this.acts = actsData.data;
                 }],
                 controllerAs: '$ctrl'
             })
