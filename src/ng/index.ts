@@ -90,8 +90,7 @@ module('event-planner', [ 'event-planner.components', 'event-planner.services', 
                     actsData: ['actService', (actService: ActService) => actService.list()]
                 },                     
                 controller: ['actsData', function(actsData: { data: ActViewModel[] }) {
-                    this.acts = actsData.data;
-                    console.log('route', this.acts, actsData);
+                    this.acts = actsData.data;                    
                 }],
                 controllerAs: '$ctrl'
             })

@@ -228,7 +228,6 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 .then(function (response) {
                 var actsResponse = response.data;
                 actsResponse.acts = actsResponse.acts.map(function (act) { return new ActViewModel(act); });
-                console.log('service', actsResponse);
                 return {
                     count: actsResponse.count,
                     data: actsResponse.acts
@@ -303,11 +302,7 @@ angular
 	.module('templates', [])
 	.run(['$templateCache', function($templateCache) {
 		$templateCache.put('components/act/act-card/act-card.html', '<md-card>\n' +
-			'{{ $ctrl.act }}\n' +
-			'\n' +
-			'    <!--<img    ng-if="$ctrl.act.getImage()"\n' +
-			'            src="{{ $ctrl.act.getImage() }}" \n' +
-			'            class="md-card-image" />-->\n' +
+			'    <img ng-if="$ctrl.act.getImage()" src="{{ $ctrl.act.getImage() }}" class="md-card-image">\n' +
 			'\n' +
 			'    <md-card-title>\n' +
 			'        <md-card-title-text>\n' +
@@ -318,7 +313,7 @@ angular
 			'    </md-card-title>\n' +
 			'\n' +
 			'    <md-card-actions layout="row" layout-align="end center">\n' +
-			'     <!--   <md-button ng-if="$ctrl.act.getWebsite()" href="{{ $ctrl.act.getWebsite() }}" target="_blank">\n' +
+			'       <md-button ng-if="$ctrl.act.getWebsite()" href="{{ $ctrl.act.getWebsite() }}" target="_blank">\n' +
 			'            <md-icon aria-label="Website">link</md-icon>\n' +
 			'        </md-button>\n' +
 			'        <md-button ng-if="$ctrl.act.getFacebook()" href="{{ $ctrl.act.getFacebook() }}" target="_blank">\n' +
@@ -326,7 +321,7 @@ angular
 			'        </md-button>\n' +
 			'        <md-button ng-if="$ctrl.act.getTwitter()" href="{{ $ctrl.act.getTwitter() }}" target="_blank">\n' +
 			'            <md-icon aria-label="Twitter" md-svg-icon="community:twitter"></md-icon>\n' +
-			'        </md-button>-->\n' +
+			'        </md-button>\n' +
 			'    </md-card-actions>\n' +
 			'</md-card>');
 
@@ -450,10 +445,8 @@ angular
 			'</md-dialog>');
 
 		$templateCache.put('components/act/acts-summary/acts-summary.html', '<md-content class="md-padding" layout="row" layout-wrap>    \n' +
-			'    <application-card flex="100" flex-gt-xs="50" flex-gt-sm="33" flex-gt-md="25" ng-repeat="act in $ctrl.acts" act="act">\n' +
-			'    </application-card>\n' +
-			'\n' +
-			'    {{ $ctrl.acts }}\n' +
+			'    <act-card flex="100" flex-gt-xs="50" flex-gt-sm="33" flex-gt-md="25" ng-repeat="act in $ctrl.acts" act="act">\n' +
+			'    </act-card>\n' +
 			'</md-content>');
 
 		$templateCache.put('components/act/acts-table/acts-table.html', '<script type="text/ng-template" id="/acts-header.html">\n' +
@@ -1430,7 +1423,6 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 },
                 controller: ['actsData', function (actsData) {
                         this.acts = actsData.data;
-                        console.log('route', this.acts, actsData);
                     }],
                 controllerAs: '$ctrl'
             })
