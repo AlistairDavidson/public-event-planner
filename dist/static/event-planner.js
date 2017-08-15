@@ -535,116 +535,118 @@ angular
 
 		$templateCache.put('components/application/application-editor/application-editor.html', '<md-dialog aria-label="New Application">\n' +
 			'    <md-dialog-content class="md-dialog-content">\n' +
-			'        <form novalidate ng-cloak>\n' +
-			'            <div layout="column">\n' +
-			'                <h2 class="md-title">Application</h2>\n' +
+			'        <md-card>\n' +
+			'            <form novalidate ng-cloak>\n' +
+			'                <div layout="column">\n' +
+			'                    <h2 class="md-title">Application</h2>\n' +
 			'\n' +
-			'                <div layout-gt-sm="row">\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Act Name</label>\n' +
-			'                        <input ng-model="$ctrl.application.details.name">\n' +
-			'                    </md-input-container>\n' +
+			'                    <div layout-gt-sm="row">\n' +
+			'                        <md-input-container>\n' +
+			'                            <label>Act Name</label>\n' +
+			'                            <input ng-model="$ctrl.application.details.name">\n' +
+			'                        </md-input-container>\n' +
 			'\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Type</label>\n' +
-			'                        <input ng-model="$ctrl.application.details.type">\n' +
-			'                    </md-input-container>\n' +
+			'                        <md-input-container>\n' +
+			'                            <label>Type</label>\n' +
+			'                            <input ng-model="$ctrl.application.details.type">\n' +
+			'                        </md-input-container>\n' +
 			'\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Town</label>\n' +
-			'                        <input ng-model="$ctrl.application.details.town">\n' +
-			'                    </md-input-container>\n' +
+			'                        <md-input-container>\n' +
+			'                            <label>Town</label>\n' +
+			'                            <input ng-model="$ctrl.application.details.town">\n' +
+			'                        </md-input-container>\n' +
+			'                    </div>\n' +
+			'\n' +
+			'                    <div layout-gt-sm="row">\n' +
+			'                        <md-input-container>\n' +
+			'                            <label>Act Size</label>\n' +
+			'                            <input ng-model="$ctrl.application.details.size_of_act">\n' +
+			'                        </md-input-container>\n' +
+			'\n' +
+			'                        <md-input-container>\n' +
+			'                            <label>Party Size</label>\n' +
+			'                            <input ng-model="$ctrl.application.details.size_of_party">\n' +
+			'                        </md-input-container>\n' +
+			'                    \n' +
+			'                        <md-input-container>\n' +
+			'                            <label>Requested Fee</label>\n' +
+			'                            <input ng-model="$ctrl.application.details.requested_fee">\n' +
+			'                        </md-input-container>\n' +
+			'                    </div>\n' +
+			'\n' +
+			'                    <h3 class="md-subhead">Contact</h3>\n' +
+			'\n' +
+			'                    <div layout-gt-sm="row">\n' +
+			'                        <md-input-container>\n' +
+			'                            <label>Name</label>\n' +
+			'                            <input ng-model="$ctrl.application.details.contact_name">\n' +
+			'                        </md-input-container>\n' +
+			'\n' +
+			'                        <md-input-container>\n' +
+			'                            <label>Email</label>\n' +
+			'                            <input ng-model="$ctrl.application.details.email">\n' +
+			'                        </md-input-container>\n' +
+			'\n' +
+			'                        <md-input-container>\n' +
+			'                            <label>Phone</label>\n' +
+			'                            <input ng-model="$ctrl.application.details.phone">\n' +
+			'                        </md-input-container>\n' +
+			'                    </div>\n' +
+			'\n' +
+			'                    <div layout-gt-sm="row">\n' +
+			'                        <md-input-container>\n' +
+			'                            <label>Link</label>\n' +
+			'                            <input ng-model="$ctrl.application.details.link">\n' +
+			'                        </md-input-container>\n' +
+			'\n' +
+			'                        <md-input-container>\n' +
+			'                            <label>Facebook</label>\n' +
+			'                            <input ng-model="$ctrl.application.details.facebook">\n' +
+			'                        </md-input-container>\n' +
+			'\n' +
+			'                        <md-input-container>\n' +
+			'                            <label>Twitter</label>\n' +
+			'                            <input ng-model="$ctrl.application.details.twitter">\n' +
+			'                        </md-input-container>\n' +
+			'                    </div>\n' +
+			'\n' +
+			'                    <h3 class="md-subhead">Details</h3>\n' +
+			'\n' +
+			'                    <div layout-gt-sm="row">\n' +
+			'                        <md-input-container>\n' +
+			'                            <label>Party Names</label>\n' +
+			'                            <input ng-model="$ctrl.application.details.party_names">\n' +
+			'                        </md-input-container>\n' +
+			'                    </div>\n' +
+			'\n' +
+			'                    <div layout-gt-sm="row">\n' +
+			'                        <md-input-container>\n' +
+			'                            <label>Bio</label>\n' +
+			'                            <textarea ng-model="$ctrl.application.details.bio">\n' +
+			'                            </textarea>\n' +
+			'                        </md-input-container>\n' +
+			'                    </div>\n' +
+			'\n' +
+			'                    <div layout-gt-sm="row">\n' +
+			'                        <md-input-container>\n' +
+			'                            <label>Tech Specs</label>\n' +
+			'                            <textarea ng-model="$ctrl.application.details.tech_specs">\n' +
+			'                            </textarea>\n' +
+			'                        </md-input-container>\n' +
+			'                    </div>\n' +
+			'\n' +
+			'                    <div layout-gt-sm="row">\n' +
+			'                        <md-input-container>\n' +
+			'                            <label>Image</label>\n' +
+			'                            <input ng-model="$ctrl.application.details.image">\n' +
+			'                        </md-input-container>\n' +
+			'                    </div>\n' +
+			'\n' +
+			'\n' +
+			'                    <img ng-if="$ctrl.application.details.image" src="{{ $ctrl.application.details.image }}">\n' +
 			'                </div>\n' +
-			'\n' +
-			'                <div layout-gt-sm="row">\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Act Size</label>\n' +
-			'                        <input ng-model="$ctrl.application.details.size_of_act">\n' +
-			'                    </md-input-container>\n' +
-			'\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Party Size</label>\n' +
-			'                        <input ng-model="$ctrl.application.details.size_of_party">\n' +
-			'                    </md-input-container>\n' +
-			'                \n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Requested Fee</label>\n' +
-			'                        <input ng-model="$ctrl.application.details.requested_fee">\n' +
-			'                    </md-input-container>\n' +
-			'                </div>\n' +
-			'\n' +
-			'                <h3 class="md-subhead">Contact</h3>\n' +
-			'\n' +
-			'                <div layout-gt-sm="row">\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Name</label>\n' +
-			'                        <input ng-model="$ctrl.application.details.contact_name">\n' +
-			'                    </md-input-container>\n' +
-			'\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Email</label>\n' +
-			'                        <input ng-model="$ctrl.application.details.email">\n' +
-			'                    </md-input-container>\n' +
-			'\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Phone</label>\n' +
-			'                        <input ng-model="$ctrl.application.details.phone">\n' +
-			'                    </md-input-container>\n' +
-			'                </div>\n' +
-			'\n' +
-			'                <div layout-gt-sm="row">\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Link</label>\n' +
-			'                        <input ng-model="$ctrl.application.details.link">\n' +
-			'                    </md-input-container>\n' +
-			'\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Facebook</label>\n' +
-			'                        <input ng-model="$ctrl.application.details.facebook">\n' +
-			'                    </md-input-container>\n' +
-			'\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Twitter</label>\n' +
-			'                        <input ng-model="$ctrl.application.details.twitter">\n' +
-			'                    </md-input-container>\n' +
-			'                </div>\n' +
-			'\n' +
-			'                <h3 class="md-subhead">Details</h3>\n' +
-			'\n' +
-			'                <div layout-gt-sm="row">\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Party Names</label>\n' +
-			'                        <input ng-model="$ctrl.application.details.party_names">\n' +
-			'                    </md-input-container>\n' +
-			'                </div>\n' +
-			'\n' +
-			'                <div layout-gt-sm="row">\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Bio</label>\n' +
-			'                        <textarea ng-model="$ctrl.application.details.bio">\n' +
-			'                        </textarea>\n' +
-			'                    </md-input-container>\n' +
-			'                </div>\n' +
-			'\n' +
-			'                <div layout-gt-sm="row">\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Tech Specs</label>\n' +
-			'                        <textarea ng-model="$ctrl.application.details.tech_specs">\n' +
-			'                        </textarea>\n' +
-			'                    </md-input-container>\n' +
-			'                </div>\n' +
-			'\n' +
-			'                <div layout-gt-sm="row">\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Image</label>\n' +
-			'                        <input ng-model="$ctrl.application.details.image">\n' +
-			'                    </md-input-container>\n' +
-			'                </div>\n' +
-			'\n' +
-			'\n' +
-			'                <img ng-if="$ctrl.application.details.image" src="{{ $ctrl.application.details.image }}">\n' +
-			'            </div>\n' +
-			'        </form>\n' +
+			'            </form>\n' +
+			'        </md-card>\n' +
 			'    </md-dialog-content>\n' +
 			'    <md-dialog-actions>\n' +
 			'        <md-button ng-click="$ctrl.save()">Save</md-button>\n' +
