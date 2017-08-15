@@ -1,9 +1,9 @@
 <md-card>
 {{ $ctrl.act }}
 
-    <img    ng-if="$ctrl.act.getImage()"
+    <!--<img    ng-if="$ctrl.act.getImage()"
             src="{{ $ctrl.act.getImage() }}" 
-            class="md-card-image" />
+            class="md-card-image" />-->
 
     <md-card-title>
         <md-card-title-text>
@@ -14,7 +14,7 @@
     </md-card-title>
 
     <md-card-actions layout="row" layout-align="end center">
-        <md-button ng-if="$ctrl.act.getWebsite()" href="{{ $ctrl.act.getWebsite() }}" target="_blank">
+     <!--   <md-button ng-if="$ctrl.act.getWebsite()" href="{{ $ctrl.act.getWebsite() }}" target="_blank">
             <md-icon aria-label="Website">link</md-icon>
         </md-button>
         <md-button ng-if="$ctrl.act.getFacebook()" href="{{ $ctrl.act.getFacebook() }}" target="_blank">
@@ -22,7 +22,7 @@
         </md-button>
         <md-button ng-if="$ctrl.act.getTwitter()" href="{{ $ctrl.act.getTwitter() }}" target="_blank">
             <md-icon aria-label="Twitter" md-svg-icon="community:twitter"></md-icon>
-        </md-button>
+        </md-button>-->
     </md-card-actions>
 </md-card>
 

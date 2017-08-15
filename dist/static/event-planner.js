@@ -305,7 +305,9 @@ angular
 		$templateCache.put('components/act/act-card/act-card.html', '<md-card>\n' +
 			'{{ $ctrl.act }}\n' +
 			'\n' +
-			'    <img ng-if="$ctrl.act.getImage()" src="{{ $ctrl.act.getImage() }}" class="md-card-image">\n' +
+			'    <!--<img    ng-if="$ctrl.act.getImage()"\n' +
+			'            src="{{ $ctrl.act.getImage() }}" \n' +
+			'            class="md-card-image" />-->\n' +
 			'\n' +
 			'    <md-card-title>\n' +
 			'        <md-card-title-text>\n' +
@@ -316,7 +318,7 @@ angular
 			'    </md-card-title>\n' +
 			'\n' +
 			'    <md-card-actions layout="row" layout-align="end center">\n' +
-			'        <md-button ng-if="$ctrl.act.getWebsite()" href="{{ $ctrl.act.getWebsite() }}" target="_blank">\n' +
+			'     <!--   <md-button ng-if="$ctrl.act.getWebsite()" href="{{ $ctrl.act.getWebsite() }}" target="_blank">\n' +
 			'            <md-icon aria-label="Website">link</md-icon>\n' +
 			'        </md-button>\n' +
 			'        <md-button ng-if="$ctrl.act.getFacebook()" href="{{ $ctrl.act.getFacebook() }}" target="_blank">\n' +
@@ -324,7 +326,7 @@ angular
 			'        </md-button>\n' +
 			'        <md-button ng-if="$ctrl.act.getTwitter()" href="{{ $ctrl.act.getTwitter() }}" target="_blank">\n' +
 			'            <md-icon aria-label="Twitter" md-svg-icon="community:twitter"></md-icon>\n' +
-			'        </md-button>\n' +
+			'        </md-button>-->\n' +
 			'    </md-card-actions>\n' +
 			'</md-card>');
 
