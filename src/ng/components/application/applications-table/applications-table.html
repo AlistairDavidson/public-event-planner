@@ -9,12 +9,12 @@
 </script>
 
 <script type="text/ng-template" id="/applications-cell.html">
-  <td md-cell>{{ data.createdAt | date: 'mediumDate' }}</td>
-  <td md-cell>{{ data.name }}</td>
-  <td md-cell>{{ data.type }}</td>
-  <td md-cell>{{ data.town }}</td>
-  <td md-cell>{{ data.size_of_act }} / {{ data.size_of_party }}</td>
-  <td md-cell>{{ data.requested_fee }}</td>
+  <td md-cell>{{ row.createdAt | date: 'mediumDate' }}</td>
+  <td md-cell>{{ row.name }}</td>
+  <td md-cell>{{ row.type }}</td>
+  <td md-cell>{{ row.town }}</td>
+  <td md-cell>{{ row.size_of_act }} / {{ row.size_of_party }}</td>
+  <td md-cell>{{ row.requested_fee }}</td>
   <td md-cell> 
     <md-menu>
       <md-button aria-label="Application contact menu" class="md-icon-button" ng-click="$mdMenu.open($event)">
@@ -23,19 +23,19 @@
 
       <md-menu-content width="4">
         <md-menu-item>
-          <md-button ng-if="data.link" ng-href="{{ data.link }}" target="_blank">
+          <md-button ng-if="row.link" ng-href="{{ row.link }}" target="_blank">
             <md-icon>link</md-icon> Website
           </md-button>
         </md-menu-item>
         
         <md-menu-item>
-          <md-button ng-if="data.facebook" ng-href="{{ data.facebook }}" target="_blank">
+          <md-button ng-if="row.facebook" ng-href="{{ row.facebook }}" target="_blank">
             <md-icon md-svg-icon="community:facebook"></md-icon> Facebook
           </md-button>
         </md-menu-item>
 
         <md-menu-item>
-          <md-button ng-if="data.twitter" ng-href="{{ data.twitter }}" target="_blank">
+          <md-button ng-if="row.twitter" ng-href="{{ row.twitter }}" target="_blank">
             <md-icon md-svg-icon="community:twitter"></md-icon> Twitter
           </md-button>
         </md-menu-item>

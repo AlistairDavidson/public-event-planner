@@ -41,10 +41,7 @@ export class ActApplicationService {
 
         let result = await database.models.ActApplication.findAndCountAll(options);
 
-        return {
-            applications: result.rows,
-            count: result.count          
-        };
+        return result;
     }
 
     async get(actId: number) {

@@ -12,7 +12,6 @@ class ActsSummaryController implements angular.IComponentController {
     }
 
     $onInit() {
-        console.log('summary', this.acts);
     }
 }
 

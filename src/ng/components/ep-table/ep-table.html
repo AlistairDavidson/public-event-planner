@@ -28,7 +28,7 @@
 
   <md-toolbar class="md-table-toolbar alternate" ng-show="$ctrl.selected.length">
     <div class="md-toolbar-tools" layout-align="space-between">      
-      <div>{{$ctrl.data.length}} {{$ctrl.selected.length > 1 ? 'items' : 'item'}} selected</div>
+      <div>{{$ctrl.rows.length}} {{$ctrl.selected.length > 1 ? 'items' : 'item'}} selected</div>
       <md-button class="md-icon-button" ng-click="$ctrl.delete($event)">
         <md-icon>delete</md-icon>
       </md-button>
@@ -40,7 +40,7 @@
       <thead md-head
              md-row-select="true"
              multiple="true"
-             ng-model="$ctrl.data"
+             ng-model="$ctrl.rows"
              md-progress="$ctrl.loading"
              md-order="$ctrl.query.order"
              md-on-reorder="$ctrl.get">
@@ -52,9 +52,9 @@
             md-select="row"
             md-select-id="id"
             md-auto-select
-            ng-repeat="row in $ctrl.data | orderBy: $ctrl.query.order"
+            ng-repeat="row in $ctrl.rows | orderBy: $ctrl.query.order"
             ng-include="$ctrl.cellTemplate"
-            onload="data = row">        
+            onload="row = row">        
         </tr>
       </tbody>
     </table>

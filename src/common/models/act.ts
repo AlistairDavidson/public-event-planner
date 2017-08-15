@@ -96,7 +96,7 @@ export interface ActDto extends ActAttribute {
 
 export interface ActsDto {
     count: number;
-    acts: ActDto[];
+    rows: ActDto[];
 }
 
 export interface ActModel extends SequelizeStatic.Model<ActInstance, ActAttribute> {}

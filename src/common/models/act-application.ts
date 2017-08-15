@@ -49,7 +49,7 @@ export interface ActApplicationDto extends ActApplicationAttribute {
 
 export interface ActApplicationsDto {
     count: number;
-    applications: ActApplicationDto[];
+    rows: ActApplicationDto[];
 }
 
 export interface ActApplicationInstance extends SequelizeStatic.Instance<ActApplicationAttribute>, ActApplicationAttribute {

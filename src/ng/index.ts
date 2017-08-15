@@ -56,8 +56,8 @@ module('event-planner', [ 'event-planner.components', 'event-planner.services', 
                 resolve: {
                     applicationsData: ['applicationService', (applicationService: ApplicationService) => applicationService.list()]
                 },                     
-                controller: ['applicationsData', function(applications: { data: ApplicationViewModel[] }) {
-                    this.applications = applications.data;
+                controller: ['applicationsData', function(applicationsData: { rows: ApplicationViewModel[] }) {
+                    this.applications = applicationsData.rows;
                 }],
                 controllerAs: '$ctrl'
             })
@@ -89,8 +89,8 @@ module('event-planner', [ 'event-planner.components', 'event-planner.services', 
                 resolve: {
                     actsData: ['actService', (actService: ActService) => actService.list()]
                 },                     
-                controller: ['actsData', function(actsData: { data: ActViewModel[] }) {
-                    this.acts = actsData.data;                    
+                controller: ['actsData', function(actsData: { rows: ActViewModel[] }) {
+                    this.acts = actsData.rows;                    
                 }],
                 controllerAs: '$ctrl'
             })

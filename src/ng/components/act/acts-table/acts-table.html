@@ -6,9 +6,9 @@
 </script>
 
 <script type="text/ng-template" id="/acts-cell.html">
-  <td md-cell>{{ data.name }}</td>
-  <td md-cell>{{ data.type }}</td>
-  <td md-cell>{{ data.town }}</td> 
+  <td md-cell>{{ row.name }}</td>
+  <td md-cell>{{ row.type }}</td>
+  <td md-cell>{{ row.town }}</td> 
   <td md-cell> 
     <md-menu>
       <md-button aria-label="Act contact menu" class="md-icon-button" ng-click="$mdMenu.open($event)">
@@ -17,19 +17,19 @@
 
       <md-menu-content width="4">
         <md-menu-item>
-          <md-button ng-if="data.link" ng-href="{{ data.getWebsite() }}" target="_blank">
+          <md-button ng-if="row.link" ng-href="{{ row.getWebsite() }}" target="_blank">
             <md-icon>link</md-icon> Website
           </md-button>
         </md-menu-item>
         
         <md-menu-item>
-          <md-button ng-if="data.facebook" ng-href="{{ data.getFacebook() }}" target="_blank">
+          <md-button ng-if="row.facebook" ng-href="{{ row.getFacebook() }}" target="_blank">
             <md-icon md-svg-icon="community:facebook"></md-icon> Facebook
           </md-button>
         </md-menu-item>
 
         <md-menu-item>
-          <md-button ng-if="data.twitter" ng-href="{{ data.getTwitter() }}" target="_blank">
+          <md-button ng-if="row.twitter" ng-href="{{ row.getTwitter() }}" target="_blank">
             <md-icon md-svg-icon="community:twitter"></md-icon> Twitter
           </md-button>
         </md-menu-item>

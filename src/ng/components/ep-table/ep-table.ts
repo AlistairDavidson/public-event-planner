@@ -9,7 +9,7 @@ class EpTableController implements angular.IComponentController {
     title: string;
 
     count: number;
-    data: any[] = [];
+    rows: any[] = [];
     selected: any[] = [];
 
     onList: Function;
@@ -44,8 +44,8 @@ class EpTableController implements angular.IComponentController {
 
     get() {
        return this.loading = this.onList({ query: this.query })
-            .then((newData: { count: number, data: any[]}) => {
-                this.data = newData.data;
+            .then((newData: { count: number, rows: any[]}) => {
+                this.rows = newData.rows;
                 this.count = newData.count
                 return newData;
             });            

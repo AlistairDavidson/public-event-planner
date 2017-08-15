@@ -8,13 +8,21 @@ Copyright (C) 2017 Alistair Davidson <alistair.l.davidson@gmail.com>
 
 TODO
 
+
+Act      
+    Create / Edit popup
+        - relationships
+            contacts
+            webcontact
+            maincontact (just a pointer...)
+
+        Contact detail editor component
+    Detail view - single-page, single act, editable, will show timeline etc later
+
+
 Acts section pages
     Bookings
         Table
-    Act      
-        Create / Edit popup
-        Detail view - single-page, single act, editable, will show timeline etc later
-
 Application to booking, act, and contact.
     Popup thingy like create
         Radio: existing act (dropdown) or new act (create fields)

@@ -34,12 +34,9 @@ export default class ActService {
         return this.$http.get(url)
             .then(response => {
                 let actsResponse = response.data as ActsDto;
-                actsResponse.acts = actsResponse.acts.map(act => new ActViewModel(act));
+                actsResponse.rows = actsResponse.rows.map(act => new ActViewModel(act));
 
-                return {
-                    count: actsResponse.count,
-                    data: actsResponse.acts
-                }
+                return actsResponse;
             });            
     }
 
@@ -99,21 +96,37 @@ export class ActViewModel implements ActDto {
     bookings?: BookingDto[];
 
     getImage() {
+        if(!this.webContact) {
+            return '';
+        }
+
         let contacts = _.filter(this.webContact.contactDetails, { type: 'Image' });
         return contacts.length ? (contacts[0].data as ImageDto).image : '';
     }
 
     getWebsite() {
+        if(!this.webContact) {
+            return '';
+        }
+        
         let contacts = _.filter(this.webContact.contactDetails, { type: 'Website' });
         return contacts.length ? (contacts[0].data as WebsiteDto).website : '';
     }
 
     getFacebook() {
+        if(!this.webContact) {
+            return '';
+        }
+        
         let contacts = _.filter(this.webContact.contactDetails, { type: 'Facebook' });
         return contacts.length ? (contacts[0].data as FacebookDto).facebook : '';
     }
 
     getTwitter() {
+        if(!this.webContact) {
+            return '';
+        }
+        
         let contacts = _.filter(this.webContact.contactDetails, { type: 'Twitter' });
         return contacts.length ? (contacts[0].data as TwitterDto).twitter : '';
     }

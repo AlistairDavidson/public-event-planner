@@ -227,11 +227,8 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
             return this.$http.get(url)
                 .then(function (response) {
                 var actsResponse = response.data;
-                actsResponse.acts = actsResponse.acts.map(function (act) { return new ActViewModel(act); });
-                return {
-                    count: actsResponse.count,
-                    data: actsResponse.acts
-                };
+                actsResponse.rows = actsResponse.rows.map(function (act) { return new ActViewModel(act); });
+                return actsResponse;
             });
         };
         ActService.prototype.get = function (id) {
@@ -267,18 +264,30 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
             _.extend(this, act);
         }
         ActViewModel.prototype.getImage = function () {
+            if (!this.webContact) {
+                return '';
+            }
             var contacts = _.filter(this.webContact.contactDetails, { type: 'Image' });
             return contacts.length ? contacts[0].data.image : '';
         };
         ActViewModel.prototype.getWebsite = function () {
+            if (!this.webContact) {
+                return '';
+            }
             var contacts = _.filter(this.webContact.contactDetails, { type: 'Website' });
             return contacts.length ? contacts[0].data.website : '';
         };
         ActViewModel.prototype.getFacebook = function () {
+            if (!this.webContact) {
+                return '';
+            }
             var contacts = _.filter(this.webContact.contactDetails, { type: 'Facebook' });
             return contacts.length ? contacts[0].data.facebook : '';
         };
         ActViewModel.prototype.getTwitter = function () {
+            if (!this.webContact) {
+                return '';
+            }
             var contacts = _.filter(this.webContact.contactDetails, { type: 'Twitter' });
             return contacts.length ? contacts[0].data.twitter : '';
         };
@@ -348,67 +357,7 @@ angular
 			'                    </md-input-container>\n' +
 			'                </div>\n' +
 			'\n' +
-			'                <div layout-gt-sm="row">\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Act Size</label>\n' +
-			'                        <input ng-model="$ctrl.act.size_of_act">\n' +
-			'                    </md-input-container>\n' +
-			'\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Party Size</label>\n' +
-			'                        <input ng-model="$ctrl.act.size_of_party">\n' +
-			'                    </md-input-container>\n' +
-			'                \n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Requested Fee</label>\n' +
-			'                        <input ng-model="$ctrl.act.requested_fee">\n' +
-			'                    </md-input-container>\n' +
-			'                </div>\n' +
-			'\n' +
-			'                <h3 class="md-subhead">Contact</h3>\n' +
-			'\n' +
-			'                <div layout-gt-sm="row">\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Name</label>\n' +
-			'                        <input ng-model="$ctrl.act.contact_name">\n' +
-			'                    </md-input-container>\n' +
-			'\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Email</label>\n' +
-			'                        <input ng-model="$ctrl.act.email">\n' +
-			'                    </md-input-container>\n' +
-			'\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Phone</label>\n' +
-			'                        <input ng-model="$ctrl.act.phone">\n' +
-			'                    </md-input-container>\n' +
-			'                </div>\n' +
-			'\n' +
-			'                <div layout-gt-sm="row">\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Link</label>\n' +
-			'                        <input ng-model="$ctrl.act.link">\n' +
-			'                    </md-input-container>\n' +
-			'\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Facebook</label>\n' +
-			'                        <input ng-model="$ctrl.act.facebook">\n' +
-			'                    </md-input-container>\n' +
-			'\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Twitter</label>\n' +
-			'                        <input ng-model="$ctrl.act.twitter">\n' +
-			'                    </md-input-container>\n' +
-			'                </div>\n' +
-			'\n' +
 			'                <h3 class="md-subhead">Details</h3>\n' +
-			'\n' +
-			'                <div layout-gt-sm="row">\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Party Names</label>\n' +
-			'                        <input ng-model="$ctrl.act.party_names">\n' +
-			'                    </md-input-container>\n' +
-			'                </div>\n' +
 			'\n' +
 			'                <div layout-gt-sm="row">\n' +
 			'                    <md-input-container>\n' +
@@ -424,17 +373,16 @@ angular
 			'                        <textarea ng-model="$ctrl.act.tech_specs">\n' +
 			'                        </textarea>\n' +
 			'                    </md-input-container>\n' +
-			'                </div>\n' +
+			'                </div>                \n' +
 			'\n' +
 			'                <div layout-gt-sm="row">\n' +
 			'                    <md-input-container>\n' +
 			'                        <label>Image</label>\n' +
-			'                        <input ng-model="$ctrl.act.image">\n' +
+			'                        <input ng-model="$ctrl.act.details.image">\n' +
 			'                    </md-input-container>\n' +
 			'                </div>\n' +
 			'\n' +
-			'\n' +
-			'                <img ng-if="$ctrl.act.image" src="{{ $ctrl.act.image }}">\n' +
+			'                <img ng-if="$ctrl.application.details.image" src="{{ $ctrl.application.details.image }}">\n' +
 			'            </div>\n' +
 			'        </form>\n' +
 			'    </md-dialog-content>\n' +
@@ -457,9 +405,9 @@ angular
 			'</script>\n' +
 			'\n' +
 			'<script type="text/ng-template" id="/acts-cell.html">\n' +
-			'  <td md-cell>{{ data.name }}</td>\n' +
-			'  <td md-cell>{{ data.type }}</td>\n' +
-			'  <td md-cell>{{ data.town }}</td> \n' +
+			'  <td md-cell>{{ row.name }}</td>\n' +
+			'  <td md-cell>{{ row.type }}</td>\n' +
+			'  <td md-cell>{{ row.town }}</td> \n' +
 			'  <td md-cell> \n' +
 			'    <md-menu>\n' +
 			'      <md-button aria-label="Act contact menu" class="md-icon-button" ng-click="$mdMenu.open($event)">\n' +
@@ -468,19 +416,19 @@ angular
 			'\n' +
 			'      <md-menu-content width="4">\n' +
 			'        <md-menu-item>\n' +
-			'          <md-button ng-if="data.link" ng-href="{{ data.getWebsite() }}" target="_blank">\n' +
+			'          <md-button ng-if="row.link" ng-href="{{ row.getWebsite() }}" target="_blank">\n' +
 			'            <md-icon>link</md-icon> Website\n' +
 			'          </md-button>\n' +
 			'        </md-menu-item>\n' +
 			'        \n' +
 			'        <md-menu-item>\n' +
-			'          <md-button ng-if="data.facebook" ng-href="{{ data.getFacebook() }}" target="_blank">\n' +
+			'          <md-button ng-if="row.facebook" ng-href="{{ row.getFacebook() }}" target="_blank">\n' +
 			'            <md-icon md-svg-icon="community:facebook"></md-icon> Facebook\n' +
 			'          </md-button>\n' +
 			'        </md-menu-item>\n' +
 			'\n' +
 			'        <md-menu-item>\n' +
-			'          <md-button ng-if="data.twitter" ng-href="{{ data.getTwitter() }}" target="_blank">\n' +
+			'          <md-button ng-if="row.twitter" ng-href="{{ row.getTwitter() }}" target="_blank">\n' +
 			'            <md-icon md-svg-icon="community:twitter"></md-icon> Twitter\n' +
 			'          </md-button>\n' +
 			'        </md-menu-item>\n' +
@@ -664,12 +612,12 @@ angular
 			'</script>\n' +
 			'\n' +
 			'<script type="text/ng-template" id="/applications-cell.html">\n' +
-			'  <td md-cell>{{ data.createdAt | date: \'mediumDate\' }}</td>\n' +
-			'  <td md-cell>{{ data.name }}</td>\n' +
-			'  <td md-cell>{{ data.type }}</td>\n' +
-			'  <td md-cell>{{ data.town }}</td>\n' +
-			'  <td md-cell>{{ data.size_of_act }} / {{ data.size_of_party }}</td>\n' +
-			'  <td md-cell>{{ data.requested_fee }}</td>\n' +
+			'  <td md-cell>{{ row.createdAt | date: \'mediumDate\' }}</td>\n' +
+			'  <td md-cell>{{ row.name }}</td>\n' +
+			'  <td md-cell>{{ row.type }}</td>\n' +
+			'  <td md-cell>{{ row.town }}</td>\n' +
+			'  <td md-cell>{{ row.size_of_act }} / {{ row.size_of_party }}</td>\n' +
+			'  <td md-cell>{{ row.requested_fee }}</td>\n' +
 			'  <td md-cell> \n' +
 			'    <md-menu>\n' +
 			'      <md-button aria-label="Application contact menu" class="md-icon-button" ng-click="$mdMenu.open($event)">\n' +
@@ -678,19 +626,19 @@ angular
 			'\n' +
 			'      <md-menu-content width="4">\n' +
 			'        <md-menu-item>\n' +
-			'          <md-button ng-if="data.link" ng-href="{{ data.link }}" target="_blank">\n' +
+			'          <md-button ng-if="row.link" ng-href="{{ row.link }}" target="_blank">\n' +
 			'            <md-icon>link</md-icon> Website\n' +
 			'          </md-button>\n' +
 			'        </md-menu-item>\n' +
 			'        \n' +
 			'        <md-menu-item>\n' +
-			'          <md-button ng-if="data.facebook" ng-href="{{ data.facebook }}" target="_blank">\n' +
+			'          <md-button ng-if="row.facebook" ng-href="{{ row.facebook }}" target="_blank">\n' +
 			'            <md-icon md-svg-icon="community:facebook"></md-icon> Facebook\n' +
 			'          </md-button>\n' +
 			'        </md-menu-item>\n' +
 			'\n' +
 			'        <md-menu-item>\n' +
-			'          <md-button ng-if="data.twitter" ng-href="{{ data.twitter }}" target="_blank">\n' +
+			'          <md-button ng-if="row.twitter" ng-href="{{ row.twitter }}" target="_blank">\n' +
 			'            <md-icon md-svg-icon="community:twitter"></md-icon> Twitter\n' +
 			'          </md-button>\n' +
 			'        </md-menu-item>\n' +
@@ -745,7 +693,7 @@ angular
 			'\n' +
 			'  <md-toolbar class="md-table-toolbar alternate" ng-show="$ctrl.selected.length">\n' +
 			'    <div class="md-toolbar-tools" layout-align="space-between">      \n' +
-			'      <div>{{$ctrl.data.length}} {{$ctrl.selected.length > 1 ? \'items\' : \'item\'}} selected</div>\n' +
+			'      <div>{{$ctrl.rows.length}} {{$ctrl.selected.length > 1 ? \'items\' : \'item\'}} selected</div>\n' +
 			'      <md-button class="md-icon-button" ng-click="$ctrl.delete($event)">\n' +
 			'        <md-icon>delete</md-icon>\n' +
 			'      </md-button>\n' +
@@ -754,12 +702,12 @@ angular
 			'\n' +
 			'  <md-table-container>\n' +
 			'    <table md-table>\n' +
-			'      <thead md-head md-row-select="true" multiple="true" ng-model="$ctrl.data" md-progress="$ctrl.loading" md-order="$ctrl.query.order" md-on-reorder="$ctrl.get">\n' +
+			'      <thead md-head md-row-select="true" multiple="true" ng-model="$ctrl.rows" md-progress="$ctrl.loading" md-order="$ctrl.query.order" md-on-reorder="$ctrl.get">\n' +
 			'        <tr md-row ng-include="$ctrl.headerTemplate">               \n' +
 			'        </tr>\n' +
 			'      </thead>\n' +
 			'      <tbody md-body>\n' +
-			'        <tr md-row md-select="row" md-select-id="id" md-auto-select ng-repeat="row in $ctrl.data | orderBy: $ctrl.query.order" ng-include="$ctrl.cellTemplate" onload="data = row">        \n' +
+			'        <tr md-row md-select="row" md-select-id="id" md-auto-select ng-repeat="row in $ctrl.rows | orderBy: $ctrl.query.order" ng-include="$ctrl.cellTemplate" onload="row = row">        \n' +
 			'        </tr>\n' +
 			'      </tbody>\n' +
 			'    </table>\n' +
@@ -1395,8 +1343,8 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 resolve: {
                     applicationsData: ['applicationService', function (applicationService) { return applicationService.list(); }]
                 },
-                controller: ['applicationsData', function (applications) {
-                        this.applications = applications.data;
+                controller: ['applicationsData', function (applicationsData) {
+                        this.applications = applicationsData.rows;
                     }],
                 controllerAs: '$ctrl'
             })
@@ -1422,7 +1370,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                     actsData: ['actService', function (actService) { return actService.list(); }]
                 },
                 controller: ['actsData', function (actsData) {
-                        this.acts = actsData.data;
+                        this.acts = actsData.rows;
                     }],
                 controllerAs: '$ctrl'
             })
@@ -1482,7 +1430,6 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         function ActsSummaryController() {
         }
         ActsSummaryController.prototype.$onInit = function () {
-            console.log('summary', this.acts);
         };
         return ActsSummaryController;
     }());
@@ -1699,7 +1646,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
     var EpTableController = (function () {
         function EpTableController($scope) {
             this.$scope = $scope;
-            this.data = [];
+            this.rows = [];
             this.selected = [];
             this.query = {
                 order: 'name',
@@ -1724,7 +1671,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
             var _this = this;
             return this.loading = this.onList({ query: this.query })
                 .then(function (newData) {
-                _this.data = newData.data;
+                _this.rows = newData.rows;
                 _this.count = newData.count;
                 return newData;
             });
@@ -1891,11 +1838,9 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
             return this.$http.get(url)
                 .then(function (response) { return response.data; })
                 .then(function (applicationsData) {
-                var applications = _this.processApplicationsList(applicationsData.applications);
-                var count = applicationsData.count;
                 return {
-                    count: count,
-                    data: applications
+                    count: applicationsData.count,
+                    rows: _this.processApplicationsList(applicationsData.rows)
                 };
             });
         };

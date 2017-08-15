@@ -17,7 +17,7 @@ export default class ApplicationController {
         let result = await actApplicationService.list(query);
 
         return {
-            applications: result.applications.map(application => application.toJSON()),
+            rows: result.rows.map(row => row.toJSON()),
             count: result.count
         };
     }

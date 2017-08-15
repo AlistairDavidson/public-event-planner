@@ -33,12 +33,10 @@ export default class ApplicationService {
 
         return this.$http.get(url)
             .then(response => (response.data as ActApplicationsDto))
-            .then(applicationsData => {
-                let applications = this.processApplicationsList(applicationsData.applications);
-                let count = applicationsData.count
+            .then(applicationsData => {                 
                 return {
-                    count: count,
-                    data: applications
+                    count: applicationsData.count,
+                    rows: this.processApplicationsList(applicationsData.rows)
                 };
             });    
     }
