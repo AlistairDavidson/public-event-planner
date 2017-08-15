@@ -1,15 +1,9 @@
 <md-content class="md-padding" layout="row" layout-wrap>    
-    <md-content class="md-padding" layout="row" layout-wrap>    
-        <md-grid md-cols="12" style="height:100%" md-row-height="fit">
-            <md-tile ng-repeat="application in $ctrl.applications" md-colspan="4">    
-
-            <application-card   
-                                
-                                application="application">
-            </application-card>
-
-            <!-- flex="100"
-                                flex-gt-xs="50"
-                                flex-gt-sm="33"
-                                flex-gt-md="25"-->
+    <application-card   flex="100"
+                        flex-gt-xs="50"
+                        flex-gt-sm="33"
+                        flex-gt-md="25"
+                        ng-repeat="application in $ctrl.applications"
+                        application="application">
+    </application-card>
 </md-content>

@@ -302,6 +302,8 @@ angular
 	.module('templates', [])
 	.run(['$templateCache', function($templateCache) {
 		$templateCache.put('components/act/act-card/act-card.html', '<md-card>\n' +
+			'{{ $ctrl.act }}\n' +
+			'\n' +
 			'    <img ng-if="$ctrl.act.getImage()" src="{{ $ctrl.act.getImage() }}" class="md-card-image">\n' +
 			'\n' +
 			'    <md-card-title>\n' +
@@ -447,20 +449,8 @@ angular
 			'</md-dialog>');
 
 		$templateCache.put('components/act/acts-summary/acts-summary.html', '<md-content class="md-padding" layout="row" layout-wrap>    \n' +
-			'    <md-grid md-cols="12" style="height:100%" md-row-height="fit">\n' +
-			'        <md-tile ng-repeat="act in $ctrl.acts" md-colspan="4">    \n' +
-			'            <application-card act="act">\n' +
-			'\n' +
-			'            </application-card>\n' +
-			'\n' +
-			'\n' +
-			'                            <!--flex="100"\n' +
-			'                            flex-gt-xs="50"\n' +
-			'                            flex-gt-sm="33"\n' +
-			'                            flex-gt-md="25"       -->\n' +
-			'\n' +
-			'        </md-tile>\n' +
-			'    </md-grid>\n' +
+			'    <application-card flex="100" flex-gt-xs="50" flex-gt-sm="33" flex-gt-md="25" ng-repeat="act in $ctrl.acts" act="act">\n' +
+			'    </application-card>\n' +
 			'</md-content>');
 
 		$templateCache.put('components/act/acts-table/acts-table.html', '<script type="text/ng-template" id="/acts-header.html">\n' +
@@ -663,18 +653,9 @@ angular
 			'</md-dialog>');
 
 		$templateCache.put('components/application/applications-summary/applications-summary.html', '<md-content class="md-padding" layout="row" layout-wrap>    \n' +
-			'    <md-content class="md-padding" layout="row" layout-wrap>    \n' +
-			'        <md-grid md-cols="12" style="height:100%" md-row-height="fit">\n' +
-			'            <md-tile ng-repeat="application in $ctrl.applications" md-colspan="4">    \n' +
-			'\n' +
-			'            <application-card application="application">\n' +
-			'            </application-card>\n' +
-			'\n' +
-			'            <!-- flex="100"\n' +
-			'                                flex-gt-xs="50"\n' +
-			'                                flex-gt-sm="33"\n' +
-			'                                flex-gt-md="25"-->\n' +
-			'</md-tile></md-grid></md-content></md-content>');
+			'    <application-card flex="100" flex-gt-xs="50" flex-gt-sm="33" flex-gt-md="25" ng-repeat="application in $ctrl.applications" application="application">\n' +
+			'    </application-card>\n' +
+			'</md-content>');
 
 		$templateCache.put('components/application/applications-table/applications-table.html', '<script type="text/ng-template" id="/applications-header.html">\n' +
 			'  <th md-column md-order-by="createdAt"><span>Received</span></th>\n' +
