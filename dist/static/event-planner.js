@@ -452,6 +452,8 @@ angular
 		$templateCache.put('components/act/acts-summary/acts-summary.html', '<md-content class="md-padding" layout="row" layout-wrap>    \n' +
 			'    <application-card flex="100" flex-gt-xs="50" flex-gt-sm="33" flex-gt-md="25" ng-repeat="act in $ctrl.acts" act="act">\n' +
 			'    </application-card>\n' +
+			'\n' +
+			'    {{ $ctrl.acts }}\n' +
 			'</md-content>');
 
 		$templateCache.put('components/act/acts-table/acts-table.html', '<script type="text/ng-template" id="/acts-header.html">\n' +
@@ -1488,6 +1490,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         function ActsSummaryController() {
         }
         ActsSummaryController.prototype.$onInit = function () {
+            console.log('summary', this.acts);
         };
         return ActsSummaryController;
     }());
