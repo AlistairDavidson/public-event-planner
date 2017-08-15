@@ -228,6 +228,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 .then(function (response) {
                 var actsResponse = response.data;
                 actsResponse.acts = actsResponse.acts.map(function (act) { return new ActViewModel(act); });
+                console.log('service', actsResponse);
                 return {
                     count: actsResponse.count,
                     data: actsResponse.acts
@@ -1425,6 +1426,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 },
                 controller: ['actsData', function (actsData) {
                         this.acts = actsData.data;
+                        console.log('route', this.acts, actsData);
                     }],
                 controllerAs: '$ctrl'
             })
