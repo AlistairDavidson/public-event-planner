@@ -91,9 +91,9 @@ export class AuthService {
                         username: username
                     }
                 }).then((user) => {
-                    console.log('found user')            
+                    console.log('found user', user);            
                                 
-                    if (!self.validPassword(user, password) || !user) {
+                    if (!user || !self.validPassword(user, password)) {
                         return done(null, false, req.flash('loginMessage', 'Username or password incorrect'));
                     }
 
