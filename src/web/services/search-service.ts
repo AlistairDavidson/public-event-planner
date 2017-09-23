@@ -13,6 +13,8 @@ async list<T>(options: {
     order?: SequelizeStatic.FindOptions["order"],
     attributes?: string[]
 }): Promise<{ rows: T[], count: number}> {
+        console.log('**** SEARCH RECIEVED', JSON.stringify(options.query))
+
         if(!options.query) {
             options.query = {
                 field: 'createdAt',
