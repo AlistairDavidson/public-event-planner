@@ -29,13 +29,13 @@ export function event(db: SequelizeStatic.Sequelize, Booking: BookingModel, Loca
 
 export interface EventAttribute {
     id?: number;
-    createdAt?: Date;
-    updatedAt?: Date;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
 
-    name?: string,
-    version?: string,
-    start?: Date,
-    end?: Date   
+    name?: string;
+    version?: string;
+    start?: Date | string;
+    end?: Date | string;
 }
 
 export interface EventInstance extends SequelizeStatic.Instance<EventAttribute>, EventAttribute {
@@ -73,7 +73,12 @@ export interface EventInstance extends SequelizeStatic.Instance<EventAttribute>,
     countActApplications: SequelizeStatic.HasManyCountAssociationsMixin;
 }
 
-export interface EventDto extends EventAttribute {    
+export interface EventDto extends EventAttribute {  
+    createdAt?: string;
+    updatedAt?: string;
+    start?: string;
+    end?: string;   
+
     bookings?: BookingDto[];
     locations?: LocationDto[];
     actApplications?: ActApplicationDto[];
@@ -81,7 +86,7 @@ export interface EventDto extends EventAttribute {
 
 export interface EventsDto {
     count: number;
-    events: EventDto[];
+    rows: EventDto[];
 }
 
 export interface EventModel extends SequelizeStatic.Model<EventInstance, EventAttribute> {}

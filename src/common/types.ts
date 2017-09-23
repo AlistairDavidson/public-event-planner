@@ -4,7 +4,9 @@ export interface ListDto {
     offset: number;
     limit: number;
     filter: string;
-    eventId?: string;
+
+    eventId?: number;
+    actId?: number;
 }
 
 export interface MdSortDto {
@@ -12,5 +14,7 @@ export interface MdSortDto {
     limit?: number;
     page?: number;
     filter?: string;
-    eventId?: string;
+    
+    eventId?: number;
+    actId?: number;
 }

@@ -51,7 +51,7 @@ class EpTableController implements angular.IComponentController {
             });            
     }
 
-    create() {
+    edit() {
         return this.loading = this.onCreate()
             .then(() => this.get());
     }

@@ -3,6 +3,7 @@ import { queryToRequest } from './helper';
 import settings from '../settings';
 import { MdSortDto } from '../../common/types';
 import { element } from 'angular';
+import * as _ from 'lodash';
 //import { EventEditorController } from '../components/event-editor/event-editor';
 
 export default class EventService {
@@ -26,10 +27,15 @@ export default class EventService {
         }
 
         return this.$http.get(url)
-            .then(response => (response.data as EventsDto));            
+            .then(response => {
+                let eventsResponse = response.data as EventsDto;
+                eventsResponse.rows = eventsResponse.rows.map(event => new EventViewModel(event));
+
+                return eventsResponse;
+            });                          
     }
 
-    get(id: number) {
+    get(id: number, full: boolean) {
         return this.$http.get(`${settings.api}/event/get?id=${id}`)
             .then(response => (response.data as EventDto));
     }
@@ -44,7 +50,7 @@ export default class EventService {
             .then(response => (response.data as EventDto));
     }         
 /*
-    create(ev: ng.IAngularEvent) {
+    edit(ev: ng.IAngularEvent) {
         return this.$mdDialog.show({
             controller: EventEditorController,
             templateUrl: 'components/event-editor/event-editor.html',
@@ -56,4 +62,21 @@ export default class EventService {
             controllerAs: '$ctrl'
         } as any);
     }*/
+}
+
+export class EventViewModel implements EventDto {
+    constructor(event?: EventDto) {
+        if(event) {
+            _.extend(this, event);
+        }
+    }
+
+    id?: number;
+    createdAt?: string;
+    updatedAt?: string;
+
+    name?: string;
+    version?: string;
+    start?: string;
+    end?: string;
 }

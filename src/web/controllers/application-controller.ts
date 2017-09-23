@@ -26,7 +26,9 @@ export default class ApplicationController {
     @Auth(['view_application'])
     async get(req: express.Request, res: express.Response) {
         let id = req.query.id as number;
-        let application = await actApplicationService.get(id);
+        let full = !!req.query.full;
+
+        let application = await actApplicationService.get(id, full);
         return application.toJSON();
     }
     

@@ -4,30 +4,41 @@ Cloud-based planning software for public events
 
 Copyright (C) 2017 Alistair Davidson <alistair.l.davidson@gmail.com>
 
-'data' -> row
-
 TODO
 
+Single-line summary widgets
+    act
+    application
+    contact
 
-Act      
-    Create / Edit popup
-        - relationships
-            contacts
-            webcontact
-            maincontact (just a pointer...)
+acts, applications -> acts-page, applications-page
 
-        Contact detail editor component
-    Detail view - single-page, single act, editable, will show timeline etc later
+Act
+    Create / Edit page
+        Bookings editor
 
+        act-from-application
+            Three columns: act, main contact, booking
 
-Acts section pages
-    Bookings
-        Table
-Application to booking, act, and contact.
-    Popup thingy like create
-        Radio: existing act (dropdown) or new act (create fields)
-        Same for contact
-        If merging with existing records, prompt for overwrites
+            Radio: existing act (dropdown) or new act (create fields)
+            Same for contact
+            If merging with existing records, prompt for overwrites
+
+    Detail view     
+        single-page, single act, editable, will show timeline etc later
+        add bookings, applications from here
+
+Validation pass
+
+modal edit with just an id
+
+Solve issue where we don't always want to show selects in forms (eg, when creating a booking from an act, there is no need to allow the user to change act)
+
+Solve issue with dates on viewmodels (possibly just a get createdDateAsDate ?) 
+
+Surely consolidate stuff more, somehow
+
+Do something so contact sort is by last name
 
 Applications
     Detail view - card with all details, pops up from table 
@@ -38,12 +49,18 @@ Events management page - create and edit events
 Give events users, allow sharing
 Event list gets from user
 
+unify lists
+rework to material-style list
+
 Event view
     Locations
     Calendar
 
 Admin page
     Grid of users vs permissions
+
+Booking status
+    Colour, icon
 
 Maybe some direct management of contacts
 
@@ -54,17 +71,6 @@ ep-table
     Get select and delete working
 
 Dashboard
-
-Location
-    Location types
-        Venue
-        Green room
-        etc
-
-Equipment
-    Equipment types
-    Equipment sources
-    List of all equipment needed
 
 Rider prices
 
@@ -123,6 +129,19 @@ Todo dependencies, todo lists automatically advancing booking statuses
 
 Connect to facebook, twitter, eventbrite...
     Fetch band follower numbers
+
+
+Location
+    Location types
+        Venue
+        Green room
+        etc
+
+Equipment
+    Equipment types
+    Equipment sources
+    List of all equipment needed
+
 
 
 --

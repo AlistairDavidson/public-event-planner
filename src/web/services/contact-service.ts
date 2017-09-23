@@ -1,34 +1,56 @@
 import database from '../../common/database';
+import searchService from './search-service';
+
 import * as _ from 'lodash';
+import * as SequelizeStatic from 'sequelize';
 
 import { ContactDto, ContactInstance } from '../../common/models/contact';
+import { ListDto } from '../../common/types';
 
 export class ContactService {
-    async get() {
-
+    async list(query?: ListDto) {        
+        return await searchService.list<ContactInstance>({
+            model: database.models.Contact,
+            query: query
+        });
     }
 
-    async updateOrCreate(contactsData: ContactDto[]) {
-        let contacts: ContactInstance[] = [];
+    async get(contactId: number, full: boolean) {
+        if(full) {
+            return await database.models.Contact
+                .findById(contactId, {
+                    include: [{
+                        model: database.models.ActContact,
+                        include: [{
+                            model: database.models.Contact
+                        }]
+                    }]
+                });
+        } else {
+            return await database.models.Contact
+                .findById(contactId);
+        }
+    }
 
-        for(let contactData of contactsData) {
-            let contact = await database.models.Contact.findById(contactData.id);
-            if(!contact) {
-                contact = await database.models.Contact.create(contactData);                
-            } else {
-                contact = await contact.update(contactData);
-            }
-
-            // intersect addy removey on contact details
-
-            contacts.push(contact);
+    async save(contactData: ContactDto) {
+        let contact;
+        
+        if(contactData.id) {
+            contact = await database.models.Contact.findById(contactData.id);
         }
 
-        return contacts;
+        if(!contact) {
+            contact = await database.models.Contact.create(contactData);                
+        } else {
+            contact = await contact.update(contactData);
+        }                  
+
+        return contact;
     }
 
-    async delete() {
-
+    async delete(contactId: number) {
+        let contact = await database.models.Contact.findById(contactId);
+        return await contact.destroy();
     }
 }
 

@@ -14057,9 +14057,16 @@ div.app-container {
   position: absolute;
   right: 16px; }
 
+.fixed-height-button {
+  height: 1em;
+  margin-top: 1em; }
+
 .filter-container {
   position: relative;
   top: 15px; }
+
+.contact-editor-modal {
+  min-width: 583px; }
 
 .loading {
   margin: auto;

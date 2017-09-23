@@ -22,10 +22,10 @@ export function timeslot(db: SequelizeStatic.Sequelize, Act: ActModel, Location:
 
 export interface TimeslotAttribute {
     id?: number;
-    createdAt?: Date;
-    updatedAt?: Date;
-    start?: Date,
-    end?: Date
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    start?: Date | string;
+    end?: Date | string;
 }
 
 export interface TimeslotInstance extends SequelizeStatic.Instance<TimeslotAttribute>, TimeslotAttribute {    
@@ -40,7 +40,11 @@ export interface TimeslotInstance extends SequelizeStatic.Instance<TimeslotAttri
     setLocation: SequelizeStatic.BelongsToSetAssociationMixin<LocationInstance, number>;
 }
 
-export interface TimeslotDto extends TimeslotAttribute {    
+export interface TimeslotDto extends TimeslotAttribute {  
+    createdAt?: string;
+    updatedAt?: string;
+    start?: string;
+    end?: string;  
 }
 
 export interface TimeslotModel extends SequelizeStatic.Model<TimeslotInstance, TimeslotAttribute> {}

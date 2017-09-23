@@ -29,11 +29,12 @@ export function act(db: SequelizeStatic.Sequelize, Booking: BookingModel, Contac
 
 export interface ActAttribute {
     id?: number;
-    createdAt?: Date;
-    updatedAt?: Date;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
 
     name?: string;
     bio?: string;
+    town?: string;
     tech_specs?: string;
     type?: string;
 
@@ -87,6 +88,9 @@ export interface ActInstance extends SequelizeStatic.Instance<ActAttribute>, Act
 }
 
 export interface ActDto extends ActAttribute {
+    createdAt?: string;
+    updatedAt?: string;
+
     mainContact?: ContactDto;
     webContact?: ContactDto;
     actContacts?: ActContactDto[];

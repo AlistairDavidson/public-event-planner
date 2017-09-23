@@ -1,127 +1,88 @@
 import database from '../../common/database';
 import * as _ from 'lodash';
 import * as SequelizeStatic from 'sequelize';
-
-import { ActDto, ActsDto, ActInstance } from '../../common/models/act';
+import { ActDto, ActsDto, ActInstance, ActModel } from '../../common/models/act';
 import { ActContactDto } from '../../common/models/act-contact';
 import { BookingDto, BookingInstance, BookingAttribute } from '../../common/models/booking';
 import { ActApplicationDto, ActApplicationInstance, ActApplicationAttribute } from '../../common/models/act-application';
 import { ListDto } from '../../common/types';
 
-
+import searchService from './search-service';
 import contactService from './contact-service';
 
 export class ActService {
-        async list(query?: ListDto) {
-        console.log('list', query);
-
-        if(!query) {
-            query = {
-                field: 'createdAt',
-                order: 'DESC',
-                filter: '',
-                offset: 0,
-                limit: 100
-            }
-        }
-
-        if(query.order != 'ASC' && query.order != 'DESC') {
-            query.order = 'ASC';
-        }
-
-        let order;
-        if(query.field) {
-            order = [ query.field, query.order ]
-        }
-
-        let options: SequelizeStatic.FindOptions = {
-            order: order,
-            offset: query.offset,
-            limit: query.limit            
-        }
-
-        if(query.filter) {
-            options.where = {
-                name: {
-                    $iLike: `%${query.filter}%`
-                }
-            }
-        }
-
-        options.include = [{
-            model: database.models.Contact,
-            as: 'mainContact'           
-        },{
-            model: database.models.Contact,
-            as: 'webContact'         
-        }];
-
-        console.log('do-list', options);
-
-        let result = await database.models.Act.findAndCountAll(options);
-
-        return result;
+    async list(query?: ListDto) {    
+        return await searchService.list<ActInstance>({
+            model: database.models.Act,
+            query: query,
+            include: [{
+                model: database.models.Contact,
+                as: 'mainContact'           
+            },{
+                model: database.models.Contact,
+                as: 'webContact'         
+            }]
+        });
     }
 
-    async get(actId: number) {
-        let act = await database.models.Act
-            .findById(actId, {
-                include: [{
-                    model: database.models.ActContact,
-                    include: [{ model: database.models.Contact }]
-                },{
-                    model: database.models.Booking,
-                    include: [{ model: database.models.Event },
-                             { model: database.models.BookingStatus }],
-                },{
-                    model: database.models.Timeslot,
-                    include: [{ model: database.models.Location,
-                                include: [{ model: database.models.Event }] }]
-                },{
-                    model: database.models.Contact,
-                    as: 'mainContact'
-                },{
-                    model: database.models.Contact,
-                    as: 'webContact'
-                }]
-            });
-
-        return act;
+    async get(actId: number, full: boolean) {
+        if(full) {
+            return await database.models.Act
+                .findById(actId, {
+                    include: [{
+                        model: database.models.ActContact,
+                        include: [{ model: database.models.Contact }]
+                    },{
+                        model: database.models.Booking,
+                        include: [{ model: database.models.Event },
+                                { model: database.models.BookingStatus }],
+                    },{
+                        model: database.models.Timeslot,
+                        include: [{
+                            model: database.models.Location,
+                            include: [{ model: database.models.Event }]
+                        }]
+                    },{
+                        model: database.models.Contact,
+                        as: 'mainContact'
+                    },{
+                        model: database.models.Contact,
+                        as: 'webContact'
+                    }]
+                });
+        } else {
+             return await database.models.Act.findById(actId);
+        }
     }
 
     async save(actData: ActDto) {        
-        let act = await database.models.Act.findById(actData.id);
+        let act;
+        
+        if(actData.id) {
+            act = await database.models.Act.findById(actData.id);
+        }
         
         if(!act) {
             act = await database.models.Act.create(actData);
         }
-
-        return act;
-    }
-
-    async updateOrCreate(actData: ActDto) {        
+    
         let mainContactData = actData.mainContact;
         delete actData.mainContact;
 
         let webContactData = actData.webContact;
         delete actData.webContact;
+       
 
-
-        let act = await this.get(actData.id);
-        if(!act) {
-            act = await database.models.Act.create(actData);
-        }
-
-        let mainContact = (await contactService.updateOrCreate([ mainContactData ]))[0];
+        let mainContact = await contactService.save(mainContactData);
         await act.setMainContact(mainContact);
 
-        let webContact = (await contactService.updateOrCreate([ webContactData ]))[0];
-        await act.setMainContact(webContact);
+        let webContact = await contactService.save(webContactData);
+        await act.setWebContact(webContact);
 
         await this.rewriteContacts(act, actData.actContacts);
         await this.rewriteBookings(act, actData.bookings);
       
-        return await this.get(act.id);
+        return await this.get(act.id, true);
     }
 
     async rewriteContacts(act: ActInstance, actContactsData: ActContactDto[]) {
@@ -135,7 +96,7 @@ export class ActService {
         await act.removeActContacts(actContactIdsToRemove);
         await act.addActContacts(actContactIdsToAdd);
 
-        return this.get(act.id);
+        return this.get(act.id, true);
     }
 
     // Applications and bookings need proper create / updates

@@ -6,10 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
 
     <title>Event Planner</title>
+
     
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>     
+    <script>
+        window.lodash = window._;
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.3/require.min.js"></script>
+
     
+
     <script src="/event-planner.js"></script>
 
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic" rel="stylesheet">
@@ -18,7 +24,14 @@
     <link href="/app.css" rel="stylesheet">
 </head>
 <body ng-controller="eventPlanner" ng-strict-di>
+    <!--<contacts-editor>
+    </contacts-editor>
     <event-planner-app>        
-    </event-planner-app>
+    </event-planner-app>-->
+
+    <!--<act-search act-id="1">
+    </act-search>-->
+
+    <act-editor-form></act-editor-form>
 </body>
 </html>

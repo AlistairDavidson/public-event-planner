@@ -21,7 +21,7 @@ class EventPlannerAppController implements angular.IComponentController {
         this.selectedEvent = this.$stateParams.event;
 
         this.eventService.list()
-            .then(eventData => this.events = eventData.events)
+            .then(eventData => this.events = eventData.rows)
             .then(() => {
                 if(!this.selectedEvent) {
                     this.selectedEvent = this.events[0].id;

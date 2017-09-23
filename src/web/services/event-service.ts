@@ -4,74 +4,52 @@ import * as _ from 'lodash';
 import * as SequelizeStatic from 'sequelize';
 
 import { EventDto, EventInstance, EventAttribute } from '../../common/models/event';
+import searchService from './search-service';
 
 export class EventService {
     async list(query?: ListDto) {
-        console.log('list', query);
-
-        if(!query) {
-            query = {
-                field: 'createdAt',
-                order: 'DESC',
-                filter: '',
-                offset: 0,
-                limit: 100
-            }
-        }
-
-        if(query.order != 'ASC' && query.order != 'DESC') {
-            query.order = 'ASC';
-        }
-
-        let order;
-        if(query.field) {
-            order = [ query.field, query.order ]
-        }
-
-        let options: SequelizeStatic.FindOptions = {
-            order: order,
-            offset: query.offset,
-            limit: query.limit            
-        }
-
-        if(query.filter) {
-            options.where = {
-                name: {
-                    $iLike: `%${query.filter}%`
-                }
-            }
-        }
-
-        console.log('do-list', options);
-
-        let result = await database.models.Event.findAndCountAll(options);
-
-        return {
-            events: result.rows,
-            count: result.count          
-        };
-    }
-
-    async get(actId: number) {
-        let event = await database.models.Event.findById(actId, {
-        
+        return await searchService.list<EventInstance>({
+            model: database.models.Event,
+            query: query
         });
-
-        return event;
     }
 
-    async save(actApplicationData: EventDto) {        
-        let event = await database.models.Event.findById(actApplicationData.id);
+    async get(eventId: number, full: boolean) {
+        if(full) {
+            return await database.models.Event.findById(eventId, {
+                include: [{
+                    model: database.models.Booking,
+                    include: [{ model: database.models.BookingStatus }]
+                }, {
+                    model: database.models.Location,
+                    include: [{ model: database.models.Timeslot }]
+                }, {
+                    model: database.models.ActApplication
+                }]
+            });
+        } else {
+            return await database.models.Event.findById(eventId);
+        }
+    }
+
+    async save(eventData: EventDto) {        
+        let event;
+        
+        if(eventData.id) {
+            event = await database.models.Event.findById(eventData.id);
+        }
         
         if(!event) {
-            event = await database.models.Event.create(actApplicationData);
+            event = await database.models.Event.create(eventData);
+        } else {
+            event = await event.update(eventData);
         }
 
         return event;
     }
 
-    async delete(actApplicationId: number) {
-        let event = await database.models.Event.findById(actApplicationId);
+    async delete(eventId: number) {
+        let event = await database.models.Event.findById(eventId);
         return await event.destroy();
     }
 }

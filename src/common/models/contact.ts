@@ -1,10 +1,10 @@
 import * as SequelizeStatic from 'sequelize';
 import { ActContactModel, ActContactInstance, ActContactDto } from './act-contact';
-import { ContactDetailModel, ContactDetailInstance, ContactDetailDto } from './contact-detail';
 
-export function contact(db: SequelizeStatic.Sequelize, ActContact: ActContactModel, ContactDetail: ContactDetailModel)  {    
+export function contact(db: SequelizeStatic.Sequelize, ActContact: ActContactModel)  {    
     let Contact = db.define<ContactInstance, ContactAttribute>('Contact', {
-        name: SequelizeStatic.STRING(255)        
+        name: SequelizeStatic.STRING(255),
+        contactDetails: SequelizeStatic.JSON
     }, {
         schema: 'eventplanner'
     });
@@ -12,18 +12,16 @@ export function contact(db: SequelizeStatic.Sequelize, ActContact: ActContactMod
     Contact.hasMany(ActContact);
     ActContact.belongsTo(Contact);
 
-    Contact.hasMany(ContactDetail);
-    ContactDetail.belongsTo(Contact);
-
     return Contact;    
 }
 
 export interface ContactAttribute {
     id?: number;
-    createdAt?: Date;
-    updatedAt?: Date;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
 
     name?: string;
+    details: ContactDetailsDto;
 }
 
 export interface ContactInstance extends SequelizeStatic.Instance<ContactAttribute>, ContactAttribute {
@@ -37,22 +35,48 @@ export interface ContactInstance extends SequelizeStatic.Instance<ContactAttribu
     hasActContact: SequelizeStatic.HasManyHasAssociationMixin<ActContactInstance, number>;
     hasActContacts: SequelizeStatic.HasManyHasAssociationsMixin<ActContactInstance, number>;
     countActContacts: SequelizeStatic.HasManyCountAssociationsMixin;
-
-    getContactDetails: SequelizeStatic.HasManyGetAssociationsMixin<ContactDetailInstance>;
-    setContactDetails: SequelizeStatic.HasManySetAssociationsMixin<ContactDetailInstance, number>;
-    addContactDetails: SequelizeStatic.HasManyAddAssociationsMixin<ContactDetailInstance, number>;
-    addContactDetail: SequelizeStatic.HasManyAddAssociationMixin<ContactDetailInstance, number>;
-    createContactDetail: SequelizeStatic.HasManyCreateAssociationMixin<ContactDetailInstance>;
-    removeContactDetail: SequelizeStatic.HasManyRemoveAssociationMixin<ContactDetailInstance, number>;
-    removeContactDetails: SequelizeStatic.HasManyRemoveAssociationsMixin<ContactDetailInstance, number>;
-    hasContactDetail: SequelizeStatic.HasManyHasAssociationMixin<ContactDetailInstance, number>;
-    hasContactDetails: SequelizeStatic.HasManyHasAssociationsMixin<ContactDetailInstance, number>;
-    countContactDetails: SequelizeStatic.HasManyCountAssociationsMixin;
 }
 
 export interface ContactDto extends ContactAttribute {
-    contactDetails?: ContactDetailDto[];
+    createdAt?: string;
+    updatedAt?: string;
+
     actContacts?: ActContactDto[];
 }
 
+export interface ContactsDto {
+    count: number;
+    rows: ContactDto[];
+}
+
 export interface ContactModel extends SequelizeStatic.Model<ContactInstance, ContactAttribute> {}
+
+
+export interface ContactDetailsDto {
+    addresses: AddressDto[];
+    emails: EmailDto[];
+    phones: PhoneDto[];
+    websites: WebsiteDto[];
+    images: ImageDto[];
+}
+
+export interface AddressDto {
+    address?: string;
+    postcode?: string;    
+}
+
+export interface EmailDto {
+    email?: string;
+}
+
+export interface PhoneDto {
+    phone?: string;
+}
+
+export interface WebsiteDto {
+    url?: string;
+}
+
+export interface ImageDto {
+    image?: string;
+}

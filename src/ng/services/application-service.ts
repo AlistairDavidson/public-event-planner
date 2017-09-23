@@ -3,7 +3,7 @@ import { queryToRequest } from './helper';
 import settings from '../settings';
 import { MdSortDto, ListDto } from '../../common/types';
 import { element } from 'angular';
-import { ApplicationEditorController } from '../components/application/application-editor/application-editor';
+import { ApplicationEditorModalController } from '../components/application/application-editor-modal/application-editor-modal';
 
 export default class ApplicationService {
     static $inject = ['$http', '$httpParamSerializer', '$q', '$mdDialog', '$stateParams'];
@@ -41,7 +41,7 @@ export default class ApplicationService {
             });    
     }
 
-    get(id: number) {
+    get(id: number, full: boolean) {
         return this.$http.get(`${settings.api}/application/get?id=${id}`)
             .then(response => (response.data as ActApplicationDto));
     }
@@ -71,16 +71,19 @@ export default class ApplicationService {
         return applications;
     }
 
-    create(ev: ng.IAngularEvent) {
+    edit(ev: ng.IAngularEvent, application?: ApplicationViewModel): ng.IPromise<ApplicationViewModel> {
         return this.$mdDialog.show({
-            controller: ApplicationEditorController,
-            templateUrl: 'components/application/application-editor/application-editor.html',
+            controller: ApplicationEditorModalController,
+            templateUrl: 'components/application/application-editor-modal/application-editor-modal.html',
             parent: element(document.body),
             targetEvent: ev,
             clickOutsideToClose: true,
             fullscreen: true,
             bindToController: true,
-            controllerAs: '$ctrl'
+            controllerAs: '$ctrl',
+            resolve: {
+                'application': () => application
+            }
         } as any);
     }
 }

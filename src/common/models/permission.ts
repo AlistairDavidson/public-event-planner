@@ -13,13 +13,15 @@ export function permission(db: SequelizeStatic.Sequelize)  {
 
 export interface PermissionAttribute {
     id?: number;
-    createdAt?: Date;
-    updatedAt?: Date;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
     
     name?: string;
 }
 
 export interface PermissionDto extends PermissionAttribute {    
+    createdAt?: string;
+    updatedAt?: string;
 }
 
 export interface PermissionInstance extends SequelizeStatic.Instance<PermissionAttribute>, PermissionAttribute {}

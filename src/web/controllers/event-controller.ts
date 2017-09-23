@@ -17,7 +17,7 @@ export default class EventController {
         let result = await eventService.list(query);
 
         return {
-            events: result.events.map(event => event.toJSON()),
+            rows: result.rows.map(event => event.toJSON()),
             count: result.count
         };
     }
@@ -26,7 +26,9 @@ export default class EventController {
     @Auth(['view_event'])
     async get(req: express.Request, res: express.Response) {
         let id = req.query.id as number;
-        let event = await eventService.get(id);
+        let full = !!req.query.full;
+
+        let event = await eventService.get(id, full);
         return event.toJSON();
     }
     
@@ -34,6 +36,7 @@ export default class EventController {
     @Auth(['edit_event'])
     async save(req: express.Request, res: express.Response) {
         let id = req.body as EventDto;
+
         let event = await eventService.save(id);
         return event.toJSON();
     }

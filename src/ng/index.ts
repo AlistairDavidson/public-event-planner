@@ -66,7 +66,7 @@ module('event-planner', [ 'event-planner.components', 'event-planner.services', 
                 url: '/detail',
                 template:  `<applications-table                                
                                 get-applications="$ctrl.applicationService.list(query)"
-                                create="$ctrl.applicationService.create()">
+                                create="$ctrl.applicationService.edit($event)">
                             </applications-table>`,
                 controller: ['applicationService', function(applicationService: ApplicationService) {
                     this.applicationService = applicationService;
@@ -99,7 +99,7 @@ module('event-planner', [ 'event-planner.components', 'event-planner.services', 
                 url: '/detail',
                 template:  `<acts-table                                
                                 get-acts="$ctrl.actService.list(query)"
-                                create="$ctrl.actService.create()">
+                                create="$ctrl.actService.edit($event)">
                             </acts-table>`,
                 controller: ['actService', function(actService: ActService) {
                     this.actService = actService;

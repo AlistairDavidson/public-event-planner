@@ -6,22 +6,22 @@ import * as SequelizeStatic from 'sequelize';
 import { ActApplicationDto, ActApplicationInstance, ActApplicationAttribute, RawApplicationDto, ActApplicationsDto } from '../../common/models/act-application';
 
 import contactService from './contact-service';
+import searchService from './search-service';
 
 export class ActApplicationService {
     async list(query: ListDto) {
-        if(query.order != 'ASC' && query.order != 'DESC') {
-            query.order = 'ASC';
-        }
-
-        let order;
-        if(query.field) {
-            order = SequelizeStatic.json(`details.${query.field} ${query.order}`) as string;
-        }
-
         let options: any = {
-            order: order,
+            model: database.models.ActApplication,        
             offset: query.offset,
             limit: query.limit            
+        }
+
+        if(query.field) {
+            if(query.order != 'DESC') {
+                query.order = 'ASC';
+            }
+
+            options.order = SequelizeStatic.json(`details.${query.field} ${query.order}`) as string;
         }
 
         if(query.filter) {
@@ -34,34 +34,41 @@ export class ActApplicationService {
                 ), {
                     EventId: query.eventId
                 }) as any;
-        }        
+        } else {
+            options.where = {
+                EventId: query.eventId
+            };
+        }      
 
-
-        console.log('do-list', options);
-
-        let result = await database.models.ActApplication.findAndCountAll(options);
-
-        return result;
+        return await searchService.list<ActApplicationInstance>(options);
     }
 
-    async get(actId: number) {
-        let application = await database.models.ActApplication.findById(actId, {            
-            include: [{
-                model: database.models.Booking,
+    async get(actId: number, full: boolean) {
+        if(full) {
+            return await database.models.ActApplication.findById(actId, {            
                 include: [{
-                    model: database.models.Act
-                }]                
-            }]
-        });
-
-        return application;
+                    model: database.models.Booking,
+                    include: [{
+                        model: database.models.Act
+                    }]                
+                }]
+            });
+        } else {
+            return await database.models.ActApplication.findById(actId);
+        }    
     }
 
-    async save(actApplicationData: ActApplicationDto) {        
-        let application = await database.models.ActApplication.findById(actApplicationData.id);
+    async save(actApplicationData: ActApplicationDto) {     
+        let application;
         
+        if(actApplicationData.id) {
+            application = await database.models.ActApplication.findById(actApplicationData.id);
+        }
+
         if(!application) {
             application = await database.models.ActApplication.create(actApplicationData);
+        } else { 
+            application = await application.update(actApplicationData);
         }
 
         return application;

@@ -29,63 +29,95 @@ angular
 			'    </md-card-actions>\n' +
 			'</md-card>');
 
-		$templateCache.put('components/act/act-editor/act-editor.html', '<md-dialog aria-label="New Application">\n' +
+		$templateCache.put('components/act/act-editor-form/act-editor-form.html', '<md-card layout-padding>\n' +
+			'<form novalidate ng-cloak>\n' +
+			'    <div layout="column">\n' +
+			'        <h2 class="md-title">Act</h2>\n' +
+			'        \n' +
+			'        <div layout-gt-sm="row">\n' +
+			'            <md-input-container>\n' +
+			'                <label>Act Name</label>\n' +
+			'                <input ng-model="$ctrl.act.name">\n' +
+			'            </md-input-container>\n' +
+			'\n' +
+			'            <md-input-container>\n' +
+			'                <label>Type</label>\n' +
+			'                <input ng-model="$ctrl.act.type">\n' +
+			'            </md-input-container>\n' +
+			'\n' +
+			'            <md-input-container>\n' +
+			'                <label>Town</label>\n' +
+			'                <input ng-model="$ctrl.act.town">\n' +
+			'            </md-input-container>\n' +
+			'        </div>\n' +
+			'\n' +
+			'        <hr>\n' +
+			'\n' +
+			'        <h3 class="md-subhead">Details</h3>\n' +
+			'\n' +
+			'        <div layout-gt-sm="row">\n' +
+			'            <md-input-container>\n' +
+			'                <label>Bio</label>\n' +
+			'                <textarea ng-model="$ctrl.act.bio">\n' +
+			'                </textarea>\n' +
+			'            </md-input-container>\n' +
+			'        </div>\n' +
+			'    \n' +
+			'        <div layout-gt-sm="row">\n' +
+			'            <md-input-container>\n' +
+			'                <label>Tech Specs</label>\n' +
+			'                <textarea ng-model="$ctrl.act.tech_specs">\n' +
+			'                </textarea>\n' +
+			'            </md-input-container>\n' +
+			'        </div>                \n' +
+			'\n' +
+			'        <contact-editor-form contact="$ctrl.act.webContact" mode="\'Web\'">\n' +
+			'        </contact-editor-form>\n' +
+			'\n' +
+			'        <hr>\n' +
+			'    \n' +
+			'        <h3 class="md-subhead">Primary Contact</h3>\n' +
+			'        <contact-search contact="$ctrl.act.mainContact">\n' +
+			'        </contact-search>\n' +
+			'\n' +
+			'        <h3 class="md-subhead">Other Contacts</h3>\n' +
+			'        <act-contacts-editor act-contacts="$ctrl.act.actContacts" act-id="$ctrl.act.id">\n' +
+			'        </act-contacts-editor>\n' +
+			'        \n' +
+			'        <hr>\n' +
+			'\n' +
+			'        <h3 class="md-subhead">Bookings</h3>\n' +
+			'        <bookings-editor bookings="$ctrl.act.bookings" act-id="$ctrl.act.id" event-id="$ctrl.eventId">            \n' +
+			'        </bookings-editor>\n' +
+			'    </div>\n' +
+			'</form>\n' +
+			'</md-card>');
+
+		$templateCache.put('components/act/act-editor-modal/act-editor-modal.html', '<md-dialog aria-label="New Act">\n' +
 			'    <md-dialog-content class="md-dialog-content">\n' +
-			'        <form novalidate ng-cloak>\n' +
-			'            <div layout="column">\n' +
-			'                <h2 class="md-title">Act</h2>\n' +
-			'\n' +
-			'                <div layout-gt-sm="row">\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Act Name</label>\n' +
-			'                        <input ng-model="$ctrl.act.name">\n' +
-			'                    </md-input-container>\n' +
-			'\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Type</label>\n' +
-			'                        <input ng-model="$ctrl.act.type">\n' +
-			'                    </md-input-container>\n' +
-			'\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Town</label>\n' +
-			'                        <input ng-model="$ctrl.act.town">\n' +
-			'                    </md-input-container>\n' +
-			'                </div>\n' +
-			'\n' +
-			'                <h3 class="md-subhead">Details</h3>\n' +
-			'\n' +
-			'                <div layout-gt-sm="row">\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Bio</label>\n' +
-			'                        <textarea ng-model="$ctrl.act.bio">\n' +
-			'                        </textarea>\n' +
-			'                    </md-input-container>\n' +
-			'                </div>\n' +
-			'\n' +
-			'                <div layout-gt-sm="row">\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Tech Specs</label>\n' +
-			'                        <textarea ng-model="$ctrl.act.tech_specs">\n' +
-			'                        </textarea>\n' +
-			'                    </md-input-container>\n' +
-			'                </div>                \n' +
-			'\n' +
-			'                <div layout-gt-sm="row">\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Image</label>\n' +
-			'                        <input ng-model="$ctrl.act.details.image">\n' +
-			'                    </md-input-container>\n' +
-			'                </div>\n' +
-			'\n' +
-			'                <img ng-if="$ctrl.application.details.image" src="{{ $ctrl.application.details.image }}">\n' +
-			'            </div>\n' +
-			'        </form>\n' +
+			'       <act-editor-form act="$ctrl.act" event-id="$ctrl.eventId">\n' +
+			'       </act-editor-form>\n' +
 			'    </md-dialog-content>\n' +
 			'    <md-dialog-actions>\n' +
 			'        <md-button ng-click="$ctrl.save()">Save</md-button>\n' +
 			'        <md-button ng-click="$ctrl.cancel()">Cancel</md-button>\n' +
 			'    </md-dialog-actions>\n' +
 			'</md-dialog>');
+
+		$templateCache.put('components/act/act-search/act-search.html', '<div layout="column">\n' +
+			'    <div layout-gt-sm="row">\n' +
+			'        <md-autocomplete flex required md-input-name="act-search" md-input-minlength="2" md-selected-item="$ctrl.act" md-search-text="$ctrl.searchText" md-items="act in $ctrl.search($ctrl.searchText)" md-item-text="act.name" md-require-match md-floating-label="Act" md-selected-item-change="$ctrl.actId = act.id">\n' +
+			'          <md-item-template>\n' +
+			'            <span md-highlight-text="ctrl.searchText">{{ act.name }}</span>\n' +
+			'          </md-item-template>\n' +
+			'        </md-autocomplete>\n' +
+			'\n' +
+			'        <md-button ng-click="$ctrl.edit($event)">\n' +
+			'            <md-icon>add</md-icon>\n' +
+			'            New\n' +
+			'        </md-button>\n' +
+			'    </div>\n' +
+			'</div>');
 
 		$templateCache.put('components/act/acts-summary/acts-summary.html', '<md-content class="md-padding" layout="row" layout-wrap>    \n' +
 			'    <act-card flex="100" flex-gt-xs="50" flex-gt-sm="33" flex-gt-md="25" ng-repeat="act in $ctrl.acts" act="act">\n' +
@@ -132,7 +164,7 @@ angular
 			'  </td>\n' +
 			'</script>\n' +
 			'\n' +
-			'<ep-table title="\'Acts\'" on-list="$ctrl.getActs(query)" on-create="$ctrl.create()" header-template="\'/acts-header.html\'" cell-template="\'/acts-cell.html\'">\n' +
+			'<ep-table title="\'Acts\'" on-list="$ctrl.getActs(query)" on-create="$ctrl.edit($event)" header-template="\'/acts-header.html\'" cell-template="\'/acts-cell.html\'">\n' +
 			'</ep-table>');
 
 		$templateCache.put('components/act/acts/acts.html', '<md-nav-bar md-selected-nav-item="$ctrl.currentNavItem">\n' +
@@ -172,118 +204,121 @@ angular
 			'    </md-card-actions>\n' +
 			'</md-card>');
 
-		$templateCache.put('components/application/application-editor/application-editor.html', '<md-dialog aria-label="New Application">\n' +
+		$templateCache.put('components/application/application-editor-form/application-editor-form.html', '<form novalidate ng-cloak>\n' +
+			'    <div layout="column">\n' +
+			'        <h2 class="md-title">Application</h2>\n' +
+			'\n' +
+			'        <div layout-gt-sm="row">\n' +
+			'            <md-input-container>\n' +
+			'                <label>Act Name</label>\n' +
+			'                <input ng-model="$ctrl.application.details.name">\n' +
+			'            </md-input-container>\n' +
+			'\n' +
+			'            <md-input-container>\n' +
+			'                <label>Type</label>\n' +
+			'                <input ng-model="$ctrl.application.details.type">\n' +
+			'            </md-input-container>\n' +
+			'\n' +
+			'            <md-input-container>\n' +
+			'                <label>Town</label>\n' +
+			'                <input ng-model="$ctrl.application.details.town">\n' +
+			'            </md-input-container>\n' +
+			'        </div>\n' +
+			'\n' +
+			'        <div layout-gt-sm="row">\n' +
+			'            <md-input-container>\n' +
+			'                <label>Act Size</label>\n' +
+			'                <input ng-model="$ctrl.application.details.size_of_act">\n' +
+			'            </md-input-container>\n' +
+			'\n' +
+			'            <md-input-container>\n' +
+			'                <label>Party Size</label>\n' +
+			'                <input ng-model="$ctrl.application.details.size_of_party">\n' +
+			'            </md-input-container>\n' +
+			'        \n' +
+			'            <md-input-container>\n' +
+			'                <label>Requested Fee</label>\n' +
+			'                <input ng-model="$ctrl.application.details.requested_fee">\n' +
+			'            </md-input-container>\n' +
+			'        </div>\n' +
+			'\n' +
+			'        <h3 class="md-subhead">Contact</h3>\n' +
+			'\n' +
+			'        <div layout-gt-sm="row">\n' +
+			'            <md-input-container>\n' +
+			'                <label>Name</label>\n' +
+			'                <input ng-model="$ctrl.application.details.contact_name">\n' +
+			'            </md-input-container>\n' +
+			'\n' +
+			'            <md-input-container>\n' +
+			'                <label>Email</label>\n' +
+			'                <input ng-model="$ctrl.application.details.email">\n' +
+			'            </md-input-container>\n' +
+			'\n' +
+			'            <md-input-container>\n' +
+			'                <label>Phone</label>\n' +
+			'                <input ng-model="$ctrl.application.details.phone">\n' +
+			'            </md-input-container>\n' +
+			'        </div>\n' +
+			'\n' +
+			'        <div layout-gt-sm="row">\n' +
+			'            <md-input-container>\n' +
+			'                <label>Link</label>\n' +
+			'                <input ng-model="$ctrl.application.details.link">\n' +
+			'            </md-input-container>\n' +
+			'\n' +
+			'            <md-input-container>\n' +
+			'                <label>Facebook</label>\n' +
+			'                <input ng-model="$ctrl.application.details.facebook">\n' +
+			'            </md-input-container>\n' +
+			'\n' +
+			'            <md-input-container>\n' +
+			'                <label>Twitter</label>\n' +
+			'                <input ng-model="$ctrl.application.details.twitter">\n' +
+			'            </md-input-container>\n' +
+			'        </div>\n' +
+			'\n' +
+			'        <h3 class="md-subhead">Details</h3>\n' +
+			'\n' +
+			'        <div layout-gt-sm="row">\n' +
+			'            <md-input-container>\n' +
+			'                <label>Party Names</label>\n' +
+			'                <input ng-model="$ctrl.application.details.party_names">\n' +
+			'            </md-input-container>\n' +
+			'        </div>\n' +
+			'\n' +
+			'        <div layout-gt-sm="row">\n' +
+			'            <md-input-container>\n' +
+			'                <label>Bio</label>\n' +
+			'                <textarea ng-model="$ctrl.application.details.bio">\n' +
+			'                </textarea>\n' +
+			'            </md-input-container>\n' +
+			'        </div>\n' +
+			'\n' +
+			'        <div layout-gt-sm="row">\n' +
+			'            <md-input-container>\n' +
+			'                <label>Tech Specs</label>\n' +
+			'                <textarea ng-model="$ctrl.application.details.tech_specs">\n' +
+			'                </textarea>\n' +
+			'            </md-input-container>\n' +
+			'        </div>\n' +
+			'\n' +
+			'        <div layout-gt-sm="row">\n' +
+			'            <md-input-container>\n' +
+			'                <label>Image</label>\n' +
+			'                <input ng-model="$ctrl.application.details.image">\n' +
+			'            </md-input-container>\n' +
+			'        </div>\n' +
+			'\n' +
+			'\n' +
+			'        <img ng-if="$ctrl.application.details.image" src="{{ $ctrl.application.details.image }}">\n' +
+			'    </div>\n' +
+			'</form>');
+
+		$templateCache.put('components/application/application-editor-modal/application-editor-modal.html', '<md-dialog aria-label="New Application">\n' +
 			'    <md-dialog-content class="md-dialog-content">\n' +
-			'        <form novalidate ng-cloak>\n' +
-			'            <div layout="column">\n' +
-			'                <h2 class="md-title">Application</h2>\n' +
-			'\n' +
-			'                <div layout-gt-sm="row">\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Act Name</label>\n' +
-			'                        <input ng-model="$ctrl.application.details.name">\n' +
-			'                    </md-input-container>\n' +
-			'\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Type</label>\n' +
-			'                        <input ng-model="$ctrl.application.details.type">\n' +
-			'                    </md-input-container>\n' +
-			'\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Town</label>\n' +
-			'                        <input ng-model="$ctrl.application.details.town">\n' +
-			'                    </md-input-container>\n' +
-			'                </div>\n' +
-			'\n' +
-			'                <div layout-gt-sm="row">\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Act Size</label>\n' +
-			'                        <input ng-model="$ctrl.application.details.size_of_act">\n' +
-			'                    </md-input-container>\n' +
-			'\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Party Size</label>\n' +
-			'                        <input ng-model="$ctrl.application.details.size_of_party">\n' +
-			'                    </md-input-container>\n' +
-			'                \n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Requested Fee</label>\n' +
-			'                        <input ng-model="$ctrl.application.details.requested_fee">\n' +
-			'                    </md-input-container>\n' +
-			'                </div>\n' +
-			'\n' +
-			'                <h3 class="md-subhead">Contact</h3>\n' +
-			'\n' +
-			'                <div layout-gt-sm="row">\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Name</label>\n' +
-			'                        <input ng-model="$ctrl.application.details.contact_name">\n' +
-			'                    </md-input-container>\n' +
-			'\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Email</label>\n' +
-			'                        <input ng-model="$ctrl.application.details.email">\n' +
-			'                    </md-input-container>\n' +
-			'\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Phone</label>\n' +
-			'                        <input ng-model="$ctrl.application.details.phone">\n' +
-			'                    </md-input-container>\n' +
-			'                </div>\n' +
-			'\n' +
-			'                <div layout-gt-sm="row">\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Link</label>\n' +
-			'                        <input ng-model="$ctrl.application.details.link">\n' +
-			'                    </md-input-container>\n' +
-			'\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Facebook</label>\n' +
-			'                        <input ng-model="$ctrl.application.details.facebook">\n' +
-			'                    </md-input-container>\n' +
-			'\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Twitter</label>\n' +
-			'                        <input ng-model="$ctrl.application.details.twitter">\n' +
-			'                    </md-input-container>\n' +
-			'                </div>\n' +
-			'\n' +
-			'                <h3 class="md-subhead">Details</h3>\n' +
-			'\n' +
-			'                <div layout-gt-sm="row">\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Party Names</label>\n' +
-			'                        <input ng-model="$ctrl.application.details.party_names">\n' +
-			'                    </md-input-container>\n' +
-			'                </div>\n' +
-			'\n' +
-			'                <div layout-gt-sm="row">\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Bio</label>\n' +
-			'                        <textarea ng-model="$ctrl.application.details.bio">\n' +
-			'                        </textarea>\n' +
-			'                    </md-input-container>\n' +
-			'                </div>\n' +
-			'\n' +
-			'                <div layout-gt-sm="row">\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Tech Specs</label>\n' +
-			'                        <textarea ng-model="$ctrl.application.details.tech_specs">\n' +
-			'                        </textarea>\n' +
-			'                    </md-input-container>\n' +
-			'                </div>\n' +
-			'\n' +
-			'                <div layout-gt-sm="row">\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Image</label>\n' +
-			'                        <input ng-model="$ctrl.application.details.image">\n' +
-			'                    </md-input-container>\n' +
-			'                </div>\n' +
-			'\n' +
-			'\n' +
-			'                <img ng-if="$ctrl.application.details.image" src="{{ $ctrl.application.details.image }}">\n' +
-			'            </div>\n' +
-			'        </form>\n' +
+			'        <application-editor-form application="$ctrl.application">\n' +
+			'        </application-editor-form>\n' +
 			'    </md-dialog-content>\n' +
 			'    <md-dialog-actions>\n' +
 			'        <md-button ng-click="$ctrl.save()">Save</md-button>\n' +
@@ -342,7 +377,7 @@ angular
 			'  </td>\n' +
 			'</script>\n' +
 			'\n' +
-			'<ep-table title="\'Applications\'" on-list="$ctrl.getApplications(query)" on-create="$ctrl.create()" header-template="\'/applications-header.html\'" cell-template="\'/applications-cell.html\'">\n' +
+			'<ep-table title="\'Applications\'" on-list="$ctrl.getApplications(query)" on-create="$ctrl.edit($event)" header-template="\'/applications-header.html\'" cell-template="\'/applications-cell.html\'">\n' +
 			'</ep-table>');
 
 		$templateCache.put('components/application/applications/applications.html', '<md-nav-bar md-selected-nav-item="$ctrl.currentNavItem">\n' +
@@ -358,6 +393,281 @@ angular
 			'<ui-view>\n' +
 			'</ui-view>');
 
+		$templateCache.put('components/booking/booking-editor-form/booking-editor-form.html', '<form novalidate ng-cloak>\n' +
+			'    <div layout="column">\n' +
+			'        <h2 class="md-title">Booking</h2>\n' +
+			'\n' +
+			'        <div layout-gt-sm="row">\n' +
+			'            <event-search event-id="$ctrl.booking.EventId">                \n' +
+			'            </event-search>\n' +
+			'        </div>\n' +
+			'\n' +
+			'        <div layout-gt-sm="row">\n' +
+			'            <act-search act-id="$ctrl.booking.ActId">                \n' +
+			'            </act-search>\n' +
+			'        </div>\n' +
+			'\n' +
+			'\n' +
+			'        <booking-status-select booking-status-id="$ctrl.booking.BookingStatusId">\n' +
+			'            </booking-status-select>\n' +
+			'\n' +
+			'        <div layout-gt-sm="row">\n' +
+			'            <md-input-container>\n' +
+			'                <label>Tech Specs</label>\n' +
+			'                <textarea ng-model="$ctrl.booking.tech_specs">\n' +
+			'                </textarea>\n' +
+			'            </md-input-container>\n' +
+			'        </div>\n' +
+			'\n' +
+			'        <div layout-gt-sm="row">\n' +
+			'            <md-input-container>\n' +
+			'                <label>Size of Act</label>\n' +
+			'                <input type="number" ng-model="$ctrl.booking.size_of_act">\n' +
+			'            </md-input-container>\n' +
+			'\n' +
+			'            <md-input-container>\n' +
+			'                <label>Size of Party</label>\n' +
+			'                <input type="number" ng-model="$ctrl.booking.size_of_party">\n' +
+			'            </md-input-container>\n' +
+			'        </div>\n' +
+			'\n' +
+			'        TODO: actApplication\n' +
+			'\n' +
+			'        </div>                \n' +
+			'    \n' +
+			'</form>');
+
+		$templateCache.put('components/booking/booking-editor-modal/booking-editor-modal.html', '<md-dialog aria-label="New Booking">    \n' +
+			'    <md-dialog-content class="md-dialog-content">\n' +
+			'       <booking-editor-form booking="$ctrl.booking">\n' +
+			'       </booking-editor-form>\n' +
+			'    </md-dialog-content>\n' +
+			'    <md-dialog-actions>\n' +
+			'        <md-button ng-click="$ctrl.save()">Save</md-button>\n' +
+			'        <md-button ng-click="$ctrl.cancel()">Cancel</md-button>\n' +
+			'    </md-dialog-actions>\n' +
+			'</md-dialog>');
+
+		$templateCache.put('components/booking/booking-search/booking-search.html', '<div layout="column">\n' +
+			'    <div layout-gt-sm="row">\n' +
+			'        <md-autocomplete flex required md-input-name="booking-search" md-input-minlength="2" md-selected-item="$ctrl.booking" md-search-text="$ctrl.searchText" md-items="booking in $ctrl.search($ctrl.searchText)" md-item-text="booking.name" md-require-match md-floating-label="Booking" md-selected-item-change="$ctrl.bookingId = booking.id">\n' +
+			'          <md-item-template>\n' +
+			'            <span md-highlight-text="ctrl.searchText">{{ booking.name }}</span>\n' +
+			'          </md-item-template>\n' +
+			'        </md-autocomplete>\n' +
+			'\n' +
+			'        <md-button ng-click="$ctrl.edit($event)">\n' +
+			'            <md-icon>add</md-icon>\n' +
+			'            New\n' +
+			'        </md-button>\n' +
+			'    </div>\n' +
+			'</div>');
+
+		$templateCache.put('components/booking/booking-status-select/booking-status-select.html', '<div layout="column">\n' +
+			'    <div layout-gt-sm="row">\n' +
+			'       <md-input-container>\n' +
+			'            <md-select ng-model="$ctrl.bookingStatus" ng-change="$ctrl.bookingStatusId = $ctrl.bookingStatus.id" placeholder="Booking status">\n' +
+			'                <md-option ng-value="bookingStatus" ng-repeat="bookingStatus in $ctrl.bookingStatuses">\n' +
+			'                    {{ bookingStatus.name }}\n' +
+			'                </md-option>\n' +
+			'            </md-select>\n' +
+			'        </md-input-container>\n' +
+			'    </div>\n' +
+			'</div>');
+
+		$templateCache.put('components/booking/booking-summary/booking-summary.html', '<div layout="row">\n' +
+			'    {{ $ctrl.booking.event.name }}\n' +
+			'    {{ $ctrl.booking.act.name }}\n' +
+			'    {{ $ctrl.bookingStatus.name }}\n' +
+			'</div>');
+
+		$templateCache.put('components/booking/bookings-editor/bookings-editor.html', '<div layout="column">\n' +
+			'    <div ng-repeat="booking in $ctrl.bookings track by $index" layout="row">\n' +
+			'        <booking-summary booking="booking">\n' +
+			'\n' +
+			'        \n' +
+			'\n' +
+			'        <md-button ng-click="$ctrl.remove(booking)" class="fixed-height-button">\n' +
+			'            <md-icon>remove</md-icon>            \n' +
+			'        </md-button>               \n' +
+			'    </booking-summary></div>\n' +
+			'\n' +
+			'    <md-button ng-click="$ctrl.add($event)">\n' +
+			'        <md-icon>add</md-icon>\n' +
+			'        \n' +
+			'        Add\n' +
+			'    </md-button>\n' +
+			'</div>');
+
+		$templateCache.put('components/contact/act-contacts-editor/act-contacts-editor.html', '<div layout="column">\n' +
+			'    <div ng-repeat="actContact in $ctrl.actContacts track by $index" layout="row">\n' +
+			'        <md-input-container class="md-block" flex="30">\n' +
+			'            <label>Relationship</label>\n' +
+			'            <input ng-model="actContact.relationship">\n' +
+			'        </md-input-container>\n' +
+			'\n' +
+			'        <contact-search contact="actContact.contact" flex="75">\n' +
+			'        </contact-search>\n' +
+			'\n' +
+			'        <md-button ng-click="$ctrl.remove(actContact)" class="fixed-height-button">\n' +
+			'            <md-icon>remove</md-icon>            \n' +
+			'        </md-button>               \n' +
+			'    </div>\n' +
+			'\n' +
+			'    <md-button ng-click="$ctrl.add()">\n' +
+			'        <md-icon>add</md-icon>\n' +
+			'        \n' +
+			'        Add\n' +
+			'    </md-button>\n' +
+			'</div>');
+
+		$templateCache.put('components/contact/contact-editor-form/contact-editor-form.html', '<form novalidate ng-cloak>\n' +
+			'    <div layout="column" ng-if="!$ctrl.mode || $ctrl.mode == \'Contact\'">\n' +
+			'        <md-input-container>\n' +
+			'            <label>Name</label>\n' +
+			'            <input ng-model="$ctrl.contact.name">\n' +
+			'        </md-input-container>\n' +
+			'    </div>\n' +
+			'\n' +
+			'    <div layout="column" ng-if="!$ctrl.mode || $ctrl.mode == \'Contact\'">\n' +
+			'\n' +
+			'        <h3 class="md-subhead">Addresses</h3>\n' +
+			'\n' +
+			'        <div ng-repeat="address in $ctrl.contact.details.addresses track by $index" layout="row">            \n' +
+			'            <md-input-container class="md-block" flex="80">\n' +
+			'                <label>Address</label>\n' +
+			'                <input ng-model="address.address">\n' +
+			'            </md-input-container>\n' +
+			'\n' +
+			'            <md-input-container class="md-block" flex="20">\n' +
+			'                <label>Postcode</label>\n' +
+			'                <input ng-model="address.postcode">\n' +
+			'            </md-input-container>\n' +
+			'        \n' +
+			'\n' +
+			'            <md-button ng-click="$ctrl.remove(\'addresses\', address)" class="fixed-height-button">\n' +
+			'                <md-icon>remove</md-icon>            \n' +
+			'            </md-button>               \n' +
+			'        </div>\n' +
+			'\n' +
+			'        <md-button ng-click="$ctrl.contact.details.addresses.push({})">\n' +
+			'            <md-icon>add</md-icon>\n' +
+			'            \n' +
+			'            Add\n' +
+			'        </md-button>\n' +
+			'    </div>\n' +
+			'\n' +
+			'    <div layout="column" ng-if="!$ctrl.mode || $ctrl.mode == \'Contact\'">\n' +
+			'        <h3 class="md-subhead">Phone Numbers</h3>\n' +
+			'        <div ng-repeat="phone in $ctrl.contact.details.phones track by $index" layout="row">\n' +
+			'                    \n' +
+			'            <md-input-container class="md-block" flex>\n' +
+			'                <label>Phone</label>\n' +
+			'                <input ng-model="phone.phone">\n' +
+			'            </md-input-container>\n' +
+			'        \n' +
+			'            <md-button ng-click="$ctrl.remove(\'phones\', phone)" class="fixed-height-button">\n' +
+			'                <md-icon>remove</md-icon>            \n' +
+			'            </md-button>   \n' +
+			'        </div>\n' +
+			'        <md-button ng-click="$ctrl.contact.details.phones.push({})">\n' +
+			'            <md-icon>add</md-icon>\n' +
+			'            \n' +
+			'            Add\n' +
+			'        </md-button>\n' +
+			'    </div>\n' +
+			'\n' +
+			'    <div layout="column" ng-if="!$ctrl.mode || $ctrl.mode == \'Contact\'">\n' +
+			'        <h3 class="md-subhead">Emails</h3>\n' +
+			'        <div ng-repeat="email in $ctrl.contact.details.emails track by $index" layout="row">\n' +
+			'                       \n' +
+			'            <md-input-container class="md-block" flex>\n' +
+			'                <label>Email</label>\n' +
+			'                <input ng-model="email.email" type="email">\n' +
+			'            </md-input-container>        \n' +
+			'\n' +
+			'            <md-button ng-click="$ctrl.remove(\'emails\', email)" class="fixed-height-button">\n' +
+			'                <md-icon>remove</md-icon>            \n' +
+			'            </md-button>   \n' +
+			'        </div>\n' +
+			'        <md-button ng-click="$ctrl.contact.details.emails.push({})">\n' +
+			'            <md-icon>add</md-icon>\n' +
+			'            \n' +
+			'            Add\n' +
+			'        </md-button>\n' +
+			'    </div>\n' +
+			'\n' +
+			'    <div layout="column">\n' +
+			'        <h3 class="md-subhead">Websites</h3>\n' +
+			'        <div ng-repeat="website in $ctrl.contact.details.websites track by $index" layout="row">\n' +
+			'\n' +
+			'            <md-input-container class="md-block" flex>\n' +
+			'                <label>Website</label>\n' +
+			'                <input ng-model="website.url">\n' +
+			'            </md-input-container>\n' +
+			'        \n' +
+			'            <md-button ng-click="$ctrl.remove(\'websites\', website)" class="fixed-height-button">\n' +
+			'                <md-icon>remove</md-icon>            \n' +
+			'            </md-button>   \n' +
+			'        </div>\n' +
+			'        <md-button ng-click="$ctrl.contact.details.websites.push({})">\n' +
+			'            <md-icon>add</md-icon>\n' +
+			'            \n' +
+			'            Add\n' +
+			'        </md-button>\n' +
+			'    </div>\n' +
+			'\n' +
+			'    <div layout="column" ng-if="!$ctrl.mode || $ctrl.mode == \'Web\'">\n' +
+			'        <h3 class="md-subhead">Images</h3>\n' +
+			'        <div ng-repeat="image in $ctrl.contact.details.images track by $index" layout="row">                                    \n' +
+			'            \n' +
+			'            <md-input-container class="md-block" flex>\n' +
+			'                <label>Image</label>\n' +
+			'                <input ng-model="image.image">\n' +
+			'            </md-input-container>\n' +
+			'\n' +
+			'            <div layout-gt-sm="row">\n' +
+			'                <img ng-if="image.image" src="{{ image.image }}">\n' +
+			'            </div>\n' +
+			'        \n' +
+			'            <md-button ng-click="$ctrl.remove(\'images\', image)" class="fixed-height-button">\n' +
+			'                <md-icon>remove</md-icon>            \n' +
+			'            </md-button>   \n' +
+			'        </div>\n' +
+			'        <md-button ng-click="$ctrl.contact.details.images.push({})">\n' +
+			'            <md-icon>add</md-icon>\n' +
+			'            \n' +
+			'            Add\n' +
+			'        </md-button>\n' +
+			'    </div>\n' +
+			'</form>');
+
+		$templateCache.put('components/contact/contact-editor-modal/contact-editor-modal.html', '<md-dialog aria-label="New Contact" class="contact-editor-modal">\n' +
+			'    <md-dialog-content class="md-dialog-content">\n' +
+			'        <contact-editor-form contact="$ctrl.contact" mode="$ctrl.mode">\n' +
+			'        </contact-editor-form>\n' +
+			'    </md-dialog-content>\n' +
+			'    <md-dialog-actions>\n' +
+			'        <md-button ng-click="$ctrl.save()" ng-disabled="$ctrl.saving">Save</md-button>\n' +
+			'        <md-button ng-click="$ctrl.cancel()">Cancel</md-button>\n' +
+			'    </md-dialog-actions>\n' +
+			'</md-dialog>');
+
+		$templateCache.put('components/contact/contact-search/contact-search.html', '<div layout="column">\n' +
+			'    <div layout-gt-sm="row">\n' +
+			'        <md-autocomplete flex required md-input-name="contact-search" md-input-minlength="2" md-selected-item="$ctrl.contact" md-search-text="$ctrl.searchText" md-items="contact in $ctrl.search($ctrl.searchText)" md-item-text="contact.name" md-require-match md-floating-label="Contact" md-selected-item-change="$ctrl.contactId = contact.id">\n' +
+			'          <md-item-template>\n' +
+			'            <span md-highlight-text="ctrl.searchText">{{ contact.name }}</span>\n' +
+			'          </md-item-template>\n' +
+			'        </md-autocomplete>\n' +
+			'\n' +
+			'        <md-button ng-click="$ctrl.edit($event)">\n' +
+			'            <md-icon>add</md-icon>\n' +
+			'            New\n' +
+			'        </md-button>\n' +
+			'    </div>\n' +
+			'</div>');
+
 		$templateCache.put('components/ep-table/ep-table.html', '<md-card>\n' +
 			'  <md-toolbar class="md-table-toolbar md-default" ng-hide="$ctrl.selected.length || $ctrl.filter.show">\n' +
 			'    <div class="md-toolbar-tools">\n' +
@@ -366,7 +676,7 @@ angular
 			'      <md-button class="md-icon-button" ng-click="$ctrl.showFilter()">\n' +
 			'        <md-icon>search</md-icon>\n' +
 			'      </md-button>\n' +
-			'      <md-button class="md-icon-button" ng-click="$ctrl.create($event)">\n' +
+			'      <md-button class="md-icon-button" ng-click="$ctrl.edit($event)">\n' +
 			'        <md-icon>add</md-icon>\n' +
 			'      </md-button>\n' +
 			'    </div>\n' +
@@ -482,6 +792,80 @@ angular
 			'  <md-content flex>\n' +
 			'    <ui-view></ui-view>\n' +
 			'  </md-content>\n' +
+			'</div>');
+
+		$templateCache.put('components/event/event-search/event-search.html', '<div layout="column">\n' +
+			'    <div layout-gt-sm="row">\n' +
+			'        <md-autocomplete flex required md-input-name="event-search" md-input-minlength="2" md-selected-item="$ctrl.event" md-search-text="$ctrl.searchText" md-items="event in $ctrl.search($ctrl.searchText)" md-item-text="event.name" md-require-match md-floating-label="Event" md-selected-item-change="$ctrl.eventId = event.id">\n' +
+			'          <md-item-template>\n' +
+			'            <span md-highlight-text="ctrl.searchText">{{ event.name }}</span>\n' +
+			'          </md-item-template>\n' +
+			'        </md-autocomplete>\n' +
+			'\n' +
+			'        <md-button ng-click="$ctrl.edit($event)">\n' +
+			'            <md-icon>add</md-icon>\n' +
+			'            New\n' +
+			'        </md-button>\n' +
+			'    </div>\n' +
+			'</div>');
+
+		$templateCache.put('components/location/location-editor-form/location-editor-form.html', '<form novalidate ng-cloak>\n' +
+			'    <div layout="column">\n' +
+			'        <h2 class="md-title">Location</h2>\n' +
+			'\n' +
+			'        <div layout-gt-sm="row">\n' +
+			'            <md-input-container>\n' +
+			'                <label>Name</label>\n' +
+			'                <input ng-model="$ctrl.location.name">\n' +
+			'            </md-input-container>\n' +
+			'        </div>           \n' +
+			'\n' +
+			'        <div layout-gt-sm="row">\n' +
+			'            <event-search event-id="$ctrl.location.EventId">                \n' +
+			'            </event-search>\n' +
+			'        </div>     \n' +
+			'    </div>\n' +
+			'</form>');
+
+		$templateCache.put('components/location/location-editor-modal/location-editor-modal.html', '<md-dialog aria-label="New Location">\n' +
+			'    <md-dialog-content class="md-dialog-content">\n' +
+			'       <location-editor-form location="$ctrl.location">\n' +
+			'       </location-editor-form>\n' +
+			'    </md-dialog-content>\n' +
+			'    <md-dialog-locationions>\n' +
+			'        <md-button ng-click="$ctrl.save()">Save</md-button>\n' +
+			'        <md-button ng-click="$ctrl.cancel()">Cancel</md-button>\n' +
+			'    </md-dialog-locationions>\n' +
+			'</md-dialog>');
+
+		$templateCache.put('components/location/location-search/location-search.html', '<div layout="column">\n' +
+			'    <div layout-gt-sm="row">\n' +
+			'        <md-autocomplete flex required md-input-name="location-search" md-input-minlength="2" md-selected-item="$ctrl.location" md-search-text="$ctrl.searchText" md-items="location in $ctrl.search($ctrl.searchText)" md-item-text="location.name" md-require-match md-floating-label="Location" md-selected-item-change="$ctrl.locationId = location.id">\n' +
+			'          <md-item-template>\n' +
+			'            <span md-highlight-text="ctrl.searchText">{{ location.name }}</span>\n' +
+			'          </md-item-template>\n' +
+			'        </md-autocomplete>\n' +
+			'\n' +
+			'        <md-button ng-click="$ctrl.edit($event)">\n' +
+			'            <md-icon>add</md-icon>\n' +
+			'            New\n' +
+			'        </md-button>\n' +
+			'    </div>\n' +
+			'</div>');
+
+		$templateCache.put('components/user/user-search/user-search.html', '<div layout="column">\n' +
+			'    <div layout-gt-sm="row">\n' +
+			'        <md-autocomplete flex required md-input-name="user-search" md-input-minlength="2" md-selected-item="$ctrl.user" md-search-text="$ctrl.searchText" md-items="user in $ctrl.search($ctrl.searchText)" md-item-text="user.name" md-require-match md-floating-label="User" md-selected-item-change="$ctrl.userId = user.id">\n' +
+			'          <md-item-template>\n' +
+			'            <span md-highlight-text="ctrl.searchText">{{ user.name }}</span>\n' +
+			'          </md-item-template>\n' +
+			'        </md-autocomplete>\n' +
+			'\n' +
+			'        <md-button ng-click="$ctrl.edit($event)">\n' +
+			'            <md-icon>add</md-icon>\n' +
+			'            New\n' +
+			'        </md-button>\n' +
+			'    </div>\n' +
 			'</div>');
 	}
 ]);

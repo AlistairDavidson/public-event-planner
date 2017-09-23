@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 31);
+/******/ 	return __webpack_require__(__webpack_require__.s = 51);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -74,6 +74,12 @@ module.exports = angular;
 
 /***/ }),
 /* 1 */
+/***/ (function(module, exports) {
+
+module.exports = lodash;
+
+/***/ }),
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
@@ -103,7 +109,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
@@ -118,87 +124,100 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(5)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, act_service_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    var ActEditorController = (function () {
-        function ActEditorController(actService, $mdDialog) {
-            this.actService = actService;
-            this.$mdDialog = $mdDialog;
-        }
-        ActEditorController.prototype.$onInit = function () {
-            if (!this.act) {
-                this.act = new act_service_1.ActViewModel();
-            }
-        };
-        ActEditorController.prototype.save = function () {
-            var _this = this;
-            this.actService.save(this.act)
-                .then(function (updatedAct) { return _this.act = updatedAct; })
-                .then(function () { return _this.$mdDialog.hide(_this.act); });
-        };
-        ActEditorController.prototype.cancel = function () {
-            this.$mdDialog.cancel();
-        };
-        ActEditorController.$inject = ['actService', '$mdDialog'];
-        return ActEditorController;
-    }());
-    exports.ActEditorController = ActEditorController;
-    var options = {
-        templateUrl: 'components/act/act-editor/act-editor.html',
-        controller: ActEditorController,
-        bindings: {
-            act: '=?'
-        }
-    };
-    exports.default = options;
-}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-
-
-/***/ }),
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(2), __webpack_require__(3), __webpack_require__(1), __webpack_require__(0), __webpack_require__(8)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, helper_1, settings_1, _, angular_1, contact_editor_modal_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var ApplicationEditorController = (function () {
-        function ApplicationEditorController(applicationService, $mdDialog) {
-            this.applicationService = applicationService;
+    var ContactService = (function () {
+        function ContactService($http, $httpParamSerializer, $q, $mdDialog) {
+            this.$http = $http;
+            this.$httpParamSerializer = $httpParamSerializer;
+            this.$q = $q;
             this.$mdDialog = $mdDialog;
         }
-        ApplicationEditorController.prototype.$onInit = function () {
-            if (!this.application) {
-                this.application = {
-                    details: {}
+        ContactService.prototype.list = function (query) {
+            var url = settings_1.default.api + "/contact/list";
+            if (query) {
+                var listQuery = helper_1.queryToRequest(query);
+                var queryString = this.$httpParamSerializer(listQuery);
+                url = url + "?" + queryString;
+            }
+            return this.$http.get(url)
+                .then(function (response) {
+                var contactsResponse = response.data;
+                contactsResponse.rows = contactsResponse.rows.map(function (contact) { return new ContactViewModel(contact); });
+                return contactsResponse;
+            });
+        };
+        ContactService.prototype.get = function (id, full) {
+            return this.$http.get(settings_1.default.api + "/contact/get?id=" + id)
+                .then(function (response) { return new ContactViewModel(response.data); });
+        };
+        ContactService.prototype.save = function (data) {
+            return this.$http.post(settings_1.default.api + "/contact/save", data)
+                .then(function (response) { return new ContactViewModel(response.data); });
+        };
+        ContactService.prototype.delete = function (data) {
+            return this.$http.post(settings_1.default.api + "/contact/delete", { id: data.id })
+                .then(function (response) { return new ContactViewModel(response.data); });
+        };
+        ContactService.prototype.edit = function (ev, contact, mode) {
+            return this.$mdDialog.show({
+                controller: contact_editor_modal_1.ContactEditorModalController,
+                templateUrl: 'components/contact/contact-editor-modal/contact-editor-modal.html',
+                parent: angular_1.element(document.body),
+                targetAct: ev,
+                clickOutsideToClose: true,
+                fullscreen: true,
+                bindToController: true,
+                controllerAs: '$ctrl',
+                resolve: {
+                    'contact': function () { return contact; },
+                    'mode': function () { return mode; }
+                }
+            });
+        };
+        ContactService.$inject = ['$http', '$httpParamSerializer', '$q', '$mdDialog'];
+        return ContactService;
+    }());
+    exports.default = ContactService;
+    var ContactViewModel = (function () {
+        function ContactViewModel(contact) {
+            this.name = '';
+            if (contact) {
+                _.extend(this, contact);
+            }
+            if (!this.details) {
+                this.details = {
+                    addresses: [],
+                    emails: [],
+                    phones: [],
+                    websites: [],
+                    images: []
                 };
             }
-        };
-        ApplicationEditorController.prototype.save = function () {
-            var _this = this;
-            this.applicationService.save(this.application)
-                .then(function (updatedApplication) { return _this.application = updatedApplication; })
-                .then(function () { return _this.$mdDialog.hide(_this.application); });
-        };
-        ApplicationEditorController.prototype.cancel = function () {
-            this.$mdDialog.cancel();
-        };
-        ApplicationEditorController.$inject = ['applicationService', '$mdDialog'];
-        return ApplicationEditorController;
-    }());
-    exports.ApplicationEditorController = ApplicationEditorController;
-    var options = {
-        templateUrl: 'components/application/application-editor/application-editor.html',
-        controller: ApplicationEditorController,
-        bindings: {
-            application: '=?'
+            if (!this.actContacts) {
+                this.actContacts = [];
+            }
         }
-    };
-    exports.default = options;
+        return ContactViewModel;
+    }());
+    exports.ContactViewModel = ContactViewModel;
+    var ActContactViewModel = (function () {
+        function ActContactViewModel(actContact) {
+            this.relationship = '';
+            if (actContact) {
+                _.extend(this, actContact);
+            }
+            if (!this.contact) {
+                this.contact = new ContactViewModel();
+            }
+        }
+        return ActContactViewModel;
+    }());
+    exports.ActContactViewModel = ActContactViewModel;
 }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 
@@ -207,15 +226,164 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(1), __webpack_require__(2), __webpack_require__(0), __webpack_require__(3), __webpack_require__(30)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, helper_1, settings_1, angular_1, act_editor_1, _) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var ActEditorModalController = (function () {
+        function ActEditorModalController(actService, $mdDialog, act, eventId) {
+            this.actService = actService;
+            this.$mdDialog = $mdDialog;
+            this.act = act;
+            this.eventId = eventId;
+        }
+        ActEditorModalController.prototype.$onInit = function () {
+        };
+        ActEditorModalController.prototype.save = function () {
+            var _this = this;
+            this.actService.save(this.act)
+                .then(function (updatedAct) { return _this.act = updatedAct; })
+                .then(function () { return _this.$mdDialog.hide(_this.act); });
+        };
+        ActEditorModalController.prototype.cancel = function () {
+            this.$mdDialog.cancel();
+        };
+        ActEditorModalController.$inject = ['actService', '$mdDialog', 'act', 'eventId'];
+        return ActEditorModalController;
+    }());
+    exports.ActEditorModalController = ActEditorModalController;
+    var options = {
+        templateUrl: 'components/act/act-editor-modal/act-editor-modal.html',
+        controller: ActEditorModalController,
+        bindings: {}
+    };
+    exports.default = options;
+}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var ApplicationEditorModalController = (function () {
+        function ApplicationEditorModalController(applicationService, $mdDialog, application) {
+            this.applicationService = applicationService;
+            this.$mdDialog = $mdDialog;
+            this.application = application;
+        }
+        ApplicationEditorModalController.prototype.$onInit = function () {
+        };
+        ApplicationEditorModalController.prototype.save = function () {
+            var _this = this;
+            this.applicationService.save(this.application)
+                .then(function (updatedApplication) { return _this.application = updatedApplication; })
+                .then(function () { return _this.$mdDialog.hide(_this.application); });
+        };
+        ApplicationEditorModalController.prototype.cancel = function () {
+            this.$mdDialog.cancel();
+        };
+        ApplicationEditorModalController.$inject = ['applicationService', '$mdDialog', 'application'];
+        return ApplicationEditorModalController;
+    }());
+    exports.ApplicationEditorModalController = ApplicationEditorModalController;
+    var options = {
+        templateUrl: 'components/application/application-editor-modal/application-editor-modal.html',
+        controller: ApplicationEditorModalController,
+        bindings: {}
+    };
+    exports.default = options;
+}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var BookingEditorModalController = (function () {
+        function BookingEditorModalController($mdDialog, booking) {
+            this.$mdDialog = $mdDialog;
+            this.booking = booking;
+        }
+        BookingEditorModalController.prototype.$onInit = function () {
+        };
+        BookingEditorModalController.prototype.save = function () {
+            this.$mdDialog.hide(this.booking);
+        };
+        BookingEditorModalController.prototype.cancel = function () {
+            this.$mdDialog.cancel();
+        };
+        BookingEditorModalController.$inject = ['$mdDialog', 'booking'];
+        return BookingEditorModalController;
+    }());
+    exports.BookingEditorModalController = BookingEditorModalController;
+    var options = {
+        templateUrl: 'components/booking/booking-editor-modal/booking-editor-modal.html',
+        controller: BookingEditorModalController,
+        bindings: {}
+    };
+    exports.default = options;
+}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var ContactEditorModalController = (function () {
+        function ContactEditorModalController($mdDialog, contact, mode) {
+            this.$mdDialog = $mdDialog;
+            this.contact = contact;
+            this.mode = mode;
+            this.saving = false;
+        }
+        ContactEditorModalController.prototype.$onInit = function () {
+        };
+        ContactEditorModalController.prototype.save = function () {
+            this.saving = true;
+            this.$mdDialog.hide(this.contact);
+        };
+        ContactEditorModalController.prototype.cancel = function () {
+            this.$mdDialog.hide();
+        };
+        ContactEditorModalController.$inject = ['$mdDialog', 'contact', 'mode'];
+        return ContactEditorModalController;
+    }());
+    exports.ContactEditorModalController = ContactEditorModalController;
+    var options = {
+        templateUrl: 'components/contact/contact-editor-modal/contact-editor-modal.html',
+        controller: ContactEditorModalController,
+        bindings: {}
+    };
+    exports.default = options;
+}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(2), __webpack_require__(3), __webpack_require__(0), __webpack_require__(5), __webpack_require__(1)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, helper_1, settings_1, angular_1, act_editor_modal_1, _) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var ActService = (function () {
-        function ActService($http, $httpParamSerializer, $q, $mdDialog) {
+        function ActService($http, $httpParamSerializer, $q, $mdDialog, $stateParams) {
             this.$http = $http;
             this.$httpParamSerializer = $httpParamSerializer;
             this.$q = $q;
             this.$mdDialog = $mdDialog;
+            this.$stateParams = $stateParams;
         }
         ActService.prototype.list = function (query) {
             var url = settings_1.default.api + "/act/list";
@@ -224,14 +392,17 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 var queryString = this.$httpParamSerializer(listQuery);
                 url = url + "?" + queryString;
             }
-            return this.$http.get(url)
-                .then(function (response) {
-                var actsResponse = response.data;
-                actsResponse.rows = actsResponse.rows.map(function (act) { return new ActViewModel(act); });
-                return actsResponse;
-            });
+            return this.$q.resolve([{ name: 'Test', id: 1 }]);
+            /*
+                    return this.$http.get(url)
+                        .then(response => {
+                            let actsResponse = response.data as ActsDto;
+                            actsResponse.rows = actsResponse.rows.map(act => new ActViewModel(act));
+            
+                            return actsResponse;
+                        });    */
         };
-        ActService.prototype.get = function (id) {
+        ActService.prototype.get = function (id, full) {
             return this.$http.get(settings_1.default.api + "/act/get?id=" + id)
                 .then(function (response) { return new ActViewModel(response.data); });
         };
@@ -243,16 +414,21 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
             return this.$http.post(settings_1.default.api + "/act/delete", { id: data.id })
                 .then(function (response) { return new ActViewModel(response.data); });
         };
-        ActService.prototype.create = function (ev) {
+        ActService.prototype.edit = function (ev, act) {
+            var _this = this;
             return this.$mdDialog.show({
-                controller: act_editor_1.ActEditorController,
-                templateUrl: 'components/act/act-editor/act-editor.html',
+                controller: act_editor_modal_1.ActEditorModalController,
+                templateUrl: 'components/act/act-editor-modal/act-editor-modal.html',
                 parent: angular_1.element(document.body),
                 targetAct: ev,
                 clickOutsideToClose: true,
                 fullscreen: true,
                 bindToController: true,
-                controllerAs: '$ctrl'
+                controllerAs: '$ctrl',
+                resolve: {
+                    'act': function () { return act; },
+                    'eventId': function () { return _this.$stateParams.event; }
+                }
             });
         };
         ActService.$inject = ['$http', '$httpParamSerializer', '$q', '$mdDialog'];
@@ -261,36 +437,10 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
     exports.default = ActService;
     var ActViewModel = (function () {
         function ActViewModel(act) {
-            _.extend(this, act);
+            if (act) {
+                _.extend(this, act);
+            }
         }
-        ActViewModel.prototype.getImage = function () {
-            if (!this.webContact) {
-                return '';
-            }
-            var contacts = _.filter(this.webContact.contactDetails, { type: 'Image' });
-            return contacts.length ? contacts[0].data.image : '';
-        };
-        ActViewModel.prototype.getWebsite = function () {
-            if (!this.webContact) {
-                return '';
-            }
-            var contacts = _.filter(this.webContact.contactDetails, { type: 'Website' });
-            return contacts.length ? contacts[0].data.website : '';
-        };
-        ActViewModel.prototype.getFacebook = function () {
-            if (!this.webContact) {
-                return '';
-            }
-            var contacts = _.filter(this.webContact.contactDetails, { type: 'Facebook' });
-            return contacts.length ? contacts[0].data.facebook : '';
-        };
-        ActViewModel.prototype.getTwitter = function () {
-            if (!this.webContact) {
-                return '';
-            }
-            var contacts = _.filter(this.webContact.contactDetails, { type: 'Twitter' });
-            return contacts.length ? contacts[0].data.twitter : '';
-        };
         return ActViewModel;
     }());
     exports.ActViewModel = ActViewModel;
@@ -299,7 +449,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 6 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -334,63 +484,95 @@ angular
 			'    </md-card-actions>\n' +
 			'</md-card>');
 
-		$templateCache.put('components/act/act-editor/act-editor.html', '<md-dialog aria-label="New Application">\n' +
+		$templateCache.put('components/act/act-editor-form/act-editor-form.html', '<md-card layout-padding>\n' +
+			'<form novalidate ng-cloak>\n' +
+			'    <div layout="column">\n' +
+			'        <h2 class="md-title">Act</h2>\n' +
+			'        \n' +
+			'        <div layout-gt-sm="row">\n' +
+			'            <md-input-container>\n' +
+			'                <label>Act Name</label>\n' +
+			'                <input ng-model="$ctrl.act.name">\n' +
+			'            </md-input-container>\n' +
+			'\n' +
+			'            <md-input-container>\n' +
+			'                <label>Type</label>\n' +
+			'                <input ng-model="$ctrl.act.type">\n' +
+			'            </md-input-container>\n' +
+			'\n' +
+			'            <md-input-container>\n' +
+			'                <label>Town</label>\n' +
+			'                <input ng-model="$ctrl.act.town">\n' +
+			'            </md-input-container>\n' +
+			'        </div>\n' +
+			'\n' +
+			'        <hr>\n' +
+			'\n' +
+			'        <h3 class="md-subhead">Details</h3>\n' +
+			'\n' +
+			'        <div layout-gt-sm="row">\n' +
+			'            <md-input-container>\n' +
+			'                <label>Bio</label>\n' +
+			'                <textarea ng-model="$ctrl.act.bio">\n' +
+			'                </textarea>\n' +
+			'            </md-input-container>\n' +
+			'        </div>\n' +
+			'    \n' +
+			'        <div layout-gt-sm="row">\n' +
+			'            <md-input-container>\n' +
+			'                <label>Tech Specs</label>\n' +
+			'                <textarea ng-model="$ctrl.act.tech_specs">\n' +
+			'                </textarea>\n' +
+			'            </md-input-container>\n' +
+			'        </div>                \n' +
+			'\n' +
+			'        <contact-editor-form contact="$ctrl.act.webContact" mode="\'Web\'">\n' +
+			'        </contact-editor-form>\n' +
+			'\n' +
+			'        <hr>\n' +
+			'    \n' +
+			'        <h3 class="md-subhead">Primary Contact</h3>\n' +
+			'        <contact-search contact="$ctrl.act.mainContact">\n' +
+			'        </contact-search>\n' +
+			'\n' +
+			'        <h3 class="md-subhead">Other Contacts</h3>\n' +
+			'        <act-contacts-editor act-contacts="$ctrl.act.actContacts" act-id="$ctrl.act.id">\n' +
+			'        </act-contacts-editor>\n' +
+			'        \n' +
+			'        <hr>\n' +
+			'\n' +
+			'        <h3 class="md-subhead">Bookings</h3>\n' +
+			'        <bookings-editor bookings="$ctrl.act.bookings" act-id="$ctrl.act.id" event-id="$ctrl.eventId">            \n' +
+			'        </bookings-editor>\n' +
+			'    </div>\n' +
+			'</form>\n' +
+			'</md-card>');
+
+		$templateCache.put('components/act/act-editor-modal/act-editor-modal.html', '<md-dialog aria-label="New Act">\n' +
 			'    <md-dialog-content class="md-dialog-content">\n' +
-			'        <form novalidate ng-cloak>\n' +
-			'            <div layout="column">\n' +
-			'                <h2 class="md-title">Act</h2>\n' +
-			'\n' +
-			'                <div layout-gt-sm="row">\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Act Name</label>\n' +
-			'                        <input ng-model="$ctrl.act.name">\n' +
-			'                    </md-input-container>\n' +
-			'\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Type</label>\n' +
-			'                        <input ng-model="$ctrl.act.type">\n' +
-			'                    </md-input-container>\n' +
-			'\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Town</label>\n' +
-			'                        <input ng-model="$ctrl.act.town">\n' +
-			'                    </md-input-container>\n' +
-			'                </div>\n' +
-			'\n' +
-			'                <h3 class="md-subhead">Details</h3>\n' +
-			'\n' +
-			'                <div layout-gt-sm="row">\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Bio</label>\n' +
-			'                        <textarea ng-model="$ctrl.act.bio">\n' +
-			'                        </textarea>\n' +
-			'                    </md-input-container>\n' +
-			'                </div>\n' +
-			'\n' +
-			'                <div layout-gt-sm="row">\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Tech Specs</label>\n' +
-			'                        <textarea ng-model="$ctrl.act.tech_specs">\n' +
-			'                        </textarea>\n' +
-			'                    </md-input-container>\n' +
-			'                </div>                \n' +
-			'\n' +
-			'                <div layout-gt-sm="row">\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Image</label>\n' +
-			'                        <input ng-model="$ctrl.act.details.image">\n' +
-			'                    </md-input-container>\n' +
-			'                </div>\n' +
-			'\n' +
-			'                <img ng-if="$ctrl.application.details.image" src="{{ $ctrl.application.details.image }}">\n' +
-			'            </div>\n' +
-			'        </form>\n' +
+			'       <act-editor-form act="$ctrl.act" event-id="$ctrl.eventId">\n' +
+			'       </act-editor-form>\n' +
 			'    </md-dialog-content>\n' +
 			'    <md-dialog-actions>\n' +
 			'        <md-button ng-click="$ctrl.save()">Save</md-button>\n' +
 			'        <md-button ng-click="$ctrl.cancel()">Cancel</md-button>\n' +
 			'    </md-dialog-actions>\n' +
 			'</md-dialog>');
+
+		$templateCache.put('components/act/act-search/act-search.html', '<div layout="column">\n' +
+			'    <div layout-gt-sm="row">\n' +
+			'        <md-autocomplete flex required md-input-name="act-search" md-input-minlength="2" md-selected-item="$ctrl.act" md-search-text="$ctrl.searchText" md-items="act in $ctrl.search($ctrl.searchText)" md-item-text="act.name" md-require-match md-floating-label="Act" md-selected-item-change="$ctrl.actId = act.id">\n' +
+			'          <md-item-template>\n' +
+			'            <span md-highlight-text="ctrl.searchText">{{ act.name }}</span>\n' +
+			'          </md-item-template>\n' +
+			'        </md-autocomplete>\n' +
+			'\n' +
+			'        <md-button ng-click="$ctrl.edit($event)">\n' +
+			'            <md-icon>add</md-icon>\n' +
+			'            New\n' +
+			'        </md-button>\n' +
+			'    </div>\n' +
+			'</div>');
 
 		$templateCache.put('components/act/acts-summary/acts-summary.html', '<md-content class="md-padding" layout="row" layout-wrap>    \n' +
 			'    <act-card flex="100" flex-gt-xs="50" flex-gt-sm="33" flex-gt-md="25" ng-repeat="act in $ctrl.acts" act="act">\n' +
@@ -437,7 +619,7 @@ angular
 			'  </td>\n' +
 			'</script>\n' +
 			'\n' +
-			'<ep-table title="\'Acts\'" on-list="$ctrl.getActs(query)" on-create="$ctrl.create()" header-template="\'/acts-header.html\'" cell-template="\'/acts-cell.html\'">\n' +
+			'<ep-table title="\'Acts\'" on-list="$ctrl.getActs(query)" on-create="$ctrl.edit($event)" header-template="\'/acts-header.html\'" cell-template="\'/acts-cell.html\'">\n' +
 			'</ep-table>');
 
 		$templateCache.put('components/act/acts/acts.html', '<md-nav-bar md-selected-nav-item="$ctrl.currentNavItem">\n' +
@@ -477,118 +659,121 @@ angular
 			'    </md-card-actions>\n' +
 			'</md-card>');
 
-		$templateCache.put('components/application/application-editor/application-editor.html', '<md-dialog aria-label="New Application">\n' +
+		$templateCache.put('components/application/application-editor-form/application-editor-form.html', '<form novalidate ng-cloak>\n' +
+			'    <div layout="column">\n' +
+			'        <h2 class="md-title">Application</h2>\n' +
+			'\n' +
+			'        <div layout-gt-sm="row">\n' +
+			'            <md-input-container>\n' +
+			'                <label>Act Name</label>\n' +
+			'                <input ng-model="$ctrl.application.details.name">\n' +
+			'            </md-input-container>\n' +
+			'\n' +
+			'            <md-input-container>\n' +
+			'                <label>Type</label>\n' +
+			'                <input ng-model="$ctrl.application.details.type">\n' +
+			'            </md-input-container>\n' +
+			'\n' +
+			'            <md-input-container>\n' +
+			'                <label>Town</label>\n' +
+			'                <input ng-model="$ctrl.application.details.town">\n' +
+			'            </md-input-container>\n' +
+			'        </div>\n' +
+			'\n' +
+			'        <div layout-gt-sm="row">\n' +
+			'            <md-input-container>\n' +
+			'                <label>Act Size</label>\n' +
+			'                <input ng-model="$ctrl.application.details.size_of_act">\n' +
+			'            </md-input-container>\n' +
+			'\n' +
+			'            <md-input-container>\n' +
+			'                <label>Party Size</label>\n' +
+			'                <input ng-model="$ctrl.application.details.size_of_party">\n' +
+			'            </md-input-container>\n' +
+			'        \n' +
+			'            <md-input-container>\n' +
+			'                <label>Requested Fee</label>\n' +
+			'                <input ng-model="$ctrl.application.details.requested_fee">\n' +
+			'            </md-input-container>\n' +
+			'        </div>\n' +
+			'\n' +
+			'        <h3 class="md-subhead">Contact</h3>\n' +
+			'\n' +
+			'        <div layout-gt-sm="row">\n' +
+			'            <md-input-container>\n' +
+			'                <label>Name</label>\n' +
+			'                <input ng-model="$ctrl.application.details.contact_name">\n' +
+			'            </md-input-container>\n' +
+			'\n' +
+			'            <md-input-container>\n' +
+			'                <label>Email</label>\n' +
+			'                <input ng-model="$ctrl.application.details.email">\n' +
+			'            </md-input-container>\n' +
+			'\n' +
+			'            <md-input-container>\n' +
+			'                <label>Phone</label>\n' +
+			'                <input ng-model="$ctrl.application.details.phone">\n' +
+			'            </md-input-container>\n' +
+			'        </div>\n' +
+			'\n' +
+			'        <div layout-gt-sm="row">\n' +
+			'            <md-input-container>\n' +
+			'                <label>Link</label>\n' +
+			'                <input ng-model="$ctrl.application.details.link">\n' +
+			'            </md-input-container>\n' +
+			'\n' +
+			'            <md-input-container>\n' +
+			'                <label>Facebook</label>\n' +
+			'                <input ng-model="$ctrl.application.details.facebook">\n' +
+			'            </md-input-container>\n' +
+			'\n' +
+			'            <md-input-container>\n' +
+			'                <label>Twitter</label>\n' +
+			'                <input ng-model="$ctrl.application.details.twitter">\n' +
+			'            </md-input-container>\n' +
+			'        </div>\n' +
+			'\n' +
+			'        <h3 class="md-subhead">Details</h3>\n' +
+			'\n' +
+			'        <div layout-gt-sm="row">\n' +
+			'            <md-input-container>\n' +
+			'                <label>Party Names</label>\n' +
+			'                <input ng-model="$ctrl.application.details.party_names">\n' +
+			'            </md-input-container>\n' +
+			'        </div>\n' +
+			'\n' +
+			'        <div layout-gt-sm="row">\n' +
+			'            <md-input-container>\n' +
+			'                <label>Bio</label>\n' +
+			'                <textarea ng-model="$ctrl.application.details.bio">\n' +
+			'                </textarea>\n' +
+			'            </md-input-container>\n' +
+			'        </div>\n' +
+			'\n' +
+			'        <div layout-gt-sm="row">\n' +
+			'            <md-input-container>\n' +
+			'                <label>Tech Specs</label>\n' +
+			'                <textarea ng-model="$ctrl.application.details.tech_specs">\n' +
+			'                </textarea>\n' +
+			'            </md-input-container>\n' +
+			'        </div>\n' +
+			'\n' +
+			'        <div layout-gt-sm="row">\n' +
+			'            <md-input-container>\n' +
+			'                <label>Image</label>\n' +
+			'                <input ng-model="$ctrl.application.details.image">\n' +
+			'            </md-input-container>\n' +
+			'        </div>\n' +
+			'\n' +
+			'\n' +
+			'        <img ng-if="$ctrl.application.details.image" src="{{ $ctrl.application.details.image }}">\n' +
+			'    </div>\n' +
+			'</form>');
+
+		$templateCache.put('components/application/application-editor-modal/application-editor-modal.html', '<md-dialog aria-label="New Application">\n' +
 			'    <md-dialog-content class="md-dialog-content">\n' +
-			'        <form novalidate ng-cloak>\n' +
-			'            <div layout="column">\n' +
-			'                <h2 class="md-title">Application</h2>\n' +
-			'\n' +
-			'                <div layout-gt-sm="row">\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Act Name</label>\n' +
-			'                        <input ng-model="$ctrl.application.details.name">\n' +
-			'                    </md-input-container>\n' +
-			'\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Type</label>\n' +
-			'                        <input ng-model="$ctrl.application.details.type">\n' +
-			'                    </md-input-container>\n' +
-			'\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Town</label>\n' +
-			'                        <input ng-model="$ctrl.application.details.town">\n' +
-			'                    </md-input-container>\n' +
-			'                </div>\n' +
-			'\n' +
-			'                <div layout-gt-sm="row">\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Act Size</label>\n' +
-			'                        <input ng-model="$ctrl.application.details.size_of_act">\n' +
-			'                    </md-input-container>\n' +
-			'\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Party Size</label>\n' +
-			'                        <input ng-model="$ctrl.application.details.size_of_party">\n' +
-			'                    </md-input-container>\n' +
-			'                \n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Requested Fee</label>\n' +
-			'                        <input ng-model="$ctrl.application.details.requested_fee">\n' +
-			'                    </md-input-container>\n' +
-			'                </div>\n' +
-			'\n' +
-			'                <h3 class="md-subhead">Contact</h3>\n' +
-			'\n' +
-			'                <div layout-gt-sm="row">\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Name</label>\n' +
-			'                        <input ng-model="$ctrl.application.details.contact_name">\n' +
-			'                    </md-input-container>\n' +
-			'\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Email</label>\n' +
-			'                        <input ng-model="$ctrl.application.details.email">\n' +
-			'                    </md-input-container>\n' +
-			'\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Phone</label>\n' +
-			'                        <input ng-model="$ctrl.application.details.phone">\n' +
-			'                    </md-input-container>\n' +
-			'                </div>\n' +
-			'\n' +
-			'                <div layout-gt-sm="row">\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Link</label>\n' +
-			'                        <input ng-model="$ctrl.application.details.link">\n' +
-			'                    </md-input-container>\n' +
-			'\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Facebook</label>\n' +
-			'                        <input ng-model="$ctrl.application.details.facebook">\n' +
-			'                    </md-input-container>\n' +
-			'\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Twitter</label>\n' +
-			'                        <input ng-model="$ctrl.application.details.twitter">\n' +
-			'                    </md-input-container>\n' +
-			'                </div>\n' +
-			'\n' +
-			'                <h3 class="md-subhead">Details</h3>\n' +
-			'\n' +
-			'                <div layout-gt-sm="row">\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Party Names</label>\n' +
-			'                        <input ng-model="$ctrl.application.details.party_names">\n' +
-			'                    </md-input-container>\n' +
-			'                </div>\n' +
-			'\n' +
-			'                <div layout-gt-sm="row">\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Bio</label>\n' +
-			'                        <textarea ng-model="$ctrl.application.details.bio">\n' +
-			'                        </textarea>\n' +
-			'                    </md-input-container>\n' +
-			'                </div>\n' +
-			'\n' +
-			'                <div layout-gt-sm="row">\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Tech Specs</label>\n' +
-			'                        <textarea ng-model="$ctrl.application.details.tech_specs">\n' +
-			'                        </textarea>\n' +
-			'                    </md-input-container>\n' +
-			'                </div>\n' +
-			'\n' +
-			'                <div layout-gt-sm="row">\n' +
-			'                    <md-input-container>\n' +
-			'                        <label>Image</label>\n' +
-			'                        <input ng-model="$ctrl.application.details.image">\n' +
-			'                    </md-input-container>\n' +
-			'                </div>\n' +
-			'\n' +
-			'\n' +
-			'                <img ng-if="$ctrl.application.details.image" src="{{ $ctrl.application.details.image }}">\n' +
-			'            </div>\n' +
-			'        </form>\n' +
+			'        <application-editor-form application="$ctrl.application">\n' +
+			'        </application-editor-form>\n' +
 			'    </md-dialog-content>\n' +
 			'    <md-dialog-actions>\n' +
 			'        <md-button ng-click="$ctrl.save()">Save</md-button>\n' +
@@ -647,7 +832,7 @@ angular
 			'  </td>\n' +
 			'</script>\n' +
 			'\n' +
-			'<ep-table title="\'Applications\'" on-list="$ctrl.getApplications(query)" on-create="$ctrl.create()" header-template="\'/applications-header.html\'" cell-template="\'/applications-cell.html\'">\n' +
+			'<ep-table title="\'Applications\'" on-list="$ctrl.getApplications(query)" on-create="$ctrl.edit($event)" header-template="\'/applications-header.html\'" cell-template="\'/applications-cell.html\'">\n' +
 			'</ep-table>');
 
 		$templateCache.put('components/application/applications/applications.html', '<md-nav-bar md-selected-nav-item="$ctrl.currentNavItem">\n' +
@@ -663,6 +848,281 @@ angular
 			'<ui-view>\n' +
 			'</ui-view>');
 
+		$templateCache.put('components/booking/booking-editor-form/booking-editor-form.html', '<form novalidate ng-cloak>\n' +
+			'    <div layout="column">\n' +
+			'        <h2 class="md-title">Booking</h2>\n' +
+			'\n' +
+			'        <div layout-gt-sm="row">\n' +
+			'            <event-search event-id="$ctrl.booking.EventId">                \n' +
+			'            </event-search>\n' +
+			'        </div>\n' +
+			'\n' +
+			'        <div layout-gt-sm="row">\n' +
+			'            <act-search act-id="$ctrl.booking.ActId">                \n' +
+			'            </act-search>\n' +
+			'        </div>\n' +
+			'\n' +
+			'\n' +
+			'        <booking-status-select booking-status-id="$ctrl.booking.BookingStatusId">\n' +
+			'            </booking-status-select>\n' +
+			'\n' +
+			'        <div layout-gt-sm="row">\n' +
+			'            <md-input-container>\n' +
+			'                <label>Tech Specs</label>\n' +
+			'                <textarea ng-model="$ctrl.booking.tech_specs">\n' +
+			'                </textarea>\n' +
+			'            </md-input-container>\n' +
+			'        </div>\n' +
+			'\n' +
+			'        <div layout-gt-sm="row">\n' +
+			'            <md-input-container>\n' +
+			'                <label>Size of Act</label>\n' +
+			'                <input type="number" ng-model="$ctrl.booking.size_of_act">\n' +
+			'            </md-input-container>\n' +
+			'\n' +
+			'            <md-input-container>\n' +
+			'                <label>Size of Party</label>\n' +
+			'                <input type="number" ng-model="$ctrl.booking.size_of_party">\n' +
+			'            </md-input-container>\n' +
+			'        </div>\n' +
+			'\n' +
+			'        TODO: actApplication\n' +
+			'\n' +
+			'        </div>                \n' +
+			'    \n' +
+			'</form>');
+
+		$templateCache.put('components/booking/booking-editor-modal/booking-editor-modal.html', '<md-dialog aria-label="New Booking">    \n' +
+			'    <md-dialog-content class="md-dialog-content">\n' +
+			'       <booking-editor-form booking="$ctrl.booking">\n' +
+			'       </booking-editor-form>\n' +
+			'    </md-dialog-content>\n' +
+			'    <md-dialog-actions>\n' +
+			'        <md-button ng-click="$ctrl.save()">Save</md-button>\n' +
+			'        <md-button ng-click="$ctrl.cancel()">Cancel</md-button>\n' +
+			'    </md-dialog-actions>\n' +
+			'</md-dialog>');
+
+		$templateCache.put('components/booking/booking-search/booking-search.html', '<div layout="column">\n' +
+			'    <div layout-gt-sm="row">\n' +
+			'        <md-autocomplete flex required md-input-name="booking-search" md-input-minlength="2" md-selected-item="$ctrl.booking" md-search-text="$ctrl.searchText" md-items="booking in $ctrl.search($ctrl.searchText)" md-item-text="booking.name" md-require-match md-floating-label="Booking" md-selected-item-change="$ctrl.bookingId = booking.id">\n' +
+			'          <md-item-template>\n' +
+			'            <span md-highlight-text="ctrl.searchText">{{ booking.name }}</span>\n' +
+			'          </md-item-template>\n' +
+			'        </md-autocomplete>\n' +
+			'\n' +
+			'        <md-button ng-click="$ctrl.edit($event)">\n' +
+			'            <md-icon>add</md-icon>\n' +
+			'            New\n' +
+			'        </md-button>\n' +
+			'    </div>\n' +
+			'</div>');
+
+		$templateCache.put('components/booking/booking-status-select/booking-status-select.html', '<div layout="column">\n' +
+			'    <div layout-gt-sm="row">\n' +
+			'       <md-input-container>\n' +
+			'            <md-select ng-model="$ctrl.bookingStatus" ng-change="$ctrl.bookingStatusId = $ctrl.bookingStatus.id" placeholder="Booking status">\n' +
+			'                <md-option ng-value="bookingStatus" ng-repeat="bookingStatus in $ctrl.bookingStatuses">\n' +
+			'                    {{ bookingStatus.name }}\n' +
+			'                </md-option>\n' +
+			'            </md-select>\n' +
+			'        </md-input-container>\n' +
+			'    </div>\n' +
+			'</div>');
+
+		$templateCache.put('components/booking/booking-summary/booking-summary.html', '<div layout="row">\n' +
+			'    {{ $ctrl.booking.event.name }}\n' +
+			'    {{ $ctrl.booking.act.name }}\n' +
+			'    {{ $ctrl.bookingStatus.name }}\n' +
+			'</div>');
+
+		$templateCache.put('components/booking/bookings-editor/bookings-editor.html', '<div layout="column">\n' +
+			'    <div ng-repeat="booking in $ctrl.bookings track by $index" layout="row">\n' +
+			'        <booking-summary booking="booking">\n' +
+			'\n' +
+			'        \n' +
+			'\n' +
+			'        <md-button ng-click="$ctrl.remove(booking)" class="fixed-height-button">\n' +
+			'            <md-icon>remove</md-icon>            \n' +
+			'        </md-button>               \n' +
+			'    </booking-summary></div>\n' +
+			'\n' +
+			'    <md-button ng-click="$ctrl.add($event)">\n' +
+			'        <md-icon>add</md-icon>\n' +
+			'        \n' +
+			'        Add\n' +
+			'    </md-button>\n' +
+			'</div>');
+
+		$templateCache.put('components/contact/act-contacts-editor/act-contacts-editor.html', '<div layout="column">\n' +
+			'    <div ng-repeat="actContact in $ctrl.actContacts track by $index" layout="row">\n' +
+			'        <md-input-container class="md-block" flex="30">\n' +
+			'            <label>Relationship</label>\n' +
+			'            <input ng-model="actContact.relationship">\n' +
+			'        </md-input-container>\n' +
+			'\n' +
+			'        <contact-search contact="actContact.contact" flex="75">\n' +
+			'        </contact-search>\n' +
+			'\n' +
+			'        <md-button ng-click="$ctrl.remove(actContact)" class="fixed-height-button">\n' +
+			'            <md-icon>remove</md-icon>            \n' +
+			'        </md-button>               \n' +
+			'    </div>\n' +
+			'\n' +
+			'    <md-button ng-click="$ctrl.add()">\n' +
+			'        <md-icon>add</md-icon>\n' +
+			'        \n' +
+			'        Add\n' +
+			'    </md-button>\n' +
+			'</div>');
+
+		$templateCache.put('components/contact/contact-editor-form/contact-editor-form.html', '<form novalidate ng-cloak>\n' +
+			'    <div layout="column" ng-if="!$ctrl.mode || $ctrl.mode == \'Contact\'">\n' +
+			'        <md-input-container>\n' +
+			'            <label>Name</label>\n' +
+			'            <input ng-model="$ctrl.contact.name">\n' +
+			'        </md-input-container>\n' +
+			'    </div>\n' +
+			'\n' +
+			'    <div layout="column" ng-if="!$ctrl.mode || $ctrl.mode == \'Contact\'">\n' +
+			'\n' +
+			'        <h3 class="md-subhead">Addresses</h3>\n' +
+			'\n' +
+			'        <div ng-repeat="address in $ctrl.contact.details.addresses track by $index" layout="row">            \n' +
+			'            <md-input-container class="md-block" flex="80">\n' +
+			'                <label>Address</label>\n' +
+			'                <input ng-model="address.address">\n' +
+			'            </md-input-container>\n' +
+			'\n' +
+			'            <md-input-container class="md-block" flex="20">\n' +
+			'                <label>Postcode</label>\n' +
+			'                <input ng-model="address.postcode">\n' +
+			'            </md-input-container>\n' +
+			'        \n' +
+			'\n' +
+			'            <md-button ng-click="$ctrl.remove(\'addresses\', address)" class="fixed-height-button">\n' +
+			'                <md-icon>remove</md-icon>            \n' +
+			'            </md-button>               \n' +
+			'        </div>\n' +
+			'\n' +
+			'        <md-button ng-click="$ctrl.contact.details.addresses.push({})">\n' +
+			'            <md-icon>add</md-icon>\n' +
+			'            \n' +
+			'            Add\n' +
+			'        </md-button>\n' +
+			'    </div>\n' +
+			'\n' +
+			'    <div layout="column" ng-if="!$ctrl.mode || $ctrl.mode == \'Contact\'">\n' +
+			'        <h3 class="md-subhead">Phone Numbers</h3>\n' +
+			'        <div ng-repeat="phone in $ctrl.contact.details.phones track by $index" layout="row">\n' +
+			'                    \n' +
+			'            <md-input-container class="md-block" flex>\n' +
+			'                <label>Phone</label>\n' +
+			'                <input ng-model="phone.phone">\n' +
+			'            </md-input-container>\n' +
+			'        \n' +
+			'            <md-button ng-click="$ctrl.remove(\'phones\', phone)" class="fixed-height-button">\n' +
+			'                <md-icon>remove</md-icon>            \n' +
+			'            </md-button>   \n' +
+			'        </div>\n' +
+			'        <md-button ng-click="$ctrl.contact.details.phones.push({})">\n' +
+			'            <md-icon>add</md-icon>\n' +
+			'            \n' +
+			'            Add\n' +
+			'        </md-button>\n' +
+			'    </div>\n' +
+			'\n' +
+			'    <div layout="column" ng-if="!$ctrl.mode || $ctrl.mode == \'Contact\'">\n' +
+			'        <h3 class="md-subhead">Emails</h3>\n' +
+			'        <div ng-repeat="email in $ctrl.contact.details.emails track by $index" layout="row">\n' +
+			'                       \n' +
+			'            <md-input-container class="md-block" flex>\n' +
+			'                <label>Email</label>\n' +
+			'                <input ng-model="email.email" type="email">\n' +
+			'            </md-input-container>        \n' +
+			'\n' +
+			'            <md-button ng-click="$ctrl.remove(\'emails\', email)" class="fixed-height-button">\n' +
+			'                <md-icon>remove</md-icon>            \n' +
+			'            </md-button>   \n' +
+			'        </div>\n' +
+			'        <md-button ng-click="$ctrl.contact.details.emails.push({})">\n' +
+			'            <md-icon>add</md-icon>\n' +
+			'            \n' +
+			'            Add\n' +
+			'        </md-button>\n' +
+			'    </div>\n' +
+			'\n' +
+			'    <div layout="column">\n' +
+			'        <h3 class="md-subhead">Websites</h3>\n' +
+			'        <div ng-repeat="website in $ctrl.contact.details.websites track by $index" layout="row">\n' +
+			'\n' +
+			'            <md-input-container class="md-block" flex>\n' +
+			'                <label>Website</label>\n' +
+			'                <input ng-model="website.url">\n' +
+			'            </md-input-container>\n' +
+			'        \n' +
+			'            <md-button ng-click="$ctrl.remove(\'websites\', website)" class="fixed-height-button">\n' +
+			'                <md-icon>remove</md-icon>            \n' +
+			'            </md-button>   \n' +
+			'        </div>\n' +
+			'        <md-button ng-click="$ctrl.contact.details.websites.push({})">\n' +
+			'            <md-icon>add</md-icon>\n' +
+			'            \n' +
+			'            Add\n' +
+			'        </md-button>\n' +
+			'    </div>\n' +
+			'\n' +
+			'    <div layout="column" ng-if="!$ctrl.mode || $ctrl.mode == \'Web\'">\n' +
+			'        <h3 class="md-subhead">Images</h3>\n' +
+			'        <div ng-repeat="image in $ctrl.contact.details.images track by $index" layout="row">                                    \n' +
+			'            \n' +
+			'            <md-input-container class="md-block" flex>\n' +
+			'                <label>Image</label>\n' +
+			'                <input ng-model="image.image">\n' +
+			'            </md-input-container>\n' +
+			'\n' +
+			'            <div layout-gt-sm="row">\n' +
+			'                <img ng-if="image.image" src="{{ image.image }}">\n' +
+			'            </div>\n' +
+			'        \n' +
+			'            <md-button ng-click="$ctrl.remove(\'images\', image)" class="fixed-height-button">\n' +
+			'                <md-icon>remove</md-icon>            \n' +
+			'            </md-button>   \n' +
+			'        </div>\n' +
+			'        <md-button ng-click="$ctrl.contact.details.images.push({})">\n' +
+			'            <md-icon>add</md-icon>\n' +
+			'            \n' +
+			'            Add\n' +
+			'        </md-button>\n' +
+			'    </div>\n' +
+			'</form>');
+
+		$templateCache.put('components/contact/contact-editor-modal/contact-editor-modal.html', '<md-dialog aria-label="New Contact" class="contact-editor-modal">\n' +
+			'    <md-dialog-content class="md-dialog-content">\n' +
+			'        <contact-editor-form contact="$ctrl.contact" mode="$ctrl.mode">\n' +
+			'        </contact-editor-form>\n' +
+			'    </md-dialog-content>\n' +
+			'    <md-dialog-actions>\n' +
+			'        <md-button ng-click="$ctrl.save()" ng-disabled="$ctrl.saving">Save</md-button>\n' +
+			'        <md-button ng-click="$ctrl.cancel()">Cancel</md-button>\n' +
+			'    </md-dialog-actions>\n' +
+			'</md-dialog>');
+
+		$templateCache.put('components/contact/contact-search/contact-search.html', '<div layout="column">\n' +
+			'    <div layout-gt-sm="row">\n' +
+			'        <md-autocomplete flex required md-input-name="contact-search" md-input-minlength="2" md-selected-item="$ctrl.contact" md-search-text="$ctrl.searchText" md-items="contact in $ctrl.search($ctrl.searchText)" md-item-text="contact.name" md-require-match md-floating-label="Contact" md-selected-item-change="$ctrl.contactId = contact.id">\n' +
+			'          <md-item-template>\n' +
+			'            <span md-highlight-text="ctrl.searchText">{{ contact.name }}</span>\n' +
+			'          </md-item-template>\n' +
+			'        </md-autocomplete>\n' +
+			'\n' +
+			'        <md-button ng-click="$ctrl.edit($event)">\n' +
+			'            <md-icon>add</md-icon>\n' +
+			'            New\n' +
+			'        </md-button>\n' +
+			'    </div>\n' +
+			'</div>');
+
 		$templateCache.put('components/ep-table/ep-table.html', '<md-card>\n' +
 			'  <md-toolbar class="md-table-toolbar md-default" ng-hide="$ctrl.selected.length || $ctrl.filter.show">\n' +
 			'    <div class="md-toolbar-tools">\n' +
@@ -671,7 +1131,7 @@ angular
 			'      <md-button class="md-icon-button" ng-click="$ctrl.showFilter()">\n' +
 			'        <md-icon>search</md-icon>\n' +
 			'      </md-button>\n' +
-			'      <md-button class="md-icon-button" ng-click="$ctrl.create($event)">\n' +
+			'      <md-button class="md-icon-button" ng-click="$ctrl.edit($event)">\n' +
 			'        <md-icon>add</md-icon>\n' +
 			'      </md-button>\n' +
 			'    </div>\n' +
@@ -788,12 +1248,86 @@ angular
 			'    <ui-view></ui-view>\n' +
 			'  </md-content>\n' +
 			'</div>');
+
+		$templateCache.put('components/event/event-search/event-search.html', '<div layout="column">\n' +
+			'    <div layout-gt-sm="row">\n' +
+			'        <md-autocomplete flex required md-input-name="event-search" md-input-minlength="2" md-selected-item="$ctrl.event" md-search-text="$ctrl.searchText" md-items="event in $ctrl.search($ctrl.searchText)" md-item-text="event.name" md-require-match md-floating-label="Event" md-selected-item-change="$ctrl.eventId = event.id">\n' +
+			'          <md-item-template>\n' +
+			'            <span md-highlight-text="ctrl.searchText">{{ event.name }}</span>\n' +
+			'          </md-item-template>\n' +
+			'        </md-autocomplete>\n' +
+			'\n' +
+			'        <md-button ng-click="$ctrl.edit($event)">\n' +
+			'            <md-icon>add</md-icon>\n' +
+			'            New\n' +
+			'        </md-button>\n' +
+			'    </div>\n' +
+			'</div>');
+
+		$templateCache.put('components/location/location-editor-form/location-editor-form.html', '<form novalidate ng-cloak>\n' +
+			'    <div layout="column">\n' +
+			'        <h2 class="md-title">Location</h2>\n' +
+			'\n' +
+			'        <div layout-gt-sm="row">\n' +
+			'            <md-input-container>\n' +
+			'                <label>Name</label>\n' +
+			'                <input ng-model="$ctrl.location.name">\n' +
+			'            </md-input-container>\n' +
+			'        </div>           \n' +
+			'\n' +
+			'        <div layout-gt-sm="row">\n' +
+			'            <event-search event-id="$ctrl.location.EventId">                \n' +
+			'            </event-search>\n' +
+			'        </div>     \n' +
+			'    </div>\n' +
+			'</form>');
+
+		$templateCache.put('components/location/location-editor-modal/location-editor-modal.html', '<md-dialog aria-label="New Location">\n' +
+			'    <md-dialog-content class="md-dialog-content">\n' +
+			'       <location-editor-form location="$ctrl.location">\n' +
+			'       </location-editor-form>\n' +
+			'    </md-dialog-content>\n' +
+			'    <md-dialog-locationions>\n' +
+			'        <md-button ng-click="$ctrl.save()">Save</md-button>\n' +
+			'        <md-button ng-click="$ctrl.cancel()">Cancel</md-button>\n' +
+			'    </md-dialog-locationions>\n' +
+			'</md-dialog>');
+
+		$templateCache.put('components/location/location-search/location-search.html', '<div layout="column">\n' +
+			'    <div layout-gt-sm="row">\n' +
+			'        <md-autocomplete flex required md-input-name="location-search" md-input-minlength="2" md-selected-item="$ctrl.location" md-search-text="$ctrl.searchText" md-items="location in $ctrl.search($ctrl.searchText)" md-item-text="location.name" md-require-match md-floating-label="Location" md-selected-item-change="$ctrl.locationId = location.id">\n' +
+			'          <md-item-template>\n' +
+			'            <span md-highlight-text="ctrl.searchText">{{ location.name }}</span>\n' +
+			'          </md-item-template>\n' +
+			'        </md-autocomplete>\n' +
+			'\n' +
+			'        <md-button ng-click="$ctrl.edit($event)">\n' +
+			'            <md-icon>add</md-icon>\n' +
+			'            New\n' +
+			'        </md-button>\n' +
+			'    </div>\n' +
+			'</div>');
+
+		$templateCache.put('components/user/user-search/user-search.html', '<div layout="column">\n' +
+			'    <div layout-gt-sm="row">\n' +
+			'        <md-autocomplete flex required md-input-name="user-search" md-input-minlength="2" md-selected-item="$ctrl.user" md-search-text="$ctrl.searchText" md-items="user in $ctrl.search($ctrl.searchText)" md-item-text="user.name" md-require-match md-floating-label="User" md-selected-item-change="$ctrl.userId = user.id">\n' +
+			'          <md-item-template>\n' +
+			'            <span md-highlight-text="ctrl.searchText">{{ user.name }}</span>\n' +
+			'          </md-item-template>\n' +
+			'        </md-autocomplete>\n' +
+			'\n' +
+			'        <md-button ng-click="$ctrl.edit($event)">\n' +
+			'            <md-icon>add</md-icon>\n' +
+			'            New\n' +
+			'        </md-button>\n' +
+			'    </div>\n' +
+			'</div>');
 	}
 ]);
 
 
 /***/ }),
-/* 7 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -814,7 +1348,7 @@ t.prototype.getController=function(t){var e=this.viewDecl.controllerProvider;if(
 
 
 /***/ }),
-/* 8 */
+/* 12 */
 /***/ (function(module, exports) {
 
 /*
@@ -877,7 +1411,7 @@ return e}}}else return d(a)}}]}])})(window,window.angular);
 
 
 /***/ }),
-/* 9 */
+/* 13 */
 /***/ (function(module, exports) {
 
 /*
@@ -897,7 +1431,7 @@ b.attr("aria-live","assertive")}}}).directive("ngClick",["$aria","$parse",functi
 
 
 /***/ }),
-/* 10 */
+/* 14 */
 /***/ (function(module, exports) {
 
 /*
@@ -912,13 +1446,13 @@ f+" > 4096 bytes)!");k.cookie=e}}c.module("ngCookies",["ng"]).info({angularVersi
 
 
 /***/ }),
-/* 11 */
+/* 15 */
 /***/ (function(module, exports) {
 
 !function(a,b,c){"use strict";function d(){function a(a){a.addClass("md-body")}return{compile:a,restrict:"A"}}function e(){function a(a){var b=a.find("md-select");return b.length&&b.addClass("md-table-select").attr("md-container-class","md-table-select"),a.addClass("md-cell"),c}function b(){}function c(a,b,c,d){function e(){return i.$$columns[f()]}function f(){return Array.prototype.indexOf.call(b.parent().children(),b[0])}var g=b.find("md-select"),h=d.shift(),i=d.shift();c.ngClick&&b.addClass("md-clickable"),g.length&&(g.on("click",function(a){a.stopPropagation()}),b.addClass("md-clickable").on("click",function(a){a.stopPropagation(),g[0].click()})),h.getTable=i.getElement,a.$watch(e,function(a){a&&(a.numeric?b.addClass("md-numeric"):b.removeClass("md-numeric"))})}return{controller:b,compile:a,require:["mdCell","^^mdTable"],restrict:"A"}}function f(a,c){function d(a){return a.addClass("md-column"),e}function e(d,e,f,g){function h(){var c=b.element('<md-icon md-svg-icon="arrow-up.svg">');a(c.addClass("md-sort-icon").attr("ng-class","getDirection()"))(d),e.hasClass("md-numeric")?e.prepend(c):e.append(c)}function i(){Array.prototype.some.call(e.find("md-icon"),function(a){return a.classList.contains("md-sort-icon")&&e[0].removeChild(a)})}function j(){i(),e.removeClass("md-sort").off("click",o)}function k(){h(),e.addClass("md-sort").on("click",o)}function l(){return Array.prototype.indexOf.call(e.parent().children(),e[0])}function m(){return d.orderBy&&(q.order===d.orderBy||q.order==="-"+d.orderBy)}function n(){return""===f.mdNumeric||d.numeric}function o(){d.$applyAsync(function(){m()?q.order="md-asc"===d.getDirection()?"-"+d.orderBy:d.orderBy:q.order="md-asc"===d.getDirection()?d.orderBy:"-"+d.orderBy,b.isFunction(q.onReorder)&&c.nextTick(function(){q.onReorder(q.order)})})}function p(a,b){r.$$columns[a]=b,b.numeric?e.addClass("md-numeric"):e.removeClass("md-numeric")}var q=g.shift(),r=g.shift();d.getDirection=function(){return m()?"-"===q.order.charAt(0)?"md-desc":"md-asc":""===f.mdDesc||d.$eval(f.mdDesc)?"md-desc":"md-asc"},d.$watch(m,function(a){a?e.addClass("md-active"):e.removeClass("md-active")}),d.$watch(l,function(a){p(a,{numeric:n()})}),d.$watch(n,function(a){p(l(),{numeric:a})}),d.$watch("orderBy",function(a){a?e.hasClass("md-sort")||k():e.hasClass("md-sort")&&j()})}return{compile:d,require:["^^mdHead","^^mdTable"],restrict:"A",scope:{numeric:"=?mdNumeric",orderBy:"@?mdOrderBy"}}}function g(a){return function(c,d,e,f){if(e&&"object"==typeof e){var g=a(c,d,!0,f);return b.extend(g.instance,e),g()}return a(c,d,e,f)}}function h(a,c,d,e,f,g,h,i,j){function k(c,d){var f,h=g.$new(),i=a(c)(h),j=e.createBackdrop(h,"md-edit-dialog-backdrop");return d.controller?f=m(d,h,{$element:i,$scope:h}):b.extend(h,d.scope),d.disableScroll&&l(i),v.prepend(j).append(i.addClass("md-whiteframe-1dp")),r(i,d.target),d.focusOnOpen&&q(i),d.clickOutsideToClose&&j.on("click",function(){i.remove()}),d.escToClose&&p(i),i.on("$destroy",function(){u=!1,j.remove()}),f}function l(a){var b=e.disableScrollAround(a,v);a.on("$destroy",function(){b()})}function m(a,d,e){if(a.controller)return a.resolve&&b.extend(e,a.resolve),a.locals&&b.extend(e,a.locals),a.controllerAs?(d[a.controllerAs]={},a.bindToController?b.extend(d[a.controllerAs],a.scope):b.extend(d,a.scope)):b.extend(d,a.scope),a.bindToController?c(a.controller,e,d[a.controllerAs]):c(a.controller,e)}function n(a){return f(function(c,d){function e(a){d("Unexpected template value. Expected a string; received a "+a+".")}var f=a.template;if(f)return b.isString(f)?c(f):e(typeof f);if(a.templateUrl){if(f=h.get(a.templateUrl))return c(f);var g=function(a){return c(a)},j=function(){return d("Error retrieving template from URL.")};return i(a.templateUrl).then(g,j)}d("Template not provided.")})}function o(a){u=!1,console.error(a)}function p(a){var b=function(b){b.keyCode===t&&a.remove()};v.on("keyup",b),a.on("$destroy",function(){v.off("keyup",b)})}function q(a){e.nextTick(function(){var b=e.findFocusTarget(a);b&&b.focus()},!1)}function r(a,c){var d=b.element(c).controller("mdCell").getTable(),e=function(){return a.prop("clientHeight")},f=function(){return{width:i(),height:e()}},h=function(){var a=d.parent();return"MD-TABLE-CONTAINER"===a.prop("tagName")?a[0].getBoundingClientRect():d[0].getBoundingClientRect()},i=function(){return a.prop("clientWidth")},k=function(){var b=f(),d=c.getBoundingClientRect(),e=h();b.width>e.right-d.left?a.css("left",e.right-b.width+"px"):a.css("left",d.left+"px"),b.height>e.bottom-d.top?a.css("top",e.bottom-b.height+"px"):a.css("top",d.top+1+"px"),a.css("minWidth",d.width+"px")},l=g.$watch(i,k),m=g.$watch(e,k);j.addEventListener("resize",k),a.on("$destroy",function(){l(),m(),j.removeEventListener("resize",k)})}function s(a,c){function d(){var a='type="'+(c.type||"text")+'"';for(var b in c.validators)a+=" "+b+'="'+c.validators[b]+'"';return a}return{controller:["$element","$q","save","$scope",function(a,c,d,e){function f(){return e.editDialog.$invalid?c.reject():b.isFunction(d)?c.when(d(e.editDialog.input)):c.resolve()}this.dismiss=function(){a.remove()},this.getInput=function(){return e.editDialog.input},e.dismiss=this.dismiss,e.submit=function(){f().then(function(){e.dismiss()})}}],locals:{save:c.save},scope:{cancel:c.cancel||"Cancel",messages:c.messages,model:c.modelValue,ok:c.ok||"Save",placeholder:c.placeholder,title:c.title,size:a},template:'<md-edit-dialog><div layout="column" class="md-content"><div ng-if="size === \'large\'" class="md-title">{{title || \'Edit\'}}</div><form name="editDialog" layout="column" ng-submit="submit(model)"><md-input-container md-no-float><input name="input" ng-model="model" md-autofocus placeholder="{{placeholder}} "'+d()+'><div ng-messages="editDialog.input.$error"><div ng-repeat="(key, message) in messages" ng-message="{{key}}">{{message}}</div></div></md-input-container></form></div><div ng-if="size === \'large\'" layout="row" layout-align="end" class="md-actions"><md-button class="md-primary" ng-click="dismiss()">{{cancel}}</md-button><md-button class="md-primary" ng-click="submit()">{{ok}}</md-button></div></md-edit-dialog>'}}var t=27,u=!1,v=b.element(d.prop("body")),w={clickOutsideToClose:!0,disableScroll:!0,escToClose:!0,focusOnOpen:!0};return this.show=function(a){if(u)return f.reject();if(u=!0,a=b.extend({},w,a),!a.targetEvent)return o("options.targetEvent is required to align the dialog with the table cell.");if(!a.targetEvent.currentTarget.classList.contains("md-cell"))return o("The event target must be a table cell.");if(a.bindToController&&!a.controllerAs)return o("You must define options.controllerAs when options.bindToController is true.");a.target=a.targetEvent.currentTarget;var c=n(a),d=[c];for(var e in a.resolve)c=a.resolve[e],d.push(f.when(b.isFunction(c)?c():c));return c=f.all(d),c.catch(o),c.then(function(b){var c=b.shift();for(var d in a.resolve)a.resolve[d]=b.shift();return k(c,a)})},this.small=function(a){return this.show(b.extend({},a,s("small",a)))}.bind(this),this.large=function(a){return this.show(b.extend({},a,s("large",a)))}.bind(this),this}function i(){function a(a){a.addClass("md-foot")}return{compile:a,restrict:"A"}}function j(a){function c(a){return a.addClass("md-head"),e}function d(){}function e(c,d,e,f){function g(){d.children().prepend('<th class="md-column md-checkbox-column">')}function h(){d.prop("lastElementChild").firstElementChild.appendChild(a(i())(c)[0])}function i(){return b.element("<md-checkbox>").attr({"aria-label":"Select All","ng-click":"toggleAll()","ng-checked":"allSelected()","ng-disabled":"!getSelectableRows().length"})}function j(){var a=d.prop("lastElementChild").firstElementChild;a.classList.contains("md-checkbox-column")&&b.element(a).empty()}function k(){return f.$$rowSelect}function l(a){return b.element(a).controller("mdSelect")}function m(){Array.prototype.some.call(d.find("th"),function(a){return a.classList.contains("md-checkbox-column")&&a.remove()})}var n=new Array(2);c.allSelected=function(){var a=c.getSelectableRows();return a.length&&a.every(function(a){return a.isSelected()})},c.getSelectableRows=function(){return f.getBodyRows().map(l).filter(function(a){return a&&!a.disabled})},c.selectAll=function(){f.getBodyRows().map(l).forEach(function(a){a&&!a.isSelected()&&a.select()})},c.toggleAll=function(){return c.allSelected()?c.unSelectAll():c.selectAll()},c.unSelectAll=function(){f.getBodyRows().map(l).forEach(function(a){a&&a.isSelected()&&a.deselect()})},c.$watchGroup([k,f.enableMultiSelect],function(a){a[0]!==n[0]?a[0]?(g(),a[1]&&h()):m():a[0]&&a[1]!==n[1]&&(a[1]?h():j()),b.copy(a,n)})}return{bindToController:!0,compile:c,controller:d,controllerAs:"$mdHead",require:"^^mdTable",restrict:"A",scope:{order:"=?mdOrder",onReorder:"=?mdOnReorder"}}}function k(){function a(a){return a.addClass("md-row"),c}function c(a,c,d,e){function f(){return e.$$rowSelect}function g(){return e.getBodyRows().indexOf(c[0])!==-1}function h(a){return c[0].contains(a[0])}if(g()){var i=b.element('<td class="md-cell">');a.$watch(f,function(a){return a&&!d.mdSelect?void(h(i)||c.prepend(i)):void(h(i)&&i.remove())})}}return{compile:a,require:"^^mdTable",restrict:"A"}}function l(a,c){function d(){}function e(d,e,f,g){function h(){return""===f.mdAutoSelect||o.autoSelect}function i(){var c=b.element("<md-checkbox>").attr({"aria-label":"Select Row","ng-click":"$mdSelect.toggle($event)","ng-checked":"$mdSelect.isSelected()","ng-disabled":"$mdSelect.disabled"});return b.element('<td class="md-cell md-checkbox-cell">').append(a(c)(d))}function j(){Array.prototype.some.call(e.children(),function(a){return a.classList.contains("md-checkbox-cell")&&e[0].removeChild(a)}),h()&&e.off("click",n)}function k(){e.prepend(i()),h()&&e.on("click",n)}function l(){return p.$$rowSelect}function m(a){if(o.id)return p.$$hash.has(o.id)?void(a.indexOf(p.$$hash.get(o.id))===-1&&p.$$hash.purge(o.id)):void(a.indexOf(o.model)!==-1&&p.$$hash.update(o.id,o.model))}function n(a){d.$applyAsync(function(){o.toggle(a)})}var o=g.shift(),p=g.shift(),q=c(f.mdSelectId);if(o.id=q(o.model),p.$$rowSelect&&o.id)if(p.$$hash.has(o.id)){var r=p.selected.indexOf(p.$$hash.get(o.id));r===-1?p.$$hash.purge(o.id):p.$$hash.equals(o.id,o.model)||(p.$$hash.update(o.id,o.model),p.selected.splice(r,1,o.model))}else p.selected.some(function(a,b){if(q(a)===o.id)return p.$$hash.update(o.id,o.model),p.selected.splice(b,1,o.model),!0});o.isSelected=function(){return!!p.$$rowSelect&&(o.id?p.$$hash.has(o.id):p.selected.indexOf(o.model)!==-1)},o.select=function(){o.disabled||(p.enableMultiSelect()?p.selected.push(o.model):p.selected.splice(0,p.selected.length,o.model),b.isFunction(o.onSelect)&&o.onSelect(o.model))},o.deselect=function(){o.disabled||(p.selected.splice(p.selected.indexOf(o.model),1),b.isFunction(o.onDeselect)&&o.onDeselect(o.model))},o.toggle=function(a){return a&&a.stopPropagation&&a.stopPropagation(),o.isSelected()?o.deselect():o.select()},d.$watch(l,function(a){a?k():j()}),d.$watch(h,function(a,b){a!==b&&(p.$$rowSelect&&a?e.on("click",n):e.off("click",n))}),d.$watch(o.isSelected,function(a){return a?e.addClass("md-selected"):e.removeClass("md-selected")}),d.$watch(p.enableMultiSelect,function(a){p.$$rowSelect&&!a&&p.selected.splice(1)}),p.registerModelChangeListener(m),e.on("$destroy",function(){p.removeModelChangeListener(m)})}return{bindToController:!0,controller:d,controllerAs:"$mdSelect",link:e,require:["mdSelect","^^mdTable"],restrict:"A",scope:{model:"=mdSelect",disabled:"=ngDisabled",onSelect:"=?mdOnSelect",onDeselect:"=?mdOnDeselect",autoSelect:"=mdAutoSelect"}}}function m(){var a={};this.equals=function(b,c){return a[b]===c},this.get=function(b){return a[b]},this.has=function(b){return a.hasOwnProperty(b)},this.purge=function(b){delete a[b]},this.update=function(b,c){a[b]=c}}function n(){function a(a,c){if(a.addClass("md-table"),c.hasOwnProperty("mdProgress")){var d=a.find("tbody")[0],e=b.element('<thead class="md-table-progress" md-table-progress>');d&&a[0].insertBefore(e[0],d)}}function c(a,c,d,e){function f(){l.$$rowSelect=!0,k=e.$watchCollection("$mdTable.selected",function(a){o.forEach(function(b){b(a)})}),c.addClass("md-row-select")}function g(){l.$$rowSelect=!1,b.isFunction(k)&&k(),c.removeClass("md-row-select")}function h(){return n.length?void n[0].finally(function(){n.shift(),h()}):e.$applyAsync()}function i(){return""===a.mdRowSelect||l.rowSelect}function j(){return l.selected?!!b.isArray(l.selected)||console.error("Row selection: Expected an array. Recived "+typeof l.selected+"."):console.error("Row selection: ngModel is not defined.")}var k,l=this,n=[],o=[];l.$$hash=new m,l.$$columns={},l.columnCount=function(){return l.getRows(c[0]).reduce(function(a,b){return b.cells.length>a?b.cells.length:a},0)},l.getRows=function(a){return Array.prototype.filter.call(a.rows,function(a){return!a.classList.contains("ng-leave")})},l.getBodyRows=function(){return Array.prototype.reduce.call(c.prop("tBodies"),function(a,b){return a.concat(l.getRows(b))},[])},l.getElement=function(){return c},l.getHeaderRows=function(){return l.getRows(c.prop("tHead"))},l.enableMultiSelect=function(){return""===a.multiple||e.$eval(a.multiple)},l.waitingOnPromise=function(){return!!n.length},l.queuePromise=function(a){a&&1===n.push(b.isArray(a)?d.all(a):d.when(a))&&h()},l.registerModelChangeListener=function(a){o.push(a)},l.removeModelChangeListener=function(a){var b=o.indexOf(a);b!==-1&&o.splice(b,1)},a.hasOwnProperty("mdProgress")&&e.$watch("$mdTable.progress",l.queuePromise),e.$watch(i,function(a){a&&j()?f():g()})}return c.$inject=["$attrs","$element","$q","$scope"],{bindToController:!0,compile:a,controller:c,controllerAs:"$mdTable",restrict:"A",scope:{progress:"=?mdProgress",selected:"=ngModel",rowSelect:"=mdRowSelect"}}}function o(){function a(a){a.addClass("md-table-pagination")}function c(a,c,d){function e(a){return parseInt(a,10)>0}var f=this,g={page:"Page:",rowsPerPage:"Rows per page:",of:"of"};f.label=b.copy(g),f.eval=function(a){return d.$eval(a)},f.first=function(){f.page=1,f.onPaginationChange()},f.hasNext=function(){return f.page*f.limit<f.total},f.hasPrevious=function(){return f.page>1},f.last=function(){f.page=f.pages(),f.onPaginationChange()},f.max=function(){return f.hasNext()?f.page*f.limit:f.total},f.min=function(){return e(f.total)?f.page*f.limit-f.limit+1:0},f.next=function(){f.page++,f.onPaginationChange()},f.onPaginationChange=function(){b.isFunction(f.onPaginate)&&c.nextTick(function(){f.onPaginate(f.page,f.limit)})},f.pages=function(){return e(f.total)?Math.ceil(f.total/(e(f.limit)?f.limit:1)):1},f.previous=function(){f.page--,f.onPaginationChange()},f.showBoundaryLinks=function(){return""===a.mdBoundaryLinks||f.boundaryLinks},f.showPageSelect=function(){return""===a.mdPageSelect||f.pageSelect},d.$watch("$pagination.limit",function(a,b){isNaN(a)||isNaN(b)||a===b||(f.page=Math.floor((f.page*b-b+a)/(e(a)?a:1)),f.onPaginationChange())}),a.$observe("mdLabel",function(a){b.extend(f.label,g,d.$eval(a))}),d.$watch("$pagination.total",function(a,b){isNaN(a)||a===b||f.page>f.pages()&&f.last()})}return c.$inject=["$attrs","$mdUtil","$scope"],{bindToController:{boundaryLinks:"=?mdBoundaryLinks",disabled:"=ngDisabled",limit:"=mdLimit",page:"=mdPage",pageSelect:"=?mdPageSelect",onPaginate:"=?mdOnPaginate",limitOptions:"=?mdLimitOptions",total:"@mdTotal"},compile:a,controller:c,controllerAs:"$pagination",restrict:"E",scope:{},templateUrl:"md-table-pagination.html"}}function p(){function a(a,b,c,d){a.columnCount=d.columnCount,a.deferred=d.waitingOnPromise}return{link:a,require:"^^mdTable",restrict:"A",scope:{},templateUrl:"md-table-progress.html"}}function q(){function a(a,b){function c(a,b){return Math.min(a,isFinite(b)&&d(b)?b:1)}function d(a){return a>0}function e(a){if(f.pages.length>a)return f.pages.splice(a);for(var b=f.pages.length;b<a;b++)f.pages.push(b+1)}var f=this,g=a.find("md-content");f.pages=[],g.on("scroll",function(){g.prop("clientHeight")+g.prop("scrollTop")>=g.prop("scrollHeight")&&b.$applyAsync(function(){e(c(f.pages.length+10,f.total))})}),b.$watch("$pageSelect.total",function(a){e(c(Math.max(f.pages.length,10),a))}),b.$watch("$pagination.page",function(a){for(var b=f.pages.length;b<a;b++)f.pages.push(b+1)})}return a.$inject=["$element","$scope"],{bindToController:{total:"@"},controller:a,controllerAs:"$pageSelect"}}b.module("md.table.templates",["md-table-pagination.html","md-table-progress.html","arrow-up.svg","navigate-before.svg","navigate-first.svg","navigate-last.svg","navigate-next.svg"]),b.module("md-table-pagination.html",[]).run(["$templateCache",function(a){a.put("md-table-pagination.html",'<div class="page-select" ng-if="$pagination.showPageSelect()">\n  <div class="label">{{$pagination.label.page}}</div>\n\n  <md-select virtual-page-select total="{{$pagination.pages()}}" class="md-table-select" ng-model="$pagination.page" md-container-class="md-pagination-select" ng-change="$pagination.onPaginationChange()" ng-disabled="$pagination.disabled" aria-label="Page">\n    <md-content>\n      <md-option ng-repeat="page in $pageSelect.pages" ng-value="page">{{page}}</md-option>\n    </md-content>\n  </md-select>\n</div>\n\n<div class="limit-select" ng-if="$pagination.limitOptions">\n  <div class="label">{{$pagination.label.rowsPerPage}}</div>\n\n  <md-select class="md-table-select" ng-model="$pagination.limit" md-container-class="md-pagination-select" ng-disabled="$pagination.disabled" aria-label="Rows" placeholder="{{ $pagination.limitOptions[0] }}">\n    <md-option ng-repeat="option in $pagination.limitOptions" ng-value="option.value ? $pagination.eval(option.value) : option">{{::option.label ? option.label : option}}</md-option>\n  </md-select>\n</div>\n\n<div class="buttons">\n  <div class="label">{{$pagination.min()}} - {{$pagination.max()}} {{$pagination.label.of}} {{$pagination.total}}</div>\n\n  <md-button class="md-icon-button" type="button" ng-if="$pagination.showBoundaryLinks()" ng-click="$pagination.first()" ng-disabled="$pagination.disabled || !$pagination.hasPrevious()" aria-label="First">\n    <md-icon md-svg-icon="navigate-first.svg"></md-icon>\n  </md-button>\n\n  <md-button class="md-icon-button" type="button" ng-click="$pagination.previous()" ng-disabled="$pagination.disabled || !$pagination.hasPrevious()" aria-label="Previous">\n    <md-icon md-svg-icon="navigate-before.svg"></md-icon>\n  </md-button>\n\n  <md-button class="md-icon-button" type="button" ng-click="$pagination.next()" ng-disabled="$pagination.disabled || !$pagination.hasNext()" aria-label="Next">\n    <md-icon md-svg-icon="navigate-next.svg"></md-icon>\n  </md-button>\n\n  <md-button class="md-icon-button" type="button" ng-if="$pagination.showBoundaryLinks()" ng-click="$pagination.last()" ng-disabled="$pagination.disabled || !$pagination.hasNext()" aria-label="Last">\n    <md-icon md-svg-icon="navigate-last.svg"></md-icon>\n  </md-button>\n</div>')}]),b.module("md-table-progress.html",[]).run(["$templateCache",function(a){a.put("md-table-progress.html",'<tr>\n  <th colspan="{{columnCount()}}">\n    <md-progress-linear ng-show="deferred()" md-mode="indeterminate"></md-progress-linear>\n  </th>\n</tr>')}]),b.module("arrow-up.svg",[]).run(["$templateCache",function(a){a.put("arrow-up.svg",'<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"/></svg>')}]),b.module("navigate-before.svg",[]).run(["$templateCache",function(a){a.put("navigate-before.svg",'<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>')}]),b.module("navigate-first.svg",[]).run(["$templateCache",function(a){a.put("navigate-first.svg",'<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M7 6 v12 h2 v-12 h-2z M17.41 7.41L16 6l-6 6 6 6 1.41-1.41L12.83 12z"/></svg>')}]),b.module("navigate-last.svg",[]).run(["$templateCache",function(a){a.put("navigate-last.svg",'<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M15 6 v12 h2 v-12 h-2z M8 6L6.59 7.41 11.17 12l-4.58 4.59L8 18l6-6z"/></svg>')}]),b.module("navigate-next.svg",[]).run(["$templateCache",function(a){a.put("navigate-next.svg",'<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>')}]),b.module("md.data.table",["md.table.templates"]),b.module("md.data.table").directive("mdBody",d),b.module("md.data.table").directive("mdCell",e),b.module("md.data.table").directive("mdColumn",f),f.$inject=["$compile","$mdUtil"],b.module("md.data.table").decorator("$controller",g).factory("$mdEditDialog",h),g.$inject=["$delegate"],h.$inject=["$compile","$controller","$document","$mdUtil","$q","$rootScope","$templateCache","$templateRequest","$window"],b.module("md.data.table").directive("mdFoot",i),b.module("md.data.table").directive("mdHead",j),j.$inject=["$compile"],b.module("md.data.table").directive("mdRow",k),b.module("md.data.table").directive("mdSelect",l),l.$inject=["$compile","$parse"],b.module("md.data.table").directive("mdTable",n),b.module("md.data.table").directive("mdTablePagination",o),b.module("md.data.table").directive("mdTableProgress",p),b.module("md.data.table").directive("virtualPageSelect",q)}(window,angular);
 
 /***/ }),
-/* 12 */
+/* 16 */
 /***/ (function(module, exports) {
 
 /*!
@@ -941,7 +1475,7 @@ var o=e(n.mdTabScroll,null,!0);return function(e,t){t.on("mousewheel",function(t
 }()}(window,window.angular),window.ngMaterial={version:{full:"1.1.4"}};
 
 /***/ }),
-/* 13 */
+/* 17 */
 /***/ (function(module, exports) {
 
 /*
@@ -959,7 +1493,7 @@ f):p[0].createComment(" ngMessagesInclude: "+f+" "),e=x(e);a.after(e);a.remove()
 
 
 /***/ }),
-/* 14 */
+/* 18 */
 /***/ (function(module, exports) {
 
 /*
@@ -1299,10 +1833,10 @@ minFrac:2,minInt:1,negPre:"-\u00a4",negSuf:"",posPre:"\u00a4",posSuf:""}]},id:"e
 
 
 /***/ }),
-/* 15 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(0), __webpack_require__(29), __webpack_require__(26)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, angular_1) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(0), __webpack_require__(48), __webpack_require__(42)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, angular_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     angular_1.module('event-planner', ['event-planner.components', 'event-planner.services', 'ui.router', 'ngCookies', 'templates', 'md.data.table'])
@@ -1351,7 +1885,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 .state({
                 name: 'root.applications.detail',
                 url: '/detail',
-                template: "<applications-table                                \n                                get-applications=\"$ctrl.applicationService.list(query)\"\n                                create=\"$ctrl.applicationService.create()\">\n                            </applications-table>",
+                template: "<applications-table                                \n                                get-applications=\"$ctrl.applicationService.list(query)\"\n                                create=\"$ctrl.applicationService.edit($event)\">\n                            </applications-table>",
                 controller: ['applicationService', function (applicationService) {
                         this.applicationService = applicationService;
                     }],
@@ -1377,7 +1911,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 .state({
                 name: 'root.acts.detail',
                 url: '/detail',
-                template: "<acts-table                                \n                                get-acts=\"$ctrl.actService.list(query)\"\n                                create=\"$ctrl.actService.create()\">\n                            </acts-table>",
+                template: "<acts-table                                \n                                get-acts=\"$ctrl.actService.list(query)\"\n                                create=\"$ctrl.actService.edit($event)\">\n                            </acts-table>",
                 controller: ['actService', function (actService) {
                         this.actService = actService;
                     }],
@@ -1393,7 +1927,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 16 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
@@ -1420,7 +1954,88 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 17 */
+/* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(9)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, act_service_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var ActEditorFormController = (function () {
+        function ActEditorFormController() {
+        }
+        ActEditorFormController.prototype.$onInit = function () {
+            if (!this.act) {
+                this.act = new act_service_1.ActViewModel();
+            }
+        };
+        return ActEditorFormController;
+    }());
+    exports.ActEditorFormController = ActEditorFormController;
+    var options = {
+        templateUrl: 'components/act/act-editor-form/act-editor-form.html',
+        controller: ActEditorFormController,
+        bindings: {
+            act: '=?',
+            eventId: '=?'
+        }
+    };
+    exports.default = options;
+}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var ActSearchController = (function () {
+        function ActSearchController(actService) {
+            this.actService = actService;
+        }
+        ActSearchController.prototype.$onInit = function () {
+            var _this = this;
+            if (!this.act && this.actId) {
+                this.actService.get(this.actId, false)
+                    .then(function (act) { return _this.act = act; });
+            }
+        };
+        ActSearchController.prototype.edit = function (ev) {
+            var _this = this;
+            this.actService.edit(ev)
+                .then(function (act) {
+                _this.act = act;
+            });
+        };
+        ActSearchController.prototype.search = function (searchText) {
+            return this.actService.list({
+                order: 'name',
+                limit: 25,
+                page: 0,
+                filter: searchText
+            });
+        };
+        ActSearchController.$inject = ['actService'];
+        return ActSearchController;
+    }());
+    exports.ActSearchController = ActSearchController;
+    var options = {
+        templateUrl: 'components/act/act-search/act-search.html',
+        controller: ActSearchController,
+        bindings: {
+            act: '=?',
+            actId: '=?'
+        }
+    };
+    exports.default = options;
+}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ }),
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
@@ -1448,7 +2063,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 18 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
@@ -1477,7 +2092,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 19 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
@@ -1515,7 +2130,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 20 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
@@ -1542,7 +2157,39 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 21 */
+/* 27 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var ApplicationEditorFormController = (function () {
+        function ApplicationEditorFormController() {
+        }
+        ApplicationEditorFormController.prototype.$onInit = function () {
+            if (!this.application) {
+                this.application = {
+                    details: {}
+                };
+            }
+        };
+        return ApplicationEditorFormController;
+    }());
+    exports.ApplicationEditorFormController = ApplicationEditorFormController;
+    var options = {
+        templateUrl: 'components/application/application-editor-form/application-editor-form.html',
+        controller: ApplicationEditorFormController,
+        bindings: {
+            application: '=?'
+        }
+    };
+    exports.default = options;
+}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ }),
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
@@ -1570,7 +2217,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 22 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
@@ -1599,7 +2246,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 23 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
@@ -1637,7 +2284,326 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 24 */
+/* 31 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var BookingEditorFormController = (function () {
+        function BookingEditorFormController() {
+        }
+        BookingEditorFormController.prototype.$onInit = function () {
+            if (!this.booking) {
+                this.booking = {};
+            }
+        };
+        return BookingEditorFormController;
+    }());
+    exports.BookingEditorFormController = BookingEditorFormController;
+    var options = {
+        templateUrl: 'components/booking/booking-editor-form/booking-editor-form.html',
+        controller: BookingEditorFormController,
+        bindings: {
+            booking: '=?'
+        }
+    };
+    exports.default = options;
+}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ }),
+/* 32 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var BookingSearchController = (function () {
+        function BookingSearchController(bookingService) {
+            this.bookingService = bookingService;
+        }
+        BookingSearchController.prototype.$onInit = function () {
+            var _this = this;
+            if (!this.booking && this.bookingId) {
+                this.bookingService.get(this.bookingId, false)
+                    .then(function (booking) { return _this.booking = booking; });
+            }
+        };
+        BookingSearchController.prototype.edit = function (ev) {
+            var _this = this;
+            this.bookingService.edit(ev)
+                .then(function (booking) {
+                _this.booking = booking;
+            });
+        };
+        BookingSearchController.prototype.search = function (searchText) {
+            var query = {
+                order: 'name',
+                limit: 25,
+                page: 0,
+                filter: searchText
+            };
+            if (this.eventId) {
+                query.eventId = this.eventId;
+            }
+            if (this.actId) {
+                query.actId = this.actId;
+            }
+            return this.bookingService.list(query);
+        };
+        BookingSearchController.$inject = ['bookingService'];
+        return BookingSearchController;
+    }());
+    exports.BookingSearchController = BookingSearchController;
+    var options = {
+        templateUrl: 'components/booking/booking-search/booking-search.html',
+        controller: BookingSearchController,
+        bindings: {
+            eventId: '=?',
+            actId: '=?',
+            booking: '=?',
+            bookingId: '=?'
+        }
+    };
+    exports.default = options;
+}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ }),
+/* 33 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var BookingStatusSelectController = (function () {
+        function BookingStatusSelectController(bookingService) {
+            this.bookingService = bookingService;
+        }
+        BookingStatusSelectController.prototype.$onInit = function () {
+        };
+        BookingStatusSelectController.prototype.search = function (searchText) {
+            var _this = this;
+            return this.bookingService.listStatuses()
+                .then(function (bookingStatuses) { return _this.bookingStatuses = bookingStatuses; });
+        };
+        BookingStatusSelectController.$inject = ['bookingService'];
+        return BookingStatusSelectController;
+    }());
+    exports.BookingStatusSelectController = BookingStatusSelectController;
+    var options = {
+        templateUrl: 'components/booking/booking-status-select/booking-status-select.html',
+        controller: BookingStatusSelectController,
+        bindings: {
+            bookingStatus: '=?',
+            bookingStatusId: '=?'
+        }
+    };
+    exports.default = options;
+}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ }),
+/* 34 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var BookingSummary = (function () {
+        function BookingSummary() {
+        }
+        BookingSummary.prototype.$onInit = function () {
+        };
+        return BookingSummary;
+    }());
+    exports.BookingSummary = BookingSummary;
+    var options = {
+        templateUrl: 'components/contact/booking-summary/booking-summary.html',
+        controller: BookingSummary,
+        bindings: {
+            booking: '='
+        }
+    };
+    exports.default = options;
+}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ }),
+/* 35 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(1)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, _) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var BookingsEditorController = (function () {
+        function BookingsEditorController(bookingService) {
+            this.bookingService = bookingService;
+            this.bookings = [];
+        }
+        BookingsEditorController.prototype.$onInit = function () {
+        };
+        BookingsEditorController.prototype.add = function (ev) {
+            var _this = this;
+            var options = {};
+            if (this.actId) {
+                options.ActId = this.actId;
+            }
+            if (this.eventId) {
+                options.EventId = this.eventId;
+            }
+            this.bookingService.edit(ev, options)
+                .then(function (booking) {
+                _this.bookings.push(booking);
+            });
+        };
+        BookingsEditorController.prototype.remove = function (booking) {
+            _.remove(this.bookings, function (ac) { return ac == booking; });
+        };
+        return BookingsEditorController;
+    }());
+    exports.BookingsEditorController = BookingsEditorController;
+    var options = {
+        templateUrl: 'components/booking/bookings-editor/bookings-editor.html',
+        controller: BookingsEditorController,
+        bindings: {
+            bookings: '=?',
+            actId: '=?',
+            eventId: '=?'
+        }
+    };
+    exports.default = options;
+}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ }),
+/* 36 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(4), __webpack_require__(1)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, contact_service_1, _) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var ActContactsEditorController = (function () {
+        function ActContactsEditorController() {
+            this.actContacts = [];
+        }
+        ActContactsEditorController.prototype.$onInit = function () {
+        };
+        ActContactsEditorController.prototype.add = function () {
+            this.actContacts.push(new contact_service_1.ActContactViewModel({ ActId: this.actId }));
+        };
+        ActContactsEditorController.prototype.remove = function (actContact) {
+            _.remove(this.actContacts, function (ac) { return ac == actContact; });
+        };
+        return ActContactsEditorController;
+    }());
+    exports.ActContactsEditorController = ActContactsEditorController;
+    var options = {
+        templateUrl: 'components/contact/act-contacts-editor/act-contacts-editor.html',
+        controller: ActContactsEditorController,
+        bindings: {
+            actContacts: '=?',
+            actId: '=?'
+        }
+    };
+    exports.default = options;
+}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ }),
+/* 37 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(4), __webpack_require__(1)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, contact_service_1, _) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var ContactEditorFormController = (function () {
+        function ContactEditorFormController() {
+        }
+        ContactEditorFormController.prototype.$onInit = function () {
+            if (!this.contact) {
+                this.contact = new contact_service_1.ContactViewModel();
+            }
+        };
+        ContactEditorFormController.prototype.remove = function (array, detail) {
+            var details = this.contact.details;
+            _.remove(details[array], detail);
+        };
+        return ContactEditorFormController;
+    }());
+    exports.ContactEditorFormController = ContactEditorFormController;
+    var options = {
+        templateUrl: 'components/contact/contact-editor-form/contact-editor-form.html',
+        controller: ContactEditorFormController,
+        bindings: {
+            contact: '=?',
+            mode: '=?'
+        }
+    };
+    exports.default = options;
+}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ }),
+/* 38 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var ContactSearchController = (function () {
+        function ContactSearchController(contactService) {
+            this.contactService = contactService;
+        }
+        ContactSearchController.prototype.$onInit = function () {
+            var _this = this;
+            if (!this.contact && this.contactId) {
+                this.contactService.get(this.contactId, false)
+                    .then(function (contact) { return _this.contact = contact; });
+            }
+        };
+        ContactSearchController.prototype.edit = function (ev) {
+            var _this = this;
+            this.contactService.edit(ev)
+                .then(function (contact) {
+                _this.contact = contact;
+            });
+        };
+        ContactSearchController.prototype.search = function (searchText) {
+            return this.contactService.list({
+                order: 'name',
+                limit: 25,
+                page: 0,
+                filter: searchText
+            });
+        };
+        ContactSearchController.$inject = ['contactService'];
+        return ContactSearchController;
+    }());
+    exports.ContactSearchController = ContactSearchController;
+    var options = {
+        templateUrl: 'components/contact/contact-search/contact-search.html',
+        controller: ContactSearchController,
+        bindings: {
+            contact: "=?",
+            contactId: "=?"
+        }
+    };
+    exports.default = options;
+}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ }),
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
@@ -1676,7 +2642,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 return newData;
             });
         };
-        EpTableController.prototype.create = function () {
+        EpTableController.prototype.edit = function () {
             var _this = this;
             return this.loading = this.onCreate()
                 .then(function () { return _this.get(); });
@@ -1714,7 +2680,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 25 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
@@ -1732,7 +2698,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
             var _this = this;
             this.selectedEvent = this.$stateParams.event;
             this.eventService.list()
-                .then(function (eventData) { return _this.events = eventData.events; })
+                .then(function (eventData) { return _this.events = eventData.rows; })
                 .then(function () {
                 if (!_this.selectedEvent) {
                     _this.selectedEvent = _this.events[0].id;
@@ -1783,34 +2749,183 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 26 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(0), __webpack_require__(25), __webpack_require__(24), __webpack_require__(18), __webpack_require__(3), __webpack_require__(16), __webpack_require__(17), __webpack_require__(19), __webpack_require__(22), __webpack_require__(4), __webpack_require__(20), __webpack_require__(21), __webpack_require__(23)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, angular_1, event_planner_app_1, ep_table_1, acts_table_1, act_editor_1, act_card_1, acts_summary_1, acts_1, applications_table_1, application_editor_1, application_card_1, applications_summary_1, applications_1) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.default = angular_1.module('event-planner.components', ['event-planner.services', 'ngMaterial'])
-        .component('eventPlannerApp', event_planner_app_1.default)
-        .component('epTable', ep_table_1.default)
-        .component('actsTable', acts_table_1.default)
-        .component('actEditor', act_editor_1.default)
-        .component('actCard', act_card_1.default)
-        .component('actsSummary', acts_summary_1.default)
-        .component('acts', acts_1.default)
-        .component('applicationsTable', applications_table_1.default)
-        .component('applicationEditor', application_editor_1.default)
-        .component('applicationCard', application_card_1.default)
-        .component('applicationsSummary', applications_summary_1.default)
-        .component('applications', applications_1.default);
+    var EventSearchController = (function () {
+        function EventSearchController(eventService) {
+            this.eventService = eventService;
+        }
+        EventSearchController.prototype.$onInit = function () {
+            var _this = this;
+            if (!this.event && this.eventId) {
+                this.eventService.get(this.eventId, false)
+                    .then(function (event) { return _this.event = event; });
+            }
+        };
+        EventSearchController.prototype.edit = function (ev) {
+            /*   this.eventService.edit(ev)
+                   .then(event => {
+                       this.event = event;
+                   });*/
+        };
+        EventSearchController.prototype.search = function (searchText) {
+            return this.eventService.list({
+                order: 'name',
+                limit: 25,
+                page: 0,
+                filter: searchText
+            });
+        };
+        EventSearchController.$inject = ['eventService'];
+        return EventSearchController;
+    }());
+    exports.EventSearchController = EventSearchController;
+    var options = {
+        templateUrl: 'components/event/event-search/event-search.html',
+        controller: EventSearchController,
+        bindings: {
+            event: '=?',
+            eventId: '=?'
+        }
+    };
+    exports.default = options;
 }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 
 
 /***/ }),
-/* 27 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(1), __webpack_require__(2), __webpack_require__(0), __webpack_require__(4)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, helper_1, settings_1, angular_1, application_editor_1) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(0), __webpack_require__(40), __webpack_require__(39), __webpack_require__(20), __webpack_require__(21), __webpack_require__(5), __webpack_require__(22), __webpack_require__(25), __webpack_require__(23), __webpack_require__(24), __webpack_require__(26), __webpack_require__(27), __webpack_require__(6), __webpack_require__(30), __webpack_require__(28), __webpack_require__(29), __webpack_require__(31), __webpack_require__(7), __webpack_require__(35), __webpack_require__(32), __webpack_require__(33), __webpack_require__(34), __webpack_require__(37), __webpack_require__(8), __webpack_require__(38), __webpack_require__(36), __webpack_require__(41), __webpack_require__(44)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, angular_1, event_planner_app_1, ep_table_1, act_card_1, act_editor_form_1, act_editor_modal_1, act_search_1, acts_1, acts_summary_1, acts_table_1, application_card_1, application_editor_form_1, application_editor_modal_1, applications_1, applications_summary_1, applications_table_1, booking_editor_form_1, booking_editor_modal_1, bookings_editor_1, booking_search_1, booking_status_select_1, booking_summary_1, contact_editor_form_1, contact_editor_modal_1, contact_search_1, act_contacts_editor_1, event_search_1, location_search_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.default = angular_1.module('event-planner.components', ['event-planner.services', 'ngMaterial'])
+        .component('eventPlannerApp', event_planner_app_1.default)
+        .component('epTable', ep_table_1.default)
+        .component('actCard', act_card_1.default)
+        .component('actEditorForm', act_editor_form_1.default)
+        .component('actEditorModal', act_editor_modal_1.default)
+        .component('actSearch', act_search_1.default)
+        .component('acts', acts_1.default)
+        .component('actsSummary', acts_summary_1.default)
+        .component('actsTable', acts_table_1.default)
+        .component('applicationsTable', applications_table_1.default)
+        .component('applicationEditorForm', application_editor_form_1.default)
+        .component('applicationEditorModal', application_editor_modal_1.default)
+        .component('applicationCard', application_card_1.default)
+        .component('applicationsSummary', applications_summary_1.default)
+        .component('applications', applications_1.default)
+        .component('bookingEditorForm', booking_editor_form_1.default)
+        .component('bookingEditorModal', booking_editor_modal_1.default)
+        .component('bookingsEditor', bookings_editor_1.default)
+        .component('bookingSearch', booking_search_1.default)
+        .component('bookingStatusSelect', booking_status_select_1.default)
+        .component('bookingSummary', booking_summary_1.default)
+        .component('contactEditorForm', contact_editor_form_1.default)
+        .component('contactEditorModal', contact_editor_modal_1.default)
+        .component('actContactsEditor', act_contacts_editor_1.default)
+        .component('contactSearch', contact_search_1.default)
+        .component('eventSearch', event_search_1.default)
+        .component('locationSearch', location_search_1.default);
+}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ }),
+/* 43 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var LocationEditorModalController = (function () {
+        function LocationEditorModalController($mdDialog, location) {
+            this.$mdDialog = $mdDialog;
+            this.location = location;
+        }
+        LocationEditorModalController.prototype.$onInit = function () {
+        };
+        LocationEditorModalController.prototype.save = function () {
+            this.$mdDialog.hide(this.location);
+        };
+        LocationEditorModalController.prototype.cancel = function () {
+            this.$mdDialog.cancel();
+        };
+        LocationEditorModalController.$inject = ['$mdDialog', 'location'];
+        return LocationEditorModalController;
+    }());
+    exports.LocationEditorModalController = LocationEditorModalController;
+    var options = {
+        templateUrl: 'components/location/location-editor-modal/location-editor-modal.html',
+        controller: LocationEditorModalController,
+        bindings: {}
+    };
+    exports.default = options;
+}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ }),
+/* 44 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var LocationSearchController = (function () {
+        function LocationSearchController(locationService) {
+            this.locationService = locationService;
+        }
+        LocationSearchController.prototype.$onInit = function () {
+            var _this = this;
+            if (!this.location && this.locationId) {
+                this.locationService.get(this.eventId, false)
+                    .then(function (location) { return _this.location = location; });
+            }
+        };
+        LocationSearchController.prototype.edit = function (ev) {
+            /*   this.locationService.edit(ev)
+                   .then(location => {
+                       this.location = location;
+                   });*/
+        };
+        LocationSearchController.prototype.search = function (searchText) {
+            return this.locationService.list({
+                order: 'name',
+                limit: 25,
+                page: 0,
+                filter: searchText,
+                eventId: this.eventId
+            });
+        };
+        LocationSearchController.$inject = ['locationService'];
+        return LocationSearchController;
+    }());
+    exports.LocationSearchController = LocationSearchController;
+    var options = {
+        templateUrl: 'components/location/location-search/location-search.html',
+        controller: LocationSearchController,
+        bindings: {
+            location: '=?',
+            locationId: '=?',
+            eventId: '='
+        }
+    };
+    exports.default = options;
+}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ }),
+/* 45 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(2), __webpack_require__(3), __webpack_require__(0), __webpack_require__(6)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, helper_1, settings_1, angular_1, application_editor_modal_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var ApplicationService = (function () {
@@ -1844,7 +2959,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 };
             });
         };
-        ApplicationService.prototype.get = function (id) {
+        ApplicationService.prototype.get = function (id, full) {
             return this.$http.get(settings_1.default.api + "/application/get?id=" + id)
                 .then(function (response) { return response.data; });
         };
@@ -1868,16 +2983,19 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
             });
             return applications;
         };
-        ApplicationService.prototype.create = function (ev) {
+        ApplicationService.prototype.edit = function (ev, application) {
             return this.$mdDialog.show({
-                controller: application_editor_1.ApplicationEditorController,
-                templateUrl: 'components/application/application-editor/application-editor.html',
+                controller: application_editor_modal_1.ApplicationEditorModalController,
+                templateUrl: 'components/application/application-editor-modal/application-editor-modal.html',
                 parent: angular_1.element(document.body),
                 targetEvent: ev,
                 clickOutsideToClose: true,
                 fullscreen: true,
                 bindToController: true,
-                controllerAs: '$ctrl'
+                controllerAs: '$ctrl',
+                resolve: {
+                    'application': function () { return application; }
+                }
             });
         };
         ApplicationService.$inject = ['$http', '$httpParamSerializer', '$q', '$mdDialog', '$stateParams'];
@@ -1889,10 +3007,87 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 28 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(1), __webpack_require__(2)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, helper_1, settings_1) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(2), __webpack_require__(3), __webpack_require__(0), __webpack_require__(7), __webpack_require__(1)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, helper_1, settings_1, angular_1, booking_editor_modal_1, _) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var BookingService = (function () {
+        function BookingService($http, $httpParamSerializer, $q, $mdDialog) {
+            this.$http = $http;
+            this.$httpParamSerializer = $httpParamSerializer;
+            this.$q = $q;
+            this.$mdDialog = $mdDialog;
+        }
+        BookingService.prototype.list = function (query) {
+            var url = settings_1.default.api + "/booking/list";
+            if (query) {
+                var listQuery = helper_1.queryToRequest(query);
+                var queryString = this.$httpParamSerializer(listQuery);
+                url = url + "?" + queryString;
+            }
+            return this.$http.get(url)
+                .then(function (response) {
+                var bookingsResponse = response.data;
+                bookingsResponse.rows = bookingsResponse.rows.map(function (booking) { return new BookingViewModel(booking); });
+                return bookingsResponse;
+            });
+        };
+        BookingService.prototype.listStatuses = function () {
+            return this.$http.get(settings_1.default.api + "/booking/status/list")
+                .then(function (response) { return response.data; });
+        };
+        BookingService.prototype.get = function (id, full) {
+            return this.$http.get(settings_1.default.api + "/booking/get?id=" + id)
+                .then(function (response) { return new BookingViewModel(response.data); });
+        };
+        BookingService.prototype.save = function (data) {
+            return this.$http.post(settings_1.default.api + "/booking/save", data)
+                .then(function (response) { return new BookingViewModel(response.data); });
+        };
+        BookingService.prototype.delete = function (data) {
+            return this.$http.post(settings_1.default.api + "/booking/delete", { id: data.id })
+                .then(function (response) { return new BookingViewModel(response.data); });
+        };
+        BookingService.prototype.edit = function (ev, booking) {
+            return this.$mdDialog.show({
+                controller: booking_editor_modal_1.BookingEditorModalController,
+                templateUrl: 'components/booking/booking-editor-modal/booking-editor-modal.html',
+                parent: angular_1.element(document.body),
+                targetBooking: ev,
+                clickOutsideToClose: true,
+                fullscreen: true,
+                bindToController: true,
+                controllerAs: '$ctrl',
+                resolve: {
+                    'booking': function () { return booking; }
+                }
+            });
+        };
+        BookingService.$inject = ['$http', '$httpParamSerializer', '$q', '$mdDialog'];
+        return BookingService;
+    }());
+    exports.BookingService = BookingService;
+    var BookingViewModel = (function () {
+        function BookingViewModel(booking) {
+            if (booking) {
+                _.extend(this, booking);
+            }
+        }
+        return BookingViewModel;
+    }());
+    exports.BookingViewModel = BookingViewModel;
+    exports.default = BookingService;
+}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ }),
+/* 47 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(2), __webpack_require__(3), __webpack_require__(1)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, helper_1, settings_1, _) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     //import { EventEditorController } from '../components/event-editor/event-editor';
@@ -1911,9 +3106,13 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 url = url + "?" + queryString;
             }
             return this.$http.get(url)
-                .then(function (response) { return response.data; });
+                .then(function (response) {
+                var eventsResponse = response.data;
+                eventsResponse.rows = eventsResponse.rows.map(function (event) { return new EventViewModel(event); });
+                return eventsResponse;
+            });
         };
-        EventService.prototype.get = function (id) {
+        EventService.prototype.get = function (id, full) {
             return this.$http.get(settings_1.default.api + "/event/get?id=" + id)
                 .then(function (response) { return response.data; });
         };
@@ -1929,45 +3128,181 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         return EventService;
     }());
     exports.default = EventService;
+    var EventViewModel = (function () {
+        function EventViewModel(event) {
+            if (event) {
+                _.extend(this, event);
+            }
+        }
+        return EventViewModel;
+    }());
+    exports.EventViewModel = EventViewModel;
 }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 
 
 /***/ }),
-/* 29 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(0), __webpack_require__(27), __webpack_require__(28), __webpack_require__(5)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, angular_1, application_service_1, event_service_1, act_service_1) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(0), __webpack_require__(45), __webpack_require__(47), __webpack_require__(9), __webpack_require__(4), __webpack_require__(46), __webpack_require__(49), __webpack_require__(50)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, angular_1, application_service_1, event_service_1, act_service_1, contact_service_1, booking_service_1, location_service_1, user_service_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.default = angular_1.module('event-planner.services', [])
         .service('applicationService', application_service_1.default)
         .service('actService', act_service_1.default)
-        .service('eventService', event_service_1.default);
+        .service('contactService', contact_service_1.default)
+        .service('eventService', event_service_1.default)
+        .service('bookingService', booking_service_1.default)
+        .service('locationService', location_service_1.default)
+        .service('userService', user_service_1.default);
 }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 
 
 /***/ }),
-/* 30 */
-/***/ (function(module, exports) {
-
-module.exports = lodash;
-
-/***/ }),
-/* 31 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(14);
-__webpack_require__(8);
-__webpack_require__(9);
-__webpack_require__(13);
-__webpack_require__(10);
-__webpack_require__(7);
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(2), __webpack_require__(3), __webpack_require__(0), __webpack_require__(43), __webpack_require__(1)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, helper_1, settings_1, angular_1, location_editor_modal_1, _) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var LocationService = (function () {
+        function LocationService($http, $httpParamSerializer, $q, $mdDialog) {
+            this.$http = $http;
+            this.$httpParamSerializer = $httpParamSerializer;
+            this.$q = $q;
+            this.$mdDialog = $mdDialog;
+        }
+        LocationService.prototype.list = function (query) {
+            var url = settings_1.default.api + "/location/list";
+            if (query) {
+                var listQuery = helper_1.queryToRequest(query);
+                var queryString = this.$httpParamSerializer(listQuery);
+                url = url + "?" + queryString;
+            }
+            return this.$http.get(url)
+                .then(function (response) {
+                var locationsResponse = response.data;
+                locationsResponse.rows = locationsResponse.rows.map(function (location) { return new LocationViewModel(location); });
+                return locationsResponse;
+            });
+        };
+        LocationService.prototype.get = function (id, full) {
+            return this.$http.get(settings_1.default.api + "/location/get?id=" + id)
+                .then(function (response) { return new LocationViewModel(response.data); });
+        };
+        LocationService.prototype.save = function (data) {
+            return this.$http.post(settings_1.default.api + "/location/save", data)
+                .then(function (response) { return new LocationViewModel(response.data); });
+        };
+        LocationService.prototype.delete = function (data) {
+            return this.$http.post(settings_1.default.api + "/location/delete", { id: data.id })
+                .then(function (response) { return new LocationViewModel(response.data); });
+        };
+        LocationService.prototype.edit = function (ev, location) {
+            return this.$mdDialog.show({
+                controller: location_editor_modal_1.LocationEditorModalController,
+                templateUrl: 'components/location/location-editor-modal/location-editor-modal.html',
+                parent: angular_1.element(document.body),
+                targetLocation: ev,
+                clickOutsideToClose: true,
+                fullscreen: true,
+                bindToController: true,
+                controllerAs: '$ctrl',
+                resolve: {
+                    location: function () { return location; }
+                }
+            });
+        };
+        LocationService.$inject = ['$http', '$httpParamSerializer', '$q', '$mdDialog'];
+        return LocationService;
+    }());
+    exports.default = LocationService;
+    var LocationViewModel = (function () {
+        function LocationViewModel(location) {
+            if (location) {
+                _.extend(this, location);
+            }
+        }
+        return LocationViewModel;
+    }());
+    exports.LocationViewModel = LocationViewModel;
+}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ }),
+/* 50 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(2), __webpack_require__(3), __webpack_require__(1)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, helper_1, settings_1, _) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var UserService = (function () {
+        function UserService($http, $httpParamSerializer, $q, $mdDialog) {
+            this.$http = $http;
+            this.$httpParamSerializer = $httpParamSerializer;
+            this.$q = $q;
+            this.$mdDialog = $mdDialog;
+        }
+        UserService.prototype.list = function (query) {
+            var url = settings_1.default.api + "/user/list";
+            if (query) {
+                var listQuery = helper_1.queryToRequest(query);
+                var queryString = this.$httpParamSerializer(listQuery);
+                url = url + "?" + queryString;
+            }
+            return this.$http.get(url)
+                .then(function (response) {
+                var usersResponse = response.data;
+                usersResponse.rows = usersResponse.rows.map(function (user) { return new UserViewModel(user); });
+                return usersResponse;
+            });
+        };
+        UserService.prototype.get = function (id, full) {
+            return this.$http.get(settings_1.default.api + "/user/get?id=" + id)
+                .then(function (response) { return new UserViewModel(response.data); });
+        };
+        UserService.prototype.save = function (data) {
+            return this.$http.post(settings_1.default.api + "/user/save", data)
+                .then(function (response) { return new UserViewModel(response.data); });
+        };
+        UserService.prototype.delete = function (data) {
+            return this.$http.post(settings_1.default.api + "/user/delete", { id: data.id })
+                .then(function (response) { return new UserViewModel(response.data); });
+        };
+        UserService.$inject = ['$http', '$httpParamSerializer', '$q', '$mdDialog'];
+        return UserService;
+    }());
+    exports.default = UserService;
+    var UserViewModel = (function () {
+        function UserViewModel(user) {
+            if (user) {
+                _.extend(this, user);
+            }
+        }
+        return UserViewModel;
+    }());
+    exports.UserViewModel = UserViewModel;
+}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ }),
+/* 51 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(18);
 __webpack_require__(12);
+__webpack_require__(13);
+__webpack_require__(17);
+__webpack_require__(14);
 __webpack_require__(11);
-__webpack_require__(6);
-module.exports = __webpack_require__(15);
+__webpack_require__(16);
+__webpack_require__(15);
+__webpack_require__(10);
+module.exports = __webpack_require__(19);
 
 
 /***/ })

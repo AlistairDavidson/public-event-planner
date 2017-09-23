@@ -1,6 +1,5 @@
 import { ActDto, ActsDto } from '../../common/models/act';
 import { ContactDto } from '../../common/models/contact';
-import { ImageDto, WebsiteDto, FacebookDto, TwitterDto } from '../../common/models/contact-detail';
 import { ActContactDto } from '../../common/models/act-contact';
 import { BookingDto } from '../../common/models/booking';
 import { TimeslotDto } from '../../common/models/timeslot';
@@ -8,7 +7,7 @@ import { queryToRequest } from './helper';
 import settings from '../settings';
 import { MdSortDto } from '../../common/types';
 import { element } from 'angular';
-import { ActEditorController } from '../components/act/act-editor/act-editor';
+import { ActEditorModalController } from '../components/act/act-editor-modal/act-editor-modal';
 import * as _ from 'lodash';
 
 export default class ActService {
@@ -17,7 +16,8 @@ export default class ActService {
     constructor(private $http: ng.IHttpService,
                 private $httpParamSerializer: ng.IHttpParamSerializer,
                 private $q: ng.IQService,
-                private $mdDialog: ng.material.IDialogService) {
+                private $mdDialog: ng.material.IDialogService,
+                private $stateParams: ng.ui.IStateParamsService) {
 
     }
 
@@ -31,59 +31,65 @@ export default class ActService {
             url = `${url}?${queryString}`                
         }
 
+        return this.$q.resolve([{ name: 'Test', id: 1 }]);
+/*
         return this.$http.get(url)
             .then(response => {
                 let actsResponse = response.data as ActsDto;
                 actsResponse.rows = actsResponse.rows.map(act => new ActViewModel(act));
 
                 return actsResponse;
-            });            
+            });    */        
     }
 
-    get(id: number) {
+    get(id: number, full: boolean) {
         return this.$http.get(`${settings.api}/act/get?id=${id}`)
-            .then(response => new ActViewModel(response.data));
+            .then(response => new ActViewModel(response.data as ActDto));        
     }
 
     save(data: ActDto) {
         return this.$http.post(`${settings.api}/act/save`, data)
-            .then(response => new ActViewModel(response.data));
+            .then(response => new ActViewModel(response.data as ActDto));
     }
 
     delete(data: ActDto) {
         return this.$http.post(`${settings.api}/act/delete`, { id: data.id })
-            .then(response => new ActViewModel(response.data));
+            .then(response => new ActViewModel(response.data as ActDto));
     }         
 
-    create(ev: ng.IAngularEvent) {
+    edit(ev: ng.IAngularEvent, act?: ActViewModel): ng.IPromise<ActViewModel> {
         return this.$mdDialog.show({
-            controller: ActEditorController,
-            templateUrl: 'components/act/act-editor/act-editor.html',
+            controller: ActEditorModalController,
+            templateUrl: 'components/act/act-editor-modal/act-editor-modal.html',
             parent: element(document.body),
             targetAct: ev,
             clickOutsideToClose: true,
             fullscreen: true,
             bindToController: true,
-            controllerAs: '$ctrl'
+            controllerAs: '$ctrl',
+            resolve: {
+                'act': () => act,
+                'eventId': () => this.$stateParams.event
+            }
         } as any);
     }
 }
 
 export class ActViewModel implements ActDto {
     constructor(act?: ActDto) {
-        _.extend(this, act);
+        if(act) {
+            _.extend(this, act);
+        }
     }
 
     id?: number;
-    createdAt?: Date;
-    updatedAt?: Date;
+    createdAt?: string;
+    updatedAt?: string;
 
     name?: string;
     bio?: string;
     tech_specs?: string;
-    size?: number;
     town?: string;
-    image?: string;
     type?: string;
 
     mainContactId?: number;
@@ -94,40 +100,4 @@ export class ActViewModel implements ActDto {
     actContacts?: ActContactDto[];
     timeslots?: TimeslotDto[];
     bookings?: BookingDto[];
-
-    getImage() {
-        if(!this.webContact) {
-            return '';
-        }
-
-        let contacts = _.filter(this.webContact.contactDetails, { type: 'Image' });
-        return contacts.length ? (contacts[0].data as ImageDto).image : '';
-    }
-
-    getWebsite() {
-        if(!this.webContact) {
-            return '';
-        }
-        
-        let contacts = _.filter(this.webContact.contactDetails, { type: 'Website' });
-        return contacts.length ? (contacts[0].data as WebsiteDto).website : '';
-    }
-
-    getFacebook() {
-        if(!this.webContact) {
-            return '';
-        }
-        
-        let contacts = _.filter(this.webContact.contactDetails, { type: 'Facebook' });
-        return contacts.length ? (contacts[0].data as FacebookDto).facebook : '';
-    }
-
-    getTwitter() {
-        if(!this.webContact) {
-            return '';
-        }
-        
-        let contacts = _.filter(this.webContact.contactDetails, { type: 'Twitter' });
-        return contacts.length ? (contacts[0].data as TwitterDto).twitter : '';
-    }
 }

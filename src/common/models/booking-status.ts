@@ -15,8 +15,8 @@ export function bookingStatus(db: SequelizeStatic.Sequelize)  {
 
 export interface BookingStatusAttribute {
     id?: number;
-    createdAt?: Date;
-    updatedAt?: Date;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
     
     name?: string;
     order?: number;
@@ -25,6 +25,8 @@ export interface BookingStatusAttribute {
 }
 
 export interface BookingStatusDto extends BookingStatusAttribute {
+    createdAt?: string;
+    updatedAt?: string;
 }
 
 export interface BookingStatusInstance extends SequelizeStatic.Instance<BookingStatusAttribute>, BookingStatusAttribute {    

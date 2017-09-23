@@ -26,22 +26,24 @@ export default class ApplicationController {
     @Auth(['view_act'])
     async get(req: express.Request, res: express.Response) {
         let id = req.query.id as number;
-        let act = await actService.get(id);
+        let full = !!req.query.full;
+
+        let act = await actService.get(id, full);
         return act.toJSON();
     }
     
     @POST('/api/act/save')
     @Auth(['edit_act'])
     async save(req: express.Request, res: express.Response) {
-        let id = req.body as ActDto;
-        let act = await actService.save(id);
+        let actData = req.body as ActDto;
+        let act = await actService.save(actData);
         return act.toJSON();
     }
         
     @POST('/api/act/delete')
     @Auth(['edit_act'])
     async delete(req: express.Request, res: express.Response) {
-        let id = req.query.id as number;
+        let id = req.body.id as number;
         let act = await actService.delete(id);
         return { message: 'success' };
     }

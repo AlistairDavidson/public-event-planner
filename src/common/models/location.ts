@@ -5,8 +5,7 @@ import { TimeslotInstance, TimeslotModel, TimeslotDto } from './timeslot';
 
 export function location(db: SequelizeStatic.Sequelize)  {    
     let Location = db.define<LocationInstance, LocationAttribute>('Location', {
-        start: SequelizeStatic.DATE,
-        end: SequelizeStatic.DATE                
+        name: SequelizeStatic.STRING            
     }, {
         schema: 'eventplanner'
     });
@@ -16,11 +15,10 @@ export function location(db: SequelizeStatic.Sequelize)  {
 
 export interface LocationAttribute {
     id?: number;
-    createdAt?: Date;
-    updatedAt?: Date;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
 
-    start?: Date,
-    end?: Date
+    name?: string;
 
     EventId?: number;
 }
@@ -44,8 +42,16 @@ export interface LocationInstance extends SequelizeStatic.Instance<LocationAttri
 }
 
 export interface LocationDto extends LocationAttribute {
+    createdAt?: string;
+    updatedAt?: string;
+
     event?: EventDto;
     timeslots?: TimeslotDto[];
+}
+
+export interface LocationsDto {
+    count: number;
+    rows: LocationDto[];
 }
 
 export interface LocationModel extends SequelizeStatic.Model<LocationInstance, LocationAttribute> {}

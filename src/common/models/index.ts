@@ -7,7 +7,6 @@ import { permission, PermissionModel } from './permission';
 import { act, ActModel } from './act';
 import { event, EventModel } from './event';
 import { contact, ContactModel } from './contact';
-import { contactDetail, ContactDetailModel } from './contact-detail';
 import { timeslot, TimeslotModel } from './timeslot';
 import { booking, BookingModel } from './booking';
 import { bookingStatus, BookingStatusModel } from './booking-status';
@@ -34,7 +33,6 @@ export class Models {
     Act: ActModel;
     Event: EventModel;
     Contact: ContactModel;
-    ContactDetail: ContactDetailModel;
     Timeslot: TimeslotModel;
     Booking: BookingModel;
     BookingStatus: BookingStatusModel;
@@ -50,8 +48,7 @@ export class Models {
         this.User = user(database.db, this.Permission);
 
         this.ActContact = actContact(database.db);
-        this.ContactDetail = contactDetail(database.db);
-        this.Contact = contact(database.db, this.ActContact, this.ContactDetail);
+        this.Contact = contact(database.db, this.ActContact);
         this.BookingStatus = bookingStatus(database.db);
         this.ActApplication = actApplication(database.db);
         this.Booking = booking(database.db, this.BookingStatus, this.ActApplication);

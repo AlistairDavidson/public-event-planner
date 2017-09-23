@@ -14,8 +14,8 @@ export function actContact(db: SequelizeStatic.Sequelize)  {
 
 export interface ActContactAttribute {
     id?: number;
-    createdAt?: Date;
-    updatedAt?: Date;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
     relationship?: string;
     ActId?: number;
     ContactId?: number;
@@ -34,8 +34,11 @@ export interface ActContactInstance extends SequelizeStatic.Instance<ActContactA
 }
 
 export interface ActContactDto extends ActContactAttribute {    
+    createdAt?: string;
+    updatedAt?: string;
+    
     contact?: ContactDto; 
-    act?: ActDto;
+    act?: ActDto;    
 }
 
 export interface ActContactModel extends SequelizeStatic.Model<ActContactInstance, ActContactAttribute> {}

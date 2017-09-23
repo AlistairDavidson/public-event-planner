@@ -18,8 +18,8 @@ export function user(db: SequelizeStatic.Sequelize, Permission: PermissionModel)
 
 export interface UserAttribute {
     id?: number;
-    createdAt?: Date;
-    updatedAt?: Date;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
     username?: string;
     password?: string;
     uuid?: string;
@@ -39,6 +39,14 @@ export interface UserInstance extends SequelizeStatic.Instance<UserAttribute>, U
 }
 
 export interface UserDto extends UserAttribute {    
+    createdAt?: string;
+    updatedAt?: string;
 }
+
+export interface UsersDto {
+    count: number;
+    rows: UserDto[];
+}
+
 
 export interface UserModel extends SequelizeStatic.Model<UserInstance, UserAttribute> {}
