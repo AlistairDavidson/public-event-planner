@@ -6,6 +6,10 @@ Copyright (C) 2017 Alistair Davidson <alistair.l.davidson@gmail.com>
 
 TODO
 
+edit buttons on tables
+
+operation death to modals
+
 Single-line summary widgets
     act
     application

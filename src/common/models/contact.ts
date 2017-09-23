@@ -4,7 +4,7 @@ import { ActContactModel, ActContactInstance, ActContactDto } from './act-contac
 export function contact(db: SequelizeStatic.Sequelize, ActContact: ActContactModel)  {    
     let Contact = db.define<ContactInstance, ContactAttribute>('Contact', {
         name: SequelizeStatic.STRING(255),
-        contactDetails: SequelizeStatic.JSON
+        details: SequelizeStatic.JSON
     }, {
         schema: 'eventplanner'
     });
