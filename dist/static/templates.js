@@ -405,9 +405,8 @@ angular
 			'            </act-search>\n' +
 			'        </div>\n' +
 			'\n' +
-			'\n' +
 			'        <booking-status-select booking-status-id="$ctrl.booking.BookingStatusId">\n' +
-			'            </booking-status-select>\n' +
+			'        </booking-status-select>\n' +
 			'\n' +
 			'        <div layout-gt-sm="row">\n' +
 			'            <md-input-container>\n' +

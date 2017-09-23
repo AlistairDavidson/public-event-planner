@@ -860,9 +860,8 @@ angular
 			'            </act-search>\n' +
 			'        </div>\n' +
 			'\n' +
-			'\n' +
 			'        <booking-status-select booking-status-id="$ctrl.booking.BookingStatusId">\n' +
-			'            </booking-status-select>\n' +
+			'        </booking-status-select>\n' +
 			'\n' +
 			'        <div layout-gt-sm="row">\n' +
 			'            <md-input-container>\n' +
@@ -2488,9 +2487,11 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
     Object.defineProperty(exports, "__esModule", { value: true });
     var ActContactsEditorController = (function () {
         function ActContactsEditorController() {
-            this.actContacts = [];
         }
         ActContactsEditorController.prototype.$onInit = function () {
+            if (!this.actContacts) {
+                this.actContacts = [];
+            }
         };
         ActContactsEditorController.prototype.add = function () {
             this.actContacts.push(new contact_service_1.ActContactViewModel({ ActId: this.actId }));

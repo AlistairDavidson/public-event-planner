@@ -3,7 +3,7 @@ import { ContactViewModel, ActContactViewModel } from '../../../services/contact
 import * as _ from 'lodash';
 
 export class ActContactsEditorController implements angular.IComponentController {
-    actContacts: ActContactViewModel[] = [];
+    actContacts: ActContactViewModel[];
 
     relationship: string;
     contact: ContactViewModel;
@@ -13,6 +13,9 @@ export class ActContactsEditorController implements angular.IComponentController
     }
 
     $onInit() {
+        if(!this.actContacts) {
+            this.actContacts = [];
+        }
     }
 
     add() {
