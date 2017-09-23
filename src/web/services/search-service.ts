@@ -33,7 +33,7 @@ async list<T>(options: {
                 options.query.order = 'ASC';
             }
 
-            opts.order = [ options.query.field, options.query.order ]
+            opts.order = [ [ options.query.field, options.query.order ] ]
         }
 
         if(options.where) {
