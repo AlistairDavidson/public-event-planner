@@ -619,7 +619,7 @@ angular
 			'  </td>\n' +
 			'</script>\n' +
 			'\n' +
-			'<ep-table title="\'Acts\'" on-list="$ctrl.getActs(query)" on-create="$ctrl.edit($event)" header-template="\'/acts-header.html\'" cell-template="\'/acts-cell.html\'">\n' +
+			'<ep-table title="\'Acts\'" on-list="$ctrl.getActs(query)" on-edit="$ctrl.edit($event)" header-template="\'/acts-header.html\'" cell-template="\'/acts-cell.html\'">\n' +
 			'</ep-table>');
 
 		$templateCache.put('components/act/acts/acts.html', '<md-nav-bar md-selected-nav-item="$ctrl.currentNavItem">\n' +
@@ -832,7 +832,7 @@ angular
 			'  </td>\n' +
 			'</script>\n' +
 			'\n' +
-			'<ep-table title="\'Applications\'" on-list="$ctrl.getApplications(query)" on-create="$ctrl.edit($event)" header-template="\'/applications-header.html\'" cell-template="\'/applications-cell.html\'">\n' +
+			'<ep-table title="\'Applications\'" on-list="$ctrl.getApplications(query)" on-edit="$ctrl.edit($event)" header-template="\'/applications-header.html\'" cell-template="\'/applications-cell.html\'">\n' +
 			'</ep-table>');
 
 		$templateCache.put('components/application/applications/applications.html', '<md-nav-bar md-selected-nav-item="$ctrl.currentNavItem">\n' +
@@ -1885,7 +1885,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 .state({
                 name: 'root.applications.detail',
                 url: '/detail',
-                template: "<applications-table                                \n                                get-applications=\"$ctrl.applicationService.list(query)\"\n                                create=\"$ctrl.applicationService.edit($event)\">\n                            </applications-table>",
+                template: "<applications-table                                \n                                get-applications=\"$ctrl.applicationService.list(query)\"\n                                edit=\"$ctrl.applicationService.edit($event)\">\n                            </applications-table>",
                 controller: ['applicationService', function (applicationService) {
                         this.applicationService = applicationService;
                     }],
@@ -1911,7 +1911,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 .state({
                 name: 'root.acts.detail',
                 url: '/detail',
-                template: "<acts-table                                \n                                get-acts=\"$ctrl.actService.list(query)\"\n                                create=\"$ctrl.actService.edit($event)\">\n                            </acts-table>",
+                template: "<acts-table                                \n                                get-acts=\"$ctrl.actService.list(query)\"\n                                edit=\"$ctrl.actService.edit($event)\">\n                            </acts-table>",
                 controller: ['actService', function (actService) {
                         this.actService = actService;
                     }],
@@ -2083,7 +2083,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         controller: ActsTableController,
         bindings: {
             getActs: '&',
-            create: '&'
+            edit: '&'
         }
     };
     exports.default = options;
@@ -2642,9 +2642,9 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 return newData;
             });
         };
-        EpTableController.prototype.edit = function () {
+        EpTableController.prototype.edit = function (ev) {
             var _this = this;
-            return this.loading = this.onCreate()
+            return this.loading = this.onEdit()
                 .then(function () { return _this.get(); });
         };
         EpTableController.prototype.showFilter = function () {
@@ -2669,7 +2669,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         bindings: {
             title: '=',
             onList: '&',
-            onCreate: '&',
+            onEdit: '&',
             headerTemplate: '=',
             cellTemplate: '='
         }

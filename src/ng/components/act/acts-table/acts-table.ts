@@ -1,6 +1,6 @@
 class ActsTableController implements angular.IComponentController {
     getActs: Function;
-    create: Function;
+    edit: Function;
 
     constructor() {
     }
@@ -18,7 +18,7 @@ let options: angular.IComponentOptions = {
     controller: ActsTableController,
     bindings: {
         getActs: '&',
-        create: '&'
+        edit: '&'
     }
 }
 

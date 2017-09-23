@@ -13,7 +13,7 @@ class EpTableController implements angular.IComponentController {
     selected: any[] = [];
 
     onList: Function;
-    onCreate: Function;
+    onEdit: Function;
 
     loading: angular.IPromise<any>;
     form: ng.IFormController;   
@@ -51,8 +51,8 @@ class EpTableController implements angular.IComponentController {
             });            
     }
 
-    edit() {
-        return this.loading = this.onCreate()
+    edit(ev: ng.IAngularEvent) {
+        return this.loading = this.onEdit()
             .then(() => this.get());
     }
 
@@ -87,7 +87,7 @@ let options: angular.IComponentOptions = {
     bindings: {
         title: '=',
         onList: '&',
-        onCreate: '&',
+        onEdit: '&',
         headerTemplate: '=',
         cellTemplate: '='        
     }
