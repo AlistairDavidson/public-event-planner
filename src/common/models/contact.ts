@@ -51,7 +51,6 @@ export interface ContactsDto {
 
 export interface ContactModel extends SequelizeStatic.Model<ContactInstance, ContactAttribute> {}
 
-
 export interface ContactDetailsDto {
     addresses: AddressDto[];
     emails: EmailDto[];
