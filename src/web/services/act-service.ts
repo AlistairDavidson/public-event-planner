@@ -73,12 +73,16 @@ export class ActService {
         delete actData.webContact;
        
 
-        let mainContact = await contactService.save(mainContactData);
-        await act.setMainContact(mainContact);
+        if(mainContactData) {
+            let mainContact = await contactService.save(mainContactData);
+            await act.setMainContact(mainContact);
+        }
 
-        let webContact = await contactService.save(webContactData);
-        await act.setWebContact(webContact);
-
+        if(webContactData) {
+            let webContact = await contactService.save(webContactData);
+            await act.setWebContact(webContact);
+        }
+        
         await this.rewriteContacts(act, actData.actContacts);
         await this.rewriteBookings(act, actData.bookings);
       
