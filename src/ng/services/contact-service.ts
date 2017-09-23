@@ -42,6 +42,8 @@ export default class ContactService {
     }
 
     save(data: ContactDto) {
+        console.log('contactService saving', data);
+
         return this.$http.post(`${settings.api}/contact/save`, data)
             .then(response => new ContactViewModel(response.data as ContactDto));
     }

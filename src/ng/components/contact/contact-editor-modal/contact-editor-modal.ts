@@ -16,6 +16,7 @@ export class ContactEditorModalController implements angular.IComponentControlle
     }
 
     save() {
+        console.log('modal saving', this.contact);
         this.saving = true;
         this.$mdDialog.hide(this.contact);
     }
