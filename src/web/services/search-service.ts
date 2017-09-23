@@ -62,7 +62,6 @@ async list<T>(options: {
 
 
         console.log('**** SEARCHING WITH', opts);
-        console.log('**** SEARCHING WITH', JSON.stringify(opts));
 
         let result = await options.model.findAndCountAll(opts);
 
