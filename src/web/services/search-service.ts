@@ -14,16 +14,20 @@ async list<T>(options: {
     attributes?: string[]
 }): Promise<{ rows: T[], count: number}> {
         console.log('**** SEARCH RECIEVED', JSON.stringify(options.query))
-
-        if(!options.query) {
-            options.query = {
-                field: 'createdAt',
-                order: 'DESC',
-                filter: '',
-                offset: 0,
-                limit: 100
-            }
-        }
+    
+        options.query = options.query ? options.query : {
+            field: undefined,
+            order: undefined,
+            filter: undefined,
+            offset: undefined,
+            limit: undefined
+        };
+    
+        options.query.field = options.query.field ? options.query.field : 'createdAt';
+        options.query.order = options.query.order ? options.query.order : 'DESC';
+        options.query.filter = options.query.filter ? options.query.filter : '';
+        options.query.offset = options.query.offset ? options.query.offset : 0;
+        options.query.limit = options.query.limit ? options.query.limit : 100;        
 
         let opts: SequelizeStatic.FindOptions = {            
             offset: options.query.offset,
