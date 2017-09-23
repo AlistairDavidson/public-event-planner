@@ -431,7 +431,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 }
             });
         };
-        ActService.$inject = ['$http', '$httpParamSerializer', '$q', '$mdDialog'];
+        ActService.$inject = ['$http', '$httpParamSerializer', '$q', '$mdDialog', '$stateParams'];
         return ActService;
     }());
     exports.default = ActService;

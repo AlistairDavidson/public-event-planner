@@ -11,7 +11,7 @@ import { ActEditorModalController } from '../components/act/act-editor-modal/act
 import * as _ from 'lodash';
 
 export default class ActService {
-    static $inject = ['$http', '$httpParamSerializer', '$q', '$mdDialog'];
+    static $inject = ['$http', '$httpParamSerializer', '$q', '$mdDialog', '$stateParams'];
 
     constructor(private $http: ng.IHttpService,
                 private $httpParamSerializer: ng.IHttpParamSerializer,
