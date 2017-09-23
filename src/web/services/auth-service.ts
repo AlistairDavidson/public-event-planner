@@ -63,12 +63,20 @@ export class AuthService {
                 });
 
                 ['view_profile',
+                'view_act',
+                'edit_act',
                 'view_application',
                 'edit_application',
+                'view_booking',
+                'edit_booking',
+                'view_contact',
+                'edit_contact',
                 'view_event',
                 'edit_event',
-                'view_act',
-                'edit_act'].forEach(async permissionName => {
+                'view_location',
+                'edit_location',
+                'view_user',
+                'edit_user'].forEach(async permissionName => {
                     let permission = await database.models.Permission.findOne({
                         where: {
                             name: permissionName
@@ -93,7 +101,7 @@ export class AuthService {
                 }).then((user) => {
                     console.log('found user', user);            
                                 
-                    if (!user || !self.validPassword(user, password)) {
+                    if (!self.validPassword(user, password)) {
                         return done(null, false, req.flash('loginMessage', 'Username or password incorrect'));
                     }
 
