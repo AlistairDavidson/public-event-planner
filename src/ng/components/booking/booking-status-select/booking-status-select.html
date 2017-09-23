@@ -1,0 +1,14 @@
+<div layout="column">
+    <div layout-gt-sm="row">
+       <md-input-container>
+            <md-select  ng-model="$ctrl.bookingStatus"
+                        ng-change="$ctrl.bookingStatusId = $ctrl.bookingStatus.id"
+                        placeholder="Booking status">
+                <md-option  ng-value="bookingStatus"
+                            ng-repeat="bookingStatus in $ctrl.bookingStatuses">
+                    {{ bookingStatus.name }}
+                </md-option>
+            </md-select>
+        </md-input-container>
+    </div>
+</div>

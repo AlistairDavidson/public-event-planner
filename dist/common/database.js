@@ -75,21 +75,19 @@ class Database {
                     order: 7
                 }
             });
-            yield this.models.Permission.findOrCreate({
-                where: {
-                    name: 'view_profile'
-                }
-            });
-            yield this.models.Permission.findOrCreate({
-                where: {
-                    name: 'view_application'
-                }
-            });
-            yield this.models.Permission.findOrCreate({
-                where: {
-                    name: 'edit_application'
-                }
-            });
+            ['view_profile',
+                'view_application',
+                'edit_application',
+                'view_event',
+                'edit_event',
+                'view_act',
+                'edit_act'].forEach((permission) => __awaiter(this, void 0, void 0, function* () {
+                return yield this.models.Permission.findOrCreate({
+                    where: {
+                        name: permission
+                    }
+                });
+            }));
             /****
                 TEST
             ******/
@@ -110,7 +108,7 @@ class Database {
                         party_names: 'Alice, Alex, Annabel, Ally',
                         requested_fee: '£100',
                         bio: 'All about alabaster',
-                        image: '',
+                        image: 'https://www.ticketline.co.uk/images/artist/the-wurzels/the-wurzels.jpg',
                         tech_specs: 'Amps'
                     }
                 }
@@ -132,7 +130,7 @@ class Database {
                         party_names: 'Bob, Belle',
                         requested_fee: '£200',
                         bio: 'Brilliant',
-                        image: '',
+                        image: 'http://cdn8.openculture.com/wp-content/uploads/2015/01/06212116/spinal-tap.jpg',
                         tech_specs: 'Bass'
                     }
                 }

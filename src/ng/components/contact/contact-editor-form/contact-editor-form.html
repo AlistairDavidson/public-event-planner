@@ -1,0 +1,143 @@
+<form novalidate ng-cloak>
+    <div layout="column"
+        ng-if="!$ctrl.mode || $ctrl.mode == 'Contact'">
+        <md-input-container>
+            <label>Name</label>
+            <input ng-model="$ctrl.contact.name">
+        </md-input-container>
+    </div>
+
+    <div layout="column"
+         ng-if="!$ctrl.mode || $ctrl.mode == 'Contact'">
+
+        <h3 class="md-subhead">Addresses</h3>
+
+        <div ng-repeat="address in $ctrl.contact.details.addresses track by $index"
+             layout="row">            
+            <md-input-container class="md-block"
+                                flex="80">
+                <label>Address</label>
+                <input ng-model="address.address">
+            </md-input-container>
+
+            <md-input-container class="md-block"
+                                flex="20">
+                <label>Postcode</label>
+                <input ng-model="address.postcode">
+            </md-input-container>
+        
+
+            <md-button ng-click="$ctrl.remove('addresses', address)"
+                    class="fixed-height-button">
+                <md-icon>remove</md-icon>            
+            </md-button>               
+        </div>
+
+        <md-button ng-click="$ctrl.contact.details.addresses.push({})">
+            <md-icon>add</md-icon>
+            
+            Add
+        </md-button>
+    </div>
+
+    <div layout="column"
+        ng-if="!$ctrl.mode || $ctrl.mode == 'Contact'">
+        <h3 class="md-subhead">Phone Numbers</h3>
+        <div ng-repeat="phone in $ctrl.contact.details.phones track by $index"
+                layout="row">
+                    
+            <md-input-container class="md-block" flex>
+                <label>Phone</label>
+                <input ng-model="phone.phone">
+            </md-input-container>
+        
+            <md-button ng-click="$ctrl.remove('phones', phone)"
+                    class="fixed-height-button">
+                <md-icon>remove</md-icon>            
+            </md-button>   
+        </div>
+        <md-button ng-click="$ctrl.contact.details.phones.push({})">
+            <md-icon>add</md-icon>
+            
+            Add
+        </md-button>
+    </div>
+
+    <div layout="column"
+            ng-if="!$ctrl.mode || $ctrl.mode == 'Contact'">
+        <h3 class="md-subhead">Emails</h3>
+        <div ng-repeat="email in $ctrl.contact.details.emails track by $index"
+                layout="row">
+                       
+            <md-input-container class="md-block" flex>
+                <label>Email</label>
+                <input  ng-model="email.email"
+                        type="email">
+            </md-input-container>        
+
+            <md-button ng-click="$ctrl.remove('emails', email)"
+                    class="fixed-height-button">
+                <md-icon>remove</md-icon>            
+            </md-button>   
+        </div>
+        <md-button ng-click="$ctrl.contact.details.emails.push({})">
+            <md-icon>add</md-icon>
+            
+            Add
+        </md-button>
+    </div>
+
+    <div layout="column">
+        <h3 class="md-subhead">Websites</h3>
+        <div ng-repeat="website in $ctrl.contact.details.websites track by $index"
+            layout="row">
+
+            <md-input-container class="md-block" flex>
+                <label>Website</label>
+                <input ng-model="website.url">
+            </md-input-container>
+        
+            <md-button ng-click="$ctrl.remove('websites', website)"
+                    class="fixed-height-button">
+                <md-icon>remove</md-icon>            
+            </md-button>   
+        </div>
+        <md-button ng-click="$ctrl.contact.details.websites.push({})">
+            <md-icon>add</md-icon>
+            
+            Add
+        </md-button>
+    </div>
+
+    <div layout="column"
+        ng-if="!$ctrl.mode || $ctrl.mode == 'Web'">
+        <h3 class="md-subhead">Images</h3>
+        <div ng-repeat="image in $ctrl.contact.details.images track by $index"
+            layout="row">                                    
+            
+            <md-input-container class="md-block" flex>
+                <label>Image</label>
+                <input ng-model="image.image">
+            </md-input-container>
+
+            <div layout-gt-sm="row">
+                <img ng-if="image.image" src="{{ image.image }}" />
+            </div>
+        
+            <md-button ng-click="$ctrl.remove('images', image)"
+                        class="fixed-height-button">
+                <md-icon>remove</md-icon>            
+            </md-button>   
+        </div>
+        <md-button ng-click="$ctrl.contact.details.images.push({})">
+            <md-icon>add</md-icon>
+            
+            Add
+        </md-button>
+    </div>
+</form>
+
+
+
+
+

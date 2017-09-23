@@ -3,8 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const SequelizeStatic = require("sequelize");
 function location(db) {
     let Location = db.define('Location', {
-        start: SequelizeStatic.DATE,
-        end: SequelizeStatic.DATE
+        name: SequelizeStatic.STRING
     }, {
         schema: 'eventplanner'
     });

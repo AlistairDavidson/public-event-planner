@@ -10,55 +10,56 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const database_1 = require("../../common/database");
 const search_service_1 = require("./search-service");
-class ContactService {
+class EventService {
     list(query) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield search_service_1.default.list({
-                model: database_1.default.models.Contact,
+                model: database_1.default.models.Event,
                 query: query
             });
         });
     }
-    get(contactId, full) {
+    get(eventId, full) {
         return __awaiter(this, void 0, void 0, function* () {
             if (full) {
-                return yield database_1.default.models.Contact
-                    .findById(contactId, {
+                return yield database_1.default.models.Event.findById(eventId, {
                     include: [{
-                            model: database_1.default.models.ActContact,
-                            include: [{
-                                    model: database_1.default.models.Contact
-                                }]
+                            model: database_1.default.models.Booking,
+                            include: [{ model: database_1.default.models.BookingStatus }]
+                        }, {
+                            model: database_1.default.models.Location,
+                            include: [{ model: database_1.default.models.Timeslot }]
+                        }, {
+                            model: database_1.default.models.ActApplication
                         }]
                 });
             }
             else {
-                return yield database_1.default.models.Contact
-                    .findById(contactId);
+                return yield database_1.default.models.Event.findById(eventId);
             }
         });
     }
-    save(contactData) {
+    save(eventData) {
         return __awaiter(this, void 0, void 0, function* () {
-            let contact;
-            if (contactData.id) {
-                contact = yield database_1.default.models.Contact.findById(contactData.id);
+            let event;
+            if (eventData.id) {
+                event = yield database_1.default.models.Event.findById(eventData.id);
             }
-            if (!contact) {
-                contact = yield database_1.default.models.Contact.create(contactData);
+            if (!event) {
+                event = yield database_1.default.models.Event.create(eventData);
             }
             else {
-                contact = yield contact.update(contactData);
+                event = yield event.update(eventData);
             }
-            return contact;
+            return event;
         });
     }
-    delete(contactId) {
+    delete(eventId) {
         return __awaiter(this, void 0, void 0, function* () {
-            let contact = yield database_1.default.models.Contact.findById(contactId);
-            return yield contact.destroy();
+            let event = yield database_1.default.models.Event.findById(eventId);
+            return yield event.destroy();
         });
     }
 }
-exports.ContactService = ContactService;
-exports.default = new ContactService();
+exports.EventService = EventService;
+exports.default = new EventService();

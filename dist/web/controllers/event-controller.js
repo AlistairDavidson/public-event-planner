@@ -19,16 +19,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const express = require("express");
 const web_decorators_1 = require("../services/web-decorators");
-const act_application_service_1 = require("../services/act-application-service");
-class ApplicationController {
+const event_service_1 = require("../services/event-service");
+class EventController {
     constructor(app) {
     }
     list(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             let query = req.query;
-            let result = yield act_application_service_1.default.list(query);
+            let result = yield event_service_1.default.list(query);
             return {
-                rows: result.rows.map(row => row.toJSON()),
+                rows: result.rows.map(event => event.toJSON()),
                 count: result.count
             };
         });
@@ -37,69 +37,51 @@ class ApplicationController {
         return __awaiter(this, void 0, void 0, function* () {
             let id = req.query.id;
             let full = !!req.query.full;
-            let application = yield act_application_service_1.default.get(id, full);
-            return application.toJSON();
+            let event = yield event_service_1.default.get(id, full);
+            return event.toJSON();
         });
     }
     save(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             let id = req.body;
-            let application = yield act_application_service_1.default.save(id);
-            return application.toJSON();
+            let event = yield event_service_1.default.save(id);
+            return event.toJSON();
         });
     }
     delete(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             let id = req.query.id;
-            let application = yield act_application_service_1.default.delete(id);
-            return { message: 'success' };
-        });
-    }
-    /*******
-     * NOTE: UNAUTHED
-     */
-    apply(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            let data = req.body;
-            let application = yield act_application_service_1.default.save({
-                details: data
-            });
+            let event = yield event_service_1.default.delete(id);
             return { message: 'success' };
         });
     }
 }
 __decorate([
-    web_decorators_1.GET('/api/application/list'),
-    web_decorators_1.Auth(['view_application']),
+    web_decorators_1.GET('/api/event/list'),
+    web_decorators_1.Auth(['view_event']),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", Promise)
-], ApplicationController.prototype, "list", null);
+], EventController.prototype, "list", null);
 __decorate([
-    web_decorators_1.GET('/api/application/get'),
-    web_decorators_1.Auth(['view_application']),
+    web_decorators_1.GET('/api/event/get'),
+    web_decorators_1.Auth(['view_event']),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", Promise)
-], ApplicationController.prototype, "get", null);
+], EventController.prototype, "get", null);
 __decorate([
-    web_decorators_1.POST('/api/application/save'),
-    web_decorators_1.Auth(['edit_application']),
+    web_decorators_1.POST('/api/event/save'),
+    web_decorators_1.Auth(['edit_event']),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", Promise)
-], ApplicationController.prototype, "save", null);
+], EventController.prototype, "save", null);
 __decorate([
-    web_decorators_1.POST('/api/application/delete'),
-    web_decorators_1.Auth(['edit_application']),
+    web_decorators_1.POST('/api/event/delete'),
+    web_decorators_1.Auth(['edit_event']),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", Promise)
-], ApplicationController.prototype, "delete", null);
-__decorate([
-    web_decorators_1.POST('/api/application/apply'),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
-    __metadata("design:returntype", Promise)
-], ApplicationController.prototype, "apply", null);
-exports.default = ApplicationController;
+], EventController.prototype, "delete", null);
+exports.default = EventController;

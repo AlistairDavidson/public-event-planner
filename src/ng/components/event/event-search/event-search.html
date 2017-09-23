@@ -1,0 +1,24 @@
+<div layout="column">
+    <div layout-gt-sm="row">
+        <md-autocomplete flex required
+            md-input-name="event-search"
+            md-input-minlength="2"
+            md-selected-item="$ctrl.event"
+            md-search-text="$ctrl.searchText"
+            md-items="event in $ctrl.search($ctrl.searchText)"
+            md-item-text="event.name"
+            md-require-match
+            md-floating-label="Event"
+            md-selected-item-change="$ctrl.eventId = event.id">
+          <md-item-template>
+            <span md-highlight-text="ctrl.searchText">{{ event.name }}</span>
+          </md-item-template>
+        </md-autocomplete>
+
+        <md-button ng-click="$ctrl.edit($event)">
+            <md-icon>add</md-icon>
+            New
+        </md-button>
+    </div>
+</div>
+        

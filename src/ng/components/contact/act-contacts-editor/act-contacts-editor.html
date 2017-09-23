@@ -1,0 +1,23 @@
+<div layout="column">
+    <div ng-repeat="actContact in $ctrl.actContacts track by $index"
+            layout="row">
+        <md-input-container class="md-block" flex="30">
+            <label>Relationship</label>
+            <input ng-model="actContact.relationship">
+        </md-input-container>
+
+        <contact-search contact="actContact.contact" flex="75">
+        </contact-search>
+
+        <md-button ng-click="$ctrl.remove(actContact)"
+                class="fixed-height-button">
+            <md-icon>remove</md-icon>            
+        </md-button>               
+    </div>
+
+    <md-button ng-click="$ctrl.add()">
+        <md-icon>add</md-icon>
+        
+        Add
+    </md-button>
+</div>

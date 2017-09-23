@@ -1,0 +1,24 @@
+<div layout="column">
+    <div layout-gt-sm="row">
+        <md-autocomplete flex required
+            md-input-name="user-search"
+            md-input-minlength="2"
+            md-selected-item="$ctrl.user"
+            md-search-text="$ctrl.searchText"
+            md-items="user in $ctrl.search($ctrl.searchText)"
+            md-item-text="user.name"
+            md-require-match
+            md-floating-label="User"
+            md-selected-item-change="$ctrl.userId = user.id">
+          <md-item-template>
+            <span md-highlight-text="ctrl.searchText">{{ user.name }}</span>
+          </md-item-template>
+        </md-autocomplete>
+
+        <md-button ng-click="$ctrl.edit($event)">
+            <md-icon>add</md-icon>
+            New
+        </md-button>
+    </div>
+</div>
+        

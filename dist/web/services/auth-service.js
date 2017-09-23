@@ -58,24 +58,20 @@ class AuthService {
                         password: self.generateHash(password),
                         uuid: uuid.v4()
                     });
-                    let permission = yield database_1.default.models.Permission.findOne({
-                        where: {
-                            name: 'view_profile'
-                        }
-                    });
-                    yield user.addPermission(permission);
-                    permission = yield database_1.default.models.Permission.findOne({
-                        where: {
-                            name: 'view_application'
-                        }
-                    });
-                    yield user.addPermission(permission);
-                    permission = yield database_1.default.models.Permission.findOne({
-                        where: {
-                            name: 'edit_application'
-                        }
-                    });
-                    yield user.addPermission(permission);
+                    ['view_profile',
+                        'view_application',
+                        'edit_application',
+                        'view_event',
+                        'edit_event',
+                        'view_act',
+                        'edit_act'].forEach((permissionName) => __awaiter(this, void 0, void 0, function* () {
+                        let permission = yield database_1.default.models.Permission.findOne({
+                            where: {
+                                name: permissionName
+                            }
+                        });
+                        yield user.addPermission(permission);
+                    }));
                     return done(null, user);
                 }
             });

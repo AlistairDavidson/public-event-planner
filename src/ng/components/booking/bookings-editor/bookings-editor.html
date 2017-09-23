@@ -1,0 +1,20 @@
+
+<div layout="column">
+    <div ng-repeat="booking in $ctrl.bookings track by $index"
+            layout="row">
+        <booking-summary booking="booking">
+
+        </booking>
+
+        <md-button ng-click="$ctrl.remove(booking)"
+                   class="fixed-height-button">
+            <md-icon>remove</md-icon>            
+        </md-button>               
+    </div>
+
+    <md-button ng-click="$ctrl.add($event)">
+        <md-icon>add</md-icon>
+        
+        Add
+    </md-button>
+</div>

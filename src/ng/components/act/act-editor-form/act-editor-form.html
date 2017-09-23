@@ -1,0 +1,68 @@
+<md-card layout-padding>
+<form   novalidate
+        ng-cloak>
+    <div layout="column">
+        <h2 class="md-title">Act</h2>
+        
+        <div layout-gt-sm="row">
+            <md-input-container>
+                <label>Act Name</label>
+                <input ng-model="$ctrl.act.name">
+            </md-input-container>
+
+            <md-input-container>
+                <label>Type</label>
+                <input ng-model="$ctrl.act.type">
+            </md-input-container>
+
+            <md-input-container>
+                <label>Town</label>
+                <input ng-model="$ctrl.act.town">
+            </md-input-container>
+        </div>
+
+        <hr>
+
+        <h3 class="md-subhead">Details</h3>
+
+        <div layout-gt-sm="row">
+            <md-input-container>
+                <label>Bio</label>
+                <textarea ng-model="$ctrl.act.bio">
+                </textarea>
+            </md-input-container>
+        </div>
+    
+        <div layout-gt-sm="row">
+            <md-input-container>
+                <label>Tech Specs</label>
+                <textarea ng-model="$ctrl.act.tech_specs">
+                </textarea>
+            </md-input-container>
+        </div>                
+
+        <contact-editor-form contact="$ctrl.act.webContact"
+                                mode="'Web'">
+        </contact-editor-form>
+
+        <hr>
+    
+        <h3 class="md-subhead">Primary Contact</h3>
+        <contact-search contact="$ctrl.act.mainContact">
+        </contact-search>
+
+        <h3 class="md-subhead">Other Contacts</h3>
+        <act-contacts-editor act-contacts="$ctrl.act.actContacts"
+                             act-id="$ctrl.act.id">
+        </act-contacts-editor>
+        
+        <hr>
+
+        <h3 class="md-subhead">Bookings</h3>
+        <bookings-editor    bookings="$ctrl.act.bookings"
+                            act-id="$ctrl.act.id"
+                            event-id="$ctrl.eventId">            
+        </bookings-editor>
+    </div>
+</form>
+</md-card>

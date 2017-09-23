@@ -1,0 +1,18 @@
+<form   novalidate
+        ng-cloak>
+    <div layout="column">
+        <h2 class="md-title">Location</h2>
+
+        <div layout-gt-sm="row">
+            <md-input-container>
+                <label>Name</label>
+                <input ng-model="$ctrl.location.name">
+            </md-input-container>
+        </div>           
+
+        <div layout-gt-sm="row">
+            <event-search event-id="$ctrl.location.EventId">                
+            </event-search>
+        </div>     
+    </div>
+</form>

@@ -1,0 +1,12 @@
+<md-dialog aria-label="New Contact" class="contact-editor-modal">
+    <md-dialog-content class="md-dialog-content">
+        <contact-editor-form
+            contact="$ctrl.contact"
+            mode="$ctrl.mode">
+        </contact-editor-form>
+    </md-dialog-content>
+    <md-dialog-actions>
+        <md-button ng-click="$ctrl.save()" ng-disabled="$ctrl.saving">Save</md-button>
+        <md-button ng-click="$ctrl.cancel()">Cancel</md-button>
+    </md-dialog-actions>
+</md-dialog>

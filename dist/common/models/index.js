@@ -6,7 +6,6 @@ const permission_1 = require("./permission");
 const act_1 = require("./act");
 const event_1 = require("./event");
 const contact_1 = require("./contact");
-const contact_detail_1 = require("./contact-detail");
 const timeslot_1 = require("./timeslot");
 const booking_1 = require("./booking");
 const booking_status_1 = require("./booking-status");
@@ -32,8 +31,7 @@ class Models {
         this.Permission = permission_1.permission(database_1.default.db);
         this.User = user_1.user(database_1.default.db, this.Permission);
         this.ActContact = act_contact_1.actContact(database_1.default.db);
-        this.ContactDetail = contact_detail_1.contactDetail(database_1.default.db);
-        this.Contact = contact_1.contact(database_1.default.db, this.ActContact, this.ContactDetail);
+        this.Contact = contact_1.contact(database_1.default.db, this.ActContact);
         this.BookingStatus = booking_status_1.bookingStatus(database_1.default.db);
         this.ActApplication = act_application_1.actApplication(database_1.default.db);
         this.Booking = booking_1.booking(database_1.default.db, this.BookingStatus, this.ActApplication);

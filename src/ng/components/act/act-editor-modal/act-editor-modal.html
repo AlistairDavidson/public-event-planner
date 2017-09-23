@@ -1,0 +1,10 @@
+<md-dialog aria-label="New Act">
+    <md-dialog-content class="md-dialog-content">
+       <act-editor-form act="$ctrl.act" event-id="$ctrl.eventId">
+       </act-editor-form>
+    </md-dialog-content>
+    <md-dialog-actions>
+        <md-button ng-click="$ctrl.save()">Save</md-button>
+        <md-button ng-click="$ctrl.cancel()">Cancel</md-button>
+    </md-dialog-actions>
+</md-dialog>

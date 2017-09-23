@@ -1,0 +1,44 @@
+<form   novalidate
+        ng-cloak>
+    <div layout="column">
+        <h2 class="md-title">Booking</h2>
+
+        <div layout-gt-sm="row">
+            <event-search event-id="$ctrl.booking.EventId">                
+            </event-search>
+        </div>
+
+        <div layout-gt-sm="row">
+            <act-search act-id="$ctrl.booking.ActId">                
+            </act-search>
+        </div>
+
+
+        <booking-status-select booking-status-id="$ctrl.booking.BookingStatusId">
+            </booking-status-select>
+
+        <div layout-gt-sm="row">
+            <md-input-container>
+                <label>Tech Specs</label>
+                <textarea ng-model="$ctrl.booking.tech_specs">
+                </textarea>
+            </md-input-container>
+        </div>
+
+        <div layout-gt-sm="row">
+            <md-input-container>
+                <label>Size of Act</label>
+                <input type="number" ng-model="$ctrl.booking.size_of_act">
+            </md-input-container>
+
+            <md-input-container>
+                <label>Size of Party</label>
+                <input type="number" ng-model="$ctrl.booking.size_of_party">
+            </md-input-container>
+        </div>
+
+        TODO: actApplication
+
+        </div>                
+    </div>
+</form>
