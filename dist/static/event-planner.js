@@ -174,6 +174,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 bindToController: true,
                 controllerAs: '$ctrl',
                 skipHide: true,
+                autoWrap: true,
                 resolve: {
                     'contact': function () { return contact; },
                     'mode': function () { return mode; }
@@ -426,7 +427,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 fullscreen: true,
                 bindToController: true,
                 controllerAs: '$ctrl',
-                skipHide: true,
+                autoWrap: false,
                 resolve: {
                     'act': function () { return act; },
                     'eventId': function () { return _this.$stateParams.event; }
@@ -2996,6 +2997,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 bindToController: true,
                 controllerAs: '$ctrl',
                 skipHide: true,
+                autoWrap: true,
                 resolve: {
                     'application': function () { return application; }
                 }
@@ -3064,6 +3066,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 bindToController: true,
                 controllerAs: '$ctrl',
                 skipHide: true,
+                autoWrap: true,
                 resolve: {
                     'booking': function () { return booking; }
                 }

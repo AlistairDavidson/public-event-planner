@@ -62,6 +62,7 @@ export default class ContactService {
             bindToController: true,
             controllerAs: '$ctrl',
             skipHide: true,
+            autoWrap: true,
             resolve: {
                 'contact': () => contact,
                 'mode': () => mode

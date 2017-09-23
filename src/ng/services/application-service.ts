@@ -82,6 +82,7 @@ export default class ApplicationService {
             bindToController: true,
             controllerAs: '$ctrl',
             skipHide: true,
+            autoWrap: true,
             resolve: {
                 'application': () => application
             }
