@@ -12,6 +12,9 @@ export class BookingsEditorController implements angular.IComponentController {
     }
 
     $onInit() {
+        if(!this.bookings) {
+            this.bookings = [];
+        }
     }
 
     add(ev: ng.IAngularEvent) {

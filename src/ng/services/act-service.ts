@@ -30,16 +30,14 @@ export default class ActService {
 
             url = `${url}?${queryString}`                
         }
-
-        return this.$q.resolve([{ name: 'Test', id: 1 }]);
-/*
+  
         return this.$http.get(url)
             .then(response => {
                 let actsResponse = response.data as ActsDto;
                 actsResponse.rows = actsResponse.rows.map(act => new ActViewModel(act));
 
                 return actsResponse;
-            });    */        
+            });   
     }
 
     get(id: number, full: boolean) {

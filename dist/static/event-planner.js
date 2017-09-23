@@ -394,15 +394,12 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 var queryString = this.$httpParamSerializer(listQuery);
                 url = url + "?" + queryString;
             }
-            return this.$q.resolve([{ name: 'Test', id: 1 }]);
-            /*
-                    return this.$http.get(url)
-                        .then(response => {
-                            let actsResponse = response.data as ActsDto;
-                            actsResponse.rows = actsResponse.rows.map(act => new ActViewModel(act));
-            
-                            return actsResponse;
-                        });    */
+            return this.$http.get(url)
+                .then(function (response) {
+                var actsResponse = response.data;
+                actsResponse.rows = actsResponse.rows.map(function (act) { return new ActViewModel(act); });
+                return actsResponse;
+            });
         };
         ActService.prototype.get = function (id, full) {
             return this.$http.get(settings_1.default.api + "/act/get?id=" + id)
@@ -2447,6 +2444,9 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
             this.bookings = [];
         }
         BookingsEditorController.prototype.$onInit = function () {
+            if (!this.bookings) {
+                this.bookings = [];
+            }
         };
         BookingsEditorController.prototype.add = function (ev) {
             var _this = this;
