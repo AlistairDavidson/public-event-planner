@@ -74,6 +74,8 @@ Dashboard
 
 Rider prices
 
+Full tenants on acts and events
+
 --
 
 csv import / export

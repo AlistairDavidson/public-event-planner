@@ -10,7 +10,7 @@ export class ActEditorModalController implements angular.IComponentController {
                 private eventId?: number) {
     }
 
-    $onInit() {      
+    $onInit() {        
     }
 
     save() {

@@ -420,7 +420,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 controller: act_editor_modal_1.ActEditorModalController,
                 templateUrl: 'components/act/act-editor-modal/act-editor-modal.html',
                 parent: angular_1.element(document.body),
-                targetAct: ev,
+                targetEvent: ev,
                 clickOutsideToClose: true,
                 fullscreen: true,
                 bindToController: true,
@@ -484,8 +484,7 @@ angular
 			'    </md-card-actions>\n' +
 			'</md-card>');
 
-		$templateCache.put('components/act/act-editor-form/act-editor-form.html', '<md-card layout-padding>\n' +
-			'<form novalidate ng-cloak>\n' +
+		$templateCache.put('components/act/act-editor-form/act-editor-form.html', '<form novalidate ng-cloak>\n' +
 			'    <div layout="column">\n' +
 			'        <h2 class="md-title">Act</h2>\n' +
 			'        \n' +
@@ -545,8 +544,7 @@ angular
 			'        <bookings-editor bookings="$ctrl.act.bookings" act-id="$ctrl.act.id" event-id="$ctrl.eventId">            \n' +
 			'        </bookings-editor>\n' +
 			'    </div>\n' +
-			'</form>\n' +
-			'</md-card>');
+			'</form>');
 
 		$templateCache.put('components/act/act-editor-modal/act-editor-modal.html', '<md-dialog aria-label="New Act">\n' +
 			'    <md-dialog-content class="md-dialog-content">\n' +
@@ -853,7 +851,7 @@ angular
 			'        <h2 class="md-title">Booking</h2>\n' +
 			'\n' +
 			'        <div layout-gt-sm="row">\n' +
-			'            <event-search event-id="$ctrl.booking.EventId">                \n' +
+			'            <event-search event-id="$ctrl.booking.EventId" ng-if=""> \n' +
 			'            </event-search>\n' +
 			'        </div>\n' +
 			'\n' +
@@ -886,10 +884,8 @@ angular
 			'            </md-input-container>\n' +
 			'        </div>\n' +
 			'\n' +
-			'        TODO: actApplication\n' +
-			'\n' +
-			'        </div>                \n' +
-			'    \n' +
+			'        TODO: actApplication               \n' +
+			'    </div>\n' +
 			'</form>');
 
 		$templateCache.put('components/booking/booking-editor-modal/booking-editor-modal.html', '<md-dialog aria-label="New Booking">    \n' +
@@ -940,12 +936,12 @@ angular
 			'    <div ng-repeat="booking in $ctrl.bookings track by $index" layout="row">\n' +
 			'        <booking-summary booking="booking">\n' +
 			'\n' +
-			'        \n' +
+			'        </booking-summary>\n' +
 			'\n' +
 			'        <md-button ng-click="$ctrl.remove(booking)" class="fixed-height-button">\n' +
 			'            <md-icon>remove</md-icon>            \n' +
 			'        </md-button>               \n' +
-			'    </booking-summary></div>\n' +
+			'    </div>\n' +
 			'\n' +
 			'    <md-button ng-click="$ctrl.add($event)">\n' +
 			'        <md-icon>add</md-icon>\n' +
@@ -2465,6 +2461,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         BookingsEditorController.prototype.remove = function (booking) {
             _.remove(this.bookings, function (ac) { return ac == booking; });
         };
+        BookingsEditorController.$inject = ['bookingService'];
         return BookingsEditorController;
     }());
     exports.BookingsEditorController = BookingsEditorController;

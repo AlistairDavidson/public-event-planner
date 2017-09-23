@@ -62,7 +62,7 @@ export default class ActService {
             controller: ActEditorModalController,
             templateUrl: 'components/act/act-editor-modal/act-editor-modal.html',
             parent: element(document.body),
-            targetAct: ev,
+            targetEvent: ev,
             clickOutsideToClose: true,
             fullscreen: true,
             bindToController: true,

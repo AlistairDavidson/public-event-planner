@@ -1,7 +1,6 @@
 import { ActViewModel } from '../../../services/act-service';
 
 export class ActEditorFormController implements angular.IComponentController {
-
     act?: ActViewModel;
     eventId?: number;
 

@@ -2,7 +2,8 @@ import { BookingViewModel, BookingService } from '../../../services/booking-serv
 import * as _ from 'lodash';
 
 export class BookingsEditorController implements angular.IComponentController {
-    
+    static $inject = ['bookingService'];
+
     bookings?: BookingViewModel[] = [];
     actId?: number;
     eventId?: number;
