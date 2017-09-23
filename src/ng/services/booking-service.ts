@@ -70,6 +70,7 @@ export class BookingService {
             fullscreen: true,
             bindToController: true,
             controllerAs: '$ctrl',
+            skipHide: true,
             resolve: {
                 'booking': () => booking
             }

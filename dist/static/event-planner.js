@@ -173,6 +173,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 fullscreen: true,
                 bindToController: true,
                 controllerAs: '$ctrl',
+                skipHide: true,
                 resolve: {
                     'contact': function () { return contact; },
                     'mode': function () { return mode; }
@@ -425,6 +426,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 fullscreen: true,
                 bindToController: true,
                 controllerAs: '$ctrl',
+                skipHide: true,
                 resolve: {
                     'act': function () { return act; },
                     'eventId': function () { return _this.$stateParams.event; }
@@ -851,12 +853,12 @@ angular
 			'        <h2 class="md-title">Booking</h2>\n' +
 			'\n' +
 			'        <div layout-gt-sm="row">\n' +
-			'            <event-search event-id="$ctrl.booking.EventId" ng-if=""> \n' +
+			'            <event-search event-id="$ctrl.booking.EventId" ng-if="!$ctrl.fixedEvent"> \n' +
 			'            </event-search>\n' +
 			'        </div>\n' +
 			'\n' +
 			'        <div layout-gt-sm="row">\n' +
-			'            <act-search act-id="$ctrl.booking.ActId">                \n' +
+			'            <act-search act-id="$ctrl.booking.ActId" ng-if="!$ctrl.fixedAct">                \n' +
 			'            </act-search>\n' +
 			'        </div>\n' +
 			'\n' +
@@ -2292,6 +2294,8 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
             if (!this.booking) {
                 this.booking = {};
             }
+            this.fixedAct = !!this.booking.ActId;
+            this.fixedEvent = !!this.booking.EventId;
         };
         return BookingEditorFormController;
     }());
@@ -2991,6 +2995,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 fullscreen: true,
                 bindToController: true,
                 controllerAs: '$ctrl',
+                skipHide: true,
                 resolve: {
                     'application': function () { return application; }
                 }
@@ -3058,6 +3063,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 fullscreen: true,
                 bindToController: true,
                 controllerAs: '$ctrl',
+                skipHide: true,
                 resolve: {
                     'booking': function () { return booking; }
                 }
@@ -3208,6 +3214,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 fullscreen: true,
                 bindToController: true,
                 controllerAs: '$ctrl',
+                skipHide: true,
                 resolve: {
                     location: function () { return location; }
                 }

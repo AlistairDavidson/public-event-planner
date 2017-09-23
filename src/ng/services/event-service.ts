@@ -59,6 +59,7 @@ export default class EventService {
             clickOutsideToClose: true,
             fullscreen: true,
             bindToController: true,
+            skipHide: true,
             controllerAs: '$ctrl'
         } as any);
     }*/

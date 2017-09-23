@@ -67,6 +67,7 @@ export default class ActService {
             fullscreen: true,
             bindToController: true,
             controllerAs: '$ctrl',
+            skipHide: true,
             resolve: {
                 'act': () => act,
                 'eventId': () => this.$stateParams.event

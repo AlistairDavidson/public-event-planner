@@ -63,6 +63,7 @@ export default class LocationService {
             fullscreen: true,
             bindToController: true,
             controllerAs: '$ctrl',
+            skipHide: true,
             resolve: {
                 location: () => location
             }

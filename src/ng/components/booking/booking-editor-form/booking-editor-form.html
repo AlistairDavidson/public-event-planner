@@ -5,12 +5,13 @@
 
         <div layout-gt-sm="row">
             <event-search event-id="$ctrl.booking.EventId"
-                          ng-if=""> 
+                          ng-if="!$ctrl.fixedEvent"> 
             </event-search>
         </div>
 
         <div layout-gt-sm="row">
-            <act-search act-id="$ctrl.booking.ActId">                
+            <act-search act-id="$ctrl.booking.ActId"
+                        ng-if="!$ctrl.fixedAct">                
             </act-search>
         </div>
 

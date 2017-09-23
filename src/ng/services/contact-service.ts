@@ -61,6 +61,7 @@ export default class ContactService {
             fullscreen: true,
             bindToController: true,
             controllerAs: '$ctrl',
+            skipHide: true,
             resolve: {
                 'contact': () => contact,
                 'mode': () => mode

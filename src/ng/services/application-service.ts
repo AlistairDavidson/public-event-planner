@@ -81,6 +81,7 @@ export default class ApplicationService {
             fullscreen: true,
             bindToController: true,
             controllerAs: '$ctrl',
+            skipHide: true,
             resolve: {
                 'application': () => application
             }

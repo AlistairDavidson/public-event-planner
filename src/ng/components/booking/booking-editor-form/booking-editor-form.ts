@@ -3,6 +3,9 @@ import { BookingViewModel } from '../../../services/booking-service';
 export class BookingEditorFormController implements angular.IComponentController {
     booking?: BookingViewModel;
 
+    fixedEvent: boolean;
+    fixedAct: boolean;
+
     constructor() {
     }
 
@@ -10,6 +13,9 @@ export class BookingEditorFormController implements angular.IComponentController
         if(!this.booking) {
             this.booking = {}
         }
+
+        this.fixedAct = !!this.booking.ActId;
+        this.fixedEvent = !!this.booking.EventId;
     }
 }
 

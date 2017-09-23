@@ -396,12 +396,12 @@ angular
 			'        <h2 class="md-title">Booking</h2>\n' +
 			'\n' +
 			'        <div layout-gt-sm="row">\n' +
-			'            <event-search event-id="$ctrl.booking.EventId" ng-if=""> \n' +
+			'            <event-search event-id="$ctrl.booking.EventId" ng-if="!$ctrl.fixedEvent"> \n' +
 			'            </event-search>\n' +
 			'        </div>\n' +
 			'\n' +
 			'        <div layout-gt-sm="row">\n' +
-			'            <act-search act-id="$ctrl.booking.ActId">                \n' +
+			'            <act-search act-id="$ctrl.booking.ActId" ng-if="!$ctrl.fixedAct">                \n' +
 			'            </act-search>\n' +
 			'        </div>\n' +
 			'\n' +

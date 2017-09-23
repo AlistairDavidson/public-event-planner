@@ -61,6 +61,7 @@ export default class UserService {
             clickOutsideToClose: true,
             fullscreen: true,
             bindToController: true,
+            skipHide: true,
             controllerAs: '$ctrl'
         } as any);
     }*/
