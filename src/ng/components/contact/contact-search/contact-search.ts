@@ -29,7 +29,7 @@ export class ContactSearchController implements angular.IComponentController {
     edit(ev: ng.IAngularEvent) {
         this.contactService.edit(ev)            
             .then(contact => {
-                this.contact = contact;
+                this.contact = contact;                
             });
     }
 

@@ -48,6 +48,13 @@ export default class ActService {
     }
 
     save(data: ActDto) {
+        data.ActContacts = data.ActContacts.map(actContact => {
+            if(actContact.contact) {
+                actContact.ContactId = actContact.contact.id;
+            }
+            return actContact;
+        });
+
         return this.$http.post(`${settings.api}/act/save`, data)
             .then(response => new ActViewModel(response.data as ActDto));
     }
