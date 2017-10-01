@@ -7,6 +7,7 @@ import epTable from './ep-table/ep-table';
 import actCard from './act/act-card/act-card';
 import actEditorForm from './act/act-editor-form/act-editor-form';
 import actEditorModal from './act/act-editor-modal/act-editor-modal';
+import actEditor from './act/act-editor/act-editor';
 import actSearch from './act/act-search/act-search';
 import acts from './act/acts/acts';
 import actsSummary from './act/acts-summary/acts-summary';
@@ -44,6 +45,7 @@ export default module('event-planner.components', [ 'event-planner.services', 'n
     .component('actCard', actCard)    
     .component('actEditorForm', actEditorForm)
     .component('actEditorModal', actEditorModal)
+    .component('actEditor', actEditor)
     .component('actSearch', actSearch)
     .component('acts', acts)
     .component('actsSummary', actsSummary)
