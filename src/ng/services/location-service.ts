@@ -87,5 +87,5 @@ export class LocationViewModel implements LocationDto {
     EventId?: number;
 
     event?: EventDto;
-    timeslots?: TimeslotDto[];
+    Timeslots?: TimeslotDto[];
 }

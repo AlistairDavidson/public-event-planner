@@ -89,8 +89,8 @@ export class ContactViewModel implements ContactDto {
             }
         }
 
-        if(!this.actContacts) {
-            this.actContacts = [];
+        if(!this.ActContacts) {
+            this.ActContacts = [];
         }
     }
 
@@ -100,7 +100,7 @@ export class ContactViewModel implements ContactDto {
     name = '';
 
     details: ContactDetailsDto;
-    actContacts?: ActContactDto[] = [];
+    ActContacts?: ActContactDto[] = [];
 }
 
 

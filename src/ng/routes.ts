@@ -1,9 +1,8 @@
 import ApplicationService from './services/application-service';
 import { ApplicationViewModel } from './services/application-service';
-import { ActDto, ActsDto } from '../common/models/act';
+import { ActDto } from '../common/models/act';
 import ActService from './services/act-service';
 import { ActViewModel } from './services/act-service';
-import { MdSortDto } from '../common/types';
 
 export default [
     '$stateProvider',
@@ -64,15 +63,11 @@ function(
             name: 'root.applications.detail',
             url: '/detail',
             template:  `<applications-table                                
-                            get-applications="$ctrl.getApplications(query)"
+                            get-applications="$ctrl.applicationService.list(query)"
                             edit="$ctrl.applicationService.edit($event)">
                         </applications-table>`,
             controller: ['applicationService', function(applicationService: ApplicationService) {
                 this.applicationService = applicationService;
-                this.getApplications = (query: MdSortDto) => {
-                    applicationService.list(query)
-                        .then(acts => acts.rows);
-                }
             }],
             controllerAs: '$ctrl'
         })
@@ -102,15 +97,11 @@ function(
             name: 'root.acts.detail',
             url: '/detail',
             template:  `<acts-table                                
-                            get-acts="$ctrl.getActs(query)"
+                            get-acts="$ctrl.actService.list(query)"
                             edit="$ctrl.actService.edit($event)">
                         </acts-table>`,
             controller: ['actService', function(actService: ActService) {
                 this.actService = actService;
-                this.getActs = (query: MdSortDto) => {
-                    actService.list(query)
-                        .then(acts => acts.rows);
-                }
             }],
             controllerAs: '$ctrl'
         })
