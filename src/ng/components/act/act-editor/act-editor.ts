@@ -5,6 +5,8 @@ export class ActEditorController implements angular.IComponentController {
     static $inject = ['actService', '$mdDialog'];
    
     actId: number;
+    eventId: number;
+
     act: ActViewModel;
 
     constructor(private actService: ActService,
@@ -16,7 +18,7 @@ export class ActEditorController implements angular.IComponentController {
             console.log('loading act', this.actId)
             this.actService.get(this.actId, true)
                 .then((act) => this.act = act);
-        }    
+        }        
     }
 
     save() {
@@ -32,7 +34,8 @@ let options: angular.IComponentOptions = {
     templateUrl: 'components/act/act-editor/act-editor.html',
     controller: ActEditorController,
     bindings: {
-        actId: '=?'
+        actId: '=?',
+        eventId: '=?'
     }
 }
 

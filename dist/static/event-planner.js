@@ -2041,7 +2041,8 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         templateUrl: 'components/act/act-editor/act-editor.html',
         controller: ActEditorController,
         bindings: {
-            actId: '=?'
+            actId: '=?',
+            eventId: '=?'
         }
     };
     exports.default = options;
@@ -3081,7 +3082,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 .state({
                 name: 'root.act',
                 url: '/act/{act}',
-                template: "<act-editor act-id=\"$ctrl.$stateParams.act\"></act-editor>",
+                template: "<act-editor act-id=\"$ctrl.$stateParams.act\" event-id=\"$ctrl.$stateParams.event\"></act-editor>",
                 controller: ['$stateParams', function ($stateParams) {
                         this.$stateParams = $stateParams;
                         console.log('Editing act:' + this.$stateParams.act);
