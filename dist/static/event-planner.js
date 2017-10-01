@@ -1949,7 +1949,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
     }());
     exports.ActEditorController = ActEditorController;
     var options = {
-        templateUrl: 'components/act/act-editor/act-editor-modal',
+        templateUrl: 'components/act/act-editor/act-editor.html',
         controller: ActEditorController,
         bindings: {
             actId: '=?'

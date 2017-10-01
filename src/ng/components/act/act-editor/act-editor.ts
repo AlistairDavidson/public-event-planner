@@ -29,7 +29,7 @@ export class ActEditorController implements angular.IComponentController {
 }
 
 let options: angular.IComponentOptions = {
-    templateUrl: 'components/act/act-editor/act-editor-modal',
+    templateUrl: 'components/act/act-editor/act-editor.html',
     controller: ActEditorController,
     bindings: {
         actId: '=?'
