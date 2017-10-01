@@ -14072,4 +14072,7 @@ div.app-container {
   margin: auto;
   top: 250px; }
 
+img {
+  max-height: 300px; }
+
 /*# sourceMappingURL=app.css.map */
