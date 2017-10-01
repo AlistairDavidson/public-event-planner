@@ -100,10 +100,13 @@ export class ActService {
         let actContactIdsToAdd = _.difference(newActContactIds, actContactIds);
         let actContactIdsToRemove = _.difference(actContactIds, newActContactIds);
 
-        await act.removeActContacts(actContactIdsToRemove);
-        await act.addActContacts(actContactIdsToAdd);
+       if((actContactIdsToRemove).length) {
+            await act.removeActContacts(actContactIdsToRemove);
+       }
 
-        return await this.get(act.id, true);
+       if(actContactIdsToAdd.length) {
+            await act.addActContacts(actContactIdsToAdd);
+       }
     }
 
     // Applications and bookings need proper create / updates
@@ -132,8 +135,6 @@ export class ActService {
 
             await booking.setBookingStatus(bookingStatus);
         }
-
-        return await act.getBookings();
     }
 
     async delete(actId: number) {
