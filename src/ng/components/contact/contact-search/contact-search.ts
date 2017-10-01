@@ -8,8 +8,6 @@ export class ContactSearchController implements angular.IComponentController {
     contact: ContactViewModel;
     contactId: number;
 
-    contacts: ContactDto[];
-
     searchText: string;
 
     constructor(private contactService: ContactService) {
@@ -41,7 +39,7 @@ export class ContactSearchController implements angular.IComponentController {
             limit: 25,
             page: 1,
             filter: searchText
-        }).then(contacts => this.contacts = contacts.rows);
+        });
     }
 }
 
