@@ -91,6 +91,7 @@ export class ActService {
 
     async rewriteContacts(act: ActInstance, actContactsData: ActContactDto[]) {
         let actContacts = await act.getActContacts();
+        actContacts = actContacts || [];
         let actContactIds = actContacts.map(actContact => actContact.id);
         let newActContactIds = actContactsData.map(actContactData => actContactData.id);
 
