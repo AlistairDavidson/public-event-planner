@@ -102,6 +102,13 @@ angular
 			'    </md-dialog-actions>\n' +
 			'</md-dialog>');
 
+		$templateCache.put('components/act/act-editor/act-editor.html', '<md-card layout-padding layout="column">    \n' +
+			'    <act-editor-form act="$ctrl.act" event-id="$ctrl.eventId">\n' +
+			'    </act-editor-form>\n' +
+			'\n' +
+			'    <md-button ng-click="$ctrl.save()">Save</md-button>\n' +
+			'</md-card>');
+
 		$templateCache.put('components/act/act-search/act-search.html', '<div layout="column">\n' +
 			'    <div layout-gt-sm="row">\n' +
 			'        <md-autocomplete flex required md-input-name="act-search" md-input-minlength="2" md-selected-item="$ctrl.act" md-search-text="$ctrl.searchText" md-items="act in $ctrl.search($ctrl.searchText)" md-item-text="act.name" md-require-match md-floating-label="Act" md-selected-item-change="$ctrl.actId = act.id">\n' +

@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 51);
+/******/ 	return __webpack_require__(__webpack_require__.s = 53);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -156,6 +156,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 .then(function (response) { return new ContactViewModel(response.data); });
         };
         ContactService.prototype.save = function (data) {
+            console.log('contactService saving', data);
             return this.$http.post(settings_1.default.api + "/contact/save", data)
                 .then(function (response) { return new ContactViewModel(response.data); });
         };
@@ -352,6 +353,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         ContactEditorModalController.prototype.$onInit = function () {
         };
         ContactEditorModalController.prototype.save = function () {
+            console.log('modal saving', this.contact);
             this.saving = true;
             this.$mdDialog.hide(this.contact);
         };
@@ -556,6 +558,13 @@ angular
 			'        <md-button ng-click="$ctrl.cancel()">Cancel</md-button>\n' +
 			'    </md-dialog-actions>\n' +
 			'</md-dialog>');
+
+		$templateCache.put('components/act/act-editor/act-editor.html', '<md-card layout-padding layout="column">    \n' +
+			'    <act-editor-form act="$ctrl.act" event-id="$ctrl.eventId">\n' +
+			'    </act-editor-form>\n' +
+			'\n' +
+			'    <md-button ng-click="$ctrl.save()">Save</md-button>\n' +
+			'</md-card>');
 
 		$templateCache.put('components/act/act-search/act-search.html', '<div layout="column">\n' +
 			'    <div layout-gt-sm="row">\n' +
@@ -1831,7 +1840,7 @@ minFrac:2,minInt:1,negPre:"-\u00a4",negSuf:"",posPre:"\u00a4",posSuf:""}]},id:"e
 /* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(0), __webpack_require__(48), __webpack_require__(42)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, angular_1) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(0), __webpack_require__(46), __webpack_require__(50), __webpack_require__(43)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, angular_1, routes_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     angular_1.module('event-planner', ['event-planner.components', 'event-planner.services', 'ui.router', 'ngCookies', 'templates', 'md.data.table'])
@@ -1839,80 +1848,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
             $mdIconProvider
                 .iconSet('community', 'mdi.svg');
         }])
-        .config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
-        function ($stateProvider, $urlRouterProvider, $locationProvider) {
-            $locationProvider.html5Mode(true);
-            $urlRouterProvider.otherwise('/');
-            $stateProvider
-                .state({
-                name: 'default',
-                url: '/',
-                template: "<md-progress-circular md-mode=\"indeterminate\" class=\"loading\"></md-progress-circular>"
-            })
-                .state({
-                name: 'root',
-                url: '/{event}',
-                template: "<ui-view></ui-view>",
-                abstract: true
-            })
-                .state({
-                name: 'root.home',
-                url: '/home',
-                template: "<dashboard>\n                                <md-progress-circular md-mode=\"indeterminate\" class=\"loading\"></md-progress-circular>\n                            </dashboard>"
-            })
-                .state({
-                name: 'root.applications',
-                url: '/applications',
-                template: "<applications>\n                                <md-progress-circular md-mode=\"indeterminate\" class=\"loading\"></md-progress-circular>\n                            </applications>"
-            })
-                .state({
-                name: 'root.applications.summary',
-                url: '/summary',
-                template: "<applications-summary\n                                applications=\"$ctrl.applications\">\n                            </applications-summary>",
-                resolve: {
-                    applicationsData: ['applicationService', function (applicationService) { return applicationService.list(); }]
-                },
-                controller: ['applicationsData', function (applicationsData) {
-                        this.applications = applicationsData.rows;
-                    }],
-                controllerAs: '$ctrl'
-            })
-                .state({
-                name: 'root.applications.detail',
-                url: '/detail',
-                template: "<applications-table                                \n                                get-applications=\"$ctrl.applicationService.list(query)\"\n                                edit=\"$ctrl.applicationService.edit($event)\">\n                            </applications-table>",
-                controller: ['applicationService', function (applicationService) {
-                        this.applicationService = applicationService;
-                    }],
-                controllerAs: '$ctrl'
-            })
-                .state({
-                name: 'root.acts',
-                url: '/acts',
-                template: "<acts>\n                                <md-progress-circular md-mode=\"indeterminate\" class=\"loading\"></md-progress-circular>\n                            </acts>"
-            })
-                .state({
-                name: 'root.acts.summary',
-                url: '/summary',
-                template: "<acts-summary\n                                acts=\"$ctrl.acts\">\n                            </acts-summary>",
-                resolve: {
-                    actsData: ['actService', function (actService) { return actService.list(); }]
-                },
-                controller: ['actsData', function (actsData) {
-                        this.acts = actsData.rows;
-                    }],
-                controllerAs: '$ctrl'
-            })
-                .state({
-                name: 'root.acts.detail',
-                url: '/detail',
-                template: "<acts-table                                \n                                get-acts=\"$ctrl.actService.list(query)\"\n                                edit=\"$ctrl.actService.edit($event)\">\n                            </acts-table>",
-                controller: ['actService', function (actService) {
-                        this.actService = actService;
-                    }],
-                controllerAs: '$ctrl'
-            });
-        }])
+        .config(routes_1.default)
         .controller('eventPlanner', function () { });
     angular_1.element(document).ready(function () {
         angular_1.bootstrap(document, ['event-planner', 'templates']);
@@ -1986,6 +1922,49 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
+    var ActEditorController = (function () {
+        function ActEditorController(actService, $mdDialog) {
+            this.actService = actService;
+            this.$mdDialog = $mdDialog;
+        }
+        ActEditorController.prototype.$onInit = function () {
+            var _this = this;
+            if (this.actId) {
+                this.actService.get(this.actId, true)
+                    .then(function (act) { return _this.act = act; });
+            }
+        };
+        ActEditorController.prototype.save = function () {
+            var _this = this;
+            this.actService.save(this.act)
+                .then(function (act) {
+                _this.act = act;
+                _this.actId = act.id;
+            });
+        };
+        ActEditorController.$inject = ['actService', '$mdDialog'];
+        return ActEditorController;
+    }());
+    exports.ActEditorController = ActEditorController;
+    var options = {
+        templateUrl: 'components/act/act-editor/act-editor-modal',
+        controller: ActEditorController,
+        bindings: {
+            actId: '=?'
+        }
+    };
+    exports.default = options;
+}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
     var ActSearchController = (function () {
         function ActSearchController(actService) {
             this.actService = actService;
@@ -2030,7 +2009,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
@@ -2058,7 +2037,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
@@ -2087,7 +2066,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
@@ -2125,7 +2104,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
@@ -2152,7 +2131,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
@@ -2184,7 +2163,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
@@ -2212,7 +2191,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
@@ -2241,7 +2220,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
@@ -2279,7 +2258,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
@@ -2311,7 +2290,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
@@ -2370,7 +2349,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
@@ -2405,7 +2384,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
@@ -2432,7 +2411,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(1)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, _) {
@@ -2484,7 +2463,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(4), __webpack_require__(1)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, contact_service_1, _) {
@@ -2521,7 +2500,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(4), __webpack_require__(1)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, contact_service_1, _) {
@@ -2556,7 +2535,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
@@ -2606,7 +2585,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
@@ -2683,7 +2662,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
@@ -2752,7 +2731,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
@@ -2801,10 +2780,10 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(0), __webpack_require__(40), __webpack_require__(39), __webpack_require__(20), __webpack_require__(21), __webpack_require__(5), __webpack_require__(22), __webpack_require__(25), __webpack_require__(23), __webpack_require__(24), __webpack_require__(26), __webpack_require__(27), __webpack_require__(6), __webpack_require__(30), __webpack_require__(28), __webpack_require__(29), __webpack_require__(31), __webpack_require__(7), __webpack_require__(35), __webpack_require__(32), __webpack_require__(33), __webpack_require__(34), __webpack_require__(37), __webpack_require__(8), __webpack_require__(38), __webpack_require__(36), __webpack_require__(41), __webpack_require__(44)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, angular_1, event_planner_app_1, ep_table_1, act_card_1, act_editor_form_1, act_editor_modal_1, act_search_1, acts_1, acts_summary_1, acts_table_1, application_card_1, application_editor_form_1, application_editor_modal_1, applications_1, applications_summary_1, applications_table_1, booking_editor_form_1, booking_editor_modal_1, bookings_editor_1, booking_search_1, booking_status_select_1, booking_summary_1, contact_editor_form_1, contact_editor_modal_1, contact_search_1, act_contacts_editor_1, event_search_1, location_search_1) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(0), __webpack_require__(41), __webpack_require__(40), __webpack_require__(20), __webpack_require__(21), __webpack_require__(5), __webpack_require__(22), __webpack_require__(23), __webpack_require__(26), __webpack_require__(24), __webpack_require__(25), __webpack_require__(27), __webpack_require__(28), __webpack_require__(6), __webpack_require__(31), __webpack_require__(29), __webpack_require__(30), __webpack_require__(32), __webpack_require__(7), __webpack_require__(36), __webpack_require__(33), __webpack_require__(34), __webpack_require__(35), __webpack_require__(38), __webpack_require__(8), __webpack_require__(39), __webpack_require__(37), __webpack_require__(42), __webpack_require__(45)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, angular_1, event_planner_app_1, ep_table_1, act_card_1, act_editor_form_1, act_editor_modal_1, act_editor_1, act_search_1, acts_1, acts_summary_1, acts_table_1, application_card_1, application_editor_form_1, application_editor_modal_1, applications_1, applications_summary_1, applications_table_1, booking_editor_form_1, booking_editor_modal_1, bookings_editor_1, booking_search_1, booking_status_select_1, booking_summary_1, contact_editor_form_1, contact_editor_modal_1, contact_search_1, act_contacts_editor_1, event_search_1, location_search_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.default = angular_1.module('event-planner.components', ['event-planner.services', 'ngMaterial'])
@@ -2813,6 +2792,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         .component('actCard', act_card_1.default)
         .component('actEditorForm', act_editor_form_1.default)
         .component('actEditorModal', act_editor_modal_1.default)
+        .component('actEditor', act_editor_1.default)
         .component('actSearch', act_search_1.default)
         .component('acts', acts_1.default)
         .component('actsSummary', acts_summary_1.default)
@@ -2840,7 +2820,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
@@ -2874,7 +2854,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
@@ -2925,7 +2905,111 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 45 */
+/* 46 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.default = [
+        '$stateProvider',
+        '$urlRouterProvider',
+        '$locationProvider',
+        function ($stateProvider, $urlRouterProvider, $locationProvider) {
+            $locationProvider.html5Mode(true);
+            $urlRouterProvider.otherwise('/');
+            $stateProvider
+                .state({
+                name: 'default',
+                url: '/',
+                template: "<md-progress-circular md-mode=\"indeterminate\" class=\"loading\"></md-progress-circular>"
+            })
+                .state({
+                name: 'root',
+                url: '/{event}',
+                template: "<ui-view></ui-view>",
+                abstract: true
+            })
+                .state({
+                name: 'root.home',
+                url: '/home',
+                template: "<dashboard>\n                            <md-progress-circular md-mode=\"indeterminate\" class=\"loading\"></md-progress-circular>\n                        </dashboard>"
+            })
+                .state({
+                name: 'root.applications',
+                url: '/applications',
+                template: "<applications>\n                            <md-progress-circular md-mode=\"indeterminate\" class=\"loading\"></md-progress-circular>\n                        </applications>"
+            })
+                .state({
+                name: 'root.applications.summary',
+                url: '/summary',
+                template: "<applications-summary\n                            applications=\"$ctrl.applications\">\n                        </applications-summary>",
+                resolve: {
+                    applicationsData: ['applicationService', function (applicationService) { return applicationService.list(); }]
+                },
+                controller: ['applicationsData', function (applicationsData) {
+                        this.applications = applicationsData.rows;
+                    }],
+                controllerAs: '$ctrl'
+            })
+                .state({
+                name: 'root.applications.detail',
+                url: '/detail',
+                template: "<applications-table                                \n                            get-applications=\"$ctrl.applicationService.list(query)\"\n                            edit=\"$ctrl.applicationService.edit($event)\">\n                        </applications-table>",
+                controller: ['applicationService', function (applicationService) {
+                        this.applicationService = applicationService;
+                    }],
+                controllerAs: '$ctrl'
+            })
+                .state({
+                name: 'root.acts',
+                url: '/acts',
+                template: "<acts>\n                            <md-progress-circular md-mode=\"indeterminate\" class=\"loading\"></md-progress-circular>\n                        </acts>"
+            })
+                .state({
+                name: 'root.acts.summary',
+                url: '/summary',
+                template: "<acts-summary\n                            acts=\"$ctrl.acts\">\n                        </acts-summary>",
+                resolve: {
+                    actsData: ['actService', function (actService) { return actService.list(); }]
+                },
+                controller: ['actsData', function (actsData) {
+                        this.acts = actsData.rows;
+                    }],
+                controllerAs: '$ctrl'
+            })
+                .state({
+                name: 'root.acts.detail',
+                url: '/detail',
+                template: "<acts-table                                \n                            get-acts=\"$ctrl.actService.list(query)\"\n                            edit=\"$ctrl.actService.edit($event)\">\n                        </acts-table>",
+                controller: ['actService', function (actService) {
+                        this.actService = actService;
+                    }],
+                controllerAs: '$ctrl'
+            })
+                .state({
+                name: 'root.act',
+                url: '/act',
+                template: "<ui-view></ui-view>",
+                abstract: true
+            })
+                .state({
+                name: 'root.act.edit',
+                url: '/edit/{act}',
+                template: "<act-editor act-id=\"$ctrl.stateParams.act\"></act-editor>",
+                controller: ['$stateParams', function ($stateParams) {
+                        this.$stateParams = $stateParams;
+                    }],
+                controllerAs: '$ctrl'
+            });
+        }
+    ];
+}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ }),
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(2), __webpack_require__(3), __webpack_require__(0), __webpack_require__(6)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, helper_1, settings_1, angular_1, application_editor_modal_1) {
@@ -3012,7 +3096,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 46 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(2), __webpack_require__(3), __webpack_require__(0), __webpack_require__(7), __webpack_require__(1)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, helper_1, settings_1, angular_1, booking_editor_modal_1, _) {
@@ -3091,7 +3175,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 47 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(2), __webpack_require__(3), __webpack_require__(1)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, helper_1, settings_1, _) {
@@ -3149,10 +3233,10 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 48 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(0), __webpack_require__(45), __webpack_require__(47), __webpack_require__(9), __webpack_require__(4), __webpack_require__(46), __webpack_require__(49), __webpack_require__(50)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, angular_1, application_service_1, event_service_1, act_service_1, contact_service_1, booking_service_1, location_service_1, user_service_1) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(0), __webpack_require__(47), __webpack_require__(49), __webpack_require__(9), __webpack_require__(4), __webpack_require__(48), __webpack_require__(51), __webpack_require__(52)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, angular_1, application_service_1, event_service_1, act_service_1, contact_service_1, booking_service_1, location_service_1, user_service_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.default = angular_1.module('event-planner.services', [])
@@ -3168,10 +3252,10 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 49 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(2), __webpack_require__(3), __webpack_require__(0), __webpack_require__(43), __webpack_require__(1)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, helper_1, settings_1, angular_1, location_editor_modal_1, _) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(2), __webpack_require__(3), __webpack_require__(0), __webpack_require__(44), __webpack_require__(1)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, helper_1, settings_1, angular_1, location_editor_modal_1, _) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var LocationService = (function () {
@@ -3241,7 +3325,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 50 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(2), __webpack_require__(3), __webpack_require__(1)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, helper_1, settings_1, _) {
@@ -3298,7 +3382,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 51 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(18);
