@@ -80,7 +80,7 @@ angular
 			'        </contact-search>\n' +
 			'\n' +
 			'        <h3 class="md-subhead">Other Contacts</h3>\n' +
-			'        <act-contacts-editor act-contacts="$ctrl.act.actContacts" act-id="$ctrl.act.id">\n' +
+			'        <act-contacts-editor act-contacts="$ctrl.act.ActContacts" act-id="$ctrl.act.id">\n' +
 			'        </act-contacts-editor>\n' +
 			'        \n' +
 			'        <hr>\n' +

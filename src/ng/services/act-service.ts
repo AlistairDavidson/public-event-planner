@@ -82,8 +82,8 @@ export class ActViewModel implements ActDto {
             this.mainContact = new ContactViewModel(act.mainContact);
             this.webContact = new ContactViewModel(act.webContact);
 
-            this.actContacts = this.actContacts.map(ac => new ActContactViewModel(ac));
-            this.bookings = this.bookings.map(b => new BookingViewModel(b));
+            this.ActContacts = this.ActContacts.map(ac => new ActContactViewModel(ac));
+            this.Bookings = this.Bookings.map(b => new BookingViewModel(b));
 
             _.extend(this, act);
         }        
@@ -104,7 +104,7 @@ export class ActViewModel implements ActDto {
 
     mainContact?: ContactViewModel = new ContactViewModel();
     webContact?: ContactViewModel = new ContactViewModel();
-    actContacts?: ActContactViewModel[] = [];
-    timeslots?: TimeslotDto[] = [];
-    bookings?: BookingViewModel[] = [];
+    ActContacts?: ActContactViewModel[] = [];
+    Timeslots?: TimeslotDto[] = [];
+    Bookings?: BookingViewModel[] = [];
 }
