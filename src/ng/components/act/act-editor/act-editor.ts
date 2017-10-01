@@ -24,8 +24,7 @@ export class ActEditorController implements angular.IComponentController {
     save() {
         this.actService.save(this.act)
             .then((act) => {
-                this.act = act;
-                this.actId = act.id;
+                this.act = act;                
             });
     }
 }

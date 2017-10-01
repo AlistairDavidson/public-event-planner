@@ -1,5 +1,6 @@
 import ActService from '../../../services/act-service';
 import { ActViewModel } from '../../../services/act-service';
+import * as _ from 'lodash';
 
 export class ActEditorModalController implements angular.IComponentController {
     static $inject = ['actService', '$mdDialog', 'act', 'eventId'];
@@ -15,7 +16,7 @@ export class ActEditorModalController implements angular.IComponentController {
 
     save() {
         this.actService.save(this.act)
-            .then((updatedAct) => this.act = updatedAct)
+            .then((updatedAct) => _.extend(this.act, updatedAct))
             .then(() => this.$mdDialog.hide(this.act));
     }
 
