@@ -43,7 +43,7 @@ export default class ActService {
     }
 
     get(id: number, full: boolean) {
-        return this.$http.get(`${settings.api}/act/get?id=${id}`)
+        return this.$http.get(`${settings.api}/act/get?id=${id}&full=${full}`)
             .then(response => new ActViewModel(response.data as ActDto));        
     }
 
@@ -81,7 +81,7 @@ export class ActViewModel implements ActDto {
         if(act) {
             this.mainContact = new ContactViewModel(act.mainContact);
             this.webContact = new ContactViewModel(act.webContact);
-            
+
             this.actContacts = this.actContacts.map(ac => new ActContactViewModel(ac));
             this.bookings = this.bookings.map(b => new BookingViewModel(b));
 

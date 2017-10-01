@@ -408,7 +408,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
             });
         };
         ActService.prototype.get = function (id, full) {
-            return this.$http.get(settings_1.default.api + "/act/get?id=" + id)
+            return this.$http.get(settings_1.default.api + "/act/get?id=" + id + "&full=" + full)
                 .then(function (response) { return new ActViewModel(response.data); });
         };
         ActService.prototype.save = function (data) {
