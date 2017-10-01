@@ -1,13 +1,15 @@
 import { ContactDto } from '../../../../common/models/contact';
 import { ContactViewModel } from '../../../services/contact-service';
+import ActService from '../../../services/act-service';
 import * as _ from 'lodash';
 
 export class ContactEditorModalController implements angular.IComponentController {
-    static $inject = ['$mdDialog', 'contact', 'mode'];
+    static $inject = ['$mdDialog', 'actService', 'contact', 'mode',];
     
     saving = false;
 
     constructor(private $mdDialog: ng.material.IDialogService,
+                private actService: ActService,
                 private contact?: ContactViewModel,
                 private mode?: string) {
     }
@@ -18,7 +20,8 @@ export class ContactEditorModalController implements angular.IComponentControlle
     save() {
         console.log('modal saving', this.contact);
         this.saving = true;
-        this.$mdDialog.hide(this.contact);
+        this.actService.save(this.contact)
+            .then((contact) => this.$mdDialog.hide(this.contact));
     }
 
     cancel() {
