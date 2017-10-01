@@ -83,7 +83,7 @@ export class ActService {
             await act.setWebContact(webContact);
         }
         
-        await this.rewriteContacts(act, actData.actContacts);
+        await this.rewriteContacts(act, actData.ActContacts);
     //    await this.rewriteBookings(act, actData.bookings);
       
         return await this.get(act.id, true);
@@ -101,7 +101,7 @@ export class ActService {
         let actContactIdsToRemove = _.difference(actContactIds, newActContactIds);        
 
         let actContactsToCreate = _.filter(actContactsData, actContactData => !actContactData.id);
-        console.log('actContactsToCreate', actContactsToCreate);
+        console.log('actContacts', 'actContactsToCreate', actContactsToCreate);
         database.models.ActContact.bulkCreate(actContactsToCreate);
 
         console.log('actContactIds', actContactIds, ' newActContactIds', newActContactIds, ' actContactIdsToAdd', actContactIdsToAdd, ' actContactIdsToRemove', actContactIdsToRemove);

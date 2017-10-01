@@ -93,9 +93,9 @@ export interface ActDto extends ActAttribute {
 
     mainContact?: ContactDto;
     webContact?: ContactDto;
-    actContacts?: ActContactDto[];
-    timeslots?: TimeslotDto[];
-    bookings?: BookingDto[];
+    ActContacts?: ActContactDto[];
+    Timeslots?: TimeslotDto[];
+    Bookings?: BookingDto[];
 }
 
 export interface ActsDto {

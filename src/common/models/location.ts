@@ -46,7 +46,7 @@ export interface LocationDto extends LocationAttribute {
     updatedAt?: string;
 
     event?: EventDto;
-    timeslots?: TimeslotDto[];
+    Timeslots?: TimeslotDto[];
 }
 
 export interface LocationsDto {

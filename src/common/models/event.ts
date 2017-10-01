@@ -79,9 +79,9 @@ export interface EventDto extends EventAttribute {
     start?: string;
     end?: string;   
 
-    bookings?: BookingDto[];
-    locations?: LocationDto[];
-    actApplications?: ActApplicationDto[];
+    Bookings?: BookingDto[];
+    Locations?: LocationDto[];
+    ActApplications?: ActApplicationDto[];
 }
 
 export interface EventsDto {
