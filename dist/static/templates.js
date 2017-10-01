@@ -173,7 +173,7 @@ angular
 			'  </td>\n' +
 			'</script>\n' +
 			'\n' +
-			'<ep-table title="\'Acts\'" on-list="$ctrl.getActs(query)" on-edit="$ctrl.edit($event)" header-template="\'/acts-header.html\'" cell-template="\'/acts-cell.html\'">\n' +
+			'<ep-table title="\'Acts\'" on-list="$ctrl.getActs({ query: query })" on-edit="$ctrl.edit($event)" header-template="\'/acts-header.html\'" cell-template="\'/acts-cell.html\'">\n' +
 			'</ep-table>');
 
 		$templateCache.put('components/act/acts/acts.html', '<md-nav-bar md-selected-nav-item="$ctrl.currentNavItem">\n' +
@@ -386,7 +386,7 @@ angular
 			'  </td>\n' +
 			'</script>\n' +
 			'\n' +
-			'<ep-table title="\'Applications\'" on-list="$ctrl.getApplications(query)" on-edit="$ctrl.edit($event)" header-template="\'/applications-header.html\'" cell-template="\'/applications-cell.html\'">\n' +
+			'<ep-table title="\'Applications\'" on-list="$ctrl.getApplications({ query: query })" on-edit="$ctrl.edit($event)" header-template="\'/applications-header.html\'" cell-template="\'/applications-cell.html\'">\n' +
 			'</ep-table>');
 
 		$templateCache.put('components/application/applications/applications.html', '<md-nav-bar md-selected-nav-item="$ctrl.currentNavItem">\n' +

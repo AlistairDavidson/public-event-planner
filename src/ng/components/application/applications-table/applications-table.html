@@ -46,7 +46,7 @@
 
 <ep-table
   title="'Applications'"
-  on-list="$ctrl.getApplications(query)"
+  on-list="$ctrl.getApplications({ query: query })"
   on-edit="$ctrl.edit($event)"
   header-template="'/applications-header.html'"
   cell-template="'/applications-cell.html'">
