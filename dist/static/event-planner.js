@@ -1895,6 +1895,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         function ActEditorFormController() {
         }
         ActEditorFormController.prototype.$onInit = function () {
+            console.log('form init');
             if (!this.act) {
                 this.act = new act_service_1.ActViewModel();
             }
@@ -1930,6 +1931,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         ActEditorController.prototype.$onInit = function () {
             var _this = this;
             if (this.actId) {
+                console.log('loading act', this.actId);
                 this.actService.get(this.actId, true)
                     .then(function (act) { return _this.act = act; });
             }
@@ -2999,6 +3001,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 template: "<act-editor act-id=\"$ctrl.stateParams.act\"></act-editor>",
                 controller: ['$stateParams', function ($stateParams) {
                         this.$stateParams = $stateParams;
+                        console.log('Editing act:' + this.$stateParams.act);
                     }],
                 controllerAs: '$ctrl'
             });

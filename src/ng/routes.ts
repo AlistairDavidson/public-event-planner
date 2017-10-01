@@ -117,6 +117,7 @@ function(
             template:  `<act-editor act-id="$ctrl.stateParams.act"></act-editor>`,
             controller: ['$stateParams', function($stateParams: ng.ui.IStateParamsService) {
                 this.$stateParams = $stateParams;
+                console.log('Editing act:' + this.$stateParams.act);
             }],
             controllerAs: '$ctrl'
         });

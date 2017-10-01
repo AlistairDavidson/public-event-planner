@@ -8,6 +8,7 @@ export class ActEditorFormController implements angular.IComponentController {
     }
 
     $onInit() {
+        console.log('form init')
         if(!this.act) {
             this.act = new ActViewModel();
         }
