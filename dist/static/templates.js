@@ -166,6 +166,10 @@ angular
 			'        </md-menu-item>\n' +
 			'      </md-menu-content>\n' +
 			'    </md-menu>\n' +
+			'\n' +
+			'    <md-button aria-label="Edit" class="md-icon-button" ui-sref="root.act({ act: row.id })">\n' +
+			'        <md-icon md-menu-origin>mode edit</md-icon>      \n' +
+			'      </md-button>\n' +
 			'  </td>\n' +
 			'</script>\n' +
 			'\n' +
