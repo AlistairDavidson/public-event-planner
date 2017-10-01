@@ -84,7 +84,7 @@ export class ActService {
         }
         
         await this.rewriteContacts(act, actData.actContacts);
-        await this.rewriteBookings(act, actData.bookings);
+    //    await this.rewriteBookings(act, actData.bookings);
       
         return await this.get(act.id, true);
     }
@@ -100,7 +100,7 @@ export class ActService {
         let actContactIdsToAdd = _.difference(newActContactIds, actContactIds);
         let actContactIdsToRemove = _.difference(actContactIds, newActContactIds);
 
-       if((actContactIdsToRemove).length) {
+       if(actContactIdsToRemove.length) {
             await act.removeActContacts(actContactIdsToRemove);
        }
 
