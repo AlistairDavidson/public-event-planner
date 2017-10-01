@@ -657,7 +657,7 @@ angular
 
 		$templateCache.put('components/contact/contact-search/contact-search.html', '<div layout="column">\n' +
 			'    <div layout-gt-sm="row">\n' +
-			'        <md-autocomplete flex required md-input-name="contact-search" md-input-minlength="2" md-selected-item="$ctrl.contact" md-search-text="$ctrl.searchText" md-items="contact in $ctrl.contacts" md-require-match md-floating-label="Contact" md-selected-item-change="$ctrl.contactId = contact.id">\n' +
+			'        <md-autocomplete flex required md-input-name="contact-search" md-input-minlength="2" md-selected-item="$ctrl.contact" md-search-text="$ctrl.searchText" md-items="contact in $ctrl.search($ctrl.searchText)" md-require-match md-floating-label="Contact" md-selected-item-change="$ctrl.contactId = contact.id">\n' +
 			'          <md-item-template>\n' +
 			'            <span md-highlight-text="ctrl.searchText">{{ contact.name }}</span>\n' +
 			'          </md-item-template>\n' +

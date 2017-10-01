@@ -5,7 +5,7 @@
             md-input-minlength="2"
             md-selected-item="$ctrl.contact"
             md-search-text="$ctrl.searchText"
-            md-items="contact in $ctrl.contacts"           
+            md-items="contact in $ctrl.search($ctrl.searchText)"           
             md-require-match
             md-floating-label="Contact"
             md-selected-item-change="$ctrl.contactId = contact.id">

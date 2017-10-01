@@ -14,12 +14,9 @@ export class BookingStatusSelectController implements angular.IComponentControll
     constructor(private bookingService: BookingService) {
     }
 
-    $onInit() {        
-    }
-
-    search(searchText: string) {
-        return this.bookingService.listStatuses()
-            .then(bookingStatuses => this.bookingStatuses = bookingStatuses)
+    $onInit() {
+        this.bookingService.listStatuses()
+            .then(bookingStatuses => this.bookingStatuses = bookingStatuses);
     }
 }
 
