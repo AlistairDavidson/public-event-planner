@@ -100,7 +100,7 @@ export class ContactViewModel implements ContactDto {
     name = '';
 
     details: ContactDetailsDto;
-    actContacts?: ActContactDto[];
+    actContacts?: ActContactDto[] = [];
 }
 
 

@@ -31,7 +31,7 @@ export class ActSearchController implements angular.IComponentController {
         return this.actService.list({
             order: 'name',
             limit: 25,
-            page: 0,
+            page: 1,
             filter: searchText
         });
     }

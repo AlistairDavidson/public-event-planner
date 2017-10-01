@@ -32,7 +32,7 @@ export class LocationSearchController implements angular.IComponentController {
         return this.locationService.list({
             order: 'name',
             limit: 25,
-            page: 0,
+            page: 1,
             filter: searchText,
             eventId: this.eventId
         });

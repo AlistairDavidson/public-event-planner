@@ -36,7 +36,6 @@ Act
 
 tech specs - use Act tech specs if none against booking
 bio onto booking, same rules as tech specs
-rename location to stage?
 
 Validation pass
 

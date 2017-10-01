@@ -1,5 +1,7 @@
 import { ActDto, ActsDto } from '../../common/models/act';
 import { ContactDto } from '../../common/models/contact';
+import { ContactViewModel, ActContactViewModel } from './contact-service';
+import { BookingViewModel } from './booking-service';
 import { ActContactDto } from '../../common/models/act-contact';
 import { BookingDto } from '../../common/models/booking';
 import { TimeslotDto } from '../../common/models/timeslot';
@@ -77,8 +79,14 @@ export default class ActService {
 export class ActViewModel implements ActDto {
     constructor(act?: ActDto) {
         if(act) {
+            this.mainContact = new ContactViewModel(act.mainContact);
+            this.webContact = new ContactViewModel(act.webContact);
+            
+            this.actContacts = this.actContacts.map(ac => new ActContactViewModel(ac));
+            this.bookings = this.bookings.map(b => new BookingViewModel(b));
+
             _.extend(this, act);
-        }
+        }        
     }
 
     id?: number;
@@ -94,9 +102,9 @@ export class ActViewModel implements ActDto {
     mainContactId?: number;
     webContactId?: number;
 
-    mainContact?: ContactDto;
-    webContact?: ContactDto;
-    actContacts?: ActContactDto[];
-    timeslots?: TimeslotDto[];
-    bookings?: BookingDto[];
+    mainContact?: ContactViewModel = new ContactViewModel();
+    webContact?: ContactViewModel = new ContactViewModel();
+    actContacts?: ActContactViewModel[] = [];
+    timeslots?: TimeslotDto[] = [];
+    bookings?: BookingViewModel[] = [];
 }

@@ -33,7 +33,7 @@ export class BookingSearchController implements angular.IComponentController {
         let query: any = {
             order: 'name',
             limit: 25,
-            page: 0,
+            page: 1,
             filter: searchText
         }
 
