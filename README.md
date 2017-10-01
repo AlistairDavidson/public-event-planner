@@ -6,9 +6,12 @@ Copyright (C) 2017 Alistair Davidson <alistair.l.davidson@gmail.com>
 
 TODO
 
-edit buttons on tables
+Operation Death to Modals
+    Routes that show forms
+    Replacement of edit modals with in-line forms
 
-operation death to modals
+
+edit buttons on tables
 
 Single-line summary widgets
     act
@@ -18,29 +21,26 @@ Single-line summary widgets
 acts, applications -> acts-page, applications-page
 
 Act
-    Create / Edit page
-        Bookings editor
+    act-from-application
+        Three columns: act, main contact, booking
 
-        act-from-application
-            Three columns: act, main contact, booking
-
-            Radio: existing act (dropdown) or new act (create fields)
-            Same for contact
-            If merging with existing records, prompt for overwrites
+        Radio: existing act (dropdown) or new act (create fields)
+        Same for contact
+        If merging with existing records, prompt for overwrites
 
     Detail view     
         single-page, single act, editable, will show timeline etc later
         add bookings, applications from here
 
+tech specs - use Act tech specs if none against booking
+bio onto booking, same rules as tech specs
+rename location to stage?
+
 Validation pass
 
-modal edit with just an id
+Solve issue with dates on viewmodels (set createdDate -> also sets createdDateAsDate) 
 
-Solve issue where we don't always want to show selects in forms (eg, when creating a booking from an act, there is no need to allow the user to change act)
-
-Solve issue with dates on viewmodels (possibly just a get createdDateAsDate ?) 
-
-Surely consolidate stuff more, somehow
+Surely consolidate code more, somehow
 
 Do something so contact sort is by last name
 
@@ -49,9 +49,12 @@ Applications
 
 Events management page - create and edit events
     this should be sort of a top level page... need to be able to come 'out' of an event
+    automatically create a 'main stage' and other such blank stationery
 
 Give events users, allow sharing
 Event list gets from user
+
+search over existing answers for the likes of band type
 
 unify lists
 rework to material-style list
