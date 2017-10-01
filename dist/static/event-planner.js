@@ -2067,6 +2067,9 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 this.actService.get(this.actId, false)
                     .then(function (act) { return _this.act = act; });
             }
+            if (this.act) {
+                this.actId = this.act.id;
+            }
         };
         ActSearchController.prototype.edit = function (ev) {
             var _this = this;
@@ -2630,7 +2633,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 /* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(4)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, contact_service_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var ContactSearchController = (function () {
@@ -2642,6 +2645,12 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
             if (!this.contact && this.contactId) {
                 this.contactService.get(this.contactId, false)
                     .then(function (contact) { return _this.contact = contact; });
+            }
+            if (this.contact) {
+                this.contactId = this.contact.id;
+            }
+            else {
+                this.contact = new contact_service_1.ContactViewModel();
             }
         };
         ContactSearchController.prototype.edit = function (ev) {

@@ -18,6 +18,12 @@ export class ContactSearchController implements angular.IComponentController {
             this.contactService.get(this.contactId, false)
                 .then(contact => this.contact = contact);
         }
+
+        if(this.contact) {
+            this.contactId = this.contact.id;
+        } else {
+            this.contact = new ContactViewModel();
+        }
     }
 
     edit(ev: ng.IAngularEvent) {

@@ -18,6 +18,10 @@ export class ActSearchController implements angular.IComponentController {
             this.actService.get(this.actId, false)
                 .then(act => this.act = act);
         }
+        
+        if(this.act) {
+            this.actId = this.act.id;
+        }
     }
 
     edit(ev: ng.IAngularEvent) {
