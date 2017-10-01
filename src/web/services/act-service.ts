@@ -101,6 +101,7 @@ export class ActService {
         let actContactIdsToRemove = _.difference(actContactIds, newActContactIds);        
 
         let actContactsToCreate = _.filter(actContactsData, actContactData => !!actContactData.id);
+        database.models.ActContact.bulkCreate(actContactsToCreate);
 
         console.log('actContactIds', actContactIds, ' newActContactIds', newActContactIds, ' actContactIdsToAdd', actContactIdsToAdd, ' actContactIdsToRemove', actContactIdsToRemove);
 
