@@ -412,6 +412,12 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 .then(function (response) { return new ActViewModel(response.data); });
         };
         ActService.prototype.save = function (data) {
+            data.ActContacts = data.ActContacts.map(function (actContact) {
+                if (actContact.contact) {
+                    actContact.ContactId = actContact.contact.id;
+                }
+                return actContact;
+            });
             return this.$http.post(settings_1.default.api + "/act/save", data)
                 .then(function (response) { return new ActViewModel(response.data); });
         };
