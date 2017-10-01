@@ -15,8 +15,7 @@ export class ActEditorController implements angular.IComponentController {
         if(this.actId) {
             this.actService.get(this.actId, true)
                 .then((act) => this.act = act);
-        }
-        
+        }    
     }
 
     save() {
