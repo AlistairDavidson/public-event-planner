@@ -19,6 +19,8 @@ export default class ApplicationService {
     list(query?: MdSortDto) {
         let queryString: string;
 
+        console.log('query is', query);
+
         if(query) {
            let listQuery = queryToRequest(query);
            listQuery.eventId = this.$stateParams.event;
@@ -30,6 +32,8 @@ export default class ApplicationService {
         }    
 
         let url = `${settings.api}/application/list?${queryString}`;
+
+        console.log('url is', url);
 
         return this.$http.get(url)
             .then(response => (response.data as ActApplicationsDto))

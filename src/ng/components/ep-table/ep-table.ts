@@ -43,6 +43,7 @@ class EpTableController implements angular.IComponentController {
     }
 
     get() {
+        console.log('ep-table:', this.query)
        return this.loading = this.onList({ query: this.query })
             .then((newData: { count: number, rows: any[]}) => {
                 this.rows = newData.rows;

@@ -2724,6 +2724,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         };
         EpTableController.prototype.get = function () {
             var _this = this;
+            console.log('ep-table:', this.query);
             return this.loading = this.onList({ query: this.query })
                 .then(function (newData) {
                 _this.rows = newData.rows;
@@ -3128,6 +3129,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         ApplicationService.prototype.list = function (query) {
             var _this = this;
             var queryString;
+            console.log('query is', query);
             if (query) {
                 var listQuery = helper_1.queryToRequest(query);
                 listQuery.eventId = this.$stateParams.event;
@@ -3139,6 +3141,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 });
             }
             var url = settings_1.default.api + "/application/list?" + queryString;
+            console.log('url is', url);
             return this.$http.get(url)
                 .then(function (response) { return response.data; })
                 .then(function (applicationsData) {
