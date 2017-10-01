@@ -92,6 +92,8 @@ export class ActService {
     async rewriteContacts(act: ActInstance, actContactsData: ActContactDto[]) {
         let actContacts = await act.getActContacts();
         actContacts = actContacts || [];
+        actContactsData = actContactsData || [];
+
         let actContactIds = actContacts.map(actContact => actContact.id);
         let newActContactIds = actContactsData.map(actContactData => actContactData.id);
 
@@ -101,7 +103,7 @@ export class ActService {
         await act.removeActContacts(actContactIdsToRemove);
         await act.addActContacts(actContactIdsToAdd);
 
-        return this.get(act.id, true);
+        return await this.get(act.id, true);
     }
 
     // Applications and bookings need proper create / updates
