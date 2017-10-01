@@ -4,7 +4,7 @@ import ContactService from '../../../services/act-service';
 import * as _ from 'lodash';
 
 export class ContactEditorModalController implements angular.IComponentController {
-    static $inject = ['$mdDialog', 'actService', 'contact', 'mode',];
+    static $inject = ['$mdDialog', 'contactService', 'contact', 'mode',];
     
     saving = false;
 

@@ -364,7 +364,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         ContactEditorModalController.prototype.cancel = function () {
             this.$mdDialog.hide();
         };
-        ContactEditorModalController.$inject = ['$mdDialog', 'actService', 'contact', 'mode',];
+        ContactEditorModalController.$inject = ['$mdDialog', 'contactService', 'contact', 'mode',];
         return ContactEditorModalController;
     }());
     exports.ContactEditorModalController = ContactEditorModalController;
