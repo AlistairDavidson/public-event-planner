@@ -1206,7 +1206,7 @@ angular
 
 		$templateCache.put('components/contact/contact-search/contact-search.html', '<div layout="column">\n' +
 			'    <div layout-gt-sm="row">\n' +
-			'        <md-autocomplete flex required md-input-name="contact-search" md-input-minlength="2" md-selected-item="$ctrl.contact" md-search-text="$ctrl.searchText" md-items="contact in $ctrl.search($ctrl.searchText)" md-item-text="contact.name" md-require-match md-floating-label="Contact" md-selected-item-change="$ctrl.contactId = contact.id">\n' +
+			'        <md-autocomplete flex required md-input-name="contact-search" md-input-minlength="2" md-selected-item="$ctrl.contact" md-search-text="$ctrl.searchText" md-items="contact in $ctrl.contacts" md-require-match md-floating-label="Contact" md-selected-item-change="$ctrl.contactId = contact.id">\n' +
 			'          <md-item-template>\n' +
 			'            <span md-highlight-text="ctrl.searchText">{{ contact.name }}</span>\n' +
 			'          </md-item-template>\n' +
@@ -2663,12 +2663,13 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
             });
         };
         ContactSearchController.prototype.search = function (searchText) {
+            var _this = this;
             return this.contactService.list({
                 order: 'name',
                 limit: 25,
                 page: 1,
                 filter: searchText
-            });
+            }).then(function (contacts) { return _this.contacts = contacts.rows; });
         };
         ContactSearchController.$inject = ['contactService'];
         return ContactSearchController;
