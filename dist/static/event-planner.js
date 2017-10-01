@@ -2991,8 +2991,8 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
             })
                 .state({
                 name: 'root.act.edit',
-                url: '/act/edit/{act}',
-                template: "<act-editor act-id=\"$ctrl.stateParams.act\"></act-editor>",
+                url: '/act/{act}',
+                template: "<act-editor act-id=\"$ctrl.$stateParams.act\"></act-editor>",
                 controller: ['$stateParams', function ($stateParams) {
                         this.$stateParams = $stateParams;
                         console.log('Editing act:' + this.$stateParams.act);

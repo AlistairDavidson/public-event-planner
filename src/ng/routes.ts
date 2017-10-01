@@ -107,8 +107,8 @@ function(
         })
         .state({
             name: 'root.act.edit',
-            url: '/act/edit/{act}',
-            template:  `<act-editor act-id="$ctrl.stateParams.act"></act-editor>`,
+            url: '/act/{act}',
+            template:  `<act-editor act-id="$ctrl.$stateParams.act"></act-editor>`,
             controller: ['$stateParams', function($stateParams: ng.ui.IStateParamsService) {
                 this.$stateParams = $stateParams;
                 console.log('Editing act:' + this.$stateParams.act);
