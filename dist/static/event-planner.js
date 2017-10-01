@@ -3058,9 +3058,13 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 .state({
                 name: 'root.applications.detail',
                 url: '/detail',
-                template: "<applications-table                                \n                            get-applications=\"$ctrl.applicationService.list(query)\"\n                            edit=\"$ctrl.applicationService.edit($event)\">\n                        </applications-table>",
+                template: "<applications-table                                \n                            get-applications=\"$ctrl.getApplications(query)\"\n                            edit=\"$ctrl.applicationService.edit($event)\">\n                        </applications-table>",
                 controller: ['applicationService', function (applicationService) {
                         this.applicationService = applicationService;
+                        this.getApplications = function (query) {
+                            applicationService.list(query)
+                                .then(function (acts) { return acts.rows; });
+                        };
                     }],
                 controllerAs: '$ctrl'
             })
@@ -3084,9 +3088,13 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 .state({
                 name: 'root.acts.detail',
                 url: '/detail',
-                template: "<acts-table                                \n                            get-acts=\"$ctrl.actService.list(query)\"\n                            edit=\"$ctrl.actService.edit($event)\">\n                        </acts-table>",
+                template: "<acts-table                                \n                            get-acts=\"$ctrl.getActs(query)\"\n                            edit=\"$ctrl.actService.edit($event)\">\n                        </acts-table>",
                 controller: ['actService', function (actService) {
                         this.actService = actService;
+                        this.getActs = function (query) {
+                            actService.list(query)
+                                .then(function (acts) { return acts.rows; });
+                        };
                     }],
                 controllerAs: '$ctrl'
             })
