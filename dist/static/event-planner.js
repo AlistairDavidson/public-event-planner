@@ -345,9 +345,9 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var ContactEditorModalController = (function () {
-        function ContactEditorModalController($mdDialog, actService, contact, mode) {
+        function ContactEditorModalController($mdDialog, contactService, contact, mode) {
             this.$mdDialog = $mdDialog;
-            this.actService = actService;
+            this.contactService = contactService;
             this.contact = contact;
             this.mode = mode;
             this.saving = false;
@@ -358,7 +358,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
             var _this = this;
             console.log('modal saving', this.contact);
             this.saving = true;
-            this.actService.save(this.contact)
+            this.contactService.save(this.contact)
                 .then(function (contact) { return _this.$mdDialog.hide(_this.contact); });
         };
         ContactEditorModalController.prototype.cancel = function () {
