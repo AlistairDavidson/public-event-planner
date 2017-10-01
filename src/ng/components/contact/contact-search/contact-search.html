@@ -10,9 +10,6 @@
             md-require-match
             md-floating-label="Contact"
             md-selected-item-change="$ctrl.contactId = contact.id">
-          <md-item-template>
-            <span md-highlight-text="ctrl.searchText">{{ contact.name }}</span>
-          </md-item-template>
         </md-autocomplete>
 
         <md-button ng-click="$ctrl.edit($event)">
