@@ -95,18 +95,20 @@ export class ActService {
         actContactsData = actContactsData || [];
 
         let actContactIds = actContacts.map(actContact => actContact.id);
-        let newActContactIds = actContactsData.map(actContactData => actContactData.id);
-
+        let newActContactIds = actContactsData.map(actContactData => actContactData.id);        
+    
         let actContactIdsToAdd = _.difference(newActContactIds, actContactIds);
-        let actContactIdsToRemove = _.difference(actContactIds, newActContactIds);
+        let actContactIdsToRemove = _.difference(actContactIds, newActContactIds);        
 
-       if(actContactIdsToRemove.length) {
+        console.log('actContactIds', actContactIds, ' newActContactIds', newActContactIds, ' actContactIdsToAdd', actContactIdsToAdd, ' actContactIdsToRemove', actContactIdsToRemove);
+
+        if(actContactIdsToRemove.length) {
             await act.removeActContacts(actContactIdsToRemove);
-       }
+        }
 
-       if(actContactIdsToAdd.length) {
+        if(actContactIdsToAdd.length) {
             await act.addActContacts(actContactIdsToAdd);
-       }
+        }
     }
 
     // Applications and bookings need proper create / updates
