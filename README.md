@@ -20,6 +20,8 @@ Single-line summary widgets
 
 acts, applications -> acts-page, applications-page
 
+fix search
+
 Act
     act-from-application
         Three columns: act, main contact, booking

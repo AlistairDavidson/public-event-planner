@@ -2990,7 +2990,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 controllerAs: '$ctrl'
             })
                 .state({
-                name: 'root.act.edit',
+                name: 'root.act',
                 url: '/act/{act}',
                 template: "<act-editor act-id=\"$ctrl.$stateParams.act\"></act-editor>",
                 controller: ['$stateParams', function ($stateParams) {
