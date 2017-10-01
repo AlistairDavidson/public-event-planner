@@ -45,7 +45,8 @@ export class BookingSearchController implements angular.IComponentController {
             query.actId = this.actId;
         }
 
-        return this.bookingService.list(query);
+        return this.bookingService.list(query)
+            .then(bookings => bookings.rows);
     }
 }
 

@@ -37,7 +37,8 @@ export class ActSearchController implements angular.IComponentController {
             limit: 25,
             page: 1,
             filter: searchText
-        });
+        })
+        .then(acts => acts.rows);
     }
 }
 

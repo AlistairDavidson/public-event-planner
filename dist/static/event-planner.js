@@ -2083,7 +2083,8 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 limit: 25,
                 page: 1,
                 filter: searchText
-            });
+            })
+                .then(function (acts) { return acts.rows; });
         };
         ActSearchController.$inject = ['actService'];
         return ActSearchController;
@@ -2421,7 +2422,8 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
             if (this.actId) {
                 query.actId = this.actId;
             }
-            return this.bookingService.list(query);
+            return this.bookingService.list(query)
+                .then(function (bookings) { return bookings.rows; });
         };
         BookingSearchController.$inject = ['bookingService'];
         return BookingSearchController;
@@ -2663,7 +2665,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 limit: 25,
                 page: 1,
                 filter: searchText
-            });
+            }).then(function (contacts) { return contacts.rows; });
         };
         ContactSearchController.$inject = ['contactService'];
         return ContactSearchController;
@@ -2858,7 +2860,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 limit: 25,
                 page: 1,
                 filter: searchText
-            });
+            }).then(function (events) { return events.rows; });
         };
         EventSearchController.$inject = ['eventService'];
         return EventSearchController;

@@ -33,7 +33,7 @@ export class EventSearchController implements angular.IComponentController {
             limit: 25,
             page: 1,
             filter: searchText
-        });
+        }).then(events => events.rows);
     }
 }
 

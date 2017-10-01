@@ -39,7 +39,7 @@ export class ContactSearchController implements angular.IComponentController {
             limit: 25,
             page: 1,
             filter: searchText
-        });
+        }).then(contacts => contacts.rows);
     }
 }
 
