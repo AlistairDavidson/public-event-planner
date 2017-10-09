@@ -1067,7 +1067,7 @@ angular
 			'            <input ng-model="actContact.relationship">\n' +
 			'        </md-input-container>\n' +
 			'\n' +
-			'        <contact-search contact="actContact.contact" flex="75">\n' +
+			'        <contact-search contact="actContact.Contact" flex="75">\n' +
 			'        </contact-search>\n' +
 			'\n' +
 			'        <md-button ng-click="$ctrl.remove(actContact)" class="fixed-height-button">\n' +
