@@ -6,6 +6,10 @@ Copyright (C) 2017 Alistair Davidson <alistair.l.davidson@gmail.com>
 
 TODO
 
+fix act contacts editor save
+better lists 
+search box text when value is null
+
 Operation Death to Modals
     Routes that show forms
     Replacement of edit modals with in-line forms
@@ -19,8 +23,6 @@ Single-line summary widgets
     contact
 
 acts, applications -> acts-page, applications-page
-
-fix search
 
 Act
     act-from-application

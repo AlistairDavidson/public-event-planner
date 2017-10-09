@@ -1,4 +1,5 @@
 import { ActContactDto } from '../../common/models/act-contact';
+import { ActDto } from '../../common/models/act';
 import { ContactDto, ContactsDto, ContactDetailsDto } from '../../common/models/contact';
 import { queryToRequest } from './helper';
 import settings from '../settings';
@@ -124,4 +125,7 @@ export class ActContactViewModel implements ActContactDto {
     
     ActId?: number;
     ContactId?: number;
+
+    Act?: ActDto;
+    Contact?: ContactDto;
 }

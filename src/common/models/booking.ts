@@ -38,22 +38,22 @@ export interface BookingAttribute {
 }
 
 export interface BookingInstance extends SequelizeStatic.Instance<BookingAttribute>, BookingAttribute {    
-    event: EventInstance;
+    Event: EventInstance;
     createEvent: SequelizeStatic.BelongsToCreateAssociationMixin<EventAttribute>;
     getEvent: SequelizeStatic.BelongsToGetAssociationMixin<EventInstance>;
     setEvent: SequelizeStatic.BelongsToSetAssociationMixin<EventInstance, number>;
 
-    act: ActInstance;
+    Act: ActInstance;
     createAct: SequelizeStatic.BelongsToCreateAssociationMixin<ActAttribute>;
     getAct: SequelizeStatic.BelongsToGetAssociationMixin<ActInstance>;
     setAct: SequelizeStatic.BelongsToSetAssociationMixin<ActInstance, number>;
 
-    bookingStatus: BookingStatusInstance;
+    BookingStatus: BookingStatusInstance;
     createBookingStatus: SequelizeStatic.BelongsToCreateAssociationMixin<BookingStatusAttribute>;
     getBookingStatus: SequelizeStatic.BelongsToGetAssociationMixin<BookingStatusInstance>;
     setBookingStatus: SequelizeStatic.BelongsToSetAssociationMixin<BookingStatusInstance, number>;
 
-    actApplication: ActApplicationInstance;
+    ActApplication: ActApplicationInstance;
     createActApplication: SequelizeStatic.BelongsToCreateAssociationMixin<ActApplicationAttribute>;
     getActApplication: SequelizeStatic.BelongsToGetAssociationMixin<ActApplicationInstance>;
     setActApplication: SequelizeStatic.BelongsToSetAssociationMixin<ActApplicationInstance, number>;
@@ -63,10 +63,10 @@ export interface BookingDto extends BookingAttribute {
     createdAt?: string;
     updatedAt?: string;
 
-    event?: EventDto;
-    act?: ActDto;
-    bookingStatus?: BookingStatusDto;
-    actApplication?: ActApplicationDto; 
+    Event?: EventDto;
+    Act?: ActDto;
+    BookingStatus?: BookingStatusDto;
+    ActApplication?: ActApplicationDto; 
 }
 
 export interface BookingsDto {

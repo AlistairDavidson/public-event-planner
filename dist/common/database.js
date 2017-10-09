@@ -76,12 +76,21 @@ class Database {
                 }
             });
             ['view_profile',
+                'view_act',
+                'edit_act',
                 'view_application',
                 'edit_application',
+                'view_booking',
+                'edit_booking',
+                'view_contact',
+                'edit_contact',
                 'view_event',
                 'edit_event',
-                'view_act',
-                'edit_act'].forEach((permission) => __awaiter(this, void 0, void 0, function* () {
+                'view_location',
+                'edit_location',
+                'view_user',
+                'edit_user'
+            ].forEach((permission) => __awaiter(this, void 0, void 0, function* () {
                 return yield this.models.Permission.findOrCreate({
                     where: {
                         name: permission

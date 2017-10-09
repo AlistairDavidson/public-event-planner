@@ -1,5 +1,5 @@
 import * as SequelizeStatic from 'sequelize';
-import { PermissionModel, PermissionInstance } from './permission';
+import { PermissionModel, PermissionInstance, PermissionDto } from './permission';
 
 export function user(db: SequelizeStatic.Sequelize, Permission: PermissionModel)  {    
     let User = db.define<UserInstance, UserAttribute>('User', {
@@ -26,6 +26,7 @@ export interface UserAttribute {
 }
 
 export interface UserInstance extends SequelizeStatic.Instance<UserAttribute>, UserAttribute {
+    Permissions?: PermissionInstance[];
     getPermissions: SequelizeStatic.HasManyGetAssociationsMixin<PermissionInstance>;
     setPermissions: SequelizeStatic.HasManySetAssociationsMixin<PermissionInstance, number>;
     addPermissions: SequelizeStatic.HasManyAddAssociationsMixin<PermissionInstance, number>;
@@ -41,6 +42,8 @@ export interface UserInstance extends SequelizeStatic.Instance<UserAttribute>, U
 export interface UserDto extends UserAttribute {    
     createdAt?: string;
     updatedAt?: string;
+
+    Permissions?: PermissionDto[];
 }
 
 export interface UsersDto {

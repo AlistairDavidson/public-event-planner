@@ -27,7 +27,7 @@ export interface ActContactInstance extends SequelizeStatic.Instance<ActContactA
     getAct: SequelizeStatic.BelongsToGetAssociationMixin<ActInstance>;
     setAct: SequelizeStatic.BelongsToSetAssociationMixin<ActInstance, number>;
 
-    contact: ContactInstance;
+    Contact: ContactInstance;
     createContact: SequelizeStatic.BelongsToCreateAssociationMixin<ContactAttribute>;
     getContact: SequelizeStatic.BelongsToGetAssociationMixin<ContactInstance>;
     setContact: SequelizeStatic.BelongsToSetAssociationMixin<ContactInstance, number>;
@@ -37,7 +37,7 @@ export interface ActContactDto extends ActContactAttribute {
     createdAt?: string;
     updatedAt?: string;
     
-    contact?: ContactDto; 
+    Contact?: ContactDto; 
     act?: ActDto;    
 }
 

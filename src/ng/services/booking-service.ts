@@ -99,10 +99,10 @@ export class BookingViewModel implements BookingDto {
     BookingStatusId?: number;
     ActApplicationId?: number;
 
-    event?: EventDto;
-    act?: ActDto;
-    bookingStatus?: BookingStatusDto;
-    actApplication?: ActApplicationDto; 
+    Event?: EventDto;
+    Act?: ActDto;
+    BookingStatus?: BookingStatusDto;
+    ActApplication?: ActApplicationDto; 
 }
 
 export default BookingService;

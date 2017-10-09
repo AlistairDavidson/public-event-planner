@@ -43,8 +43,8 @@ export interface RawApplicationDto {
 export interface ActApplicationDto extends ActApplicationAttribute {
     createdAt?: string;
     updatedAt?: string;
-    booking?: BookingDto;
-    event?: EventDto;
+    Booking?: BookingDto;
+    Event?: EventDto;
 }
 
 export interface ActApplicationsDto {
@@ -53,12 +53,12 @@ export interface ActApplicationsDto {
 }
 
 export interface ActApplicationInstance extends SequelizeStatic.Instance<ActApplicationAttribute>, ActApplicationAttribute {
-    booking: BookingInstance;
+    Booking: BookingInstance;
     createBooking: SequelizeStatic.BelongsToCreateAssociationMixin<BookingAttribute>;
     getBooking: SequelizeStatic.BelongsToGetAssociationMixin<BookingInstance>;
     setBooking: SequelizeStatic.BelongsToSetAssociationMixin<BookingInstance, number>;
 
-    event: EventInstance;
+    Event: EventInstance;
     createEvent: SequelizeStatic.BelongsToCreateAssociationMixin<EventAttribute>;
     getEvent: SequelizeStatic.BelongsToGetAssociationMixin<EventInstance>;
     setEvent: SequelizeStatic.BelongsToSetAssociationMixin<EventInstance, number>;

@@ -413,8 +413,8 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         };
         ActService.prototype.save = function (data) {
             data.ActContacts = data.ActContacts.map(function (actContact) {
-                if (actContact.contact) {
-                    actContact.ContactId = actContact.contact.id;
+                if (actContact.Contact) {
+                    actContact.ContactId = actContact.Contact.id;
                 }
                 return actContact;
             });

@@ -24,7 +24,7 @@ export interface LocationAttribute {
 }
 
 export interface LocationInstance extends SequelizeStatic.Instance<LocationAttribute>, LocationAttribute {
-    event: EventInstance;
+    Event: EventInstance;
     createEvent: SequelizeStatic.BelongsToCreateAssociationMixin<EventAttribute>;
     getEvent: SequelizeStatic.BelongsToGetAssociationMixin<EventInstance>;
     setEvent: SequelizeStatic.BelongsToSetAssociationMixin<EventInstance, number>;
@@ -45,7 +45,7 @@ export interface LocationDto extends LocationAttribute {
     createdAt?: string;
     updatedAt?: string;
 
-    event?: EventDto;
+    Event?: EventDto;
     Timeslots?: TimeslotDto[];
 }
 

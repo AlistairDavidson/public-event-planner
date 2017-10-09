@@ -59,12 +59,20 @@ class AuthService {
                         uuid: uuid.v4()
                     });
                     ['view_profile',
+                        'view_act',
+                        'edit_act',
                         'view_application',
                         'edit_application',
+                        'view_booking',
+                        'edit_booking',
+                        'view_contact',
+                        'edit_contact',
                         'view_event',
                         'edit_event',
-                        'view_act',
-                        'edit_act'].forEach((permissionName) => __awaiter(this, void 0, void 0, function* () {
+                        'view_location',
+                        'edit_location',
+                        'view_user',
+                        'edit_user'].forEach((permissionName) => __awaiter(this, void 0, void 0, function* () {
                         let permission = yield database_1.default.models.Permission.findOne({
                             where: {
                                 name: permissionName
@@ -84,8 +92,8 @@ class AuthService {
                     username: username
                 }
             }).then((user) => {
-                console.log('found user');
-                if (!self.validPassword(user, password) || !user) {
+                console.log('found user', user);
+                if (!self.validPassword(user, password)) {
                     return done(null, false, req.flash('loginMessage', 'Username or password incorrect'));
                 }
                 return done(null, user);

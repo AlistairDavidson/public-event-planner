@@ -49,8 +49,8 @@ export default class ActService {
 
     save(data: ActDto) {
         data.ActContacts = data.ActContacts.map(actContact => {
-            if(actContact.contact) {
-                actContact.ContactId = actContact.contact.id;
+            if(actContact.Contact) {
+                actContact.ContactId = actContact.Contact.id;
             }
             return actContact;
         });

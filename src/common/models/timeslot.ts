@@ -1,7 +1,7 @@
 import * as SequelizeStatic from 'sequelize';
 import { EventModel, EventAttribute, EventInstance } from './event';
 import { ActModel, ActAttribute, ActInstance } from './act';
-import { LocationAttribute, LocationModel, LocationInstance } from './location';
+import { LocationAttribute, LocationModel, LocationInstance, LocationDto } from './location';
 
 export function timeslot(db: SequelizeStatic.Sequelize, Act: ActModel, Location: LocationModel)  {    
     let Timeslot = db.define<TimeslotInstance, TimeslotAttribute>('Timeslot', {
@@ -34,7 +34,7 @@ export interface TimeslotInstance extends SequelizeStatic.Instance<TimeslotAttri
     getAct: SequelizeStatic.BelongsToGetAssociationMixin<ActInstance>;
     setAct: SequelizeStatic.BelongsToSetAssociationMixin<ActInstance, number>;
 
-    location: LocationInstance;
+    Location: LocationInstance;
     createLocation: SequelizeStatic.BelongsToCreateAssociationMixin<LocationAttribute>;
     getLocation: SequelizeStatic.BelongsToGetAssociationMixin<LocationInstance>;
     setLocation: SequelizeStatic.BelongsToSetAssociationMixin<LocationInstance, number>;
@@ -44,7 +44,9 @@ export interface TimeslotDto extends TimeslotAttribute {
     createdAt?: string;
     updatedAt?: string;
     start?: string;
-    end?: string;  
+    end?: string;
+
+    Location?: LocationDto;
 }
 
 export interface TimeslotModel extends SequelizeStatic.Model<TimeslotInstance, TimeslotAttribute> {}

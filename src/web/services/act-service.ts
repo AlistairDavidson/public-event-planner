@@ -90,20 +90,33 @@ export class ActService {
     }
 
     async rewriteContacts(act: ActInstance, actContactsData: ActContactDto[]) {
-        let actContacts = await act.getActContacts();
+        let actContacts = await act.getActContacts()
+
         actContacts = actContacts || [];
         actContactsData = actContactsData || [];
+
+        for(let actContact of actContacts) {
+            let actContactData = _.find(actContactsData, acd => acd.id == actContact.id);
+            if(!actContactData) {
+                await actContact.destroy();
+            }
+            if(actContactData.relationship != actContact.relationship || actContactData.ContactId != actContact.ContactId) {
+                actContact = await actContact.update(actContactData);
+            }
+        }
+
+        let actContactsToCreate = _.filter(actContactsData, actContactData => !actContactData.id);
+        let newActContacts = await database.models.ActContact.bulkCreate(actContactsToCreate);
+
+        /*
 
         let actContactIds = actContacts.map(actContact => actContact.id);
         let newActContactIds = actContactsData.map(actContactData => actContactData.id);        
     
         let actContactIdsToAdd = _.difference(newActContactIds, actContactIds);
-        let actContactIdsToRemove = _.difference(actContactIds, newActContactIds);        
+    /*    let actContactIdsToRemove = _.difference(actContactIds, newActContactIds);        
 
-        let actContactsToCreate = _.filter(actContactsData, actContactData => !actContactData.id);
-        console.log('actContacts', 'actContactsToCreate', actContactsToCreate);
-        database.models.ActContact.bulkCreate(actContactsToCreate);
-
+        
         console.log('actContactIds', actContactIds, ' newActContactIds', newActContactIds, ' actContactIdsToAdd', actContactIdsToAdd, ' actContactIdsToRemove', actContactIdsToRemove);
 
         if(actContactIdsToRemove.length) {
@@ -113,6 +126,8 @@ export class ActService {
         if(actContactIdsToAdd.length) {
             await act.addActContacts(actContactIdsToAdd);
         }
+
+        */
     }
 
     // Applications and bookings need proper create / updates
@@ -136,7 +151,7 @@ export class ActService {
 
             let bookingStatus = await database.models.BookingStatus
                 .findOne({ 
-                    where: { name: bookingData.bookingStatus.name }
+                    where: { name: bookingData.BookingStatus.name }
                 });
 
             await booking.setBookingStatus(bookingStatus);

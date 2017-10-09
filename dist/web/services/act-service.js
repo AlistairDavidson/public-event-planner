@@ -73,25 +73,38 @@ class ActService {
             delete actData.mainContact;
             let webContactData = actData.webContact;
             delete actData.webContact;
-            let mainContact = yield contact_service_1.default.save(mainContactData);
-            yield act.setMainContact(mainContact);
-            let webContact = yield contact_service_1.default.save(webContactData);
-            yield act.setWebContact(webContact);
-            yield this.rewriteContacts(act, actData.actContacts);
-            yield this.rewriteBookings(act, actData.bookings);
+            if (mainContactData) {
+                let mainContact = yield contact_service_1.default.save(mainContactData);
+                yield act.setMainContact(mainContact);
+            }
+            if (webContactData) {
+                let webContact = yield contact_service_1.default.save(webContactData);
+                yield act.setWebContact(webContact);
+            }
+            yield this.rewriteContacts(act, actData.ActContacts);
+            //    await this.rewriteBookings(act, actData.bookings);
             return yield this.get(act.id, true);
         });
     }
     rewriteContacts(act, actContactsData) {
         return __awaiter(this, void 0, void 0, function* () {
             let actContacts = yield act.getActContacts();
+            actContacts = actContacts || [];
+            actContactsData = actContactsData || [];
             let actContactIds = actContacts.map(actContact => actContact.id);
             let newActContactIds = actContactsData.map(actContactData => actContactData.id);
             let actContactIdsToAdd = _.difference(newActContactIds, actContactIds);
             let actContactIdsToRemove = _.difference(actContactIds, newActContactIds);
-            yield act.removeActContacts(actContactIdsToRemove);
-            yield act.addActContacts(actContactIdsToAdd);
-            return this.get(act.id, true);
+            let actContactsToCreate = _.filter(actContactsData, actContactData => !actContactData.id);
+            console.log('actContacts', 'actContactsToCreate', actContactsToCreate);
+            database_1.default.models.ActContact.bulkCreate(actContactsToCreate);
+            console.log('actContactIds', actContactIds, ' newActContactIds', newActContactIds, ' actContactIdsToAdd', actContactIdsToAdd, ' actContactIdsToRemove', actContactIdsToRemove);
+            if (actContactIdsToRemove.length) {
+                yield act.removeActContacts(actContactIdsToRemove);
+            }
+            if (actContactIdsToAdd.length) {
+                yield act.addActContacts(actContactIdsToAdd);
+            }
         });
     }
     // Applications and bookings need proper create / updates
@@ -113,11 +126,10 @@ class ActService {
                 }
                 let bookingStatus = yield database_1.default.models.BookingStatus
                     .findOne({
-                    where: { name: bookingData.bookingStatus.name }
+                    where: { name: bookingData.BookingStatus.name }
                 });
                 yield booking.setBookingStatus(bookingStatus);
             }
-            return yield act.getBookings();
         });
     }
     delete(actId) {

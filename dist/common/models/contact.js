@@ -4,7 +4,7 @@ const SequelizeStatic = require("sequelize");
 function contact(db, ActContact) {
     let Contact = db.define('Contact', {
         name: SequelizeStatic.STRING(255),
-        contactDetails: SequelizeStatic.JSON
+        details: SequelizeStatic.JSON
     }, {
         schema: 'eventplanner'
     });
