@@ -2656,13 +2656,23 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
             var _this = this;
             if (!this.contact && this.contactId) {
                 this.contactService.get(this.contactId, false)
-                    .then(function (contact) { return _this.contact = contact; });
-            }
-            if (this.contact) {
-                this.contactId = this.contact.id;
+                    .then(function (contact) {
+                    _this.contact = contact;
+                    if (_this.contact) {
+                        _this.contactId = _this.contact.id;
+                    }
+                    else {
+                        _this.contact = new contact_service_1.ContactViewModel();
+                    }
+                });
             }
             else {
-                this.contact = new contact_service_1.ContactViewModel();
+                if (this.contact) {
+                    this.contactId = this.contact.id;
+                }
+                else {
+                    this.contact = new contact_service_1.ContactViewModel();
+                }
             }
         };
         ContactSearchController.prototype.edit = function (ev) {
