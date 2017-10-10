@@ -21,7 +21,7 @@ class SearchService {
             };
             options.query.field = options.query.field ? options.query.field : 'createdAt';
             options.query.order = options.query.order ? options.query.order : 'DESC';
-            options.query.filter = options.query.filter ? options.query.filter : '';
+            options.query.filter = options.query.filter ? options.query.filter.trim() : '';
             options.query.offset = options.query.offset ? options.query.offset : 0;
             options.query.limit = options.query.limit ? options.query.limit : 100;
             let opts = {

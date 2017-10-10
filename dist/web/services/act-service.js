@@ -91,20 +91,37 @@ class ActService {
             let actContacts = yield act.getActContacts();
             actContacts = actContacts || [];
             actContactsData = actContactsData || [];
+            for (let actContact of actContacts) {
+                let actContactData = _.find(actContactsData, acd => acd.id == actContact.id);
+                if (!actContactData) {
+                    yield actContact.destroy();
+                }
+                else if (actContactData.relationship != actContact.relationship || actContactData.ContactId != actContact.ContactId) {
+                    actContact = yield actContact.update(actContactData);
+                }
+            }
+            let actContactsToCreate = _.filter(actContactsData, actContactData => !actContactData.id);
+            let newActContacts = yield database_1.default.models.ActContact.bulkCreate(actContactsToCreate);
+            /*
+    
             let actContactIds = actContacts.map(actContact => actContact.id);
             let newActContactIds = actContactsData.map(actContactData => actContactData.id);
+        
             let actContactIdsToAdd = _.difference(newActContactIds, actContactIds);
-            let actContactIdsToRemove = _.difference(actContactIds, newActContactIds);
-            let actContactsToCreate = _.filter(actContactsData, actContactData => !actContactData.id);
-            console.log('actContacts', 'actContactsToCreate', actContactsToCreate);
-            database_1.default.models.ActContact.bulkCreate(actContactsToCreate);
+        /*    let actContactIdsToRemove = _.difference(actContactIds, newActContactIds);
+    
+            
             console.log('actContactIds', actContactIds, ' newActContactIds', newActContactIds, ' actContactIdsToAdd', actContactIdsToAdd, ' actContactIdsToRemove', actContactIdsToRemove);
-            if (actContactIdsToRemove.length) {
-                yield act.removeActContacts(actContactIdsToRemove);
+    
+            if(actContactIdsToRemove.length) {
+                await act.removeActContacts(actContactIdsToRemove);
             }
-            if (actContactIdsToAdd.length) {
-                yield act.addActContacts(actContactIdsToAdd);
+    
+            if(actContactIdsToAdd.length) {
+                await act.addActContacts(actContactIdsToAdd);
             }
+    
+            */
         });
     }
     // Applications and bookings need proper create / updates
