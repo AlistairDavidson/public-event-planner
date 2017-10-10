@@ -6,14 +6,8 @@ Copyright (C) 2017 Alistair Davidson <alistair.l.davidson@gmail.com>
 
 TODO
 
-fix act contacts editor save
-better lists 
 search box text when value is null
-
-Operation Death to Modals
-    Routes that show forms
-    Replacement of edit modals with in-line forms
-
+better lists 
 
 edit buttons on tables
 
@@ -22,7 +16,7 @@ Single-line summary widgets
     application
     contact
 
-acts, applications -> acts-page, applications-page
+rename acts, applications -> acts-page, applications-page
 
 Act
     act-from-application
@@ -36,7 +30,7 @@ Act
         single-page, single act, editable, will show timeline etc later
         add bookings, applications from here
 
-tech specs - use Act tech specs if none against booking
+tech specs - use Act tech specs only if none against booking, checkbox
 bio onto booking, same rules as tech specs
 
 Validation pass

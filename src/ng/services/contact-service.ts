@@ -98,7 +98,7 @@ export class ContactViewModel implements ContactDto {
     id?: number;
     createdAt?: string;
     updatedAt?: string;
-    name = '';
+    name = ' ';
 
     details: ContactDetailsDto;
     ActContacts?: ActContactDto[] = [];

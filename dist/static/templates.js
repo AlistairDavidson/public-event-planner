@@ -661,7 +661,10 @@ angular
 
 		$templateCache.put('components/contact/contact-search/contact-search.html', '<div layout="column">\n' +
 			'    <div layout-gt-sm="row">\n' +
-			'        <md-autocomplete flex required md-input-name="contact-search" md-input-minlength="2" md-selected-item="$ctrl.contact" md-search-text="$ctrl.searchText" md-items="contact in $ctrl.search($ctrl.searchText)" md-item-text="contact.name" md-require-match md-floating-label="Contact" md-selected-item-change="$ctrl.contactId = contact.id">\n' +
+			'\n' +
+			'            [{{ $ctrl.contact }}]\n' +
+			'\n' +
+			'        <md-autocomplete flex required md-input-name="contact-search" md-input-minlength="2" md-selected-item="$ctrl.contact" md-search-text="$ctrl.searchText" md-items="contact in $ctrl.search($ctrl.searchText)" md-item-text="contact.name" md-require-match md-floating-label="Contact" md-selected-item-change="$ctrl.contactId = contact.id" md-search-text-change="">\n' +
 			'          <md-item-template>\n' +
 			'            <span md-highlight-text="ctrl.searchText">{{ contact.name }}</span>\n' +
 			'          </md-item-template>\n' +
@@ -672,6 +675,7 @@ angular
 			'            New\n' +
 			'        </md-button>\n' +
 			'    </div>\n' +
+			'\n' +
 			'</div>');
 
 		$templateCache.put('components/ep-table/ep-table.html', '<md-card>\n' +

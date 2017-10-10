@@ -1,5 +1,8 @@
 <div layout="column">
     <div layout-gt-sm="row">
+
+            [{{ $ctrl.contact }}]
+
         <md-autocomplete flex required
             md-input-name="contact-search"
             md-input-minlength="2"
@@ -9,7 +12,8 @@
             md-item-text="contact.name"
             md-require-match
             md-floating-label="Contact"
-            md-selected-item-change="$ctrl.contactId = contact.id">
+            md-selected-item-change="$ctrl.contactId = contact.id"
+            md-search-text-change="">
           <md-item-template>
             <span md-highlight-text="ctrl.searchText">{{ contact.name }}</span>
           </md-item-template>
@@ -20,5 +24,6 @@
             New
         </md-button>
     </div>
+
 </div>
         

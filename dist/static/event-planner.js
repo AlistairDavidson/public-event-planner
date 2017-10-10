@@ -188,7 +188,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
     exports.default = ContactService;
     var ContactViewModel = (function () {
         function ContactViewModel(contact) {
-            this.name = '';
+            this.name = ' ';
             this.ActContacts = [];
             if (contact) {
                 _.extend(this, contact);
@@ -449,6 +449,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
     exports.default = ActService;
     var ActViewModel = (function () {
         function ActViewModel(act) {
+            this.name = ' ';
             this.mainContact = new contact_service_1.ContactViewModel();
             this.webContact = new contact_service_1.ContactViewModel();
             this.ActContacts = [];
@@ -1216,7 +1217,10 @@ angular
 
 		$templateCache.put('components/contact/contact-search/contact-search.html', '<div layout="column">\n' +
 			'    <div layout-gt-sm="row">\n' +
-			'        <md-autocomplete flex required md-input-name="contact-search" md-input-minlength="2" md-selected-item="$ctrl.contact" md-search-text="$ctrl.searchText" md-items="contact in $ctrl.search($ctrl.searchText)" md-item-text="contact.name" md-require-match md-floating-label="Contact" md-selected-item-change="$ctrl.contactId = contact.id">\n' +
+			'\n' +
+			'            [{{ $ctrl.contact }}]\n' +
+			'\n' +
+			'        <md-autocomplete flex required md-input-name="contact-search" md-input-minlength="2" md-selected-item="$ctrl.contact" md-search-text="$ctrl.searchText" md-items="contact in $ctrl.search($ctrl.searchText)" md-item-text="contact.name" md-require-match md-floating-label="Contact" md-selected-item-change="$ctrl.contactId = contact.id" md-search-text-change="">\n' +
 			'          <md-item-template>\n' +
 			'            <span md-highlight-text="ctrl.searchText">{{ contact.name }}</span>\n' +
 			'          </md-item-template>\n' +
@@ -1227,6 +1231,7 @@ angular
 			'            New\n' +
 			'        </md-button>\n' +
 			'    </div>\n' +
+			'\n' +
 			'</div>');
 
 		$templateCache.put('components/ep-table/ep-table.html', '<md-card>\n' +
@@ -2645,7 +2650,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 /* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(4)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, contact_service_1) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var ContactSearchController = (function () {
@@ -2661,17 +2666,11 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                     if (_this.contact) {
                         _this.contactId = _this.contact.id;
                     }
-                    else {
-                        _this.contact = new contact_service_1.ContactViewModel();
-                    }
                 });
             }
             else {
                 if (this.contact) {
                     this.contactId = this.contact.id;
-                }
-                else {
-                    this.contact = new contact_service_1.ContactViewModel();
                 }
             }
         };

@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-    <base href="/">
+    <base href="/home.html">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
 
@@ -16,7 +16,7 @@
 
     
 
-    <script src="event-planner.0.0.1.min.js"></script>
+    <script src="event-planner.js"></script>
 
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -24,6 +24,8 @@
     <link href="/app.css" rel="stylesheet">
 </head>
 <body ng-controller="eventPlanner" ng-strict-di>
+    <contact-search></contact-search>
+
     <!--<contacts-editor>
     </contacts-editor>
     <event-planner-app>        
@@ -34,6 +36,6 @@
 
     <!--<act-editor-form></act-editor-form>-->
 
-    <act-editor></act-editor>
+    <!--<act-editor></act-editor>-->
 </body>
 </html>

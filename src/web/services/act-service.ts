@@ -98,13 +98,10 @@ export class ActService {
         for(let actContact of actContacts) {
             let actContactData = _.find(actContactsData, acd => acd.id == actContact.id);
 
-            console.log('actContact', actContact, actContactData);
             if(!actContactData) {
-                
                 await actContact.destroy();
             } else if(actContactData.relationship != actContact.relationship || actContactData.ContactId != actContact.ContactId) {
                 actContact = await actContact.update(actContactData);
-                console.log('updated', actContact);
             }
         }
 
