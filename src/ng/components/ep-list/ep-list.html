@@ -1,0 +1,31 @@
+<md-list>
+    <md-list-item   ng-repeat="row in $ctrl.rows"
+                    class="secondary-button-padding md-2-line"
+                    ng-class="{ 'md-info': !$index }"
+                    ng-include="$ctrl.listItemTemplate">                                         
+    </md-list-item>
+</md-list>   
+    
+   <!-- <md-list-item>
+        <md-icon>search</md-icon>
+        <form name="$ctrl.form" >    
+            <md-autocomplete    
+            class="list-filter-container"                     
+                    md-input-name="contact-search"
+                    md-input-minlength="2"
+                    md-selected-item="$ctrl.contact"
+                    md-search-text="$ctrl.searchText"
+                    md-items="contact in $ctrl.search($ctrl.searchText)"
+                    md-item-text="contact.name"
+                    md-require-match
+                    md-floating-label="Search..."
+                    md-selected-item-change="$ctrl.contactId = contact.id"
+                    md-search-text-change="">
+                <md-item-template>
+                    <span md-highlight-text="ctrl.searchText">{{ contact.name }}</span>
+                </md-item-template>
+            </md-autocomplete>
+        </form>
+        <md-icon ng-click="$ctrl.edit($event)" class="md-secondary">create</md-icon>
+    </md-list-item>-->
+</md-list>

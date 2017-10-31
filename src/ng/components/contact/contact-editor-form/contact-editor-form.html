@@ -1,143 +1,162 @@
-<form novalidate ng-cloak>
-    <div layout="column"
-        ng-if="!$ctrl.mode || $ctrl.mode == 'Contact'">
-        <md-input-container>
-            <label>Name</label>
-            <input ng-model="$ctrl.contact.name">
+<md-card>
+<md-toolbar>
+    <div class="md-toolbar-tools">         
+        <md-button  aria-label="Close"
+                class="md-icon-button md-secondary"
+                ng-click="$ctrl.onClose()">
+            <md-icon>close</md-icon>
+        </md-button>
+        <h2>Contact</h2>
+        <span flex></span>
+
+        <md-fab-speed-dial  md-direction="down"
+                            class="md-scale md-fab-top-right">
+            
+            <md-fab-trigger>
+                <md-button  aria-label="Add a contact detail"
+                            class="md-icon-button md-fab md-secondary"
+                            ng-click="$ctrl.edit($event)">
+                    <md-icon>add</md-icon>
+                </md-button>    
+            </md-fab-trigger>
+
+            <md-fab-actions>
+                <md-button  aria-label="Add phone number"
+                            class="md-fab md-raised md-mini"
+                            ng-click="$ctrl.add('phones')">
+                    <md-icon>phone</md-icon>
+                </md-button>
+                <md-button  aria-label="Add address"
+                            class="md-fab md-raised md-mini"
+                            ng-click="$ctrl.add('addresses')">
+                    <md-icon>home</md-icon>
+                </md-button>
+                <md-button  aria-label="Add email address"
+                            class="md-fab md-raised md-mini"
+                            ng-click="$ctrl.add('emails')">
+                    <md-icon>email</md-icon>
+                </md-button>
+                <md-button  aria-label="Add website"
+                            class="md-fab md-raised md-mini"
+                            ng-click="$ctrl.add('websites')">
+                    <md-icon>web</md-icon>
+                </md-button>    
+                <md-button  aria-label="Add image"
+                            class="md-fab md-raised md-mini"
+                            ng-click="$ctrl.add('images')">
+                    <md-icon>photo_camera</md-icon>                    
+                </md-button>
+            </md-fab-actions>            
+        </md-fab-speed-dial>
+    
+    </div>
+</md-toolbar>
+
+<form novalidate ng-cloak layout="column" class="form-padding">
+    <md-input-container class="md-block" flex>
+        <label>Name</label>
+        <md-icon>person</md-icon>
+        <input ng-model="$ctrl.contact.name">
+    </md-input-container>
+
+    <div layout="row" ng-repeat="phone in $ctrl.contact.details.phones">
+        <md-input-container class="md-block"
+                            ng-class="{ 'first-condensed': $first, 'middle-condensed': $middle, 'last-condensed': $last && !$first }"
+                            flex>
+            <label>Phone</label>
+            <md-icon>phone</md-icon>
+            <input ng-model="phone.phone">            
         </md-input-container>
-    </div>
 
-    <div layout="column"
-         ng-if="!$ctrl.mode || $ctrl.mode == 'Contact'">
-
-        <h3 class="md-subhead">Addresses</h3>
-
-        <div ng-repeat="address in $ctrl.contact.details.addresses track by $index"
-             layout="row">            
-            <md-input-container class="md-block"
-                                flex="80">
-                <label>Address</label>
-                <input ng-model="address.address">
-            </md-input-container>
-
-            <md-input-container class="md-block"
-                                flex="20">
-                <label>Postcode</label>
-                <input ng-model="address.postcode">
-            </md-input-container>
-        
-
-            <md-button ng-click="$ctrl.remove('addresses', address)"
-                    class="fixed-height-button">
-                <md-icon>remove</md-icon>            
-            </md-button>               
-        </div>
-
-        <md-button ng-click="$ctrl.contact.details.addresses.push({})">
-            <md-icon>add</md-icon>
-            
-            Add
+        <md-button class="md-icon-button"
+                   style="display:inline"
+                   ng-if="!$first"
+                   ng-click="$ctrl.remove('phones', phone)">
+            <md-icon>remove</md-icon>
         </md-button>
     </div>
 
-    <div layout="column"
-        ng-if="!$ctrl.mode || $ctrl.mode == 'Contact'">
-        <h3 class="md-subhead">Phone Numbers</h3>
-        <div ng-repeat="phone in $ctrl.contact.details.phones track by $index"
-                layout="row">
-                    
-            <md-input-container class="md-block" flex>
-                <label>Phone</label>
-                <input ng-model="phone.phone">
-            </md-input-container>
-        
-            <md-button ng-click="$ctrl.remove('phones', phone)"
-                    class="fixed-height-button">
-                <md-icon>remove</md-icon>            
-            </md-button>   
-        </div>
-        <md-button ng-click="$ctrl.contact.details.phones.push({})">
-            <md-icon>add</md-icon>
-            
-            Add
+    <div layout="row" ng-repeat="address in $ctrl.contact.details.addresses">    
+        <md-input-container class="md-block"
+                            ng-class="{ 'first-condensed': $first, 'middle-condensed': $middle, 'last-condensed': $last && !$first }"
+                            flex="50">
+            <label>Address</label>
+            <md-icon>home</md-icon>
+            <input ng-model="address.address">
+        </md-input-container>
+
+        <md-input-container class="md-block"
+                            ng-class="{ 'first-condensed': $first, 'middle-condensed': $middle, 'last-condensed': $last && !$first }"
+                            flex="30">
+            <label>Town</label>
+            <input ng-model="address.town">
+        </md-input-container>
+
+        <md-input-container class="md-block"
+                            ng-class="{ 'first-condensed': $first, 'middle-condensed': $middle, 'last-condensed': $last && !$first }"
+                            flex="20">
+            <label>Postcode</label>
+            <input ng-model="address.postcode">
+        </md-input-container>
+
+        <md-button  class="md-icon-button"
+                    style="display:inline"
+                    ng-if="!$first"
+                    ng-click="$ctrl.remove('addresses', address)">
+            <md-icon>remove</md-icon>
         </md-button>
     </div>
 
-    <div layout="column"
-            ng-if="!$ctrl.mode || $ctrl.mode == 'Contact'">
-        <h3 class="md-subhead">Emails</h3>
-        <div ng-repeat="email in $ctrl.contact.details.emails track by $index"
-                layout="row">
-                       
-            <md-input-container class="md-block" flex>
-                <label>Email</label>
-                <input  ng-model="email.email"
-                        type="email">
-            </md-input-container>        
+    <div layout="row" ng-repeat="email in $ctrl.contact.details.emails">
+        <md-input-container class="md-block"
+                            ng-class="{ 'first-condensed': $first, 'middle-condensed': $middle, 'last-condensed': $last && !$first }"
+                            flex>
+            <label>Email</label>
+            <md-icon>email</md-icon>
+            <input  ng-model="email.email"
+                    type="email">    
+        </md-input-container>    
 
-            <md-button ng-click="$ctrl.remove('emails', email)"
-                    class="fixed-height-button">
-                <md-icon>remove</md-icon>            
-            </md-button>   
-        </div>
-        <md-button ng-click="$ctrl.contact.details.emails.push({})">
-            <md-icon>add</md-icon>
-            
-            Add
+        <md-button  class="md-icon-button"
+                    style="display:inline"
+                    ng-if="!$first"
+                    ng-click="$ctrl.remove('emails', email)">
+            <md-icon>remove</md-icon>
         </md-button>
     </div>
 
-    <div layout="column">
-        <h3 class="md-subhead">Websites</h3>
-        <div ng-repeat="website in $ctrl.contact.details.websites track by $index"
-            layout="row">
+    <div layout="row" ng-repeat="website in $ctrl.contact.details.websites">
+        <md-input-container class="md-block"
+                            ng-class="{ 'first-condensed': $first, 'middle-condensed': $middle, 'last-condensed': $last && !$first }"
+                            flex>
+            <label>Website</label>
+            <md-icon>web</md-icon>
+            <input ng-model="website.url">
+        </md-input-container>
 
-            <md-input-container class="md-block" flex>
-                <label>Website</label>
-                <input ng-model="website.url">
-            </md-input-container>
-        
-            <md-button ng-click="$ctrl.remove('websites', website)"
-                    class="fixed-height-button">
-                <md-icon>remove</md-icon>            
-            </md-button>   
-        </div>
-        <md-button ng-click="$ctrl.contact.details.websites.push({})">
-            <md-icon>add</md-icon>
-            
-            Add
+        <md-button  class="md-icon-button"
+                    style="display:inline"
+                    ng-if="!$first"
+                    ng-click="$ctrl.remove('websites', website)">
+            <md-icon>remove</md-icon>
         </md-button>
     </div>
 
-    <div layout="column"
-        ng-if="!$ctrl.mode || $ctrl.mode == 'Web'">
-        <h3 class="md-subhead">Images</h3>
-        <div ng-repeat="image in $ctrl.contact.details.images track by $index"
-            layout="row">                                    
-            
-            <md-input-container class="md-block" flex>
-                <label>Image</label>
-                <input ng-model="image.image">
-            </md-input-container>
+    <div layout="row" ng-repeat="image in $ctrl.contact.details.images">
+        <md-input-container class="md-block"
+                            ng-class="{ 'first-condensed': $first, 'middle-condensed': $middle, 'last-condensed': $last && !$first }"
+                            flex>
+            <label>Image</label>
+            <md-icon>photo_camera</md-icon>
+            <input ng-model="image.image">        
+        </md-input-container>
 
-            <div layout-gt-sm="row">
-                <img ng-if="image.image" src="{{ image.image }}" />
-            </div>
-        
-            <md-button ng-click="$ctrl.remove('images', image)"
-                        class="fixed-height-button">
-                <md-icon>remove</md-icon>            
-            </md-button>   
-        </div>
-        <md-button ng-click="$ctrl.contact.details.images.push({})">
-            <md-icon>add</md-icon>
-            
-            Add
+        <md-button  class="md-icon-button"
+                    style="display:inline"
+                    ng-if="!$first"
+                    ng-click="$ctrl.remove('images', image)">
+            <md-icon>remove</md-icon>
         </md-button>
     </div>
 </form>
-
-
-
-
-
+</md-card>

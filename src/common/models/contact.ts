@@ -21,7 +21,7 @@ export interface ContactAttribute {
     updatedAt?: Date | string;
 
     name?: string;
-    details: ContactDetailsDto;
+    details?: ContactDetailsDto;
 }
 
 export interface ContactInstance extends SequelizeStatic.Instance<ContactAttribute>, ContactAttribute {
@@ -52,15 +52,18 @@ export interface ContactsDto {
 export interface ContactModel extends SequelizeStatic.Model<ContactInstance, ContactAttribute> {}
 
 export interface ContactDetailsDto {
-    addresses: AddressDto[];
-    emails: EmailDto[];
-    phones: PhoneDto[];
-    websites: WebsiteDto[];
-    images: ImageDto[];
+    [key: string]: AddressDto[] | EmailDto[] | PhoneDto[] | WebsiteDto[] | ImageDto[];
+
+    addresses?: AddressDto[];
+    emails?: EmailDto[];
+    phones?: PhoneDto[];
+    websites?: WebsiteDto[];
+    images?: ImageDto[];
 }
 
 export interface AddressDto {
     address?: string;
+    town?: string;
     postcode?: string;    
 }
 

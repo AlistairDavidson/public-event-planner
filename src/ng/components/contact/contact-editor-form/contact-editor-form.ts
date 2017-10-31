@@ -5,7 +5,8 @@ import * as _ from 'lodash';
 export class ContactEditorFormController implements angular.IComponentController {
     contact: ContactViewModel;
     mode?: string;
-
+    onClose: Function;
+    
     constructor() {        
     }
 
@@ -13,6 +14,11 @@ export class ContactEditorFormController implements angular.IComponentController
         if(!this.contact) {
             this.contact = new ContactViewModel();
         }
+    }
+
+    add(array: string) {
+        let details = this.contact.details as any;
+        details[array].push({});
     }
 
     remove(array: string, detail: any) {
@@ -26,7 +32,8 @@ let options: angular.IComponentOptions = {
     controller: ContactEditorFormController,
     bindings: {
         contact: '=?',
-        mode: '=?'
+        mode: '=?',
+        onClose: '&?'
     }
 }
 

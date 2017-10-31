@@ -19,15 +19,13 @@ module.exports = {
     output: {
         filename: "dist/static/event-planner.js"
     },
-    resolve: {
-        // Add '.ts' and '.tsx' as a resolvable extension.
-        extensions: [".ts", ".tsx"]
-         
+    resolve: {        
+        extensions: [".ts", ".tsx"]    
     },
     module: {
         rules: [
              { test: /\.tsx?$/, use: ["ts-loader"] }
         ]
     },
-    externals: node_modules 
+    externals: node_modules
 }

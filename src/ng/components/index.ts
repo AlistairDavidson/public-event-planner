@@ -3,20 +3,21 @@ import services from '../services';
 
 import eventPlannerApp from './event-planner-app/event-planner-app';
 import epTable from './ep-table/ep-table';
+import epList from './ep-list/ep-list';
 
 import actCard from './act/act-card/act-card';
 import actEditorForm from './act/act-editor-form/act-editor-form';
 import actEditorModal from './act/act-editor-modal/act-editor-modal';
 import actEditor from './act/act-editor/act-editor';
 import actSearch from './act/act-search/act-search';
-import acts from './act/acts/acts';
+import actsPage from './act/acts-page/acts-page';
 import actsSummary from './act/acts-summary/acts-summary';
 import actsTable from './act/acts-table/acts-table';
 
 import applicationCard from './application/application-card/application-card';
 import applicationEditorForm from './application/application-editor-form/application-editor-form';
 import applicationEditorModal from './application/application-editor-modal/application-editor-modal';
-import applications from './application/applications/applications';
+import applicationsPage from './application/applications-page/applications-page';
 import applicationsSummary from './application/applications-summary/applications-summary';
 import applicationsTable from './application/applications-table/applications-table';
 
@@ -28,7 +29,7 @@ import bookingStatusSelect from './booking/booking-status-select/booking-status-
 import bookingSummary from './booking/booking-summary/booking-summary';
 
 import contactEditorForm from './contact/contact-editor-form/contact-editor-form';
-import contactEditorModal from './contact/contact-editor-modal/contact-editor-modal';
+import actContactEditorForm from './contact/act-contact-editor-form/act-contact-editor-form';
 import contactSearch from './contact/contact-search/contact-search';
 import actContactsEditor from './contact/act-contacts-editor/act-contacts-editor';
 
@@ -41,13 +42,14 @@ import locationSearch from './location/location-search/location-search';
 export default module('event-planner.components', [ 'event-planner.services', 'ngMaterial' ])
     .component('eventPlannerApp', eventPlannerApp)
     .component('epTable', epTable)
+    .component('epList', epList)
 
     .component('actCard', actCard)    
-    .component('actEditorForm', actEditorForm)
+    .component('actEditorForm', actEditorForm)    
     .component('actEditorModal', actEditorModal)
     .component('actEditor', actEditor)
     .component('actSearch', actSearch)
-    .component('acts', acts)
+    .component('acts-page', actsPage)
     .component('actsSummary', actsSummary)
     .component('actsTable', actsTable)
 
@@ -56,7 +58,7 @@ export default module('event-planner.components', [ 'event-planner.services', 'n
     .component('applicationEditorModal', applicationEditorModal)
     .component('applicationCard', applicationCard)
     .component('applicationsSummary', applicationsSummary)
-    .component('applications', applications)
+    .component('applications-page', applicationsPage)
     
     .component('bookingEditorForm', bookingEditorForm)
     .component('bookingEditorModal', bookingEditorModal)
@@ -66,7 +68,7 @@ export default module('event-planner.components', [ 'event-planner.services', 'n
     .component('bookingSummary', bookingSummary)    
 
     .component('contactEditorForm', contactEditorForm)
-    .component('contactEditorModal', contactEditorModal)
+    .component('actContactEditorForm', actContactEditorForm)
     .component('actContactsEditor', actContactsEditor)
     .component('contactSearch', contactSearch)
 

@@ -1,12 +1,11 @@
 import { ActContactDto } from '../../common/models/act-contact';
 import { ActDto } from '../../common/models/act';
 import { ContactDto, ContactsDto, ContactDetailsDto } from '../../common/models/contact';
-import { queryToRequest } from './helper';
+import { queryToRequest } from '../helpers/network';
 import settings from '../settings';
 import { MdSortDto } from '../../common/types';
 import * as _ from 'lodash';
 import { element } from 'angular';
-import { ContactEditorModalController } from '../components/contact/contact-editor-modal/contact-editor-modal';
 
 export default class ContactService {
     static $inject = ['$http', '$httpParamSerializer', '$q', '$mdDialog'];
@@ -43,8 +42,6 @@ export default class ContactService {
     }
 
     save(data: ContactDto) {
-        console.log('contactService saving', data);       
-
         return this.$http.post(`${settings.api}/contact/save`, data)
             .then(response => new ContactViewModel(response.data as ContactDto));
     }
@@ -52,80 +49,104 @@ export default class ContactService {
     delete(data: ContactDto) {
         return this.$http.post(`${settings.api}/contact/delete`, { id: data.id })
             .then(response => new ContactViewModel(response.data as ContactDto));
-    }         
-
-    edit(ev: ng.IAngularEvent, contact?: ContactViewModel, mode?: string): ng.IPromise<ContactViewModel> {
-        return this.$mdDialog.show({
-            controller: ContactEditorModalController,
-            templateUrl: 'components/contact/contact-editor-modal/contact-editor-modal.html',
-            parent: element(document.body),
-            targetAct: ev,
-            clickOutsideToClose: true,
-            fullscreen: true,
-            bindToController: true,
-            controllerAs: '$ctrl',
-            skipHide: true,
-            autoWrap: true,
-            resolve: {
-                'contact': () => contact,
-                'mode': () => mode
-            }
-        } as any);
     }
 }
 
 export class ContactViewModel implements ContactDto {
-    constructor(contact?: ContactDto) {
-        if(contact) {
-            _.extend(this, contact);
-        }
-
-        if(!this.details) {
-            this.details = {
-                addresses: [],
-                emails: [],
-                phones: [],
-                websites: [],
-                images: []
-            }
-        }
-
-        if(!this.ActContacts) {
-            this.ActContacts = [];
-        }
-    }
-
     id?: number;
     createdAt?: string;
     updatedAt?: string;
-    name = ' ';
+    name = '';
 
-    details: ContactDetailsDto;
+    details: ContactDetailsDto = {
+        addresses: [],
+        emails: [],
+        phones: [],
+        websites: [],
+        images: []
+    };
+
     ActContacts?: ActContactDto[] = [];
+
+    constructor(contact?: ContactDto) {
+        if(contact) {
+            _.merge(this, contact);
+        }
+    }
+
+    getEmail() {
+        return this.details.emails[0];
+    }
+
+    getPhone() {
+        return this.details.phones[0];
+    }
+
+    getWebsite() {
+        let website = _.find(this.details.websites, (w) => !/twitter|facebook/i.test(w.url) );
+        return website;
+    }
+
+    getTwitter() {
+        let website = _.find(this.details.websites, (w) => /twitter/i.test(w.url) );
+        return website;
+    }
+
+    getFacebook() {
+        let website = _.find(this.details.websites, (w) => /facebook/i.test(w.url) );
+        return website;
+    }
+
+    getImage() {
+        return this.details.images[0];
+    }
 }
 
 
 export class ActContactViewModel implements ActContactDto {
-    constructor(actContact?: ActContactDto) {
-        if(actContact) {
-            _.extend(this, actContact);
-        }
-
-        if(!this.contact) {
-            this.contact = new ContactViewModel();
-        }
-    }
-
     id?: number;
     createdAt?: string;
     updatedAt?: string;
 
-    relationship = '';
-    contact?: ContactViewModel;
+    relationship = '';    
     
     ActId?: number;
     ContactId?: number;
 
     Act?: ActDto;
-    Contact?: ContactDto;
+    Contact?: ContactViewModel;
+
+    constructor(actContact?: ActContactDto) {        
+        if(actContact) {
+            _.merge(this, actContact);
+        }        
+
+        this.Contact = new ContactViewModel(this.Contact);
+
+        console.log('ACT-CONTACT', actContact, this)
+    }
+    
+    getEmail() {        
+        return this.Contact.getEmail();
+    }
+
+    getPhone() {
+        return this.Contact.getPhone();
+    }
+
+    getWebsite() {
+        return this.Contact.getWebsite();
+    }
+
+    getTwitter() {
+        return this.Contact.getTwitter();
+    }
+
+    getFacebook() {
+        return this.Contact.getFacebook();
+    }
+
+    getImage() {
+        return this.Contact.getImage();
+    }
 }

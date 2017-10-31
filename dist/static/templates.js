@@ -124,6 +124,19 @@ angular
 			'    </div>\n' +
 			'</div>');
 
+		$templateCache.put('components/act/acts-page/acts-page.html', '<md-nav-bar md-selected-nav-item="$ctrl.currentNavItem">\n' +
+			'    <md-nav-item md-nav-sref="root.acts.summary" name="root.acts.summary">\n' +
+			'        Summary\n' +
+			'    </md-nav-item>\n' +
+			'\n' +
+			'    <md-nav-item md-nav-sref="root.acts.detail" name="root.acts.detail">\n' +
+			'        Details\n' +
+			'    </md-nav-item>\n' +
+			'</md-nav-bar>\n' +
+			'\n' +
+			'<ui-view>\n' +
+			'</ui-view>');
+
 		$templateCache.put('components/act/acts-summary/acts-summary.html', '<md-content class="md-padding" layout="row" layout-wrap>    \n' +
 			'    <act-card flex="100" flex-gt-xs="50" flex-gt-sm="33" flex-gt-md="25" ng-repeat="act in $ctrl.acts" act="act">\n' +
 			'    </act-card>\n' +
@@ -167,27 +180,14 @@ angular
 			'      </md-menu-content>\n' +
 			'    </md-menu>\n' +
 			'\n' +
-			'    <md-button aria-label="Edit" class="md-icon-button" ui-sref="root.act({ act: row.id })">\n' +
+			'    <md-button title="Edit" aria-label="Edit" class="md-icon-button" ui-sref="root.act({ act: row.id })">\n' +
 			'        <md-icon md-menu-origin>mode_edit</md-icon>      \n' +
 			'      </md-button>\n' +
 			'  </td>\n' +
 			'</script>\n' +
 			'\n' +
-			'<ep-table title="\'Acts\'" on-list="$ctrl.getActs({ query: query })" on-edit="$ctrl.edit($event)" header-template="\'/acts-header.html\'" cell-template="\'/acts-cell.html\'">\n' +
+			'<ep-table name="\'Acts\'" on-list="$ctrl.getActs({ query: query })" on-edit="$ctrl.edit($event)" header-template="\'/acts-header.html\'" cell-template="\'/acts-cell.html\'">\n' +
 			'</ep-table>');
-
-		$templateCache.put('components/act/acts/acts.html', '<md-nav-bar md-selected-nav-item="$ctrl.currentNavItem">\n' +
-			'    <md-nav-item md-nav-sref="root.acts.summary" name="root.acts.summary">\n' +
-			'        Summary\n' +
-			'    </md-nav-item>\n' +
-			'\n' +
-			'    <md-nav-item md-nav-sref="root.acts.detail" name="root.acts.detail">\n' +
-			'        Details\n' +
-			'    </md-nav-item>\n' +
-			'</md-nav-bar>\n' +
-			'\n' +
-			'<ui-view>\n' +
-			'</ui-view>');
 
 		$templateCache.put('components/application/application-card/application-card.html', '<md-card>\n' +
 			'    <img ng-if="$ctrl.application.image" src="{{ $ctrl.application.image }}" class="md-card-image">\n' +
@@ -335,6 +335,19 @@ angular
 			'    </md-dialog-actions>\n' +
 			'</md-dialog>');
 
+		$templateCache.put('components/application/applications-page/applications-page.html', '<md-nav-bar md-selected-nav-item="$ctrl.currentNavItem">\n' +
+			'    <md-nav-item md-nav-sref="root.applications.summary" name="root.applications.summary">\n' +
+			'        Summary\n' +
+			'    </md-nav-item>\n' +
+			'\n' +
+			'    <md-nav-item md-nav-sref="root.applications.detail" name="root.applications.detail">\n' +
+			'        Details\n' +
+			'    </md-nav-item>\n' +
+			'</md-nav-bar>\n' +
+			'\n' +
+			'<ui-view>\n' +
+			'</ui-view>');
+
 		$templateCache.put('components/application/applications-summary/applications-summary.html', '<md-content class="md-padding" layout="row" layout-wrap>    \n' +
 			'    <application-card flex="100" flex-gt-xs="50" flex-gt-sm="33" flex-gt-md="25" ng-repeat="application in $ctrl.applications" application="application">\n' +
 			'    </application-card>\n' +
@@ -386,21 +399,8 @@ angular
 			'  </td>\n' +
 			'</script>\n' +
 			'\n' +
-			'<ep-table title="\'Applications\'" on-list="$ctrl.getApplications({ query: query })" on-edit="$ctrl.edit($event)" header-template="\'/applications-header.html\'" cell-template="\'/applications-cell.html\'">\n' +
+			'<ep-table name="\'Applications\'" on-list="$ctrl.getApplications({ query: query })" on-edit="$ctrl.edit($event)" header-template="\'/applications-header.html\'" cell-template="\'/applications-cell.html\'">\n' +
 			'</ep-table>');
-
-		$templateCache.put('components/application/applications/applications.html', '<md-nav-bar md-selected-nav-item="$ctrl.currentNavItem">\n' +
-			'    <md-nav-item md-nav-sref="root.applications.summary" name="root.applications.summary">\n' +
-			'        Summary\n' +
-			'    </md-nav-item>\n' +
-			'\n' +
-			'    <md-nav-item md-nav-sref="root.applications.detail" name="root.applications.detail">\n' +
-			'        Details\n' +
-			'    </md-nav-item>\n' +
-			'</md-nav-bar>\n' +
-			'\n' +
-			'<ui-view>\n' +
-			'</ui-view>');
 
 		$templateCache.put('components/booking/booking-editor-form/booking-editor-form.html', '<form novalidate ng-cloak>\n' +
 			'    <div layout="column">\n' +
@@ -505,180 +505,254 @@ angular
 			'    </md-button>\n' +
 			'</div>');
 
-		$templateCache.put('components/contact/act-contacts-editor/act-contacts-editor.html', '<div layout="column">\n' +
-			'    <div ng-repeat="actContact in $ctrl.actContacts track by $index" layout="row">\n' +
-			'        <md-input-container class="md-block" flex="30">\n' +
-			'            <label>Relationship</label>\n' +
-			'            <input ng-model="actContact.relationship">\n' +
-			'        </md-input-container>\n' +
-			'\n' +
-			'        <contact-search contact="actContact.Contact" flex="75">\n' +
+		$templateCache.put('components/contact/act-contact-editor-form/act-contact-editor-form.html', '<md-card>\n' +
+			'    <md-toolbar>\n' +
+			'        <div class="md-toolbar-tools">                     \n' +
+			'            <md-button class="md-icon-button md-secondary" ng-click="$ctrl.onClose()">\n' +
+			'                <md-icon>close</md-icon>\n' +
+			'            </md-button>\n' +
+			'            <h2 ng-if="$ctrl.actContact.Contact.name">\n' +
+			'                {{ $ctrl.actContact.Contact.name }}, {{ $ctrl.actContact.relationship }}\n' +
+			'            </h2>\n' +
+			'            <h2 ng-if="!$ctrl.actContact.Contact.name">New Contact [{{$ctrl.searchText}}] </h2>\n' +
+			'            <span flex></span>\n' +
+			'            <md-button class="md-icon-button md-fab md-secondary md-fab-top-right" ng-click="$ctrl.edit()">\n' +
+			'                <md-icon>edit</md-icon>\n' +
+			'            </md-button>\n' +
+			'        </div>\n' +
+			'    </md-toolbar>\n' +
+			'    <form novalidate ng-cloak layout="column" class="form-padding">    \n' +
+			'        <contact-search contact="$ctrl.searchContact" ng-if="!$ctrl.editingContact">        \n' +
 			'        </contact-search>\n' +
-			'\n' +
-			'        <md-button ng-click="$ctrl.remove(actContact)" class="fixed-height-button">\n' +
-			'            <md-icon>remove</md-icon>            \n' +
-			'        </md-button>               \n' +
-			'    </div>\n' +
-			'\n' +
-			'    <md-button ng-click="$ctrl.add()">\n' +
-			'        <md-icon>add</md-icon>\n' +
-			'        \n' +
-			'        Add\n' +
-			'    </md-button>\n' +
-			'</div>');
-
-		$templateCache.put('components/contact/contact-editor-form/contact-editor-form.html', '<form novalidate ng-cloak>\n' +
-			'    <div layout="column" ng-if="!$ctrl.mode || $ctrl.mode == \'Contact\'">\n' +
-			'        <md-input-container>\n' +
-			'            <label>Name</label>\n' +
-			'            <input ng-model="$ctrl.contact.name">\n' +
+			'            \n' +
+			'        <md-input-container class="md-block" ng-class="{ \'last-condensed\': !$ctrl.editingContact }" flex>\n' +
+			'            <label>Role</label>\n' +
+			'            <md-icon>work</md-icon>\n' +
+			'            <input ng-model="$ctrl.actContact.relationship">\n' +
 			'        </md-input-container>\n' +
-			'    </div>\n' +
+			'    </form>\n' +
+			'</md-card>\n' +
 			'\n' +
-			'    <div layout="column" ng-if="!$ctrl.mode || $ctrl.mode == \'Contact\'">\n' +
-			'\n' +
-			'        <h3 class="md-subhead">Addresses</h3>\n' +
-			'\n' +
-			'        <div ng-repeat="address in $ctrl.contact.details.addresses track by $index" layout="row">            \n' +
-			'            <md-input-container class="md-block" flex="80">\n' +
-			'                <label>Address</label>\n' +
-			'                <input ng-model="address.address">\n' +
-			'            </md-input-container>\n' +
-			'\n' +
-			'            <md-input-container class="md-block" flex="20">\n' +
-			'                <label>Postcode</label>\n' +
-			'                <input ng-model="address.postcode">\n' +
-			'            </md-input-container>\n' +
-			'        \n' +
-			'\n' +
-			'            <md-button ng-click="$ctrl.remove(\'addresses\', address)" class="fixed-height-button">\n' +
-			'                <md-icon>remove</md-icon>            \n' +
-			'            </md-button>               \n' +
-			'        </div>\n' +
-			'\n' +
-			'        <md-button ng-click="$ctrl.contact.details.addresses.push({})">\n' +
-			'            <md-icon>add</md-icon>\n' +
-			'            \n' +
-			'            Add\n' +
-			'        </md-button>\n' +
-			'    </div>\n' +
-			'\n' +
-			'    <div layout="column" ng-if="!$ctrl.mode || $ctrl.mode == \'Contact\'">\n' +
-			'        <h3 class="md-subhead">Phone Numbers</h3>\n' +
-			'        <div ng-repeat="phone in $ctrl.contact.details.phones track by $index" layout="row">\n' +
-			'                    \n' +
-			'            <md-input-container class="md-block" flex>\n' +
-			'                <label>Phone</label>\n' +
-			'                <input ng-model="phone.phone">\n' +
-			'            </md-input-container>\n' +
-			'        \n' +
-			'            <md-button ng-click="$ctrl.remove(\'phones\', phone)" class="fixed-height-button">\n' +
-			'                <md-icon>remove</md-icon>            \n' +
-			'            </md-button>   \n' +
-			'        </div>\n' +
-			'        <md-button ng-click="$ctrl.contact.details.phones.push({})">\n' +
-			'            <md-icon>add</md-icon>\n' +
-			'            \n' +
-			'            Add\n' +
-			'        </md-button>\n' +
-			'    </div>\n' +
-			'\n' +
-			'    <div layout="column" ng-if="!$ctrl.mode || $ctrl.mode == \'Contact\'">\n' +
-			'        <h3 class="md-subhead">Emails</h3>\n' +
-			'        <div ng-repeat="email in $ctrl.contact.details.emails track by $index" layout="row">\n' +
-			'                       \n' +
-			'            <md-input-container class="md-block" flex>\n' +
-			'                <label>Email</label>\n' +
-			'                <input ng-model="email.email" type="email">\n' +
-			'            </md-input-container>        \n' +
-			'\n' +
-			'            <md-button ng-click="$ctrl.remove(\'emails\', email)" class="fixed-height-button">\n' +
-			'                <md-icon>remove</md-icon>            \n' +
-			'            </md-button>   \n' +
-			'        </div>\n' +
-			'        <md-button ng-click="$ctrl.contact.details.emails.push({})">\n' +
-			'            <md-icon>add</md-icon>\n' +
-			'            \n' +
-			'            Add\n' +
-			'        </md-button>\n' +
-			'    </div>\n' +
-			'\n' +
-			'    <div layout="column">\n' +
-			'        <h3 class="md-subhead">Websites</h3>\n' +
-			'        <div ng-repeat="website in $ctrl.contact.details.websites track by $index" layout="row">\n' +
-			'\n' +
-			'            <md-input-container class="md-block" flex>\n' +
-			'                <label>Website</label>\n' +
-			'                <input ng-model="website.url">\n' +
-			'            </md-input-container>\n' +
-			'        \n' +
-			'            <md-button ng-click="$ctrl.remove(\'websites\', website)" class="fixed-height-button">\n' +
-			'                <md-icon>remove</md-icon>            \n' +
-			'            </md-button>   \n' +
-			'        </div>\n' +
-			'        <md-button ng-click="$ctrl.contact.details.websites.push({})">\n' +
-			'            <md-icon>add</md-icon>\n' +
-			'            \n' +
-			'            Add\n' +
-			'        </md-button>\n' +
-			'    </div>\n' +
-			'\n' +
-			'    <div layout="column" ng-if="!$ctrl.mode || $ctrl.mode == \'Web\'">\n' +
-			'        <h3 class="md-subhead">Images</h3>\n' +
-			'        <div ng-repeat="image in $ctrl.contact.details.images track by $index" layout="row">                                    \n' +
-			'            \n' +
-			'            <md-input-container class="md-block" flex>\n' +
-			'                <label>Image</label>\n' +
-			'                <input ng-model="image.image">\n' +
-			'            </md-input-container>\n' +
-			'\n' +
-			'            <div layout-gt-sm="row">\n' +
-			'                <img ng-if="image.image" src="{{ image.image }}">\n' +
+			'<contact-editor-form ng-if="$ctrl.editingContact" contact="$ctrl.actContact.Contact" search-text="$ctrl.searchText" on-close="$ctrl.closeEditor()">\n' +
+			'</contact-editor-form>');
+
+		$templateCache.put('components/contact/act-contacts-editor/act-contacts-editor.html', '<div layout="row" layout-align="start start">                \n' +
+			'    <md-card flex="50">\n' +
+			'        <md-toolbar>\n' +
+			'            <div class="md-toolbar-tools">\n' +
+			'                <h2>Contacts</h2>\n' +
+			'                <span flex></span>\n' +
+			'                <md-button class="md-icon-button md-fab md-secondary md-fab-top-right" ng-click="$ctrl.edit()">\n' +
+			'                    <md-icon>add</md-icon>\n' +
+			'                </md-button>\n' +
 			'            </div>\n' +
-			'        \n' +
-			'            <md-button ng-click="$ctrl.remove(\'images\', image)" class="fixed-height-button">\n' +
-			'                <md-icon>remove</md-icon>            \n' +
-			'            </md-button>   \n' +
-			'        </div>\n' +
-			'        <md-button ng-click="$ctrl.contact.details.images.push({})">\n' +
-			'            <md-icon>add</md-icon>\n' +
+			'        </md-toolbar>\n' +
+			'        <ep-list rows="$ctrl.actContacts" on-edit="$ctrl.edit(row)" on-favourite="$ctrl.makePrimary(row)" list-item-template="\'/act-contacts-list-item.html\'">\n' +
+			'        </ep-list>\n' +
+			'    </md-card>\n' +
+			'\n' +
+			'    <act-contact-editor-form flex="50" ng-if="$ctrl.editingActContact" act-contact="$ctrl.editingActContact" on-close="$ctrl.close()">\n' +
+			'    </act-contact-editor-form>\n' +
+			'</div>\n' +
+			'\n' +
+			'<script type="text/ng-template" id="/act-contacts-list-item.html">\n' +
+			'    <img src="/default_profile_photo.png"\n' +
+			'         ng-if="!row.getImage()"\n' +
+			'         class="md-avatar">\n' +
+			'\n' +
+			'    <img ng-src="{{row.getImage()}}"\n' +
+			'         ng-if="row.getImage()"\n' +
+			'         class="md-avatar">\n' +
+			'\n' +
+			'    <div class="md-list-item-text" layout="column">\n' +
+			'        <h3>{{row.Contact.name}}, {{row.relationship}}</h3>            \n' +
+			'        <p>            \n' +
+			'            <md-icon class="micro-icon" ng-if="row.getPhone()">phone</md-icon>{{row.getPhone().phone}}\n' +
+			'            <md-icon class="micro-icon" ng-if="row.getEmail()">email</md-icon>{{row.getEmail().email}}\n' +
+			'            &nbsp;\n' +
+			'        </p>\n' +
+			'    </div>\n' +
+			'\n' +
+			'    <div class="md-secondary-container">\n' +
+			'        <md-button  class="md-icon-button md-secondary"\n' +
+			'                    ng-click="$ctrl.onFavorite({ row: row })"\n' +
+			'                    ng-if="$ctrl.favorite">\n' +
+			'            <md-icon>\n' +
+			'                star_border\n' +
+			'            </md-icon>\n' +
+			'        </md-button>\n' +
+			'        <md-button  class="md-icon-button md-secondary"\n' +
+			'                    ng-click="$ctrl.onEdit({ row: row })"\n' +
+			'                    ng-if="$ctrl.onEdit">\n' +
+			'            <md-icon>\n' +
+			'                edit\n' +
+			'            </md-icon>\n' +
+			'        </md-button>\n' +
+			'        <md-button class="md-icon-button md-secondary">          \n' +
+			'            <md-icon ng-click="$ctrl.remove($event, row)">\n' +
+			'                remove\n' +
+			'            </md-icon> \n' +
+			'        </md-button>\n' +
+			'    </div>\n' +
+			'</script>');
+
+		$templateCache.put('components/contact/contact-editor-form/contact-editor-form.html', '<md-card>\n' +
+			'<md-toolbar>\n' +
+			'    <div class="md-toolbar-tools">         \n' +
+			'        <md-button aria-label="Close" class="md-icon-button md-secondary" ng-click="$ctrl.onClose()">\n' +
+			'            <md-icon>close</md-icon>\n' +
+			'        </md-button>\n' +
+			'        <h2>Contact</h2>\n' +
+			'        <span flex></span>\n' +
+			'\n' +
+			'        <md-fab-speed-dial md-direction="down" class="md-scale md-fab-top-right">\n' +
 			'            \n' +
-			'            Add\n' +
+			'            <md-fab-trigger>\n' +
+			'                <md-button aria-label="Add a contact detail" class="md-icon-button md-fab md-secondary" ng-click="$ctrl.edit($event)">\n' +
+			'                    <md-icon>add</md-icon>\n' +
+			'                </md-button>    \n' +
+			'            </md-fab-trigger>\n' +
+			'\n' +
+			'            <md-fab-actions>\n' +
+			'                <md-button aria-label="Add phone number" class="md-fab md-raised md-mini" ng-click="$ctrl.add(\'phones\')">\n' +
+			'                    <md-icon>phone</md-icon>\n' +
+			'                </md-button>\n' +
+			'                <md-button aria-label="Add address" class="md-fab md-raised md-mini" ng-click="$ctrl.add(\'addresses\')">\n' +
+			'                    <md-icon>home</md-icon>\n' +
+			'                </md-button>\n' +
+			'                <md-button aria-label="Add email address" class="md-fab md-raised md-mini" ng-click="$ctrl.add(\'emails\')">\n' +
+			'                    <md-icon>email</md-icon>\n' +
+			'                </md-button>\n' +
+			'                <md-button aria-label="Add website" class="md-fab md-raised md-mini" ng-click="$ctrl.add(\'websites\')">\n' +
+			'                    <md-icon>web</md-icon>\n' +
+			'                </md-button>    \n' +
+			'                <md-button aria-label="Add image" class="md-fab md-raised md-mini" ng-click="$ctrl.add(\'images\')">\n' +
+			'                    <md-icon>photo_camera</md-icon>                    \n' +
+			'                </md-button>\n' +
+			'            </md-fab-actions>            \n' +
+			'        </md-fab-speed-dial>\n' +
+			'    \n' +
+			'    </div>\n' +
+			'</md-toolbar>\n' +
+			'\n' +
+			'<form novalidate ng-cloak layout="column" class="form-padding">\n' +
+			'    <md-input-container class="md-block" flex>\n' +
+			'        <label>Name</label>\n' +
+			'        <md-icon>person</md-icon>\n' +
+			'        <input ng-model="$ctrl.contact.name">\n' +
+			'    </md-input-container>\n' +
+			'\n' +
+			'    <div layout="row" ng-repeat="phone in $ctrl.contact.details.phones">\n' +
+			'        <md-input-container class="md-block" ng-class="{ \'first-condensed\': $first, \'middle-condensed\': $middle, \'last-condensed\': $last && !$first }" flex>\n' +
+			'            <label>Phone</label>\n' +
+			'            <md-icon>phone</md-icon>\n' +
+			'            <input ng-model="phone.phone">            \n' +
+			'        </md-input-container>\n' +
+			'\n' +
+			'        <md-button class="md-icon-button" style="display:inline" ng-if="!$first" ng-click="$ctrl.remove(\'phones\', phone)">\n' +
+			'            <md-icon>remove</md-icon>\n' +
 			'        </md-button>\n' +
 			'    </div>\n' +
-			'</form>');
-
-		$templateCache.put('components/contact/contact-editor-modal/contact-editor-modal.html', '<md-dialog aria-label="New Contact" class="contact-editor-modal">\n' +
-			'    <md-dialog-content class="md-dialog-content">\n' +
-			'        <contact-editor-form contact="$ctrl.contact" mode="$ctrl.mode">\n' +
-			'        </contact-editor-form>\n' +
-			'    </md-dialog-content>\n' +
-			'    <md-dialog-actions>\n' +
-			'        <md-button ng-click="$ctrl.save()" ng-disabled="$ctrl.saving">Save</md-button>\n' +
-			'        <md-button ng-click="$ctrl.cancel()">Cancel</md-button>\n' +
-			'    </md-dialog-actions>\n' +
-			'</md-dialog>');
-
-		$templateCache.put('components/contact/contact-search/contact-search.html', '<div layout="column">\n' +
-			'    <div layout-gt-sm="row">\n' +
-			'        <md-autocomplete flex required md-input-name="contact-search" md-input-minlength="2" md-selected-item="$ctrl.contact" md-search-text="$ctrl.searchText" md-items="contact in $ctrl.search($ctrl.searchText)" md-item-text="contact.name" md-require-match md-floating-label="Contact" md-selected-item-change="$ctrl.contactId = contact.id" md-search-text-change="">\n' +
-			'          <md-item-template>\n' +
-			'            <span md-highlight-text="ctrl.searchText">{{ contact.name }}</span>\n' +
-			'          </md-item-template>\n' +
-			'        </md-autocomplete>\n' +
 			'\n' +
-			'        <md-button ng-click="$ctrl.edit($event)">\n' +
-			'            <md-icon>add</md-icon>\n' +
-			'            New\n' +
+			'    <div layout="row" ng-repeat="address in $ctrl.contact.details.addresses">    \n' +
+			'        <md-input-container class="md-block" ng-class="{ \'first-condensed\': $first, \'middle-condensed\': $middle, \'last-condensed\': $last && !$first }" flex="50">\n' +
+			'            <label>Address</label>\n' +
+			'            <md-icon>home</md-icon>\n' +
+			'            <input ng-model="address.address">\n' +
+			'        </md-input-container>\n' +
+			'\n' +
+			'        <md-input-container class="md-block" ng-class="{ \'first-condensed\': $first, \'middle-condensed\': $middle, \'last-condensed\': $last && !$first }" flex="30">\n' +
+			'            <label>Town</label>\n' +
+			'            <input ng-model="address.town">\n' +
+			'        </md-input-container>\n' +
+			'\n' +
+			'        <md-input-container class="md-block" ng-class="{ \'first-condensed\': $first, \'middle-condensed\': $middle, \'last-condensed\': $last && !$first }" flex="20">\n' +
+			'            <label>Postcode</label>\n' +
+			'            <input ng-model="address.postcode">\n' +
+			'        </md-input-container>\n' +
+			'\n' +
+			'        <md-button class="md-icon-button" style="display:inline" ng-if="!$first" ng-click="$ctrl.remove(\'addresses\', address)">\n' +
+			'            <md-icon>remove</md-icon>\n' +
 			'        </md-button>\n' +
 			'    </div>\n' +
 			'\n' +
-			'</div>');
+			'    <div layout="row" ng-repeat="email in $ctrl.contact.details.emails">\n' +
+			'        <md-input-container class="md-block" ng-class="{ \'first-condensed\': $first, \'middle-condensed\': $middle, \'last-condensed\': $last && !$first }" flex>\n' +
+			'            <label>Email</label>\n' +
+			'            <md-icon>email</md-icon>\n' +
+			'            <input ng-model="email.email" type="email">    \n' +
+			'        </md-input-container>    \n' +
+			'\n' +
+			'        <md-button class="md-icon-button" style="display:inline" ng-if="!$first" ng-click="$ctrl.remove(\'emails\', email)">\n' +
+			'            <md-icon>remove</md-icon>\n' +
+			'        </md-button>\n' +
+			'    </div>\n' +
+			'\n' +
+			'    <div layout="row" ng-repeat="website in $ctrl.contact.details.websites">\n' +
+			'        <md-input-container class="md-block" ng-class="{ \'first-condensed\': $first, \'middle-condensed\': $middle, \'last-condensed\': $last && !$first }" flex>\n' +
+			'            <label>Website</label>\n' +
+			'            <md-icon>web</md-icon>\n' +
+			'            <input ng-model="website.url">\n' +
+			'        </md-input-container>\n' +
+			'\n' +
+			'        <md-button class="md-icon-button" style="display:inline" ng-if="!$first" ng-click="$ctrl.remove(\'websites\', website)">\n' +
+			'            <md-icon>remove</md-icon>\n' +
+			'        </md-button>\n' +
+			'    </div>\n' +
+			'\n' +
+			'    <div layout="row" ng-repeat="image in $ctrl.contact.details.images">\n' +
+			'        <md-input-container class="md-block" ng-class="{ \'first-condensed\': $first, \'middle-condensed\': $middle, \'last-condensed\': $last && !$first }" flex>\n' +
+			'            <label>Image</label>\n' +
+			'            <md-icon>photo_camera</md-icon>\n' +
+			'            <input ng-model="image.image">        \n' +
+			'        </md-input-container>\n' +
+			'\n' +
+			'        <md-button class="md-icon-button" style="display:inline" ng-if="!$first" ng-click="$ctrl.remove(\'images\', image)">\n' +
+			'            <md-icon>remove</md-icon>\n' +
+			'        </md-button>\n' +
+			'    </div>\n' +
+			'</form>\n' +
+			'</md-card>');
+
+		$templateCache.put('components/contact/contact-search/contact-search.html', '<md-autocomplete flex class="search" md-input-name="contact-search" md-input-minlength="2" md-selected-item="$ctrl.contact" md-search-text="$ctrl.searchText" md-items="contact in $ctrl.search($ctrl.searchText)" md-item-text="contact.name" md-require-match md-floating-label="Name" md-selected-item-change="$ctrl.contactId = contact.id" md-search-text-change="">\n' +
+			'    <md-item-template>\n' +
+			'    <span md-highlight-text="ctrl.searchText">{{ contact.name }}</span>\n' +
+			'    </md-item-template>\n' +
+			'</md-autocomplete>');
+
+		$templateCache.put('components/ep-list/ep-list.html', '<md-list>\n' +
+			'    <md-list-item ng-repeat="row in $ctrl.rows" class="secondary-button-padding md-2-line" ng-class="{ \'md-info\': !$index }" ng-include="$ctrl.listItemTemplate">                                         \n' +
+			'    </md-list-item>\n' +
+			'</md-list>   \n' +
+			'    \n' +
+			'   <!-- <md-list-item>\n' +
+			'        <md-icon>search</md-icon>\n' +
+			'        <form name="$ctrl.form" >    \n' +
+			'            <md-autocomplete    \n' +
+			'            class="list-filter-container"                     \n' +
+			'                    md-input-name="contact-search"\n' +
+			'                    md-input-minlength="2"\n' +
+			'                    md-selected-item="$ctrl.contact"\n' +
+			'                    md-search-text="$ctrl.searchText"\n' +
+			'                    md-items="contact in $ctrl.search($ctrl.searchText)"\n' +
+			'                    md-item-text="contact.name"\n' +
+			'                    md-require-match\n' +
+			'                    md-floating-label="Search..."\n' +
+			'                    md-selected-item-change="$ctrl.contactId = contact.id"\n' +
+			'                    md-search-text-change="">\n' +
+			'                <md-item-template>\n' +
+			'                    <span md-highlight-text="ctrl.searchText">{{ contact.name }}</span>\n' +
+			'                </md-item-template>\n' +
+			'            </md-autocomplete>\n' +
+			'        </form>\n' +
+			'        <md-icon ng-click="$ctrl.edit($event)" class="md-secondary">create</md-icon>\n' +
+			'    </md-list-item>-->\n' +
+			'');
 
 		$templateCache.put('components/ep-table/ep-table.html', '<md-card>\n' +
 			'  <md-toolbar class="md-table-toolbar md-default" ng-hide="$ctrl.selected.length || $ctrl.filter.show">\n' +
 			'    <div class="md-toolbar-tools">\n' +
-			'      <h2 class="md-title">{{ $ctrl.title }}</h2>\n' +
+			'      <h2 class="md-title">{{ $ctrl.name }}</h2>\n' +
 			'      <div flex></div>\n' +
 			'      <md-button class="md-icon-button" ng-click="$ctrl.showFilter()">\n' +
 			'        <md-icon>search</md-icon>\n' +

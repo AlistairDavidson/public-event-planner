@@ -1,0 +1,20 @@
+.list-filter-container {
+    position: relative;
+    top: -3px;
+
+     md-input-container {
+         .md-errors-spacer {
+             min-height: 0px !important;
+         }
+    }
+    //     &.md-default-theme label, 
+    //     .md-placeholder {  
+    //         color: rgba(255,255,255,0.87) !important; 
+    //     }
+
+    //     .md-input {
+    //         color: rgba(255,255,255,0.87);
+    //         border-color: rgba(255,255,255,0.87);
+    //     }
+    // }
+}

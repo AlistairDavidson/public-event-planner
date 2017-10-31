@@ -1,7 +1,7 @@
 import { LocationDto, LocationsDto } from '../../common/models/location'
 import { EventDto } from '../../common/models/event';
 import { TimeslotDto } from '../../common/models/timeslot';
-import { queryToRequest } from './helper';
+import { queryToRequest } from '../helpers/network';
 import settings from '../settings';
 import { MdSortDto } from '../../common/types';
 import { element } from 'angular';
@@ -74,7 +74,7 @@ export default class LocationService {
 export class LocationViewModel implements LocationDto {
     constructor(location?: LocationDto) {
         if(location) {
-            _.extend(this, location);
+            _.merge(this, location);
         }
     }
 

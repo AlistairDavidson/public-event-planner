@@ -4,7 +4,7 @@ import { ActDto } from '../../common/models/act';
 import { BookingStatusDto } from '../../common/models/booking-status';
 import { ActApplicationDto } from '../../common/models/act-application';
     
-import { queryToRequest } from './helper';
+import { queryToRequest } from '../helpers/network';
 import settings from '../settings';
 import { MdSortDto } from '../../common/types';
 import { element } from 'angular';
@@ -82,7 +82,7 @@ export class BookingService {
 export class BookingViewModel implements BookingDto {
     constructor(booking?: BookingDto) {
         if(booking) {
-            _.extend(this, booking);
+            _.merge(this, booking);
         }
     }
 

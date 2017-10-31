@@ -2,7 +2,7 @@ import { MdSortDto } from '../../../../common/types';
 import ActService from '../../../services/act-service';
 
 
-class ActsController implements angular.IComponentController {    
+class ActsPageController implements angular.IComponentController {    
     static $inject = ['$state'];
 
     constructor(private $state: ng.ui.IStateService) {
@@ -25,8 +25,8 @@ class ActsController implements angular.IComponentController {
 }
 
 let options: angular.IComponentOptions = {
-    templateUrl: 'components/act/acts/acts.html',
-    controller: ActsController,
+    templateUrl: 'components/act/acts-page/acts-page.html',
+    controller: ActsPageController,
     bindings: {}
 }
 

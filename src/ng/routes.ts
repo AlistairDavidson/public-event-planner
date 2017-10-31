@@ -41,9 +41,9 @@ function(
         .state({
             name: 'root.applications',
             url: '/applications',
-            template:  `<applications>
+            template:  `<applications-page>
                             <md-progress-circular md-mode="indeterminate" class="loading"></md-progress-circular>
-                        </applications>`
+                        </applications-page>`
         })
         .state({
             name: 'root.applications.summary',
@@ -75,9 +75,9 @@ function(
         .state({
             name: 'root.acts',
             url: '/acts',
-            template:  `<acts>
+            template:  `<acts-page>
                             <md-progress-circular md-mode="indeterminate" class="loading"></md-progress-circular>
-                        </acts>`
+                        </acts-page>`
         })
         .state({
             name: 'root.acts.summary',
@@ -111,7 +111,6 @@ function(
             template:  `<act-editor act-id="$ctrl.$stateParams.act" event-id="$ctrl.$stateParams.event"></act-editor>`,
             controller: ['$stateParams', function($stateParams: ng.ui.IStateParamsService) {
                 this.$stateParams = $stateParams;
-                console.log('Editing act:' + this.$stateParams.act);
             }],
             controllerAs: '$ctrl'
         });

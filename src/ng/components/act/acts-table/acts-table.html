@@ -36,14 +36,14 @@
       </md-menu-content>
     </md-menu>
 
-    <md-button aria-label="Edit" class="md-icon-button" ui-sref="root.act({ act: row.id })">
+    <md-button title="Edit" aria-label="Edit" class="md-icon-button" ui-sref="root.act({ act: row.id })">
         <md-icon md-menu-origin>mode_edit</md-icon>      
       </md-button>
   </td>
 </script>
 
 <ep-table
-  title="'Acts'"
+  name="'Acts'"
   on-list="$ctrl.getActs({ query: query })"
   on-edit="$ctrl.edit($event)"
   header-template="'/acts-header.html'"

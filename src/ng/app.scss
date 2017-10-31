@@ -10,3 +10,45 @@
 img {
     max-height: 300px;
 }
+
+.form-padding {
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 5.5px;
+}
+
+.micro-icon {
+    font-size: 14px;
+    line-height: 1.6em;
+    display: inline;
+    padding-right: 3px;
+    padding-left: 6px;
+
+    &:first-child {
+        padding-left: 0;
+    }
+}
+
+.search md-autocomplete-wrap:before {
+    font-family: "Material Icons";
+    content: "\E8B6";
+    line-height: 1;
+    padding: 25.5px 8px 0px 0px;
+    font-weight: normal;
+    font-size: 24px;
+}
+
+md-input-container {    
+    &.first-condensed {
+        margin-bottom: 0px;
+    }
+
+    &.middle-condensed {
+        margin-bottom: 0px;
+        margin-top: 0px;
+    }
+
+    &.last-condensed {
+        margin-top: 0px;
+    }
+}

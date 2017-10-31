@@ -15,7 +15,6 @@ export class ActEditorController implements angular.IComponentController {
 
     $onInit() {
         if(this.actId) {
-            console.log('loading act', this.actId)
             this.actService.get(this.actId, true)
                 .then((act) => this.act = act);
         }        

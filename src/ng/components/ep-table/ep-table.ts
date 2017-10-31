@@ -6,7 +6,7 @@ import { element } from 'angular';
 class EpTableController implements angular.IComponentController {
     static $inject = ['$scope']
 
-    title: string;
+    name: string;
 
     count: number;
     rows: any[] = [];
@@ -43,7 +43,6 @@ class EpTableController implements angular.IComponentController {
     }
 
     get() {
-        console.log('ep-table:', this.query)
        return this.loading = this.onList({ query: this.query })
             .then((newData: { count: number, rows: any[]}) => {
                 this.rows = newData.rows;
@@ -86,7 +85,7 @@ let options: angular.IComponentOptions = {
     templateUrl: 'components/ep-table/ep-table.html',
     controller: EpTableController,
     bindings: {
-        title: '=',
+        name: '=',
         onList: '&',
         onEdit: '&',
         headerTemplate: '=',

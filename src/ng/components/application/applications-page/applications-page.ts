@@ -4,7 +4,7 @@ import ApplicationService from '../../../services/application-service';
 import { ApplicationViewModel } from '../../../services/application-service';
 
 
-class ApplicationsController implements angular.IComponentController {    
+class ApplicationsPageController implements angular.IComponentController {    
     static $inject = ['$state'];
 
     constructor(private $state: ng.ui.IStateService) {
@@ -27,8 +27,8 @@ class ApplicationsController implements angular.IComponentController {
 }
 
 let options: angular.IComponentOptions = {
-    templateUrl: 'components/application/applications/applications.html',
-    controller: ApplicationsController,
+    templateUrl: 'components/application/applications-page/applications-page.html',
+    controller: ApplicationsPageController,
     bindings: {}
 }
 

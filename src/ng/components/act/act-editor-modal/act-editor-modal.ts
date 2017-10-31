@@ -16,7 +16,7 @@ export class ActEditorModalController implements angular.IComponentController {
 
     save() {
         this.actService.save(this.act)
-            .then((updatedAct) => _.extend(this.act, updatedAct))
+            .then((updatedAct) => _.merge(this.act, updatedAct))
             .then(() => this.$mdDialog.hide(this.act));
     }
 

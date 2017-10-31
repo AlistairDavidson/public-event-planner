@@ -1,5 +1,5 @@
 import { EventDto, EventsDto } from '../../common/models/event';
-import { queryToRequest } from './helper';
+import { queryToRequest } from '../helpers/network';
 import settings from '../settings';
 import { MdSortDto } from '../../common/types';
 import { element } from 'angular';
@@ -68,7 +68,7 @@ export default class EventService {
 export class EventViewModel implements EventDto {
     constructor(event?: EventDto) {
         if(event) {
-            _.extend(this, event);
+            _.merge(this, event);
         }
     }
 

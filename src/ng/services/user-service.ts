@@ -1,7 +1,7 @@
 import { UserDto, UsersDto } from '../../common/models/user';
 import { BookingDto } from '../../common/models/booking';
 import { TimeslotDto } from '../../common/models/timeslot';
-import { queryToRequest } from './helper';
+import { queryToRequest } from '../helpers/network';
 import settings from '../settings';
 import { MdSortDto } from '../../common/types';
 import { element } from 'angular';
@@ -70,7 +70,7 @@ export default class UserService {
 export class UserViewModel implements UserDto {
     constructor(user?: UserDto) {
         if(user) {
-            _.extend(this, user);
+            _.merge(this, user);
         }
     }
 

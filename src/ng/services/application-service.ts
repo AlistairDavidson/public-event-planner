@@ -1,5 +1,5 @@
 import { ActApplicationDto, RawApplicationDto, ActApplicationsDto } from '../../common/models/act-application';
-import { queryToRequest } from './helper';
+import { queryToRequest } from '../helpers/network';
 import settings from '../settings';
 import { MdSortDto, ListDto } from '../../common/types';
 import { element } from 'angular';
@@ -17,9 +17,7 @@ export default class ApplicationService {
     }
 
     list(query?: MdSortDto) {
-        let queryString: string;
-
-        console.log('query is', query);
+        let queryString: string;    
 
         if(query) {
            let listQuery = queryToRequest(query);
@@ -32,8 +30,6 @@ export default class ApplicationService {
         }    
 
         let url = `${settings.api}/application/list?${queryString}`;
-
-        console.log('url is', url);
 
         return this.$http.get(url)
             .then(response => (response.data as ActApplicationsDto))

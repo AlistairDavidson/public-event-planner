@@ -1,0 +1,36 @@
+<md-card>
+    <md-toolbar>
+        <div class="md-toolbar-tools">                     
+            <md-button  class="md-icon-button md-secondary"
+                        ng-click="$ctrl.onClose()">
+                <md-icon>close</md-icon>
+            </md-button>
+            <h2 ng-if="$ctrl.actContact.Contact.name">
+                {{ $ctrl.actContact.Contact.name }}, {{ $ctrl.actContact.relationship }}
+            </h2>
+            <h2 ng-if="!$ctrl.actContact.Contact.name">New Contact [{{$ctrl.searchText}}] </h2>
+            <span flex></span>
+            <md-button  class="md-icon-button md-fab md-secondary md-fab-top-right"
+                        ng-click="$ctrl.edit()">
+                <md-icon>edit</md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <form novalidate ng-cloak layout="column" class="form-padding">    
+        <contact-search contact="$ctrl.searchContact"
+                        ng-if="!$ctrl.editingContact">        
+        </contact-search>
+            
+        <md-input-container class="md-block" ng-class="{ 'last-condensed': !$ctrl.editingContact }" flex>
+            <label>Role</label>
+            <md-icon>work</md-icon>
+            <input ng-model="$ctrl.actContact.relationship">
+        </md-input-container>
+    </form>
+</md-card>
+
+<contact-editor-form    ng-if="$ctrl.editingContact"
+                        contact="$ctrl.actContact.Contact"
+                        search-text="$ctrl.searchText"
+                        on-close="$ctrl.closeEditor()">
+</contact-editor-form>

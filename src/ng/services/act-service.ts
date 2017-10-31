@@ -5,7 +5,7 @@ import { BookingViewModel } from './booking-service';
 import { ActContactDto } from '../../common/models/act-contact';
 import { BookingDto } from '../../common/models/booking';
 import { TimeslotDto } from '../../common/models/timeslot';
-import { queryToRequest } from './helper';
+import { queryToRequest } from '../helpers/network';
 import settings from '../settings';
 import { MdSortDto } from '../../common/types';
 import { element } from 'angular';
@@ -84,18 +84,6 @@ export default class ActService {
 }
 
 export class ActViewModel implements ActDto {
-    constructor(act?: ActDto) {
-        if(act) {
-            this.mainContact = new ContactViewModel(act.mainContact);
-            this.webContact = new ContactViewModel(act.webContact);
-
-            this.ActContacts = this.ActContacts.map(ac => new ActContactViewModel(ac));
-            this.Bookings = this.Bookings.map(b => new BookingViewModel(b));
-
-            _.extend(this, act);
-        }        
-    }
-
     id?: number;
     createdAt?: string;
     updatedAt?: string;
@@ -114,4 +102,38 @@ export class ActViewModel implements ActDto {
     ActContacts?: ActContactViewModel[] = [];
     Timeslots?: TimeslotDto[] = [];
     Bookings?: BookingViewModel[] = [];
+
+    constructor(act: ActDto = {}) {
+        this.mainContact = new ContactViewModel(act.mainContact);
+        this.webContact = new ContactViewModel(act.webContact);
+
+        this.ActContacts = this.ActContacts.map(ac => new ActContactViewModel(ac));
+        this.Bookings = this.Bookings.map(b => new BookingViewModel(b));
+
+        _.merge(this, act);    
+    }
+
+    getEmail() {        
+        return this.mainContact.getEmail();
+    }
+
+    getPhone() {
+        return this.mainContact.getPhone();
+    }
+
+    getWebsite() {
+        return this.webContact.getWebsite();
+    }
+
+    getTwitter() {
+        return this.webContact.getTwitter();
+    }
+
+    getFacebook() {
+        return this.webContact.getFacebook();
+    }
+
+    getImage() {
+        return this.webContact.getImage();
+    }
 }

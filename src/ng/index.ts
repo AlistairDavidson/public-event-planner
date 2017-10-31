@@ -1,4 +1,5 @@
 import { module, bootstrap, element } from 'angular';
+import contenteditable from './helpers/contenteditable-directive';
 
 import './services';
 import './components';
@@ -10,7 +11,8 @@ module('event-planner', [ 'event-planner.components', 'event-planner.services', 
             .iconSet('community', 'mdi.svg');
     }])         
     .config(routes)
-    .controller('eventPlanner', () => {});
+    .controller('eventPlanner', () => {})
+    .directive('contenteditable', contenteditable);
 
 element(document).ready(() => { 
     bootstrap(document, ['event-planner', 'templates']);

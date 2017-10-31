@@ -29,13 +29,6 @@ export class ContactSearchController implements angular.IComponentController {
         }
     }
 
-    edit(ev: ng.IAngularEvent) {
-        this.contactService.edit(ev)            
-            .then(contact => {
-                this.contact = contact;                
-            });
-    }
-
     search(searchText: string) {
         return this.contactService.list({
             order: 'name',
@@ -51,7 +44,8 @@ let options: angular.IComponentOptions = {
     controller: ContactSearchController,
     bindings: {
         contact: "=?",
-        contactId: "=?"
+        contactId: "=?",
+        searchText: "=?"
     }
 }
 
