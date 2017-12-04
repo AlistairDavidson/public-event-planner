@@ -54,6 +54,7 @@ search over existing answers for the likes of band type
 Solve issue with dates on viewmodels (set createdDate -> also sets createdDateAsDate)
 
 ... global hydration solution?
+    ... mobx-state-tree?
 
 Surely consolidate code more, somehow - esp front page
 
