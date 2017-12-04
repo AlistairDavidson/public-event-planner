@@ -36,8 +36,8 @@
     <div class="md-list-item-text" layout="column">
         <h3>{{row.Contact.name}}, {{row.relationship}}</h3>            
         <p>            
-            <md-icon class="micro-icon" ng-if="row.getPhone()">phone</md-icon>{{row.getPhone().phone}}
-            <md-icon class="micro-icon" ng-if="row.getEmail()">email</md-icon>{{row.getEmail().email}}
+            <md-icon class="micro-icon" ng-if="row.getPhone().phone">phone</md-icon>{{row.getPhone().phone}}
+            <md-icon class="micro-icon" ng-if="row.getEmail().email">email</md-icon>{{row.getEmail().email}}
             &nbsp;
         </p>
     </div>

@@ -9,26 +9,10 @@ Licensed under GNU Affero General Public License Version 3, see LICENSE file
 
 TODO
 
-act-contact editor
-    type into search box -> press create button to add item with that name
-    edit/create button shows contact form 
-    possibly seperate edit and create buttons?
-    possibly move fab to bottom of card?
-
-Contact editor
-    prepopulate one of each contact detail type
-    address layout fix when - is present
-
 create ep-form, ep-modal
 
-loading bar
-image edit - show image somehow?
+Applications, bookings, acts, events ep-lists
 
-move all lists to ep-list
-
-contact detail lists    
-    facebook and twitter icons - really ought to be sent regexes from server, reading from /plugins/contact-urls
-    
 Single-line summary widgets - content for md-list
     act
     act-contact
@@ -42,10 +26,9 @@ Single-line summary widgets - content for md-list
 
     popup contact detail view
 
+loading bar
 
 validation, accessibility pass
-
-hook up remaining code
 
 Upgrade booking form to new style
 
@@ -66,11 +49,11 @@ tech specs - when creating booking, use Act tech specs only if none against book
 bio onto booking, same rules as tech specs
 
 
-async/await?
-
 search over existing answers for the likes of band type
 
-Solve issue with dates on viewmodels (set createdDate -> also sets createdDateAsDate) 
+Solve issue with dates on viewmodels (set createdDate -> also sets createdDateAsDate)
+
+... global hydration solution?
 
 Surely consolidate code more, somehow - esp front page
 
@@ -108,9 +91,24 @@ Rider prices
 
 Full tenants on acts and events
 
+-- MINOR THINGS I DEFERRED
+
+act-contact editor
+    type into search box -> press create button to add item with that name    
+    ensure primary contact is working correctly
+
+Contact editor
+    prepopulate one of each contact detail type
+    address layout fix when - is present
+
+image edit - show image somehow?
+
+contact detail lists    
+    facebook and twitter icons - really ought to be sent regexes from server, reading from /plugins/contact-urls
+
 -- LATER
 
-csv import / export
+csv import / export 
 
 file attachments
 
