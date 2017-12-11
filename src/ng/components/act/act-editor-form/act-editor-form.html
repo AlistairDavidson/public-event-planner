@@ -1,9 +1,14 @@
-<form   novalidate
-        ng-cloak>
-    <div layout="column">
-        <h2 class="md-title">Act</h2>
-        
-        <div layout-gt-sm="row">
+<md-card layout-padding>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2 ng-if="!$ctrl.act.name">New Act</h2>
+            <h2 ng-if="$ctrl.act.name">{{ $ctrl.act.name }}</h2>
+            <span flex></span>
+        </div>
+    </md-toolbar>
+    <form   novalidate
+            ng-cloak>
+        <div layout="column">              
             <md-input-container>
                 <label>Act Name</label>
                 <input ng-model="$ctrl.act.name">
@@ -18,44 +23,36 @@
                 <label>Town</label>
                 <input ng-model="$ctrl.act.town">
             </md-input-container>
-        </div>
 
-        <hr>
+            <hr>
 
-        <h3 class="md-subhead">Details</h3>
+            <h3 class="md-subhead">Details</h3>
 
-        <div layout-gt-sm="row">
             <md-input-container>
                 <label>Bio</label>
                 <textarea ng-model="$ctrl.act.bio">
                 </textarea>
             </md-input-container>
-        </div>
-    
-        <div layout-gt-sm="row">
+
             <md-input-container>
                 <label>Tech Specs</label>
                 <textarea ng-model="$ctrl.act.tech_specs">
                 </textarea>
             </md-input-container>
-        </div>                
 
-        <contact-editor-form contact="$ctrl.act.webContact"
-                                mode="'Web'">
-        </contact-editor-form>
+            <contact-editor-form contact="$ctrl.webContact"
+                                 mode="'web'"> 
 
-        <hr>
-    
-        <act-contacts-editor act-contacts="$ctrl.act.ActContacts"
-                             act-id="$ctrl.act.id">
-        </act-contacts-editor>
+            </contact-editor-form>
         
-        <hr>
+            <act-contacts-editor act-contacts="$ctrl.act.ActContacts"
+                                act-id="$ctrl.act.id">
+            </act-contacts-editor>
 
-        <h3 class="md-subhead">Bookings</h3>
-        <bookings-editor    bookings="$ctrl.act.bookings"
-                            act-id="$ctrl.act.id"
-                            event-id="$ctrl.eventId">            
-        </bookings-editor>
-    </div>
-</form>
+            <bookings-editor    bookings="$ctrl.act.bookings"
+                                act-id="$ctrl.act.id"
+                                event-id="$ctrl.eventId">            
+            </bookings-editor>
+        </div>
+    </form>
+</md-card>

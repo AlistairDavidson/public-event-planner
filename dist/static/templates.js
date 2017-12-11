@@ -29,11 +29,16 @@ angular
 			'    </md-card-actions>\n' +
 			'</md-card>');
 
-		$templateCache.put('components/act/act-editor-form/act-editor-form.html', '<form novalidate ng-cloak>\n' +
-			'    <div layout="column">\n' +
-			'        <h2 class="md-title">Act</h2>\n' +
-			'        \n' +
-			'        <div layout-gt-sm="row">\n' +
+		$templateCache.put('components/act/act-editor-form/act-editor-form.html', '<md-card layout-padding>\n' +
+			'    <md-toolbar>\n' +
+			'        <div class="md-toolbar-tools">\n' +
+			'            <h2 ng-if="!$ctrl.act.name">New Act</h2>\n' +
+			'            <h2 ng-if="$ctrl.act.name">{{ $ctrl.act.name }}</h2>\n' +
+			'            <span flex></span>\n' +
+			'        </div>\n' +
+			'    </md-toolbar>\n' +
+			'    <form novalidate ng-cloak>\n' +
+			'        <div layout="column">              \n' +
 			'            <md-input-container>\n' +
 			'                <label>Act Name</label>\n' +
 			'                <input ng-model="$ctrl.act.name">\n' +
@@ -48,48 +53,35 @@ angular
 			'                <label>Town</label>\n' +
 			'                <input ng-model="$ctrl.act.town">\n' +
 			'            </md-input-container>\n' +
-			'        </div>\n' +
 			'\n' +
-			'        <hr>\n' +
+			'            <hr>\n' +
 			'\n' +
-			'        <h3 class="md-subhead">Details</h3>\n' +
+			'            <h3 class="md-subhead">Details</h3>\n' +
 			'\n' +
-			'        <div layout-gt-sm="row">\n' +
 			'            <md-input-container>\n' +
 			'                <label>Bio</label>\n' +
 			'                <textarea ng-model="$ctrl.act.bio">\n' +
 			'                </textarea>\n' +
 			'            </md-input-container>\n' +
-			'        </div>\n' +
-			'    \n' +
-			'        <div layout-gt-sm="row">\n' +
+			'\n' +
 			'            <md-input-container>\n' +
 			'                <label>Tech Specs</label>\n' +
 			'                <textarea ng-model="$ctrl.act.tech_specs">\n' +
 			'                </textarea>\n' +
 			'            </md-input-container>\n' +
-			'        </div>                \n' +
 			'\n' +
-			'        <contact-editor-form contact="$ctrl.act.webContact" mode="\'Web\'">\n' +
-			'        </contact-editor-form>\n' +
+			'            <contact-editor-form contact="$ctrl.webContact" mode="\'web\'"> \n' +
 			'\n' +
-			'        <hr>\n' +
-			'    \n' +
-			'        <h3 class="md-subhead">Primary Contact</h3>\n' +
-			'        <contact-search contact="$ctrl.act.mainContact">\n' +
-			'        </contact-search>\n' +
-			'\n' +
-			'        <h3 class="md-subhead">Other Contacts</h3>\n' +
-			'        <act-contacts-editor act-contacts="$ctrl.act.ActContacts" act-id="$ctrl.act.id">\n' +
-			'        </act-contacts-editor>\n' +
+			'            </contact-editor-form>\n' +
 			'        \n' +
-			'        <hr>\n' +
+			'            <act-contacts-editor act-contacts="$ctrl.act.ActContacts" act-id="$ctrl.act.id">\n' +
+			'            </act-contacts-editor>\n' +
 			'\n' +
-			'        <h3 class="md-subhead">Bookings</h3>\n' +
-			'        <bookings-editor bookings="$ctrl.act.bookings" act-id="$ctrl.act.id" event-id="$ctrl.eventId">            \n' +
-			'        </bookings-editor>\n' +
-			'    </div>\n' +
-			'</form>');
+			'            <bookings-editor bookings="$ctrl.act.bookings" act-id="$ctrl.act.id" event-id="$ctrl.eventId">            \n' +
+			'            </bookings-editor>\n' +
+			'        </div>\n' +
+			'    </form>\n' +
+			'</md-card>');
 
 		$templateCache.put('components/act/act-editor-modal/act-editor-modal.html', '<md-dialog aria-label="New Act">\n' +
 			'    <md-dialog-content class="md-dialog-content">\n' +
@@ -487,23 +479,60 @@ angular
 			'    {{ $ctrl.bookingStatus.name }}\n' +
 			'</div>');
 
-		$templateCache.put('components/booking/bookings-editor/bookings-editor.html', '<div layout="column">\n' +
-			'    <div ng-repeat="booking in $ctrl.bookings track by $index" layout="row">\n' +
-			'        <booking-summary booking="booking">\n' +
+		$templateCache.put('components/booking/bookings-editor/bookings-editor.html', '<div layout="row" layout-align="start start">                \n' +
+			'    <md-card flex="50">\n' +
+			'        <md-toolbar>\n' +
+			'            <div class="md-toolbar-tools">\n' +
+			'                <h2>Bookings</h2>\n' +
+			'                <span flex></span>\n' +
+			'                <md-button class="md-icon-button md-fab md-secondary md-fab-top-right" ng-click="$ctrl.edit()">\n' +
+			'                    <md-icon>add</md-icon>\n' +
+			'                </md-button>\n' +
+			'            </div>\n' +
+			'        </md-toolbar>\n' +
+			'        <ep-list rows="$ctrl.bookings" on-edit="$ctrl.edit(row)" list-item-template="\'/act-bookings-list-item.html\'">\n' +
+			'        </ep-list>\n' +
+			'    </md-card>\n' +
 			'\n' +
-			'        </booking-summary>\n' +
+			'    <booking-editor-form flex="50" ng-if="$ctrl.editingBooking" booking="$ctrl.editingBooking" on-close="$ctrl.close()">\n' +
+			'    </booking-editor-form>\n' +
+			'</div>\n' +
 			'\n' +
-			'        <md-button ng-click="$ctrl.remove(booking)" class="fixed-height-button">\n' +
-			'            <md-icon>remove</md-icon>            \n' +
-			'        </md-button>               \n' +
+			'<script type="text/ng-template" id="/act-bookings-list-item.html">\n' +
+			'    <!-- TODO: image of event -->\n' +
+			'    <img src="/default_profile_photo.png"\n' +
+			'         ng-if="!row.getImage()"\n' +
+			'         class="md-avatar">         \n' +
+			'\n' +
+			'    <img ng-src="{{row.getImage()}}"\n' +
+			'         ng-if="row.getImage()"\n' +
+			'         class="md-avatar">\n' +
+			'\n' +
+			'    <div class="md-list-item-text" layout="column">\n' +
+			'        <!-- TODO: act or event depending on page we\'re embedded in -->\n' +
+			'        <h3>{{row.Event.name}}</h3>            \n' +
+			'        <p>            \n' +
+			'            <!-- TODO: booking status icons -->\n' +
+			'            <md-icon class="micro-icon" ng-if="row.getPhone().phone">phone</md-icon>{{row.BookingStatus.name}}\n' +
+			'            &nbsp;\n' +
+			'        </p>\n' +
 			'    </div>\n' +
 			'\n' +
-			'    <md-button ng-click="$ctrl.add($event)">\n' +
-			'        <md-icon>add</md-icon>\n' +
-			'        \n' +
-			'        Add\n' +
-			'    </md-button>\n' +
-			'</div>');
+			'    <div class="md-secondary-container">       \n' +
+			'        <md-button  class="md-icon-button md-secondary"\n' +
+			'                    ng-click="$ctrl.onEdit({ row: row })"\n' +
+			'                    ng-if="$ctrl.onEdit">\n' +
+			'            <md-icon>\n' +
+			'                edit\n' +
+			'            </md-icon>\n' +
+			'        </md-button>\n' +
+			'        <md-button class="md-icon-button md-secondary">          \n' +
+			'            <md-icon ng-click="$ctrl.remove($event, row)">\n' +
+			'                remove\n' +
+			'            </md-icon> \n' +
+			'        </md-button>\n' +
+			'    </div>\n' +
+			'</script>');
 
 		$templateCache.put('components/contact/act-contact-editor-form/act-contact-editor-form.html', '<md-card>\n' +
 			'    <md-toolbar>\n' +
@@ -567,8 +596,8 @@ angular
 			'    <div class="md-list-item-text" layout="column">\n' +
 			'        <h3>{{row.Contact.name}}, {{row.relationship}}</h3>            \n' +
 			'        <p>            \n' +
-			'            <md-icon class="micro-icon" ng-if="row.getPhone()">phone</md-icon>{{row.getPhone().phone}}\n' +
-			'            <md-icon class="micro-icon" ng-if="row.getEmail()">email</md-icon>{{row.getEmail().email}}\n' +
+			'            <md-icon class="micro-icon" ng-if="row.getPhone().phone">phone</md-icon>{{row.getPhone().phone}}\n' +
+			'            <md-icon class="micro-icon" ng-if="row.getEmail().email">email</md-icon>{{row.getEmail().email}}\n' +
 			'            &nbsp;\n' +
 			'        </p>\n' +
 			'    </div>\n' +
@@ -599,10 +628,15 @@ angular
 		$templateCache.put('components/contact/contact-editor-form/contact-editor-form.html', '<md-card>\n' +
 			'<md-toolbar>\n' +
 			'    <div class="md-toolbar-tools">         \n' +
-			'        <md-button aria-label="Close" class="md-icon-button md-secondary" ng-click="$ctrl.onClose()">\n' +
+			'        <md-button aria-label="Close" class="md-icon-button md-secondary" ng-click="$ctrl.onClose()" ng-if="$ctrl.mode != \'web\'">\n' +
 			'            <md-icon>close</md-icon>\n' +
 			'        </md-button>\n' +
-			'        <h2>Contact</h2>\n' +
+			'        <h2 ng-if="$ctrl.mode != \'web\'">\n' +
+			'            Contact\n' +
+			'        </h2>\n' +
+			'        <h2 ng-if="$ctrl.mode == \'web\'">\n' +
+			'            Websites and Images\n' +
+			'        </h2>\n' +
 			'        <span flex></span>\n' +
 			'\n' +
 			'        <md-fab-speed-dial md-direction="down" class="md-scale md-fab-top-right">\n' +
@@ -614,13 +648,13 @@ angular
 			'            </md-fab-trigger>\n' +
 			'\n' +
 			'            <md-fab-actions>\n' +
-			'                <md-button aria-label="Add phone number" class="md-fab md-raised md-mini" ng-click="$ctrl.add(\'phones\')">\n' +
+			'                <md-button aria-label="Add phone number" class="md-fab md-raised md-mini" ng-click="$ctrl.add(\'phones\')" ng-if="$ctrl.mode != \'web\'">\n' +
 			'                    <md-icon>phone</md-icon>\n' +
 			'                </md-button>\n' +
-			'                <md-button aria-label="Add address" class="md-fab md-raised md-mini" ng-click="$ctrl.add(\'addresses\')">\n' +
+			'                <md-button aria-label="Add address" class="md-fab md-raised md-mini" ng-click="$ctrl.add(\'addresses\')" ng-if="$ctrl.mode != \'web\'">\n' +
 			'                    <md-icon>home</md-icon>\n' +
 			'                </md-button>\n' +
-			'                <md-button aria-label="Add email address" class="md-fab md-raised md-mini" ng-click="$ctrl.add(\'emails\')">\n' +
+			'                <md-button aria-label="Add email address" class="md-fab md-raised md-mini" ng-click="$ctrl.add(\'emails\')" ng-if="$ctrl.mode != \'web\'">\n' +
 			'                    <md-icon>email</md-icon>\n' +
 			'                </md-button>\n' +
 			'                <md-button aria-label="Add website" class="md-fab md-raised md-mini" ng-click="$ctrl.add(\'websites\')">\n' +
@@ -636,7 +670,7 @@ angular
 			'</md-toolbar>\n' +
 			'\n' +
 			'<form novalidate ng-cloak layout="column" class="form-padding">\n' +
-			'    <md-input-container class="md-block" flex>\n' +
+			'    <md-input-container class="md-block" flex ng-if="$ctrl.mode != \'web\'">\n' +
 			'        <label>Name</label>\n' +
 			'        <md-icon>person</md-icon>\n' +
 			'        <input ng-model="$ctrl.contact.name">\n' +

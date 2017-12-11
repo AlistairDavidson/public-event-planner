@@ -2,11 +2,17 @@
 <md-toolbar>
     <div class="md-toolbar-tools">         
         <md-button  aria-label="Close"
-                class="md-icon-button md-secondary"
-                ng-click="$ctrl.onClose()">
+                    class="md-icon-button md-secondary"
+                    ng-click="$ctrl.onClose()"
+                    ng-if="$ctrl.mode != 'web'">
             <md-icon>close</md-icon>
         </md-button>
-        <h2>Contact</h2>
+        <h2 ng-if="$ctrl.mode != 'web'">
+            Contact
+        </h2>
+        <h2 ng-if="$ctrl.mode == 'web'">
+            Websites and Images
+        </h2>
         <span flex></span>
 
         <md-fab-speed-dial  md-direction="down"
@@ -23,17 +29,20 @@
             <md-fab-actions>
                 <md-button  aria-label="Add phone number"
                             class="md-fab md-raised md-mini"
-                            ng-click="$ctrl.add('phones')">
+                            ng-click="$ctrl.add('phones')"
+                            ng-if="$ctrl.mode != 'web'">
                     <md-icon>phone</md-icon>
                 </md-button>
                 <md-button  aria-label="Add address"
                             class="md-fab md-raised md-mini"
-                            ng-click="$ctrl.add('addresses')">
+                            ng-click="$ctrl.add('addresses')"
+                            ng-if="$ctrl.mode != 'web'">
                     <md-icon>home</md-icon>
                 </md-button>
                 <md-button  aria-label="Add email address"
                             class="md-fab md-raised md-mini"
-                            ng-click="$ctrl.add('emails')">
+                            ng-click="$ctrl.add('emails')"
+                            ng-if="$ctrl.mode != 'web'">
                     <md-icon>email</md-icon>
                 </md-button>
                 <md-button  aria-label="Add website"
@@ -53,7 +62,7 @@
 </md-toolbar>
 
 <form novalidate ng-cloak layout="column" class="form-padding">
-    <md-input-container class="md-block" flex>
+    <md-input-container class="md-block" flex ng-if="$ctrl.mode != 'web'">
         <label>Name</label>
         <md-icon>person</md-icon>
         <input ng-model="$ctrl.contact.name">

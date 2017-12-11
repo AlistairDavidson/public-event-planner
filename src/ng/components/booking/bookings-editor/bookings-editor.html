@@ -1,20 +1,60 @@
+<div layout="row" layout-align="start start">                
+    <md-card flex="50">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Bookings</h2>
+                <span flex></span>
+                <md-button  class="md-icon-button md-fab md-secondary md-fab-top-right"
+                            ng-click="$ctrl.edit()">
+                    <md-icon>add</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <ep-list    rows="$ctrl.bookings"
+                    on-edit="$ctrl.edit(row)"
+                    list-item-template="'/act-bookings-list-item.html'">
+        </ep-list>
+    </md-card>
 
-<div layout="column">
-    <div ng-repeat="booking in $ctrl.bookings track by $index"
-            layout="row">
-        <booking-summary booking="booking">
+    <booking-editor-form    flex="50"
+                            ng-if="$ctrl.editingBooking"
+                            booking="$ctrl.editingBooking"
+                            on-close="$ctrl.close()">
+    </booking-editor-form>
+</div>
 
-        </booking-summary>
+<script type="text/ng-template" id="/act-bookings-list-item.html">
+    <!-- TODO: image of event -->
+    <img src="/default_profile_photo.png"
+         ng-if="!row.getImage()"
+         class="md-avatar">         
 
-        <md-button ng-click="$ctrl.remove(booking)"
-                   class="fixed-height-button">
-            <md-icon>remove</md-icon>            
-        </md-button>               
+    <img ng-src="{{row.getImage()}}"
+         ng-if="row.getImage()"
+         class="md-avatar">
+
+    <div class="md-list-item-text" layout="column">
+        <!-- TODO: act or event depending on page we're embedded in -->
+        <h3>{{row.Event.name}}</h3>            
+        <p>            
+            <!-- TODO: booking status icons -->
+            <md-icon class="micro-icon" ng-if="row.getPhone().phone">phone</md-icon>{{row.BookingStatus.name}}
+            &nbsp;
+        </p>
     </div>
 
-    <md-button ng-click="$ctrl.add($event)">
-        <md-icon>add</md-icon>
-        
-        Add
-    </md-button>
-</div>
+    <div class="md-secondary-container">       
+        <md-button  class="md-icon-button md-secondary"
+                    ng-click="$ctrl.onEdit({ row: row })"
+                    ng-if="$ctrl.onEdit">
+            <md-icon>
+                edit
+            </md-icon>
+        </md-button>
+        <md-button class="md-icon-button md-secondary">          
+            <md-icon ng-click="$ctrl.remove($event, row)">
+                remove
+            </md-icon> 
+        </md-button>
+    </div>
+</script>

@@ -11,7 +11,7 @@ TODO
 
 create ep-form, ep-modal
 
-Applications, bookings, acts, events ep-lists
+Applications, acts, events ep-lists
 
 Single-line summary widgets - content for md-list
     act
