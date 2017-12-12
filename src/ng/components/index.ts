@@ -49,7 +49,7 @@ export default module('event-planner.components', [ 'event-planner.services', 'n
     .component('actEditorModal', actEditorModal)
     .component('actEditor', actEditor)
     .component('actSearch', actSearch)
-    .component('acts-page', actsPage)
+    .component('actsPage', actsPage)
     .component('actsSummary', actsSummary)
     .component('actsTable', actsTable)
 
@@ -58,7 +58,7 @@ export default module('event-planner.components', [ 'event-planner.services', 'n
     .component('applicationEditorModal', applicationEditorModal)
     .component('applicationCard', applicationCard)
     .component('applicationsSummary', applicationsSummary)
-    .component('applications-page', applicationsPage)
+    .component('applicationsPage', applicationsPage)
     
     .component('bookingEditorForm', bookingEditorForm)
     .component('bookingEditorModal', bookingEditorModal)
