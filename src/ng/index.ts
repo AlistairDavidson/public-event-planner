@@ -18,6 +18,6 @@ module('event-planner', [ 'event-planner.components', 'event-planner.services', 
     .directive('contenteditable', contenteditable);
 
 element(document).ready(() => { 
-    bootstrap(document, ['event-planner', 'templates']);
+    bootstrap(document, ['event-planner', 'templates'], { strictDi: true });
 });
 

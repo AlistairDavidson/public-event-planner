@@ -6,6 +6,7 @@ export class EpListController implements angular.IComponentController {
     onFavourite: Function;
     listItemTemplate: string;
 
+    static $inject = [ '$mdDialog' ];
     constructor(private $mdDialog: ng.material.IDialogService) {
     }
 
