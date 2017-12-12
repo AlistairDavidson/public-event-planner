@@ -6,6 +6,9 @@ import './components';
 import routes from './routes';
 
 module('event-planner', [ 'event-planner.components', 'event-planner.services', 'ui.router', 'ngCookies', 'templates', 'md.data.table' ])
+    .config(['$httpProvider', function ($httpProvider: ng.IHttpProvider) {
+        $httpProvider.defaults.withCredentials = true;
+    }])
     .config(['$mdIconProvider', ($mdIconProvider: ng.material.IIconProvider) => {
         $mdIconProvider
             .iconSet('community', 'mdi.svg');

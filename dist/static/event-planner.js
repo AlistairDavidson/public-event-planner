@@ -2040,6 +2040,9 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     angular_1.module('event-planner', ['event-planner.components', 'event-planner.services', 'ui.router', 'ngCookies', 'templates', 'md.data.table'])
+        .config(['$httpProvider', function ($httpProvider) {
+            $httpProvider.defaults.withCredentials = true;
+        }])
         .config(['$mdIconProvider', function ($mdIconProvider) {
             $mdIconProvider
                 .iconSet('community', 'mdi.svg');
