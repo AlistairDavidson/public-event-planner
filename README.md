@@ -12,7 +12,9 @@ TODO
 Deploy
     - get bookings saving properly
 
-    
+No more 'act editor' -> just 'act editor form'
+Save etc buttons on act editor title
+Acts summary not used correctly on front end
 
 Bookings: edit-in-place in list, probably
 
