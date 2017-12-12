@@ -47,8 +47,6 @@ export class WebServer {
         this.app.use(passport.initialize());
         this.app.use(passport.session()); // persistent login sessions
         this.app.use(flash()); // use connect-flash for flash messages stored in session
- 
-        this.app.use(express.static('dist/static'))
 
         console.log('Initing decorators')
         initDecorators(this.app);
@@ -57,6 +55,8 @@ export class WebServer {
         this.controllers = new Controllers(this.app);
 
         this.app.get('/*', (req, res) => res.render('home.ejs'));
+
+        this.app.use(express.static('dist/static'))
 
         this.server = this.app.listen(process.env.PORT || 8800, () => this.printURL());
     }
