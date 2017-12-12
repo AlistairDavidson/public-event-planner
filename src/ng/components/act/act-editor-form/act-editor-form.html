@@ -24,10 +24,6 @@
                 <input ng-model="$ctrl.act.town">
             </md-input-container>
 
-            <hr>
-
-            <h3 class="md-subhead">Details</h3>
-
             <md-input-container>
                 <label>Bio</label>
                 <textarea ng-model="$ctrl.act.bio">
@@ -39,20 +35,22 @@
                 <textarea ng-model="$ctrl.act.tech_specs">
                 </textarea>
             </md-input-container>
-
-            <contact-editor-form contact="$ctrl.webContact"
-                                 mode="'web'"> 
-
-            </contact-editor-form>
-        
-            <act-contacts-editor act-contacts="$ctrl.act.ActContacts"
-                                act-id="$ctrl.act.id">
-            </act-contacts-editor>
-
-            <bookings-editor    bookings="$ctrl.act.bookings"
-                                act-id="$ctrl.act.id"
-                                event-id="$ctrl.eventId">            
-            </bookings-editor>
         </div>
     </form>
 </md-card>
+
+<bookings-editor
+    bookings="$ctrl.act.bookings"
+    act-id="$ctrl.act.id"
+    event-id="$ctrl.eventId">            
+</bookings-editor>
+
+<contact-editor-form
+    contact="$ctrl.webContact"
+    mode="'web'"> 
+</contact-editor-form>
+
+<act-contacts-editor
+    act-contacts="$ctrl.act.ActContacts"
+    act-id="$ctrl.act.id">
+</act-contacts-editor>

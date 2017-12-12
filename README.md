@@ -9,9 +9,14 @@ Licensed under GNU Affero General Public License Version 3, see LICENSE file
 
 TODO
 
-create ep-form, ep-modal
+Deploy
+    - get bookings saving properly
 
-Applications, acts, events ep-lists
+    
+
+Bookings: edit-in-place in list, probably
+
+At this point should be able to do end-to-end act editing
 
 Single-line summary widgets - content for md-list
     act
@@ -26,17 +31,17 @@ Single-line summary widgets - content for md-list
 
     popup contact detail view
 
+
+create ep-form, ep-modal
+
+Applications, acts, events ep-lists
+
 loading bar
 
 validation, accessibility pass
 
-Upgrade booking form to new style
-
 Act
-    Upgrade act form
     act-from-application
-        Three columns: act, main contact, booking
-
         Radio: existing act (dropdown) or new act (create fields)
         Same for contact
         If merging with existing records, prompt for overwrites - this becomes a generic merge form / set of merge forms - possible ep-merge...

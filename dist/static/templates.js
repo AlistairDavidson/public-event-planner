@@ -54,10 +54,6 @@ angular
 			'                <input ng-model="$ctrl.act.town">\n' +
 			'            </md-input-container>\n' +
 			'\n' +
-			'            <hr>\n' +
-			'\n' +
-			'            <h3 class="md-subhead">Details</h3>\n' +
-			'\n' +
 			'            <md-input-container>\n' +
 			'                <label>Bio</label>\n' +
 			'                <textarea ng-model="$ctrl.act.bio">\n' +
@@ -69,19 +65,18 @@ angular
 			'                <textarea ng-model="$ctrl.act.tech_specs">\n' +
 			'                </textarea>\n' +
 			'            </md-input-container>\n' +
-			'\n' +
-			'            <contact-editor-form contact="$ctrl.webContact" mode="\'web\'"> \n' +
-			'\n' +
-			'            </contact-editor-form>\n' +
-			'        \n' +
-			'            <act-contacts-editor act-contacts="$ctrl.act.ActContacts" act-id="$ctrl.act.id">\n' +
-			'            </act-contacts-editor>\n' +
-			'\n' +
-			'            <bookings-editor bookings="$ctrl.act.bookings" act-id="$ctrl.act.id" event-id="$ctrl.eventId">            \n' +
-			'            </bookings-editor>\n' +
 			'        </div>\n' +
 			'    </form>\n' +
-			'</md-card>');
+			'</md-card>\n' +
+			'\n' +
+			'<bookings-editor bookings="$ctrl.act.bookings" act-id="$ctrl.act.id" event-id="$ctrl.eventId">            \n' +
+			'</bookings-editor>\n' +
+			'\n' +
+			'<contact-editor-form contact="$ctrl.webContact" mode="\'web\'"> \n' +
+			'</contact-editor-form>\n' +
+			'\n' +
+			'<act-contacts-editor act-contacts="$ctrl.act.ActContacts" act-id="$ctrl.act.id">\n' +
+			'</act-contacts-editor>');
 
 		$templateCache.put('components/act/act-editor-modal/act-editor-modal.html', '<md-dialog aria-label="New Act">\n' +
 			'    <md-dialog-content class="md-dialog-content">\n' +
@@ -480,7 +475,7 @@ angular
 			'</div>');
 
 		$templateCache.put('components/booking/bookings-editor/bookings-editor.html', '<div layout="row" layout-align="start start">                \n' +
-			'    <md-card flex="50">\n' +
+			'    <md-card flex="100">\n' +
 			'        <md-toolbar>\n' +
 			'            <div class="md-toolbar-tools">\n' +
 			'                <h2>Bookings</h2>\n' +

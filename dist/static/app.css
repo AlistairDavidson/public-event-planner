@@ -14068,6 +14068,9 @@ div.app-container {
   height: 1em;
   margin-top: 1em; }
 
+.md-toolbar-tools md-fab-speed-dial {
+  right: 6px; }
+
 .filter-container md-input-container .md-errors-spacer {
   min-height: 0px !important; }
 

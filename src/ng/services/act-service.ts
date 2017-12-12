@@ -88,7 +88,7 @@ export class ActViewModel implements ActDto {
     createdAt?: string;
     updatedAt?: string;
 
-    name?: string = ' ';
+    name?: string = '';
     bio?: string;
     tech_specs?: string;
     town?: string;

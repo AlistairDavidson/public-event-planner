@@ -84,8 +84,10 @@ export class ActService {
         }
         
         await this.rewriteContacts(act, actData.ActContacts);
-    //    await this.rewriteBookings(act, actData.bookings);
-      
+        await this.rewriteBookings(act, actData.Bookings);
+        
+        // TODO: application updates here?
+
         return await this.get(act.id, true);
     }
 
@@ -130,32 +132,24 @@ export class ActService {
         */
     }
 
-    // Applications and bookings need proper create / updates
     async rewriteBookings(act: ActInstance, bookingsData: BookingDto[]) {
-        for(let bookingData of bookingsData) {
-            let booking: BookingInstance;
+        let bookings = await act.getBookings()
+        
+        bookings = bookings || [];
+        bookingsData = bookingsData || [];
 
-            if(bookingData.id) {
-                booking = (await act
-                    .getBookings({
-                        where: { id: bookingData.id }
-                    })
-                )[0];
-            }
+        for(let booking of bookings) {
+            let bookingData = _.find(bookingsData, bd => bd.id == booking.id);
 
-            if(booking) {
-                booking = await booking.update(bookingData);
+            if(!bookingData) {
+                await booking.destroy();
             } else {
-                booking = await database.models.Booking.create(bookingData);
+                booking = await booking.update(bookingData);
             }
-
-            let bookingStatus = await database.models.BookingStatus
-                .findOne({ 
-                    where: { name: bookingData.BookingStatus.name }
-                });
-
-            await booking.setBookingStatus(bookingStatus);
         }
+
+        let bookingsToCreate = _.filter(bookingsData, bd => !bd.id);
+        let newBookings = await database.models.Booking.bulkCreate(bookingsToCreate);
     }
 
     async delete(actId: number) {
