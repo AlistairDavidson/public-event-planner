@@ -40,6 +40,8 @@ export function Auth(requirements: string[]) {
 }
 
 async function doAuthorise(req: express.Request, res: express.Response, requirements: string[], originalMethod: Function, args: any) {
+    console.log('doAuthorise:', req.user, req);
+
     let permissions = await authService.authorize(req.user, requirements);
 
     args.push(req.user);
