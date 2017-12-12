@@ -3359,6 +3359,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 },
                 controller: ['actsData', function (actsData) {
                         this.acts = actsData.rows;
+                        console.log('acts-summary', this.acts);
                     }],
                 controllerAs: '$ctrl'
             })

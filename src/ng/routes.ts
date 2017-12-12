@@ -89,7 +89,8 @@ function(
                 actsData: ['actService', (actService: ActService) => actService.list()]
             },                     
             controller: ['actsData', function(actsData: { rows: ActViewModel[] }) {
-                this.acts = actsData.rows;                    
+                this.acts = actsData.rows;
+                console.log('acts-summary', this.acts);                 
             }],
             controllerAs: '$ctrl'
         })
