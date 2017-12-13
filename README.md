@@ -9,6 +9,8 @@ Licensed under GNU Affero General Public License Version 3, see LICENSE file
 
 TODO
 
+WIP- test this: Do something so contact sort is by last name
+
 Deploy
     - get bookings saving properly
 
@@ -65,7 +67,7 @@ Solve issue with dates on viewmodels (set createdDate -> also sets createdDateAs
 
 Surely consolidate code more, somehow - esp front page
 
-Do something so contact sort is by last name
+
 
 Applications
     Detail view - card with all details, pops up from table 
