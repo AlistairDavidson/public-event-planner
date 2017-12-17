@@ -35,6 +35,9 @@ export interface BookingAttribute {
     tech_specs?: string;
     size_of_act?: number;
     size_of_party?: number;
+
+    ActId?: number;
+    EventId?: number;
 }
 
 export interface BookingInstance extends SequelizeStatic.Instance<BookingAttribute>, BookingAttribute {    

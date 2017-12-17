@@ -72,7 +72,7 @@ angular
 			'<contact-editor-form contact="$ctrl.webContact" mode="\'web\'"> \n' +
 			'</contact-editor-form>\n' +
 			'\n' +
-			'<bookings-editor bookings="$ctrl.act.bookings" act-id="$ctrl.act.id" event-id="$ctrl.eventId">            \n' +
+			'<bookings-editor bookings="$ctrl.act.Bookings" act-id="$ctrl.act.id" event-id="$ctrl.eventId">            \n' +
 			'</bookings-editor>\n' +
 			'\n' +
 			'<act-contacts-editor act-contacts="$ctrl.act.ActContacts" act-id="$ctrl.act.id">\n' +

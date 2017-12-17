@@ -189,8 +189,8 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
             },
             set: function (newValue) {
                 var splitNames = newValue.split(' ');
-                this.lastName = splitNames.pop();
-                this.firstName = splitNames.join(' ');
+                this.lastName = splitNames.length ? splitNames.pop() : '';
+                this.firstName = splitNames.length ? splitNames.join(' ') : '';
             },
             enumerable: true,
             configurable: true
@@ -523,7 +523,7 @@ angular
 			'<contact-editor-form contact="$ctrl.webContact" mode="\'web\'"> \n' +
 			'</contact-editor-form>\n' +
 			'\n' +
-			'<bookings-editor bookings="$ctrl.act.bookings" act-id="$ctrl.act.id" event-id="$ctrl.eventId">            \n' +
+			'<bookings-editor bookings="$ctrl.act.Bookings" act-id="$ctrl.act.id" event-id="$ctrl.eventId">            \n' +
 			'</bookings-editor>\n' +
 			'\n' +
 			'<act-contacts-editor act-contacts="$ctrl.act.ActContacts" act-id="$ctrl.act.id">\n' +
@@ -2479,7 +2479,10 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
             }
         };
         BookingsEditorController.prototype.edit = function (booking) {
-            this.editingBooking = booking || new booking_service_1.BookingViewModel();
+            this.editingBooking = booking || new booking_service_1.BookingViewModel({
+                ActId: this.actId,
+                EventId: this.eventId
+            });
             if (!booking) {
                 this.bookings.push(this.editingBooking);
             }

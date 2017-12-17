@@ -81,8 +81,8 @@ export class ContactViewModel implements ContactDto {
 
     set name(newValue) {
         const splitNames = newValue.split(' ');
-        this.lastName = splitNames.pop();
-        this.firstName = splitNames.join(' ');    
+        this.lastName = splitNames.length ? splitNames.pop() : '';
+        this.firstName = splitNames.length ? splitNames.join(' ') : '';    
     }
 
     getEmail() {

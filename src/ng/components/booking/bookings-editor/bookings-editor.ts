@@ -20,7 +20,11 @@ export class BookingsEditorController implements angular.IComponentController {
     }
 
     edit(booking?: BookingViewModel) {
-        this.editingBooking = booking || new BookingViewModel();
+        this.editingBooking = booking || new BookingViewModel({
+            ActId: this.actId,
+            EventId: this.eventId
+        });
+
         if(!booking) {
             this.bookings.push(this.editingBooking);
         }
