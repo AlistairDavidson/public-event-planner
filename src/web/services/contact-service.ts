@@ -8,10 +8,28 @@ import { ContactDto, ContactInstance } from '../../common/models/contact';
 import { ListDto } from '../../common/types';
 
 export class ContactService {
-    async list(query?: ListDto) {        
+    async list(query?: ListDto) {      
+        let where: SequelizeStatic.WhereOptions = {          
+        }
+
+        if(query.filter) {
+            where = {
+                $or: [{
+                    lastName: {
+                        $iLike: `%${query.filter}%`
+                    }
+                }, {
+                    firstName: {
+                        $iLike: `%${query.filter}%`
+                    }                    
+                }]
+            }
+        }
+
         return await searchService.list<ContactInstance>({
             model: database.models.Contact,
-            query: query
+            query: query,
+            where: where
         });
     }
 

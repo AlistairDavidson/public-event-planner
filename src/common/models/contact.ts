@@ -3,7 +3,8 @@ import { ActContactModel, ActContactInstance, ActContactDto } from './act-contac
 
 export function contact(db: SequelizeStatic.Sequelize, ActContact: ActContactModel)  {    
     let Contact = db.define<ContactInstance, ContactAttribute>('Contact', {
-        name: SequelizeStatic.STRING(255),
+        firstName: SequelizeStatic.STRING(255),
+        lastName: SequelizeStatic.STRING(255),
         details: SequelizeStatic.JSON
     }, {
         schema: 'eventplanner'
@@ -20,7 +21,8 @@ export interface ContactAttribute {
     createdAt?: Date | string;
     updatedAt?: Date | string;
 
-    name?: string;
+    firstName?: string;
+    lastName?: string;
     details?: ContactDetailsDto;
 }
 

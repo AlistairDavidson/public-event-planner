@@ -31,7 +31,7 @@ export class ContactSearchController implements angular.IComponentController {
 
     search(searchText: string) {
         return this.contactService.list({
-            order: 'name',
+            order: 'lastName',
             limit: 25,
             page: 1,
             filter: searchText

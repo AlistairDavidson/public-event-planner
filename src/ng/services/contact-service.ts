@@ -56,7 +56,8 @@ export class ContactViewModel implements ContactDto {
     id?: number;
     createdAt?: string;
     updatedAt?: string;
-    name = '';
+    firstName = '';
+    lastName = '';
 
     details: ContactDetailsDto = {
         addresses: [],
@@ -72,6 +73,16 @@ export class ContactViewModel implements ContactDto {
         if(contact) {
             _.merge(this, contact);
         }
+    }
+
+    get name() {
+        return `${this.firstName} ${this.lastName}`
+    }
+
+    set name(newValue) {
+        const splitNames = newValue.split(' ');
+        this.lastName = splitNames.pop();
+        this.firstName = splitNames.join(' ');    
     }
 
     getEmail() {

@@ -11,6 +11,8 @@ TODO
 
 get bookings working properly
 
+WIP- test this: Do something so contact sort is by last name
+
 No more 'act editor' -> just 'act editor form'
 Save etc buttons on act editor title
 Acts summary not used correctly on front end
@@ -58,13 +60,12 @@ bio onto booking, same rules as tech specs
 search over existing answers for the likes of band type
 
 Solve issue with dates on viewmodels (set createdDate -> also sets createdDateAsDate)
-
-... global hydration solution?
-    ... mobx-state-tree?
+    ... global hydration solution?
+        ... mobx-state-tree?
 
 Surely consolidate code more, somehow - esp front page
 
-Do something so contact sort is by last name
+
 
 Applications
     Detail view - card with all details, pops up from table 
