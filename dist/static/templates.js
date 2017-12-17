@@ -503,8 +503,9 @@ angular
 			'                edit\n' +
 			'            </md-icon>\n' +
 			'        </md-button>\n' +
-			'        <md-button class="md-icon-button md-secondary">          \n' +
-			'            <md-icon ng-click="$ctrl.remove($event, row)">\n' +
+			'        <md-button  class="md-icon-button md-secondary"\n' +
+			'                    ng-click="$ctrl.remove($event, row)">          \n' +
+			'            <md-icon>\n' +
 			'                remove\n' +
 			'            </md-icon> \n' +
 			'        </md-button>\n' +
@@ -594,8 +595,9 @@ angular
 			'                edit\n' +
 			'            </md-icon>\n' +
 			'        </md-button>\n' +
-			'        <md-button class="md-icon-button md-secondary">          \n' +
-			'            <md-icon ng-click="$ctrl.remove($event, row)">\n' +
+			'        <md-button  class="md-icon-button md-secondary"\n' +
+			'                    ng-click="$ctrl.remove($event, row)">          \n' +
+			'            <md-icon>\n' +
 			'                remove\n' +
 			'            </md-icon> \n' +
 			'        </md-button>\n' +

@@ -9,26 +9,26 @@ Licensed under GNU Affero General Public License Version 3, see LICENSE file
 
 TODO
 
-get bookings working properly
+bookings
     tech specs - when creating booking, use Act tech specs only if none against booking, checkbox
     bio onto booking, same rules as tech specs
-    ...use placeholders
+        ...use placeholders
 
 stationery for contacts
 
-WIP- test this: Do something so contact sort is by last name
-
-Save etc buttons on act editor title
-Acts summary not used correctly on front end
-
 consolidate act-contact and contact forms
     possibly put search in a modal
+
+Save etc buttons on act editor title
 
 auto-saves in edit widgets
 
 At this point should be able to do end-to-end act editing
 
-booking statuses fully featured
+booking statuses fully featured - colours, icons
+
+ep-list remove proper dialogue text
+
 
 Single-line summary widgets - content for md-list
     act
