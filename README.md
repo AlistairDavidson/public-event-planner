@@ -9,8 +9,7 @@ Licensed under GNU Affero General Public License Version 3, see LICENSE file
 
 TODO
 
-Deploy
-    - get bookings saving properly
+get bookings working properly
 
 No more 'act editor' -> just 'act editor form'
 Save etc buttons on act editor title

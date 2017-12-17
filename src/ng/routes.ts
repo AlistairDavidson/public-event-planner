@@ -109,7 +109,7 @@ function(
         .state({
             name: 'root.act',
             url: '/act/{act}',
-            template:  `<act-editor act-id="$ctrl.$stateParams.act" event-id="$ctrl.$stateParams.event"></act-editor>`,
+            template:  `<act-editor-form act-id="$ctrl.$stateParams.act" event-id="$ctrl.$stateParams.event"></act-editor-form>`,
             controller: ['$stateParams', function($stateParams: ng.ui.IStateParamsService) {
                 this.$stateParams = $stateParams;
             }],
