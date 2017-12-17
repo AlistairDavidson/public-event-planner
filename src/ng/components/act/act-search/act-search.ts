@@ -25,10 +25,7 @@ export class ActSearchController implements angular.IComponentController {
     }
 
     edit(ev: ng.IAngularEvent) {
-        this.actService.edit(ev)            
-            .then(act => {
-                this.act = act;
-            });
+       
     }
 
     search(searchText: string) {

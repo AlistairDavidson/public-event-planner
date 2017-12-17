@@ -27,11 +27,11 @@ export class BookingsEditorController implements angular.IComponentController {
         if(this.eventId) {
             options.EventId = this.eventId;
         }
-
+/*
         this.bookingService.edit(ev, options)
             .then(booking => {
                 this.bookings.push( booking );
-            });
+            });*/
     }
 
     remove(booking: BookingViewModel) {

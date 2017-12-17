@@ -9,7 +9,6 @@ import { queryToRequest } from '../helpers/network';
 import settings from '../settings';
 import { MdSortDto } from '../../common/types';
 import { element } from 'angular';
-import { ActEditorModalController } from '../components/act/act-editor-modal/act-editor-modal';
 import * as _ from 'lodash';
 
 export default class ActService {
@@ -62,24 +61,6 @@ export default class ActService {
     delete(data: ActDto) {
         return this.$http.post(`${settings.api}/act/delete`, { id: data.id })
             .then(response => new ActViewModel(response.data as ActDto));
-    }         
-
-    edit(ev: ng.IAngularEvent, act?: ActViewModel): ng.IPromise<ActViewModel> {
-        return this.$mdDialog.show({
-            controller: ActEditorModalController,
-            templateUrl: 'components/act/act-editor-modal/act-editor-modal.html',
-            parent: element(document.body),
-            targetEvent: ev,
-            clickOutsideToClose: true,
-            fullscreen: true,
-            bindToController: true,
-            controllerAs: '$ctrl',
-            autoWrap: false,
-            resolve: {
-                'act': () => act,
-                'eventId': () => this.$stateParams.event
-            }
-        } as any);
     }
 }
 

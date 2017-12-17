@@ -16,30 +16,7 @@ export class ActContactsEditorController implements angular.IComponentController
     }
 
     $onInit() {
-        if(!this.actContacts) {
-            this.actContacts = [
-                new ActContactViewModel({
-                    relationship: 'Manager',
-                    Contact: new ContactViewModel({
-                        name: 'Bob McBobson',
-                        details: {
-                            phones: [{
-                                phone: '0000 0000 0000'
-                            }],
-                            emails: [{
-                                email: 'bob@example.com'
-                            }]
-                        }
-                    })
-                }),
-                new ActContactViewModel({
-                    relationship: 'Drummer',
-                    Contact: new ContactViewModel({
-                        name: 'Ringo Starr'
-                    })
-                })    
-            ];
-        }
+
     }
 
     edit(actContact?: ActContactViewModel) {

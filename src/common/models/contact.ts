@@ -44,6 +44,7 @@ export interface ContactDto extends ContactAttribute {
     updatedAt?: string;
 
     ActContacts?: ActContactDto[];
+    name?: string;
 }
 
 export interface ContactsDto {

@@ -23,10 +23,7 @@ export class BookingSearchController implements angular.IComponentController {
     }
 
     edit(ev: ng.IAngularEvent) {
-        this.bookingService.edit(ev)            
-            .then(booking => {
-                this.booking = booking;
-            });
+
     }
 
     search(searchText: string) {

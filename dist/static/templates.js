@@ -29,7 +29,7 @@ angular
 			'    </md-card-actions>\n' +
 			'</md-card>');
 
-		$templateCache.put('components/act/act-editor-form/act-editor-form.html', '<md-card layout-padding>\n' +
+		$templateCache.put('components/act/act-editor-form/act-editor-form.html', '<md-card>\n' +
 			'    <md-toolbar>\n' +
 			'        <div class="md-toolbar-tools">\n' +
 			'            <h2 ng-if="!$ctrl.act.name">New Act</h2>\n' +
@@ -37,7 +37,7 @@ angular
 			'            <span flex></span>\n' +
 			'        </div>\n' +
 			'    </md-toolbar>\n' +
-			'    <form novalidate ng-cloak>\n' +
+			'    <form novalidate ng-cloak layout-padding>\n' +
 			'        <div layout="column">              \n' +
 			'            <md-input-container>\n' +
 			'                <label>Act Name</label>\n' +
@@ -77,24 +77,6 @@ angular
 			'\n' +
 			'<act-contacts-editor act-contacts="$ctrl.act.ActContacts" act-id="$ctrl.act.id">\n' +
 			'</act-contacts-editor>');
-
-		$templateCache.put('components/act/act-editor-modal/act-editor-modal.html', '<md-dialog aria-label="New Act">\n' +
-			'    <md-dialog-content class="md-dialog-content">\n' +
-			'       <act-editor-form act="$ctrl.act" event-id="$ctrl.eventId">\n' +
-			'       </act-editor-form>\n' +
-			'    </md-dialog-content>\n' +
-			'    <md-dialog-actions>\n' +
-			'        <md-button ng-click="$ctrl.save()">Save</md-button>\n' +
-			'        <md-button ng-click="$ctrl.cancel()">Cancel</md-button>\n' +
-			'    </md-dialog-actions>\n' +
-			'</md-dialog>');
-
-		$templateCache.put('components/act/act-editor/act-editor.html', '<md-card layout-padding layout="column">    \n' +
-			'    <act-editor-form act="$ctrl.act" event-id="$ctrl.eventId">\n' +
-			'    </act-editor-form>\n' +
-			'\n' +
-			'    <md-button ng-click="$ctrl.save()">Save</md-button>\n' +
-			'</md-card>');
 
 		$templateCache.put('components/act/act-search/act-search.html', '<div layout="column">\n' +
 			'    <div layout-gt-sm="row">\n' +
@@ -429,17 +411,6 @@ angular
 			'        TODO: actApplication               \n' +
 			'    </div>\n' +
 			'</form>');
-
-		$templateCache.put('components/booking/booking-editor-modal/booking-editor-modal.html', '<md-dialog aria-label="New Booking">    \n' +
-			'    <md-dialog-content class="md-dialog-content">\n' +
-			'       <booking-editor-form booking="$ctrl.booking">\n' +
-			'       </booking-editor-form>\n' +
-			'    </md-dialog-content>\n' +
-			'    <md-dialog-actions>\n' +
-			'        <md-button ng-click="$ctrl.save()">Save</md-button>\n' +
-			'        <md-button ng-click="$ctrl.cancel()">Cancel</md-button>\n' +
-			'    </md-dialog-actions>\n' +
-			'</md-dialog>');
 
 		$templateCache.put('components/booking/booking-search/booking-search.html', '<div layout="column">\n' +
 			'    <div layout-gt-sm="row">\n' +

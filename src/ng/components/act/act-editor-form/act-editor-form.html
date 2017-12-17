@@ -1,4 +1,4 @@
-<md-card layout-padding>
+<md-card>
     <md-toolbar>
         <div class="md-toolbar-tools">
             <h2 ng-if="!$ctrl.act.name">New Act</h2>
@@ -7,7 +7,8 @@
         </div>
     </md-toolbar>
     <form   novalidate
-            ng-cloak>
+            ng-cloak
+            layout-padding>
         <div layout="column">              
             <md-input-container>
                 <label>Act Name</label>

@@ -20,7 +20,6 @@ import applicationsSummary from './application/applications-summary/applications
 import applicationsTable from './application/applications-table/applications-table';
 
 import bookingEditorForm from './booking/booking-editor-form/booking-editor-form';
-import bookingEditorModal from './booking/booking-editor-modal/booking-editor-modal';
 import bookingsEditor from './booking/bookings-editor/bookings-editor';
 import bookingSearch from './booking/booking-search/booking-search';
 import bookingStatusSelect from './booking/booking-status-select/booking-status-select';
@@ -57,7 +56,6 @@ export default module('event-planner.components', [ 'event-planner.services', 'n
     .component('applicationsPage', applicationsPage)
     
     .component('bookingEditorForm', bookingEditorForm)
-    .component('bookingEditorModal', bookingEditorModal)
     .component('bookingsEditor', bookingsEditor)
     .component('bookingSearch', bookingSearch)
     .component('bookingStatusSelect', bookingStatusSelect)   

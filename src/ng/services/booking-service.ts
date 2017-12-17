@@ -8,7 +8,6 @@ import { queryToRequest } from '../helpers/network';
 import settings from '../settings';
 import { MdSortDto } from '../../common/types';
 import { element } from 'angular';
-import { BookingEditorModalController } from '../components/booking/booking-editor-modal/booking-editor-modal';
 import * as _ from 'lodash';
 
 export class BookingService {
@@ -60,7 +59,7 @@ export class BookingService {
             .then(response => new BookingViewModel(response.data as BookingDto));
     }         
 
-    edit(ev: ng.IAngularEvent, booking?: BookingViewModel): ng.IPromise<BookingViewModel> {
+/*    edit(ev: ng.IAngularEvent, booking?: BookingViewModel): ng.IPromise<BookingViewModel> {
         return this.$mdDialog.show({
             controller: BookingEditorModalController,
             templateUrl: 'components/booking/booking-editor-modal/booking-editor-modal.html',
@@ -76,7 +75,7 @@ export class BookingService {
                 'booking': () => booking
             }
         } as any);
-    }
+    }*/
 }
 
 export class BookingViewModel implements BookingDto {
