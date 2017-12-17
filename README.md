@@ -10,8 +10,9 @@ Licensed under GNU Affero General Public License Version 3, see LICENSE file
 TODO
 
 bookings
-    tech specs - when creating booking, use Act tech specs only if none against booking, checkbox
-    bio onto booking, same rules as tech specs
+    list widget show real information
+    use Act tech specs only if none against booking,
+    add bio to booking, same rules as tech specs
         ...use placeholders
 
 stationery for contacts
