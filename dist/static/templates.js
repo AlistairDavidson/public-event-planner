@@ -69,11 +69,11 @@ angular
 			'    </form>\n' +
 			'</md-card>\n' +
 			'\n' +
-			'<bookings-editor bookings="$ctrl.act.bookings" act-id="$ctrl.act.id" event-id="$ctrl.eventId">            \n' +
-			'</bookings-editor>\n' +
-			'\n' +
 			'<contact-editor-form contact="$ctrl.webContact" mode="\'web\'"> \n' +
 			'</contact-editor-form>\n' +
+			'\n' +
+			'<bookings-editor bookings="$ctrl.act.bookings" act-id="$ctrl.act.id" event-id="$ctrl.eventId">            \n' +
+			'</bookings-editor>\n' +
 			'\n' +
 			'<act-contacts-editor act-contacts="$ctrl.act.ActContacts" act-id="$ctrl.act.id">\n' +
 			'</act-contacts-editor>');
@@ -371,10 +371,20 @@ angular
 			'<ep-table name="\'Applications\'" on-list="$ctrl.getApplications({ query: query })" on-edit="$ctrl.edit($event)" header-template="\'/applications-header.html\'" cell-template="\'/applications-cell.html\'">\n' +
 			'</ep-table>');
 
-		$templateCache.put('components/booking/booking-editor-form/booking-editor-form.html', '<form novalidate ng-cloak>\n' +
+		$templateCache.put('components/booking/booking-editor-form/booking-editor-form.html', '<md-card>\n' +
+			'<md-toolbar>\n' +
+			'    <div class="md-toolbar-tools">         \n' +
+			'        <md-button aria-label="Close" class="md-icon-button md-secondary" ng-click="$ctrl.onClose()">\n' +
+			'            <md-icon>close</md-icon>\n' +
+			'        </md-button>\n' +
+			'        <h2>\n' +
+			'            Booking\n' +
+			'        </h2>\n' +
+			'        <span flex></span>\n' +
+			'    </div>\n' +
+			'</md-toolbar>\n' +
+			'<form novalidate ng-cloak class="form-padding">\n' +
 			'    <div layout="column">\n' +
-			'        <h2 class="md-title">Booking</h2>\n' +
-			'\n' +
 			'        <div layout-gt-sm="row">\n' +
 			'            <event-search event-id="$ctrl.booking.EventId" ng-if="!$ctrl.fixedEvent"> \n' +
 			'            </event-search>\n' +
@@ -410,7 +420,8 @@ angular
 			'\n' +
 			'        TODO: actApplication               \n' +
 			'    </div>\n' +
-			'</form>');
+			'</form>\n' +
+			'</md-card>');
 
 		$templateCache.put('components/booking/booking-search/booking-search.html', '<div layout="column">\n' +
 			'    <div layout-gt-sm="row">\n' +
@@ -446,7 +457,7 @@ angular
 			'</div>');
 
 		$templateCache.put('components/booking/bookings-editor/bookings-editor.html', '<div layout="row" layout-align="start start">                \n' +
-			'    <md-card flex="100">\n' +
+			'    <md-card flex="50">\n' +
 			'        <md-toolbar>\n' +
 			'            <div class="md-toolbar-tools">\n' +
 			'                <h2>Bookings</h2>\n' +

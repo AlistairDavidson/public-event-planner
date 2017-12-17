@@ -1,15 +1,25 @@
-import { ActViewModel } from '../../../services/act-service';
+import ActService, { ActViewModel } from '../../../services/act-service';
 
 export class ActEditorFormController implements angular.IComponentController {
     act?: ActViewModel;
+    actId?: number;
     eventId?: number;
 
-    constructor() {
+    static $inject = ['actService']
+
+    constructor(private actService: ActService) {
     }
 
     $onInit() {
         if(!this.act) {
-            this.act = new ActViewModel();
+            if(this.actId) {
+                this.actService.get(this.actId, true)
+                    .then((act) => {
+                        this.act = act;
+                    });
+            } else {
+                this.act = new ActViewModel();
+            }
         }
     }
 }
@@ -19,6 +29,7 @@ let options: angular.IComponentOptions = {
     controller: ActEditorFormController,
     bindings: {
         act: '=?',
+        actId: '=?',
         eventId: '=?'
     }
 }

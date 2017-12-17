@@ -257,6 +257,68 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(1), __webpack_require__(2), __webpack_require__(0)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, network_1, settings_1, _) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var BookingService = /** @class */ (function () {
+        function BookingService($http, $httpParamSerializer, $q, $mdDialog) {
+            this.$http = $http;
+            this.$httpParamSerializer = $httpParamSerializer;
+            this.$q = $q;
+            this.$mdDialog = $mdDialog;
+        }
+        BookingService.prototype.list = function (query) {
+            var url = settings_1.default.api + "/booking/list";
+            if (query) {
+                var listQuery = network_1.queryToRequest(query);
+                var queryString = this.$httpParamSerializer(listQuery);
+                url = url + "?" + queryString;
+            }
+            return this.$http.get(url)
+                .then(function (response) {
+                var bookingsResponse = response.data;
+                bookingsResponse.rows = bookingsResponse.rows.map(function (booking) { return new BookingViewModel(booking); });
+                return bookingsResponse;
+            });
+        };
+        BookingService.prototype.listStatuses = function () {
+            return this.$http.get(settings_1.default.api + "/booking/status/list")
+                .then(function (response) { return response.data; });
+        };
+        BookingService.prototype.get = function (id, full) {
+            return this.$http.get(settings_1.default.api + "/booking/get?id=" + id)
+                .then(function (response) { return new BookingViewModel(response.data); });
+        };
+        BookingService.prototype.save = function (data) {
+            return this.$http.post(settings_1.default.api + "/booking/save", data)
+                .then(function (response) { return new BookingViewModel(response.data); });
+        };
+        BookingService.prototype.delete = function (data) {
+            return this.$http.post(settings_1.default.api + "/booking/delete", { id: data.id })
+                .then(function (response) { return new BookingViewModel(response.data); });
+        };
+        BookingService.$inject = ['$http', '$httpParamSerializer', '$q', '$mdDialog'];
+        return BookingService;
+    }());
+    exports.BookingService = BookingService;
+    var BookingViewModel = /** @class */ (function () {
+        function BookingViewModel(booking) {
+            if (booking) {
+                _.merge(this, booking);
+            }
+        }
+        return BookingViewModel;
+    }());
+    exports.BookingViewModel = BookingViewModel;
+    exports.default = BookingService;
+}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
@@ -292,10 +354,10 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(4), __webpack_require__(7), __webpack_require__(1), __webpack_require__(2), __webpack_require__(0)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, contact_service_1, booking_service_1, network_1, settings_1, _) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(4), __webpack_require__(5), __webpack_require__(1), __webpack_require__(2), __webpack_require__(0)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, contact_service_1, booking_service_1, network_1, settings_1, _) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var ActService = /** @class */ (function () {
@@ -383,68 +445,6 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 
 /***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(1), __webpack_require__(2), __webpack_require__(0)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, network_1, settings_1, _) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    var BookingService = /** @class */ (function () {
-        function BookingService($http, $httpParamSerializer, $q, $mdDialog) {
-            this.$http = $http;
-            this.$httpParamSerializer = $httpParamSerializer;
-            this.$q = $q;
-            this.$mdDialog = $mdDialog;
-        }
-        BookingService.prototype.list = function (query) {
-            var url = settings_1.default.api + "/booking/list";
-            if (query) {
-                var listQuery = network_1.queryToRequest(query);
-                var queryString = this.$httpParamSerializer(listQuery);
-                url = url + "?" + queryString;
-            }
-            return this.$http.get(url)
-                .then(function (response) {
-                var bookingsResponse = response.data;
-                bookingsResponse.rows = bookingsResponse.rows.map(function (booking) { return new BookingViewModel(booking); });
-                return bookingsResponse;
-            });
-        };
-        BookingService.prototype.listStatuses = function () {
-            return this.$http.get(settings_1.default.api + "/booking/status/list")
-                .then(function (response) { return response.data; });
-        };
-        BookingService.prototype.get = function (id, full) {
-            return this.$http.get(settings_1.default.api + "/booking/get?id=" + id)
-                .then(function (response) { return new BookingViewModel(response.data); });
-        };
-        BookingService.prototype.save = function (data) {
-            return this.$http.post(settings_1.default.api + "/booking/save", data)
-                .then(function (response) { return new BookingViewModel(response.data); });
-        };
-        BookingService.prototype.delete = function (data) {
-            return this.$http.post(settings_1.default.api + "/booking/delete", { id: data.id })
-                .then(function (response) { return new BookingViewModel(response.data); });
-        };
-        BookingService.$inject = ['$http', '$httpParamSerializer', '$q', '$mdDialog'];
-        return BookingService;
-    }());
-    exports.BookingService = BookingService;
-    var BookingViewModel = /** @class */ (function () {
-        function BookingViewModel(booking) {
-            if (booking) {
-                _.merge(this, booking);
-            }
-        }
-        return BookingViewModel;
-    }());
-    exports.BookingViewModel = BookingViewModel;
-    exports.default = BookingService;
-}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-
-
-/***/ }),
 /* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -520,11 +520,11 @@ angular
 			'    </form>\n' +
 			'</md-card>\n' +
 			'\n' +
-			'<bookings-editor bookings="$ctrl.act.bookings" act-id="$ctrl.act.id" event-id="$ctrl.eventId">            \n' +
-			'</bookings-editor>\n' +
-			'\n' +
 			'<contact-editor-form contact="$ctrl.webContact" mode="\'web\'"> \n' +
 			'</contact-editor-form>\n' +
+			'\n' +
+			'<bookings-editor bookings="$ctrl.act.bookings" act-id="$ctrl.act.id" event-id="$ctrl.eventId">            \n' +
+			'</bookings-editor>\n' +
 			'\n' +
 			'<act-contacts-editor act-contacts="$ctrl.act.ActContacts" act-id="$ctrl.act.id">\n' +
 			'</act-contacts-editor>');
@@ -822,10 +822,20 @@ angular
 			'<ep-table name="\'Applications\'" on-list="$ctrl.getApplications({ query: query })" on-edit="$ctrl.edit($event)" header-template="\'/applications-header.html\'" cell-template="\'/applications-cell.html\'">\n' +
 			'</ep-table>');
 
-		$templateCache.put('components/booking/booking-editor-form/booking-editor-form.html', '<form novalidate ng-cloak>\n' +
+		$templateCache.put('components/booking/booking-editor-form/booking-editor-form.html', '<md-card>\n' +
+			'<md-toolbar>\n' +
+			'    <div class="md-toolbar-tools">         \n' +
+			'        <md-button aria-label="Close" class="md-icon-button md-secondary" ng-click="$ctrl.onClose()">\n' +
+			'            <md-icon>close</md-icon>\n' +
+			'        </md-button>\n' +
+			'        <h2>\n' +
+			'            Booking\n' +
+			'        </h2>\n' +
+			'        <span flex></span>\n' +
+			'    </div>\n' +
+			'</md-toolbar>\n' +
+			'<form novalidate ng-cloak class="form-padding">\n' +
 			'    <div layout="column">\n' +
-			'        <h2 class="md-title">Booking</h2>\n' +
-			'\n' +
 			'        <div layout-gt-sm="row">\n' +
 			'            <event-search event-id="$ctrl.booking.EventId" ng-if="!$ctrl.fixedEvent"> \n' +
 			'            </event-search>\n' +
@@ -861,7 +871,8 @@ angular
 			'\n' +
 			'        TODO: actApplication               \n' +
 			'    </div>\n' +
-			'</form>');
+			'</form>\n' +
+			'</md-card>');
 
 		$templateCache.put('components/booking/booking-search/booking-search.html', '<div layout="column">\n' +
 			'    <div layout-gt-sm="row">\n' +
@@ -897,7 +908,7 @@ angular
 			'</div>');
 
 		$templateCache.put('components/booking/bookings-editor/bookings-editor.html', '<div layout="row" layout-align="start start">                \n' +
-			'    <md-card flex="100">\n' +
+			'    <md-card flex="50">\n' +
 			'        <md-toolbar>\n' +
 			'            <div class="md-toolbar-tools">\n' +
 			'                <h2>Bookings</h2>\n' +
@@ -1965,17 +1976,28 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 /* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(6)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, act_service_1) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(7)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, act_service_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var ActEditorFormController = /** @class */ (function () {
-        function ActEditorFormController() {
+        function ActEditorFormController(actService) {
+            this.actService = actService;
         }
         ActEditorFormController.prototype.$onInit = function () {
+            var _this = this;
             if (!this.act) {
-                this.act = new act_service_1.ActViewModel();
+                if (this.actId) {
+                    this.actService.get(this.actId, true)
+                        .then(function (act) {
+                        _this.act = act;
+                    });
+                }
+                else {
+                    this.act = new act_service_1.ActViewModel();
+                }
             }
         };
+        ActEditorFormController.$inject = ['actService'];
         return ActEditorFormController;
     }());
     exports.ActEditorFormController = ActEditorFormController;
@@ -1984,6 +2006,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         controller: ActEditorFormController,
         bindings: {
             act: '=?',
+            actId: '=?',
             eventId: '=?'
         }
     };
@@ -2314,7 +2337,8 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         templateUrl: 'components/booking/booking-editor-form/booking-editor-form.html',
         controller: BookingEditorFormController,
         bindings: {
-            booking: '=?'
+            booking: '=?',
+            onClose: '&?'
         }
     };
     exports.default = options;
@@ -2441,7 +2465,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 /* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(0)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, _) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(5)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, booking_service_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var BookingsEditorController = /** @class */ (function () {
@@ -2454,22 +2478,14 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 this.bookings = [];
             }
         };
-        BookingsEditorController.prototype.add = function (ev) {
-            var options = {};
-            if (this.actId) {
-                options.ActId = this.actId;
+        BookingsEditorController.prototype.edit = function (booking) {
+            this.editingBooking = booking || new booking_service_1.BookingViewModel();
+            if (!booking) {
+                this.bookings.push(this.editingBooking);
             }
-            if (this.eventId) {
-                options.EventId = this.eventId;
-            }
-            /*
-                    this.bookingService.edit(ev, options)
-                        .then(booking => {
-                            this.bookings.push( booking );
-                        });*/
         };
-        BookingsEditorController.prototype.remove = function (booking) {
-            _.remove(this.bookings, function (ac) { return ac == booking; });
+        BookingsEditorController.prototype.close = function () {
+            this.editingBooking = null;
         };
         BookingsEditorController.$inject = ['bookingService'];
         return BookingsEditorController;
@@ -2926,7 +2942,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 /* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(3), __webpack_require__(40), __webpack_require__(39), __webpack_require__(38), __webpack_require__(18), __webpack_require__(19), __webpack_require__(20), __webpack_require__(21), __webpack_require__(22), __webpack_require__(23), __webpack_require__(24), __webpack_require__(25), __webpack_require__(5), __webpack_require__(26), __webpack_require__(27), __webpack_require__(28), __webpack_require__(29), __webpack_require__(33), __webpack_require__(30), __webpack_require__(31), __webpack_require__(32), __webpack_require__(36), __webpack_require__(34), __webpack_require__(37), __webpack_require__(35), __webpack_require__(41), __webpack_require__(44)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, angular_1, event_planner_app_1, ep_table_1, ep_list_1, act_card_1, act_editor_form_1, act_search_1, acts_page_1, acts_summary_1, acts_table_1, application_card_1, application_editor_form_1, application_editor_modal_1, applications_page_1, applications_summary_1, applications_table_1, booking_editor_form_1, bookings_editor_1, booking_search_1, booking_status_select_1, booking_summary_1, contact_editor_form_1, act_contact_editor_form_1, contact_search_1, act_contacts_editor_1, event_search_1, location_search_1) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(3), __webpack_require__(40), __webpack_require__(39), __webpack_require__(38), __webpack_require__(18), __webpack_require__(19), __webpack_require__(20), __webpack_require__(21), __webpack_require__(22), __webpack_require__(23), __webpack_require__(24), __webpack_require__(25), __webpack_require__(6), __webpack_require__(26), __webpack_require__(27), __webpack_require__(28), __webpack_require__(29), __webpack_require__(33), __webpack_require__(30), __webpack_require__(31), __webpack_require__(32), __webpack_require__(36), __webpack_require__(34), __webpack_require__(37), __webpack_require__(35), __webpack_require__(41), __webpack_require__(44)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, angular_1, event_planner_app_1, ep_table_1, ep_list_1, act_card_1, act_editor_form_1, act_search_1, acts_page_1, acts_summary_1, acts_table_1, application_card_1, application_editor_form_1, application_editor_modal_1, applications_page_1, applications_summary_1, applications_table_1, booking_editor_form_1, bookings_editor_1, booking_search_1, booking_status_select_1, booking_summary_1, contact_editor_form_1, act_contact_editor_form_1, contact_search_1, act_contacts_editor_1, event_search_1, location_search_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.default = angular_1.module('event-planner.components', ['event-planner.services', 'ngMaterial'])
@@ -3189,7 +3205,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 /* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(1), __webpack_require__(2), __webpack_require__(3), __webpack_require__(5)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, network_1, settings_1, angular_1, application_editor_modal_1) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(1), __webpack_require__(2), __webpack_require__(3), __webpack_require__(6)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, network_1, settings_1, angular_1, application_editor_modal_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var ApplicationService = /** @class */ (function () {
@@ -3334,7 +3350,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 /* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(3), __webpack_require__(47), __webpack_require__(48), __webpack_require__(6), __webpack_require__(4), __webpack_require__(7), __webpack_require__(50), __webpack_require__(51)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, angular_1, application_service_1, event_service_1, act_service_1, contact_service_1, booking_service_1, location_service_1, user_service_1) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(3), __webpack_require__(47), __webpack_require__(48), __webpack_require__(7), __webpack_require__(4), __webpack_require__(5), __webpack_require__(50), __webpack_require__(51)], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, angular_1, application_service_1, event_service_1, act_service_1, contact_service_1, booking_service_1, location_service_1, user_service_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.default = angular_1.module('event-planner.services', [])

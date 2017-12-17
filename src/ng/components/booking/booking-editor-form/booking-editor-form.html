@@ -1,8 +1,21 @@
+<md-card>
+<md-toolbar>
+    <div class="md-toolbar-tools">         
+        <md-button  aria-label="Close"
+                    class="md-icon-button md-secondary"
+                    ng-click="$ctrl.onClose()">
+            <md-icon>close</md-icon>
+        </md-button>
+        <h2>
+            Booking
+        </h2>
+        <span flex></span>
+    </div>
+</md-toolbar>
 <form   novalidate
-        ng-cloak>
+        ng-cloak
+        class="form-padding">
     <div layout="column">
-        <h2 class="md-title">Booking</h2>
-
         <div layout-gt-sm="row">
             <event-search event-id="$ctrl.booking.EventId"
                           ng-if="!$ctrl.fixedEvent"> 
@@ -41,3 +54,4 @@
         TODO: actApplication               
     </div>
 </form>
+</md-card>

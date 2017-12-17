@@ -1,5 +1,6 @@
 import { BookingViewModel, BookingService } from '../../../services/booking-service';
 import * as _ from 'lodash';
+import { BookingDto } from '../../../../common/models/booking';
 
 export class BookingsEditorController implements angular.IComponentController {
     static $inject = ['bookingService'];
@@ -7,6 +8,7 @@ export class BookingsEditorController implements angular.IComponentController {
     bookings?: BookingViewModel[] = [];
     actId?: number;
     eventId?: number;
+    editingBooking?: BookingViewModel;
 
     constructor(private bookingService: BookingService) {        
     }
@@ -17,25 +19,15 @@ export class BookingsEditorController implements angular.IComponentController {
         }
     }
 
-    add(ev: ng.IAngularEvent) {
-        let options: BookingViewModel = {};
-        
-        if(this.actId) {
-            options.ActId = this.actId;
+    edit(booking?: BookingViewModel) {
+        this.editingBooking = booking || new BookingViewModel();
+        if(!booking) {
+            this.bookings.push(this.editingBooking);
         }
-
-        if(this.eventId) {
-            options.EventId = this.eventId;
-        }
-/*
-        this.bookingService.edit(ev, options)
-            .then(booking => {
-                this.bookings.push( booking );
-            });*/
     }
 
-    remove(booking: BookingViewModel) {
-        _.remove(this.bookings, (ac) => ac == booking);
+    close() {
+        this.editingBooking = null;
     }
 }
 

@@ -23,7 +23,8 @@ let options: angular.IComponentOptions = {
     templateUrl: 'components/booking/booking-editor-form/booking-editor-form.html',
     controller: BookingEditorFormController,
     bindings: {
-        booking: '=?'
+        booking: '=?',
+        onClose: '&?'
     }
 }
 

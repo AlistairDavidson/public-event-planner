@@ -10,16 +10,25 @@ Licensed under GNU Affero General Public License Version 3, see LICENSE file
 TODO
 
 get bookings working properly
+    tech specs - when creating booking, use Act tech specs only if none against booking, checkbox
+    bio onto booking, same rules as tech specs
+    ...use placeholders
+
+stationery for contacts
 
 WIP- test this: Do something so contact sort is by last name
 
-No more 'act editor' -> just 'act editor form'
 Save etc buttons on act editor title
 Acts summary not used correctly on front end
 
-Bookings: edit-in-place in list, probably
+consolidate act-contact and contact forms
+    possibly put search in a modal
+
+auto-saves in edit widgets
 
 At this point should be able to do end-to-end act editing
+
+booking statuses fully featured
 
 Single-line summary widgets - content for md-list
     act
@@ -40,6 +49,7 @@ create ep-form, ep-modal
 Applications, acts, events ep-lists
 
 loading bar
+toasts, fired from services on save or error
 
 validation, accessibility pass
 
@@ -52,9 +62,6 @@ Act
     Detail view 
         single-page, single act, editable, will show timeline etc later
         add bookings, applications from here
-
-tech specs - when creating booking, use Act tech specs only if none against booking, checkbox
-bio onto booking, same rules as tech specs
 
 
 search over existing answers for the likes of band type

@@ -40,16 +40,16 @@
     </form>
 </md-card>
 
+<contact-editor-form
+    contact="$ctrl.webContact"
+    mode="'web'"> 
+</contact-editor-form>
+
 <bookings-editor
     bookings="$ctrl.act.bookings"
     act-id="$ctrl.act.id"
     event-id="$ctrl.eventId">            
 </bookings-editor>
-
-<contact-editor-form
-    contact="$ctrl.webContact"
-    mode="'web'"> 
-</contact-editor-form>
 
 <act-contacts-editor
     act-contacts="$ctrl.act.ActContacts"
